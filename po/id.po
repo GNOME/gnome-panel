@@ -8,14 +8,14 @@
 # Ahmad Riza H Nst  <rizahnst@gnome.org>, 2006.
 # Dirgita <dirgitadevina@gmail.com>, 2010.
 # Dirgita Devina <dirgitadevina@yahoo.co.id>, 2010, 2011, 2012.
-# Andika Triwidada <andika@gmail.com>, 2011, 2013, 2014.
+# Andika Triwidada <andika@gmail.com>, 2011, 2013, 2014, 2021.
 # Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-05-31 08:36+0000\n"
-"PO-Revision-Date: 2021-05-31 17:41+0700\n"
+"POT-Creation-Date: 2021-09-07 08:45+0000\n"
+"PO-Revision-Date: 2021-09-18 14:40+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -750,6 +750,18 @@ msgstr "Temukan butir untuk ditambahkan ke “%s”"
 msgid "Find an item to add to the panel"
 msgstr "Temukan butir untuk ditambahkan ke panel"
 
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Bantuan"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Ihwal"
+
+#: gnome-panel/gp-applet-list-row.c:207
+msgid "Remove"
+msgstr "Hapus"
+
 #: gnome-panel/gp-applet-manager.c:420
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
@@ -757,14 +769,6 @@ msgid ""
 msgstr ""
 "Dinonaktifkan karena aplet ini tercantum dalam pengaturan \"disabled-applets"
 "\" di skema GSettings “org.gnome.gnome-panel.lockdown”."
-
-#: gnome-panel/gp-applet-row.c:110
-msgid "Help"
-msgstr "Bantuan"
-
-#: gnome-panel/gp-applet-row.c:120
-msgid "About"
-msgstr "Ihwal"
 
 #: gnome-panel/gp-applet-row.c:270
 msgid "Add"
@@ -921,7 +925,7 @@ msgstr "Aplet"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:989
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Galat"
 
@@ -938,24 +942,24 @@ msgstr "_Pindahkan"
 msgid "_Remove From Panel"
 msgstr "Hapus da_ri Panel"
 
-#: gnome-panel/panel-applet-frame.c:952
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Terjadi masalah saat panel mencoba membuka \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:964
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:968
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Apakah Anda ingin menghapus aplet dari konfigurasi Anda?"
 
-#: gnome-panel/panel-applet-frame.c:971
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "_Jangan Hapus"
 
-#: gnome-panel/panel-applet-frame.c:972 gnome-panel/panel.c:1249
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "Ha_pus"
 
@@ -2469,200 +2473,3 @@ msgstr "Tampilkan _nama area kerja dalam pengalih"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Area Kerja"
-
-#~ msgid "X co-ordinate of panel"
-#~ msgstr "Koordinat X pada panel"
-
-#~ msgid ""
-#~ "The location of the panel along the x-axis. This key is only relevant in "
-#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
-#~ "placed at the screen edge specified by the orientation key."
-#~ msgstr ""
-#~ "Lokasi panel sepanjang sumbu x. Nilai ini hanya berarti pada moda tidak "
-#~ "terekspansi. Pada moda terekspansi nilai ini diabaikan dan panel "
-#~ "ditempatkan pada sudut layar yang diindikasikan berdasarkan orientasi."
-
-#~ msgid "Y co-ordinate of panel"
-#~ msgstr "Koordinat Y pada panel"
-
-#~ msgid ""
-#~ "The location of the panel along the y-axis. This key is only relevant in "
-#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
-#~ "placed at the screen edge specified by the orientation key."
-#~ msgstr ""
-#~ "Lokasi panel sepanjang sumbu y. Nilai ini hanya berarti pada mode tidak "
-#~ "terekspansi. Pada mode terekspansi nilai ini diabaikan dan panel "
-#~ "ditempatkan pada sudut layar yang diindikasikan berdasarkan orientasi."
-
-#~ msgid "X co-ordinate of panel, starting from the right of the screen"
-#~ msgstr "Koordinat X pada panel, dimulai dari sebelah kanan layar"
-
-#~ msgid ""
-#~ "The location of the panel along the x-axis, starting from the right of "
-#~ "the screen. If set to -1, the value is ignored and the value of the x key "
-#~ "is used. If the value is greater than 0, then the value of the x key is "
-#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
-#~ "this key is ignored and the panel is placed at the screen edge specified "
-#~ "by the orientation key."
-#~ msgstr ""
-#~ "Lokasi dari panel sepanjang sumbu-x, dimulai dari sebelah kanan layar. "
-#~ "Jika diset -1, nilainya akan diabaikan dan nilai dari kunci x digunakan. "
-#~ "Jika nilainya lebih besar dari 0, maka nilai dari kunci x akan diabaikan. "
-#~ "Kunci ini hanya relevan pada moda tak terkembang. Pada moda terkembang "
-#~ "kunci ini akan diabaikan dan panel ditempatkan pada tepi layar yang "
-#~ "dispesifikasikan oleh kunci orientasi."
-
-#~ msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-#~ msgstr "Koordinat Y pada panel, dimulai dari sebelah bawah layar"
-
-#~ msgid ""
-#~ "The location of the panel along the y-axis, starting from the bottom of "
-#~ "the screen. If set to -1, the value is ignored and the value of the y key "
-#~ "is used. If the value is greater than 0, then the value of the y key is "
-#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
-#~ "this key is ignored and the panel is placed at the screen edge specified "
-#~ "by the orientation key."
-#~ msgstr ""
-#~ "Lokasi dari panel sepanjang sumbu-y, dimulai dari sebelah bawah layar. "
-#~ "Jika diset -1, nilainya akan diabaikan dan nilai dari kunci y digunakan. "
-#~ "Jika nilainya lebih besar dari 0, maka nilai dari kunci y akan diabaikan. "
-#~ "Kunci ini hanya relevan pada moda tak terkembang. Pada moda terkembang "
-#~ "kunci ini akan diabaikan dan panel ditempatkan pada tepi layar yang "
-#~ "dispesifikasikan oleh kunci orientasi."
-
-#~ msgid "Center panel on x-axis"
-#~ msgstr "Pusatkan panel pada sumbu x"
-
-#~ msgid ""
-#~ "If true, the x and x_right keys are ignored and the panel is placed at "
-#~ "the center of the x-axis of the screen. If the panel is resized it will "
-#~ "remain at that position - i.e. the panel will grow on both sides. If "
-#~ "false, the x and x_right keys specify the location of the panel."
-#~ msgstr ""
-#~ "Jika bernilai benar (true), kunci x dan x_right akan diabaikan dan panel "
-#~ "ditempatkan pada pusat x-axis pada layar. Jika panel diubah ukurannya "
-#~ "akan ditempatkan pada posisi tersebut - yaitu panel akan membesar di "
-#~ "kedua sisi. Jika salah, kunci x dan x_right menunjukkan lokasi dari panel."
-
-#~ msgid "Center panel on y-axis"
-#~ msgstr "Pusatkan panel pada sumbu y"
-
-#~ msgid ""
-#~ "If true, the y and y_bottom keys are ignored and the panel is placed at "
-#~ "the center of the y-axis of the screen. If the panel is resized it will "
-#~ "remain at that position - i.e. the panel will grow on both sides. If "
-#~ "false, the y and y_bottom keys specify the location of the panel."
-#~ msgstr ""
-#~ "Jika bernilai benar (true), kunci y dan y_bottom diabaikan dan panel "
-#~ "ditempatkan pada pusat sumbu-y pada layar. Jika panel diubah ukurannya "
-#~ "akan ditempatkan pada posisi tersebut - yaitu panel akan membesar pada "
-#~ "kedua sisi. Jika salah, kunci y dan y_bottom menunjukkan lokasi dari "
-#~ "panel."
-
-#~ msgid "Top Floating Panel"
-#~ msgstr "Panel Mengambang Atas"
-
-#~ msgid "Bottom Floating Panel"
-#~ msgstr "Panel Mengambang Bawah"
-
-#~ msgid "Left Floating Panel"
-#~ msgstr "Panel Mengambang Kiri"
-
-#~ msgid "Right Floating Panel"
-#~ msgstr "Panel Mengambang Kanan"
-
-#~ msgid "???"
-#~ msgstr "???"
-
-#~ msgid "Could not show this URL"
-#~ msgstr "Tidak bisa menampilkan URL ini"
-
-#~ msgid "No URL was specified."
-#~ msgstr "Tiada URL yang ditentukan."
-
-#~ msgid "Could not use dropped item"
-#~ msgstr "Tidak bisa menggunakan objek terjatuh"
-
-#~ msgid "No URI provided for panel launcher desktop file\n"
-#~ msgstr "URI untuk berkas desktop peluncur panel tidak ada\n"
-
-#~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-#~ msgstr "Berkas desktop %s untuk panel peluncur%s%s tidak dapat dibuka\n"
-
-#~ msgid "Launcher location is not set, cannot load launcher\n"
-#~ msgstr "Lokasi peluncur tak diatur, tak bisa memuat peluncur\n"
-
-#~ msgid "Create Launcher"
-#~ msgstr "Membuat Peluncur Program"
-
-#~ msgid "Search for Files..."
-#~ msgstr "Cari Berkas..."
-
-#~ msgid "Locate documents and folders on this computer by name or content"
-#~ msgstr ""
-#~ "Mencari dokumen atau folder yang terdapat dalam komputer ini berdasarkan "
-#~ "nama atau isinya"
-
-#~ msgid "Hybrid sleep"
-#~ msgstr "Tidur hibrida"
-
-#~ msgid "Find an _item to add to the panel:"
-#~ msgstr "Cari objek untuk d_itambahkan ke panel:"
-
-#~ msgid "_Forward"
-#~ msgstr "_Maju"
-
-#~ msgid "_Back"
-#~ msgstr "Kem_bali"
-
-#~ msgid "Location"
-#~ msgstr "Lokasi"
-
-#~ msgid "Could not save directory properties"
-#~ msgstr "Tidak dapat menyimpan properti direktori"
-
-#~ msgid "The name of the directory is not set."
-#~ msgstr "Nama direktori belum diisi."
-
-#~ msgid "Icon '%s' not found"
-#~ msgstr "Tidak menemukan ikon '%s'"
-
-#~ msgid "gnome-panel"
-#~ msgstr "gnome-panel"
-
-#~ msgid "Icon size in the menus"
-#~ msgstr "Ukuran ikon dalam menu"
-
-#~ msgid "Icon size for only Applications item in the Menu Bar applet"
-#~ msgstr "Ukuran ikon untuk hanya butir Aplikasi dalam aplet Bilah Menu"
-
-#~ msgid "Create new file in the given directory"
-#~ msgstr "Buat berkas baru di direktori yang diberikan"
-
-#~ msgid "[FILE...]"
-#~ msgstr "[BERKAS...]"
-
-#~ msgid "- Edit .desktop files"
-#~ msgstr "- Menyunting berkas .desktop"
-
-#~ msgid "Image widget"
-#~ msgstr "Widget gambar"
-
-#~ msgid "Child widget to appear next to the menu text"
-#~ msgstr "Widget anak yang ditampilkan di samping teks menu"
-
-#~ msgid "Always show image"
-#~ msgstr "Selalu tampilkan citra"
-
-#~ msgid "Whether the image will always be shown"
-#~ msgstr "Apakah citra selalu ditampilkan atau tidak"
-
-#~ msgid "Could not open recently used document \"%s\""
-#~ msgstr "Tidak dapat membuka dokumen \"%s\" yang baru-baru ini dipakai"
-
-#~ msgid "An unknown error occurred while trying to open \"%s\"."
-#~ msgstr "Kesalahan tidak diketahui muncul ketika membuka \"%s\"."
-
-# Konteks: baris judul.
-#~ msgid "Clear Recent Documents"
-#~ msgstr "Bersihkan Daftar"
