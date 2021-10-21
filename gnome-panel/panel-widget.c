@@ -912,6 +912,39 @@ panel_widget_update_positions (PanelWidget *panel)
 
 			i = ad->position + ad->size;
 		}
+
+		/* Third pass: try to push applets to the left to see if
+		 * there is enough room. */
+		if (i > panel->size) {
+			i = panel->size;
+			for (list = g_list_last (panel->applet_list);
+			     list != NULL;
+			     list = g_list_previous (list)) {
+				ad = list->data;
+
+				if (ad->position + ad->size > i)
+					ad->position = MAX (i - ad->size, 0);
+
+				i = ad->position;
+			}
+		}
+
+		/* EEEEK, there's not enough room, so shift applets even
+		 * at the expense of perhaps running out of room on the
+		 * right if there is no free space in the middle */
+		if (i < 0) {
+			i = 0;
+			for (list = panel->applet_list;
+			     list != NULL;
+			     list = g_list_next (list)) {
+				ad = list->data;
+
+				if (ad->position < i)
+					ad->position = i;
+
+				i = ad->position + ad->size;
+			}
+		}
 	}
 }
 
