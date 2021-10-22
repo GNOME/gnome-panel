@@ -105,6 +105,18 @@ set_text_gravity_to_auto (GtkWidget *widget)
   pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
 }
 
+static void
+set_tnum_font_feature (GtkWidget *widget)
+{
+  PangoAttrList *attrs;
+
+  attrs = pango_attr_list_new ();
+  pango_attr_list_insert (attrs, pango_attr_font_features_new ("tnum"));
+
+  gtk_label_set_attributes (GTK_LABEL (widget), attrs);
+  pango_attr_list_unref (attrs);
+}
+
 static int
 get_clock_width (ClockButton *self)
 {
@@ -113,6 +125,7 @@ get_clock_width (ClockButton *self)
 
   label = gtk_label_new (gtk_label_get_text (GTK_LABEL (self->clock_label)));
   set_text_gravity_to_auto (label);
+  set_tnum_font_feature (label);
   gp_add_text_color_class (label);
   gtk_widget_show (label);
 
@@ -290,6 +303,7 @@ clock_button_init (ClockButton *self)
                       0);
 
   set_text_gravity_to_auto (self->clock_label);
+  set_tnum_font_feature (self->clock_label);
 
   gp_add_text_color_class (self->clock_label);
   gp_add_text_color_class (self->weather_image);
