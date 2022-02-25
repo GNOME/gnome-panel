@@ -73,12 +73,7 @@ get_gweather_timezone (ClockLocation *loc)
 		while (gweather_location_get_level (gloc) >= GWEATHER_LOCATION_CITY) {
 			tmp = gloc;
 
-#ifdef HAVE_GWEATHER_40
 			gloc = gweather_location_get_parent (gloc);
-#else
-			gloc = gweather_location_get_parent (gloc);
-			gloc = gweather_location_ref (gloc);
-#endif
 
 			gweather_location_unref (tmp);
 		}
@@ -534,10 +529,8 @@ static void
 setup_weather_updates (ClockLocation *loc)
 {
 	ClockLocationPrivate *priv;
-#ifdef HAVE_GWEATHER_40
 	const char *contact_info;
 	GWeatherProvider providers;
-#endif
 
 	priv = loc->priv;
 
@@ -550,7 +543,6 @@ setup_weather_updates (ClockLocation *loc)
 
 	priv->weather_info = gweather_info_new (priv->loc);
 
-#ifdef HAVE_GWEATHER_40
 	gweather_info_set_application_id (priv->weather_info, "org.gnome.gnome-panel");
 
 	contact_info = "https://gitlab.gnome.org/GNOME/gnome-panel/-/raw/master/gnome-panel.doap";
@@ -558,14 +550,11 @@ setup_weather_updates (ClockLocation *loc)
 
 	providers = GWEATHER_PROVIDER_METAR | GWEATHER_PROVIDER_IWIN;
 	gweather_info_set_enabled_providers (priv->weather_info, providers);
-#endif
 
 	g_signal_connect (priv->weather_info, "updated",
 			  G_CALLBACK (weather_info_updated), loc);
 
 	set_weather_update_timeout (loc);
 
-#ifdef HAVE_GWEATHER_40
 	gweather_info_update (priv->weather_info);
-#endif
 }
