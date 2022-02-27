@@ -26,6 +26,8 @@ org_gnome_gnome_panel_clock_la_SOURCES = \
 	clock-face.h \
 	clock-location.c \
 	clock-location.h \
+	clock-location-entry.c \
+	clock-location-entry.h \
 	clock-location-tile.c \
 	clock-location-tile.h \
 	clock-map.c \

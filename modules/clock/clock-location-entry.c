@@ -18,26 +18,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "config.h"
+#include "clock-location-entry.h"
 
 #include <string.h>
 #include <geocode-glib/geocode-glib.h>
+#include <glib/gi18n-lib.h>
 #include <gio/gio.h>
 
-#include "gweather-location-entry.h"
-#include "gweather-private.h"
-
-/**
- * SECTION:gweatherlocationentry
- * @Title: GWeatherLocationEntry
- *
- * A subclass of #GtkSearchEntry that provides autocompletion on
- * #GWeatherLocation<!-- -->s
- */
-
-struct _GWeatherLocationEntryPrivate {
+struct _ClockLocationEntryPrivate {
     GWeatherLocation *location;
     GWeatherLocation *top;
     gboolean          show_named_timezones;
@@ -46,7 +35,9 @@ struct _GWeatherLocationEntryPrivate {
     GtkTreeModel     *model;
 };
 
-G_DEFINE_TYPE (GWeatherLocationEntry, gweather_location_entry, GTK_TYPE_SEARCH_ENTRY)
+G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationEntry,
+                            clock_location_entry,
+                            GTK_TYPE_SEARCH_ENTRY)
 
 enum {
     PROP_0,
@@ -63,10 +54,10 @@ static void set_property (GObject *object, guint prop_id,
 static void get_property (GObject *object, guint prop_id,
 			  GValue *value, GParamSpec *pspec);
 
-static void set_location_internal (GWeatherLocationEntry *entry,
-				   GtkTreeModel          *model,
-				   GtkTreeIter           *iter,
-				   GWeatherLocation      *loc);
+static void set_location_internal (ClockLocationEntry *entry,
+                                   GtkTreeModel       *model,
+                                   GtkTreeIter        *iter,
+                                   GWeatherLocation   *loc);
 static void
 fill_location_entry_model (GtkListStore *store, GWeatherLocation *loc,
 			   const char *parent_display_name,
@@ -99,16 +90,16 @@ static gboolean match_selected (GtkEntryCompletion *completion,
 				GtkTreeModel       *model,
 				GtkTreeIter        *iter,
 				gpointer            entry);
-static void     entry_changed (GWeatherLocationEntry *entry);
-static void _no_matches (GtkEntryCompletion *completion, GWeatherLocationEntry *entry);
+static void     entry_changed (ClockLocationEntry *entry);
+static void _no_matches (GtkEntryCompletion *completion, ClockLocationEntry *entry);
 
 static void
-gweather_location_entry_init (GWeatherLocationEntry *entry)
+clock_location_entry_init (ClockLocationEntry *entry)
 {
     GtkEntryCompletion *completion;
-    GWeatherLocationEntryPrivate *priv;
+    ClockLocationEntryPrivate *priv;
 
-    priv = entry->priv = G_TYPE_INSTANCE_GET_PRIVATE (entry, GWEATHER_TYPE_LOCATION_ENTRY, GWeatherLocationEntryPrivate);
+    priv = entry->priv = clock_location_entry_get_instance_private (entry);
 
     completion = gtk_entry_completion_new ();
 
@@ -134,10 +125,10 @@ gweather_location_entry_init (GWeatherLocationEntry *entry)
 static void
 finalize (GObject *object)
 {
-    GWeatherLocationEntry *entry;
-    GWeatherLocationEntryPrivate *priv;
+    ClockLocationEntry *entry;
+    ClockLocationEntryPrivate *priv;
 
-    entry = GWEATHER_LOCATION_ENTRY (object);
+    entry = CLOCK_LOCATION_ENTRY (object);
     priv = entry->priv;
 
     if (priv->location)
@@ -147,16 +138,16 @@ finalize (GObject *object)
     if (priv->model)
         g_object_unref (priv->model);
 
-    G_OBJECT_CLASS (gweather_location_entry_parent_class)->finalize (object);
+    G_OBJECT_CLASS (clock_location_entry_parent_class)->finalize (object);
 }
 
 static void
 dispose (GObject *object)
 {
-    GWeatherLocationEntry *entry;
-    GWeatherLocationEntryPrivate *priv;
+    ClockLocationEntry *entry;
+    ClockLocationEntryPrivate *priv;
 
-    entry = GWEATHER_LOCATION_ENTRY (object);
+    entry = CLOCK_LOCATION_ENTRY (object);
     priv = entry->priv;
 
     if (priv->cancellable) {
@@ -165,7 +156,7 @@ dispose (GObject *object)
         priv->cancellable = NULL;
     }
 
-    G_OBJECT_CLASS (gweather_location_entry_parent_class)->dispose (object);
+    G_OBJECT_CLASS (clock_location_entry_parent_class)->dispose (object);
 }
 
 static int
@@ -174,7 +165,12 @@ tree_compare_local_name (GtkTreeModel *model,
 			 GtkTreeIter  *b,
 			 gpointer      user_data)
 {
-    g_autofree gchar *name_a = NULL, *name_b = NULL;
+    char *name_a;
+    char *name_b;
+    int result;
+
+    name_a = NULL;
+    name_b = NULL;
 
     gtk_tree_model_get (model, a,
 			LOC_GWEATHER_LOCATION_ENTRY_COL_LOCAL_SORT_NAME, &name_a,
@@ -183,18 +179,23 @@ tree_compare_local_name (GtkTreeModel *model,
 			LOC_GWEATHER_LOCATION_ENTRY_COL_LOCAL_SORT_NAME, &name_b,
 			-1);
 
-    return g_utf8_collate (name_a, name_b);
+    result = g_utf8_collate (name_a, name_b);
+
+    g_free (name_a);
+    g_free (name_b);
+
+    return result;
 }
 
 
 static void
 constructed (GObject *object)
 {
-    GWeatherLocationEntry *entry;
+    ClockLocationEntry *entry;
     GtkListStore *store = NULL;
     GtkEntryCompletion *completion;
 
-    entry = GWEATHER_LOCATION_ENTRY (object);
+    entry = CLOCK_LOCATION_ENTRY (object);
 
     if (!entry->priv->top)
 	entry->priv->top = gweather_location_get_world ();
@@ -209,11 +210,11 @@ constructed (GObject *object)
     gtk_entry_completion_set_match_func (completion, matcher, NULL, NULL);
     gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
 
-    G_OBJECT_CLASS (gweather_location_entry_parent_class)->constructed (object);
+    G_OBJECT_CLASS (clock_location_entry_parent_class)->constructed (object);
 }
 
 static void
-gweather_location_entry_class_init (GWeatherLocationEntryClass *location_entry_class)
+clock_location_entry_class_init (ClockLocationEntryClass *location_entry_class)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (location_entry_class);
 
@@ -245,15 +246,13 @@ gweather_location_entry_class_init (GWeatherLocationEntryClass *location_entry_c
 			    "The selected GWeatherLocation",
 			    GWEATHER_TYPE_LOCATION,
 			    G_PARAM_READWRITE));
-
-    g_type_class_add_private (location_entry_class, sizeof (GWeatherLocationEntryPrivate));
 }
 
 static void
 set_property (GObject *object, guint prop_id,
 	      const GValue *value, GParamSpec *pspec)
 {
-    GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
+    ClockLocationEntry *entry = CLOCK_LOCATION_ENTRY (object);
 
     switch (prop_id) {
     case PROP_TOP:
@@ -263,8 +262,8 @@ set_property (GObject *object, guint prop_id,
 	entry->priv->show_named_timezones = g_value_get_boolean (value);
 	break;
     case PROP_LOCATION:
-	gweather_location_entry_set_location (GWEATHER_LOCATION_ENTRY (object),
-					      g_value_get_boxed (value));
+	clock_location_entry_set_location (CLOCK_LOCATION_ENTRY (object),
+					   g_value_get_boxed (value));
 	break;
     default:
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -276,7 +275,7 @@ static void
 get_property (GObject *object, guint prop_id,
 	      GValue *value, GParamSpec *pspec)
 {
-    GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
+    ClockLocationEntry *entry = CLOCK_LOCATION_ENTRY (object);
 
     switch (prop_id) {
     case PROP_SHOW_NAMED_TIMEZONES:
@@ -292,7 +291,7 @@ get_property (GObject *object, guint prop_id,
 }
 
 static void
-entry_changed (GWeatherLocationEntry *entry)
+entry_changed (ClockLocationEntry *entry)
 {
     GtkEntryCompletion *completion;
     const gchar *text;
@@ -318,12 +317,12 @@ entry_changed (GWeatherLocationEntry *entry)
 }
 
 static void
-set_location_internal (GWeatherLocationEntry *entry,
-		       GtkTreeModel          *model,
-		       GtkTreeIter           *iter,
-		       GWeatherLocation      *loc)
+set_location_internal (ClockLocationEntry *entry,
+                       GtkTreeModel       *model,
+                       GtkTreeIter        *iter,
+                       GWeatherLocation   *loc)
 {
-    GWeatherLocationEntryPrivate *priv;
+    ClockLocationEntryPrivate *priv;
     char *name;
 
     priv = entry->priv;
@@ -356,8 +355,8 @@ set_location_internal (GWeatherLocationEntry *entry,
 }
 
 /**
- * gweather_location_entry_set_location:
- * @entry: a #GWeatherLocationEntry
+ * clock_location_entry_set_location:
+ * @entry: a #ClockLocationEntry
  * @loc: (allow-none): a #GWeatherLocation in @entry, or %NULL to
  * clear @entry
  *
@@ -367,15 +366,15 @@ set_location_internal (GWeatherLocationEntry *entry,
  * equal to @loc, that will be chosen in place of @loc.
  **/
 void
-gweather_location_entry_set_location (GWeatherLocationEntry *entry,
-				      GWeatherLocation      *loc)
+clock_location_entry_set_location (ClockLocationEntry *entry,
+                                   GWeatherLocation   *loc)
 {
     GtkEntryCompletion *completion;
     GtkTreeModel *model;
     GtkTreeIter iter;
     GWeatherLocation *cmploc;
 
-    g_return_if_fail (GWEATHER_IS_LOCATION_ENTRY (entry));
+    g_return_if_fail (CLOCK_IS_LOCATION_ENTRY (entry));
 
     completion = gtk_entry_get_completion (GTK_ENTRY (entry));
     model = gtk_entry_completion_get_model (completion);
@@ -403,20 +402,20 @@ gweather_location_entry_set_location (GWeatherLocationEntry *entry,
 }
 
 /**
- * gweather_location_entry_get_location:
- * @entry: a #GWeatherLocationEntry
+ * clock_location_entry_get_location:
+ * @entry: a #ClockLocationEntry
  *
  * Gets the location that was set by a previous call to
- * gweather_location_entry_set_location() or was selected by the user.
+ * clock_location_entry_set_location() or was selected by the user.
  *
  * Return value: (transfer full) (allow-none): the selected location
  * (which you must unref when you are done with it), or %NULL if no
  * location is selected.
  **/
 GWeatherLocation *
-gweather_location_entry_get_location (GWeatherLocationEntry *entry)
+clock_location_entry_get_location (ClockLocationEntry *entry)
 {
-    g_return_val_if_fail (GWEATHER_IS_LOCATION_ENTRY (entry), NULL);
+    g_return_val_if_fail (CLOCK_IS_LOCATION_ENTRY (entry), NULL);
 
     if (entry->priv->location)
 	return gweather_location_ref (entry->priv->location);
@@ -425,27 +424,27 @@ gweather_location_entry_get_location (GWeatherLocationEntry *entry)
 }
 
 /**
- * gweather_location_entry_has_custom_text:
- * @entry: a #GWeatherLocationEntry
+ * clock_location_entry_has_custom_text:
+ * @entry: a #ClockLocationEntry
  *
  * Checks whether or not @entry's text has been modified by the user.
  * Note that this does not mean that no location is associated with @entry.
- * gweather_location_entry_get_location() should be used for this.
+ * clock_location_entry_get_location() should be used for this.
  *
  * Return value: %TRUE if @entry's text was modified by the user, or %FALSE if
  * it's set to the default text of a location.
  **/
 gboolean
-gweather_location_entry_has_custom_text (GWeatherLocationEntry *entry)
+clock_location_entry_has_custom_text (ClockLocationEntry *entry)
 {
-    g_return_val_if_fail (GWEATHER_IS_LOCATION_ENTRY (entry), FALSE);
+    g_return_val_if_fail (CLOCK_IS_LOCATION_ENTRY (entry), FALSE);
 
     return entry->priv->custom_text;
 }
 
 /**
- * gweather_location_entry_set_city:
- * @entry: a #GWeatherLocationEntry
+ * clock_location_entry_set_city:
+ * @entry: a #ClockLocationEntry
  * @city_name: (allow-none): the city name, or %NULL
  * @code: the METAR station code
  *
@@ -457,9 +456,9 @@ gweather_location_entry_has_custom_text (GWeatherLocationEntry *entry)
  * %FALSE otherwise.
  **/
 gboolean
-gweather_location_entry_set_city (GWeatherLocationEntry *entry,
-				  const char            *city_name,
-				  const char            *code)
+clock_location_entry_set_city (ClockLocationEntry *entry,
+                               const char         *city_name,
+                               const char         *code)
 {
     GtkEntryCompletion *completion;
     GtkTreeModel *model;
@@ -468,7 +467,7 @@ gweather_location_entry_set_city (GWeatherLocationEntry *entry,
     const char *cmpcode;
     char *cmpname;
 
-    g_return_val_if_fail (GWEATHER_IS_LOCATION_ENTRY (entry), FALSE);
+    g_return_val_if_fail (CLOCK_IS_LOCATION_ENTRY (entry), FALSE);
     g_return_val_if_fail (code != NULL, FALSE);
 
     completion = gtk_entry_get_completion (GTK_ENTRY (entry));
@@ -514,8 +513,10 @@ fill_location_entry_model (GtkListStore *store, GWeatherLocation *loc,
 			   const char *parent_compare_english_name,
 			   gboolean show_named_timezones)
 {
-    g_autoptr(GWeatherLocation) child = NULL;
+    GWeatherLocation *child;
     char *display_name, *local_sort_name, *local_compare_name, *english_compare_name;
+
+    child = NULL;
 
     switch (gweather_location_get_level (loc)) {
     case GWEATHER_LOCATION_WORLD:
@@ -615,6 +616,10 @@ fill_location_entry_model (GtkListStore *store, GWeatherLocation *loc,
 
     case GWEATHER_LOCATION_DETACHED:
 	g_assert_not_reached ();
+	break;
+
+    default:
+	break;
     }
 }
 
@@ -728,9 +733,9 @@ match_selected (GtkEntryCompletion *completion,
 		GtkTreeIter        *iter,
 		gpointer            entry)
 {
-    GWeatherLocationEntryPrivate *priv;
+    ClockLocationEntryPrivate *priv;
 
-    priv = ((GWeatherLocationEntry *)entry)->priv;
+    priv = ((ClockLocationEntry *) entry)->priv;
 
     if (model != priv->model) {
 	GeocodePlace *place;
@@ -752,11 +757,11 @@ match_selected (GtkEntryCompletion *completion,
 	    scope = priv->top;
 
 	loc = geocode_place_get_location (place);
-	location = gweather_location_find_nearest_city (scope, geocode_location_get_latitude (loc), geocode_location_get_longitude (loc));
 
-	location = _gweather_location_new_detached (location, display_name, TRUE,
-						     geocode_location_get_latitude (loc) * M_PI / 180.0,
-						     geocode_location_get_longitude (loc) * M_PI / 180.0);
+	location = gweather_location_new_detached (display_name,
+	                                           NULL,
+	                                           geocode_location_get_latitude (loc),
+	                                           geocode_location_get_longitude (loc));
 
 	set_location_internal (entry, model, NULL, location);
 
@@ -805,7 +810,7 @@ _got_places (GObject      *source_object,
              gpointer      user_data)
 {
     GList *places;
-    GWeatherLocationEntry *self = user_data;
+    ClockLocationEntry *self = user_data;
     GError *error = NULL;
     GtkListStore *store = NULL;
     GtkEntryCompletion *completion;
@@ -841,7 +846,9 @@ _got_places (GObject      *source_object,
 }
 
 static void
-_no_matches (GtkEntryCompletion *completion, GWeatherLocationEntry *entry) {
+_no_matches (GtkEntryCompletion *completion,
+             ClockLocationEntry *entry)
+{
     const gchar *key = gtk_entry_get_text(GTK_ENTRY (entry));
     GeocodeForward *forward;
 
@@ -860,21 +867,21 @@ _no_matches (GtkEntryCompletion *completion, GWeatherLocationEntry *entry) {
 }
 
 /**
- * gweather_location_entry_new:
+ * clock_location_entry_new:
  * @top: the top-level location for the entry.
  *
- * Creates a new #GWeatherLocationEntry.
+ * Creates a new #ClockLocationEntry.
  *
  * @top will normally be the location returned from
  * gweather_location_get_world(), but you can create an entry that
  * only accepts a smaller set of locations if you want.
  *
- * Return value: the new #GWeatherLocationEntry
+ * Return value: the new #ClockLocationEntry
  **/
 GtkWidget *
-gweather_location_entry_new (GWeatherLocation *top)
+clock_location_entry_new (GWeatherLocation *top)
 {
-    return g_object_new (GWEATHER_TYPE_LOCATION_ENTRY,
+    return g_object_new (CLOCK_TYPE_LOCATION_ENTRY,
 			 "top", top,
 			 NULL);
 }
