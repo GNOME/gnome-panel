@@ -55,6 +55,7 @@
 
 #include "calendar-window.h"
 #include "clock-location.h"
+#include "clock-location-entry.h"
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
@@ -88,7 +89,7 @@ struct _ClockApplet
 	GtkWidget *prefs_location_edit_button;
 	GtkWidget *prefs_location_remove_button;
 
-	GWeatherLocationEntry *location_entry;
+	ClockLocationEntry *location_entry;
 
 	GtkWidget *time_settings_button;
 	GAppInfo *datetime_appinfo;
@@ -1075,7 +1076,7 @@ edit_clear (ClockApplet *cd)
         GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
 
         /* clear out the old data */
-        gweather_location_entry_set_location (cd->location_entry, NULL);
+        clock_location_entry_set_location (cd->location_entry, NULL);
 
         gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
         gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
@@ -1154,7 +1155,7 @@ run_prefs_edit_save (GtkButton   *button,
         weather_code = NULL;
         name = NULL;
 
-        gloc = gweather_location_entry_get_location (cd->location_entry);
+        gloc = clock_location_entry_get_location (cd->location_entry);
         if (!gloc) {
                 edit_hide (NULL, cd);
                 return;
@@ -1166,7 +1167,7 @@ run_prefs_edit_save (GtkButton   *button,
         weather_code = gweather_location_get_code (station_loc);
         gweather_location_unref (station_loc);
 
-        if (gweather_location_entry_has_custom_text (cd->location_entry)) {
+        if (clock_location_entry_has_custom_text (cd->location_entry)) {
                 name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
         }
 
@@ -1270,12 +1271,12 @@ location_changed (GObject     *object,
                   GParamSpec  *param,
                   ClockApplet *cd)
 {
-        GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
+        ClockLocationEntry *entry = CLOCK_LOCATION_ENTRY (object);
         GWeatherLocation *gloc;
         gboolean latlon_valid;
         double latitude = 0.0, longitude = 0.0;
 
-        gloc = gweather_location_entry_get_location (entry);
+        gloc = clock_location_entry_get_location (entry);
 
 	latlon_valid = gloc && gweather_location_has_coords (gloc);
         if (latlon_valid)
@@ -1414,9 +1415,9 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
 
-        gweather_location_entry_set_city (cd->location_entry,
-                                          clock_location_get_city (loc),
-                                          clock_location_get_weather_code (loc));
+        clock_location_entry_set_city (cd->location_entry,
+                                       clock_location_get_city (loc),
+                                       clock_location_get_weather_code (loc));
 	name = clock_location_get_name (loc);
         if (name && name[0]) {
                 gtk_entry_set_text (GTK_ENTRY (cd->location_entry), name);
@@ -1677,7 +1678,7 @@ ensure_prefs_window_is_created (ClockApplet *cd)
         edit_ok_button = _clock_get_widget (cd, "edit-location-ok-button");
 
         location_box = _clock_get_widget (cd, "edit-location-name-box");
-        cd->location_entry = GWEATHER_LOCATION_ENTRY (gweather_location_entry_new (cd->world));
+        cd->location_entry = CLOCK_LOCATION_ENTRY (clock_location_entry_new (cd->world));
         gtk_widget_show (GTK_WIDGET (cd->location_entry));
         gtk_container_add (GTK_CONTAINER (location_box), GTK_WIDGET (cd->location_entry));
         gtk_label_set_mnemonic_widget (GTK_LABEL (location_name_label),
