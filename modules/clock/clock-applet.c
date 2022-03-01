@@ -89,7 +89,6 @@ struct _ClockApplet
 	GtkWidget *prefs_location_remove_button;
 
 	GWeatherLocationEntry *location_entry;
-        GWeatherTimezoneMenu *zone_combo;
 
 	GtkWidget *time_settings_button;
 	GAppInfo *datetime_appinfo;
@@ -1077,7 +1076,6 @@ edit_clear (ClockApplet *cd)
 
         /* clear out the old data */
         gweather_location_entry_set_location (cd->location_entry, NULL);
-        gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
 
         gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
         gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
@@ -1154,7 +1152,7 @@ run_prefs_edit_save (GtkButton   *button,
         GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
         GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
 
-        const gchar *timezone, *weather_code;
+        const char *weather_code;
         gchar *city, *name;
 
         GWeatherLocation *gloc, *station_loc;
@@ -1164,12 +1162,6 @@ run_prefs_edit_save (GtkButton   *button,
         if (loc) {
                 cd->locations = g_list_remove (cd->locations, loc);
                 g_object_unref (loc);
-        }
-
-        timezone = gweather_timezone_menu_get_tzid (cd->zone_combo);
-        if (!timezone) {
-                edit_hide (NULL, cd);
-                return;
         }
 
         city = NULL;
@@ -1269,30 +1261,16 @@ update_coords (ClockApplet *cd,
 }
 
 static void
-fill_timezone_combo_from_location (ClockApplet   *cd,
-                                   ClockLocation *loc)
-{
-        if (loc != NULL) {
-                gweather_timezone_menu_set_tzid (cd->zone_combo, 
-                                                 clock_location_get_timezone (loc));
-        } else {
-                gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
-        }
-}
-
-static void
 location_update_ok_sensitivity (ClockApplet *cd)
 {
 	GtkWidget *ok_button;
-        const gchar *timezone;
         gchar *name;
 
         ok_button = _clock_get_widget (cd, "edit-location-ok-button");
 
-        timezone = gweather_timezone_menu_get_tzid (cd->zone_combo);
         name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
 
-        if (timezone && name && name[0] != '\0') {
+        if (name && name[0] != '\0') {
                 gtk_widget_set_sensitive (ok_button, TRUE);
         } else {
                 gtk_widget_set_sensitive (ok_button, FALSE);
@@ -1308,7 +1286,6 @@ location_changed (GObject     *object,
 {
         GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
         GWeatherLocation *gloc;
-        GWeatherTimezone *zone;
         gboolean latlon_valid;
         double latitude = 0.0, longitude = 0.0;
 
@@ -1319,12 +1296,6 @@ location_changed (GObject     *object,
                 gweather_location_get_coords (gloc, &latitude, &longitude);
         update_coords (cd, latlon_valid, latitude, longitude);
 
-        zone = gloc ? gweather_location_get_timezone (gloc) : NULL;
-        if (zone)
-                gweather_timezone_menu_set_tzid (cd->zone_combo, gweather_timezone_get_tzid (zone));
-        else
-                gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
-
         if (gloc)
                 gweather_location_unref (gloc);
 }
@@ -1332,14 +1303,6 @@ location_changed (GObject     *object,
 static void
 location_name_changed (GObject     *object,
                        ClockApplet *cd)
-{
-    location_update_ok_sensitivity (cd);
-}
-
-static void
-location_timezone_changed (GObject     *object,
-                           GParamSpec  *param,
-                           ClockApplet *cd)
 {
     location_update_ok_sensitivity (cd);
 }
@@ -1424,8 +1387,6 @@ run_prefs_locations_add (GtkButton   *button,
 {
         GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
 
-        fill_timezone_combo_from_location (cd, NULL);
-
         g_object_set_data (G_OBJECT (edit_window), "clock-location", NULL);
         gtk_window_set_title (GTK_WINDOW (edit_window), _("Choose Location"));
         gtk_window_set_transient_for (GTK_WINDOW (edit_window), GTK_WINDOW (cd->prefs_window));
@@ -1476,8 +1437,6 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	}
 
         clock_location_get_coords (loc, &lat, &lon);
-
-        fill_timezone_combo_from_location (cd, loc);
 
         tmp = g_strdup_printf ("%f", fabs (lat));
         gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
@@ -1672,9 +1631,7 @@ ensure_prefs_window_is_created (ClockApplet *cd)
         GtkWidget *edit_cancel_button;
         GtkWidget *edit_ok_button;
         GtkWidget *location_box;
-        GtkWidget *zone_box;
         GtkWidget *location_name_label;
-        GtkWidget *timezone_label;
         GtkTreeSelection *selection;
 
         if (cd->prefs_window)
@@ -1689,8 +1646,6 @@ ensure_prefs_window_is_created (ClockApplet *cd)
         clock_options = _clock_get_widget (cd, "clock-options");
         cd->prefs_locations = GTK_TREE_VIEW (_clock_get_widget (cd, "cities_list"));
         location_name_label = _clock_get_widget (cd, "location-name-label");
-        timezone_label = _clock_get_widget (cd, "timezone-label");
-
 
 	if (!clock_locale_supports_am_pm ())
 		gtk_widget_hide (clock_options);
@@ -1746,16 +1701,6 @@ ensure_prefs_window_is_created (ClockApplet *cd)
                           G_CALLBACK (location_changed), cd);
         g_signal_connect (G_OBJECT (cd->location_entry), "changed",
                           G_CALLBACK (location_name_changed), cd);
-
-        zone_box = _clock_get_widget (cd, "edit-location-timezone-box");
-        cd->zone_combo = GWEATHER_TIMEZONE_MENU (gweather_timezone_menu_new (cd->world));
-        gtk_widget_show (GTK_WIDGET (cd->zone_combo));
-        gtk_container_add (GTK_CONTAINER (zone_box), GTK_WIDGET (cd->zone_combo));
-        gtk_label_set_mnemonic_widget (GTK_LABEL (timezone_label),
-                                       GTK_WIDGET (cd->zone_combo));
-
-        g_signal_connect (G_OBJECT (cd->zone_combo), "notify::tzid",
-                          G_CALLBACK (location_timezone_changed), cd);
 
         g_signal_connect (G_OBJECT (edit_cancel_button), "clicked",
                           G_CALLBACK (edit_hide), cd);
