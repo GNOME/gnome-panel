@@ -27,7 +27,6 @@ struct _ClockLocationPrivate {
 	GWeatherLocation *world;
 	GWeatherLocation *loc;
 
-	GWeatherTimezone *wtz;
 	GTimeZone        *tz;
 
         gdouble latitude;
@@ -56,13 +55,13 @@ static void clock_location_finalize (GObject *);
 static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
 
-static GWeatherTimezone *
+static GTimeZone *
 get_gweather_timezone (ClockLocation *loc)
 {
-	GWeatherTimezone *tz;
+	GTimeZone *tz;
 	GWeatherLocation *gloc;
 
-	gloc = gweather_location_ref (loc->priv->loc);
+	gloc = g_object_ref (loc->priv->loc);
 	tz = gweather_location_get_timezone (gloc);
 
 	if (tz == NULL) {
@@ -75,27 +74,27 @@ get_gweather_timezone (ClockLocation *loc)
 
 			gloc = gweather_location_get_parent (gloc);
 
-			gweather_location_unref (tmp);
+			g_object_unref (tmp);
 		}
 
 		tmp = gloc;
 		gloc = gweather_location_find_nearest_city (gloc,
 		                                            loc->priv->latitude,
 		                                            loc->priv->longitude);
-		gweather_location_unref (tmp);
+		g_object_unref (tmp);
 
 		if (gloc == NULL) {
 			g_warning ("Could not find the nearest city for location \"%s\"",
 			           gweather_location_get_name (loc->priv->loc));
-			return gweather_timezone_get_utc ();
+			return g_time_zone_new_utc ();
 		}
 
 		tz = gweather_location_get_timezone (gloc);
-		tz = gweather_timezone_ref (tz);
-		gweather_location_unref (gloc);
+		tz = g_time_zone_ref (tz);
+		g_object_unref (gloc);
 	} else {
-		tz = gweather_timezone_ref (tz);
-		gweather_location_unref (gloc);
+		tz = g_time_zone_ref (tz);
+		g_object_unref (gloc);
 	}
 
 	return tz;
@@ -112,13 +111,12 @@ clock_location_new (GnomeWallClock   *wall_clock,
 {
         ClockLocation *this;
         ClockLocationPrivate *priv;
-        const char *tzid;
 
         this = g_object_new (CLOCK_LOCATION_TYPE, NULL);
         priv = this->priv;
 
 	priv->wall_clock = g_object_ref (wall_clock);
-	priv->world = gweather_location_ref (world);
+	priv->world = g_object_ref (world);
 	priv->loc = gweather_location_find_by_station_code (priv->world,
 							    metar_code);
 
@@ -135,14 +133,11 @@ clock_location_new (GnomeWallClock   *wall_clock,
 		gweather_location_get_coords (priv->loc, &priv->latitude, &priv->longitude);
 	}
 
-	priv->wtz = get_gweather_timezone (this);
-
-	tzid = gweather_timezone_get_tzid (priv->wtz);
-	priv->tz = g_time_zone_new_identifier (tzid);
+	priv->tz = get_gweather_timezone (this);
 
 	if (priv->tz == NULL) {
-		g_warning ("Invalid timezone identifier - %s, falling back to UTC!",
-		           tzid);
+		g_warning ("Failed to get timezone for - %s, falling back to UTC!",
+		           priv->name);
 
 		priv->tz = g_time_zone_new_utc ();
 	}
@@ -226,10 +221,9 @@ clock_location_finalize (GObject *g_obj)
 
 	g_object_unref (priv->wall_clock);
 
-	gweather_location_unref (priv->world);
-	gweather_location_unref (priv->loc);
+	g_object_unref (priv->world);
+	g_object_unref (priv->loc);
 
-	gweather_timezone_unref (priv->wtz);
 	g_time_zone_unref (priv->tz);
 
 	if (priv->weather_timeout)
@@ -325,7 +319,7 @@ clock_location_is_current_timezone (ClockLocation *loc)
 	zone = g_time_zone_get_identifier (timezone);
 
 	if (zone)
-		return strcmp (zone, gweather_timezone_get_tzid (loc->priv->wtz)) == 0;
+		return strcmp (zone, g_time_zone_get_identifier (loc->priv->tz)) == 0;
 	else
 		return clock_location_get_offset (loc) == 0;
 }
@@ -456,7 +450,7 @@ clock_location_make_current (ClockLocation *loc,
 	mcdata->data = data;
 	mcdata->destroy = destroy;
 
-	set_system_timezone_async (gweather_timezone_get_tzid (loc->priv->wtz),
+	set_system_timezone_async (g_time_zone_get_identifier (loc->priv->tz),
 	                           make_current_cb,
 	                           mcdata);
 }

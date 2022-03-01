@@ -980,7 +980,7 @@ fill_clock_applet (ClockApplet *cd)
 
         cd->applet_settings = gp_applet_settings_new (applet, "org.gnome.gnome-panel.applet.clock");
         cd->clock_settings = g_settings_new ("org.gnome.desktop.interface");
-        cd->weather_settings = g_settings_new ("org.gnome.GWeather");
+        cd->weather_settings = g_settings_new ("org.gnome.GWeather4");
 
         g_signal_connect (cd->clock_settings, "changed::clock-format",
                           G_CALLBACK (format_changed), cd);
@@ -1109,7 +1109,7 @@ get_weather_station_location (GWeatherLocation *location)
                 station_loc = gweather_location_get_parent (location);
                 g_assert (station_loc != NULL);
         } else {
-                station_loc = gweather_location_ref (location);
+                station_loc = g_object_ref (location);
         }
 
         while (gweather_location_get_level (station_loc) < GWEATHER_LOCATION_WEATHER_STATION) {
@@ -1120,7 +1120,7 @@ get_weather_station_location (GWeatherLocation *location)
                 station_loc = gweather_location_next_child (station_loc, NULL);
                 g_assert (station_loc != NULL);
 
-                gweather_location_unref (tmp);
+                g_object_unref (tmp);
         }
 
         return station_loc;
@@ -1162,10 +1162,10 @@ run_prefs_edit_save (GtkButton   *button,
         }
 
         station_loc = get_weather_station_location (gloc);
-        gweather_location_unref (gloc);
+        g_object_unref (gloc);
 
         weather_code = gweather_location_get_code (station_loc);
-        gweather_location_unref (station_loc);
+        g_object_unref (station_loc);
 
         if (clock_location_entry_has_custom_text (cd->location_entry)) {
                 name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
@@ -1284,7 +1284,7 @@ location_changed (GObject     *object,
         update_coords (cd, latlon_valid, latitude, longitude);
 
         if (gloc)
-                gweather_location_unref (gloc);
+                g_object_unref (gloc);
 }
 
 static void
@@ -1748,7 +1748,7 @@ clock_applet_dispose (GObject *object)
 
         g_clear_object (&applet->datetime_appinfo);
 
-        g_clear_pointer (&applet->world, gweather_location_unref);
+        g_clear_object (&applet->world);
 
         free_locations (applet);
 
