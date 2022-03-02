@@ -483,10 +483,11 @@ format_time (GDateTime   *now,
 }
 
 static char *
-convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *timezone)
+convert_time_to_str (time_t               now,
+                     GDesktopClockFormat  clock_format,
+                     GTimeZone           *timezone)
 {
 	const gchar *format;
-	GTimeZone *tz;
 	GDateTime *utc, *local;
 	char *ret;
 
@@ -505,23 +506,13 @@ convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *t
 		format = _("%H:%M");
 	}
 
-	tz = g_time_zone_new_identifier (timezone);
-
-	if (tz == NULL) {
-		g_warning ("Invalid timezone identifier - %s, falling back to UTC!",
-		           timezone);
-
-		tz = g_time_zone_new_utc ();
-	}
-
 	utc = g_date_time_new_from_unix_utc (now);
-	local = g_date_time_to_timezone (utc, tz);
+	local = g_date_time_to_timezone (utc, timezone);
 
 	ret = g_date_time_format (local, format);
 
 	g_date_time_unref (utc);
 	g_date_time_unref (local);
-	g_time_zone_unref (tz);
 
 	return ret;
 }
@@ -562,7 +553,7 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
         }
 
         now = clock_location_localtime (priv->location);
-        tzname = clock_location_get_tzname (priv->location);
+        tzname = clock_location_get_timezone_abbreviation (priv->location);
 
 	if (priv->last_refresh)
 		g_date_time_unref (priv->last_refresh);
@@ -597,7 +588,7 @@ weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTool
 	const gchar *icon_name;
 	time_t sunrise_time, sunset_time;
 	gchar *sunrise_str, *sunset_str;
-	const char *timezone;
+	GTimeZone *timezone;
 	gdouble unused;
 	GWeatherWindDirection unused2;
 
@@ -636,7 +627,7 @@ weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTool
 	else
 		line3 = g_strdup ("");
 
-	timezone = clock_location_get_tzname (location);
+	timezone = clock_location_get_timezone (location);
 	if (gweather_info_get_value_sunrise (info, &sunrise_time))
 		sunrise_str = convert_time_to_str (sunrise_time, clock_format, timezone);
 	else

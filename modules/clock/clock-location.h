@@ -44,13 +44,14 @@ ClockLocation *clock_location_new (GnomeWallClock   *wall_clock,
                                    gdouble           latitude,
                                    gdouble           longitude);
 
-const gchar *clock_location_get_tzname (ClockLocation *loc);
+GTimeZone  *clock_location_get_timezone (ClockLocation *self);
+const char *clock_location_get_timezone_identifier (ClockLocation *self);
+const char *clock_location_get_timezone_abbreviation (ClockLocation *self);
 
 const char *clock_location_get_name (ClockLocation *loc);
 void clock_location_set_name (ClockLocation *loc, const gchar *name);
 
 gchar *clock_location_get_city (ClockLocation *loc);
-const gchar *clock_location_get_timezone (ClockLocation *loc);
 void clock_location_get_coords (ClockLocation *loc, gdouble *latitude, gdouble *longitude);
 
 GDateTime *clock_location_localtime (ClockLocation *loc);

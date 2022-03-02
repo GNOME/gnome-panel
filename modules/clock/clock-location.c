@@ -28,6 +28,7 @@ struct _ClockLocationPrivate {
 	GWeatherLocation *loc;
 
 	GWeatherTimezone *wtz;
+	GTimeZone        *tz;
 
         gdouble latitude;
         gdouble longitude;
@@ -116,6 +117,7 @@ clock_location_new (GnomeWallClock   *wall_clock,
 {
         ClockLocation *this;
         ClockLocationPrivate *priv;
+        const char *tzid;
 
         this = g_object_new (CLOCK_LOCATION_TYPE, NULL);
         priv = this->priv;
@@ -139,6 +141,16 @@ clock_location_new (GnomeWallClock   *wall_clock,
 	}
 
 	priv->wtz = get_gweather_timezone (this);
+
+	tzid = gweather_timezone_get_tzid (priv->wtz);
+	priv->tz = g_time_zone_new_identifier (tzid);
+
+	if (priv->tz == NULL) {
+		g_warning ("Invalid timezone identifier - %s, falling back to UTC!",
+		           tzid);
+
+		priv->tz = g_time_zone_new_utc ();
+	}
 
         setup_weather_updates (this);
 
@@ -223,6 +235,7 @@ clock_location_finalize (GObject *g_obj)
 	gweather_location_unref (priv->loc);
 
 	gweather_timezone_unref (priv->wtz);
+	g_time_zone_unref (priv->tz);
 
 	if (priv->weather_timeout)
 		g_source_remove (priv->weather_timeout);
@@ -262,16 +275,34 @@ clock_location_get_city (ClockLocation *loc)
         return gweather_location_get_city_name (loc->priv->loc);
 }
 
-const gchar *
-clock_location_get_timezone (ClockLocation *loc)
+GTimeZone *
+clock_location_get_timezone (ClockLocation *self)
 {
-	return gweather_timezone_get_name (loc->priv->wtz);
+  return self->priv->tz;
 }
 
-const gchar *
-clock_location_get_tzname (ClockLocation *loc)
+const char *
+clock_location_get_timezone_identifier (ClockLocation *self)
 {
-	return gweather_timezone_get_tzid (loc->priv->wtz);
+  return g_time_zone_get_identifier (self->priv->tz);
+}
+
+const char *
+clock_location_get_timezone_abbreviation (ClockLocation *self)
+{
+  GDateTime *dt;
+  gint64 now;
+  int interval;
+
+  dt = g_date_time_new_now_local ();
+  now = g_date_time_to_unix (dt);
+  g_date_time_unref (dt);
+
+  interval = g_time_zone_find_interval (self->priv->tz,
+                                        G_TIME_TYPE_STANDARD,
+                                        now);
+
+  return g_time_zone_get_abbreviation (self->priv->tz, interval);
 }
 
 void
@@ -286,24 +317,7 @@ clock_location_get_coords (ClockLocation *loc,
 GDateTime *
 clock_location_localtime (ClockLocation *loc)
 {
-	const char *tzid;
-	GTimeZone *tz;
-	GDateTime *dt;
-
-	tzid = gweather_timezone_get_tzid (loc->priv->wtz);
-	tz = g_time_zone_new_identifier (tzid);
-
-	if (tz == NULL) {
-		g_warning ("Invalid timezone identifier - %s, falling back to UTC!",
-		           tzid);
-
-		tz = g_time_zone_new_utc ();
-	}
-
-	dt = g_date_time_new_now (tz);
-	g_time_zone_unref (tz);
-
-	return dt;
+  return g_date_time_new_now (loc->priv->tz);
 }
 
 gboolean
