@@ -522,7 +522,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	error = NULL;
 	disk = g_locale_from_utf8 (command, -1, NULL, NULL, &error);
 
-	if (!disk || error) {
+	if (error != NULL) {
 		char *primary;
 
 		primary = g_strdup_printf (_("Could not convert '%s' from UTF-8"),
@@ -534,6 +534,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 
 		g_error_free (error);
 		g_free (command);
+		g_free (disk);
 		return;
 	}
 
