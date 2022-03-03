@@ -362,7 +362,26 @@ clock_location_is_current (ClockLocation *loc)
 glong
 clock_location_get_offset (ClockLocation *loc)
 {
-	return gweather_timezone_get_offset (loc->priv->wtz);
+  GDateTime *datetime;
+  gint64 now;
+  GTimeZone *timezone;
+  int interval;
+  gint32 system_offset;
+  gint32 location_offset;
+
+  datetime = g_date_time_new_now_local ();
+  now = g_date_time_to_unix (datetime);
+  g_date_time_unref (datetime);
+
+  timezone = gnome_wall_clock_get_timezone (loc->priv->wall_clock);
+  interval = g_time_zone_find_interval (timezone, G_TIME_TYPE_STANDARD, now);
+  system_offset = g_time_zone_get_offset (timezone, interval);
+
+  timezone = loc->priv->tz;
+  interval = g_time_zone_find_interval (timezone, G_TIME_TYPE_STANDARD, now);
+  location_offset = g_time_zone_get_offset (timezone, interval);
+
+  return system_offset - location_offset;
 }
 
 typedef struct {
