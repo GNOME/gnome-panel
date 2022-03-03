@@ -115,6 +115,7 @@ panel_key_file_to_file (GKeyFile     *keyfile,
 
 	if (write_error) {
 		g_propagate_error (error, write_error);
+		g_free (filename);
 		g_free (data);
 		return FALSE;
 	}
