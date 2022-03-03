@@ -533,6 +533,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		g_free (primary);
 
 		g_error_free (error);
+		g_free (command);
 		return;
 	}
 
