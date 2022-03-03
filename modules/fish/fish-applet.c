@@ -531,7 +531,8 @@ set_environment (gpointer user_data)
 
 	display = gdk_display_get_default ();
 
-	g_setenv ("DISPLAY", gdk_display_get_name (display), TRUE);
+	if (!g_setenv ("DISPLAY", gdk_display_get_name (display), TRUE))
+		g_warning ("Failed to set DISPLAY environment variable");
 }
 
 static void
