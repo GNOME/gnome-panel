@@ -1379,6 +1379,7 @@ calendar_client_handle_query_result (CalendarClientSource *source,
 	}
       else
 	{
+	  calendar_event_free (event);
 	  g_free (uid);
 	}		
     }
