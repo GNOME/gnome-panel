@@ -99,7 +99,7 @@ append_control_center (GpUserMenu *menu)
   GIcon *icon;
   GtkWidget *item;
 
-  info = g_desktop_app_info_new ("gnome-control-center.desktop");
+  info = g_desktop_app_info_new ("org.gnome.Settings.desktop");
   if (info == NULL)
     return;
 
