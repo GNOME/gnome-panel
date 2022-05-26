@@ -94,6 +94,15 @@ get_launcher_filename (GpLauncherProperties  *self,
 
       return TRUE;
     }
+  else if (!g_path_is_absolute (location))
+    {
+      *filename = g_build_filename (launchers_dir, location, NULL);
+
+      g_free (location);
+      g_free (launchers_dir);
+
+      return FALSE;
+    }
 
   *filename = location;
 
