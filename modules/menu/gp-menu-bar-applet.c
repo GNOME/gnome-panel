@@ -76,7 +76,10 @@ button_press_event_cb (GtkWidget      *widget,
                        GdkEventButton *event,
                        gpointer        user_data)
 {
-  return TRUE;
+  if (event->button == 3)
+    return TRUE;
+
+  return FALSE;
 }
 
 static gchar *
