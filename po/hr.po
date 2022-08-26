@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-08-23 21:59+0000\n"
-"PO-Revision-Date: 2022-08-25 20:07+0200\n"
+"POT-Creation-Date: 2022-08-25 18:09+0000\n"
+"PO-Revision-Date: 2022-08-26 15:49+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -857,7 +857,7 @@ msgstr "Prikaži tipke _skrivanja"
 msgid "Arro_ws on hide buttons"
 msgstr "S_trelice na tipkama skrivanja"
 
-#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:600
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Općenito"
@@ -1010,7 +1010,7 @@ msgstr ""
 "Kada se panel obriše, panel i njegove\n"
 "postavke su nepovratno izgubljeni."
 
-#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1304
+#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
 #: gnome-panel/panel-run-dialog.ui:236
 #: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1049,39 +1049,39 @@ msgstr "_Novi panel"
 msgid "Cannot create initial panel layout.\n"
 msgstr "Nemoguće stvaranje početnog rasporeda panela.\n"
 
-#: gnome-panel/panel-run-dialog.c:431
+#: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Nemoguć pronalazak terminala, koristi se xterm, čak iako možda neće raditi"
 
-#: gnome-panel/panel-run-dialog.c:489
+#: gnome-panel/panel-run-dialog.c:488
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Nemoguće pokretanje naredbe '%s'"
 
-#: gnome-panel/panel-run-dialog.c:529
+#: gnome-panel/panel-run-dialog.c:528
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nemoguća pretvorba '%s' iz UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Odaberite datoteku koju želite dodati naredbi..."
 
-#: gnome-panel/panel-run-dialog.c:1305 modules/clock/clock.ui:82
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_U redu"
 
-#: gnome-panel/panel-run-dialog.c:1694 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1691 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Odaberite aplikaciju kako bi vidjeli njen opis."
 
-#: gnome-panel/panel-run-dialog.c:1732
+#: gnome-panel/panel-run-dialog.c:1729
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Pokrenut će naredbu: \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1765
+#: gnome-panel/panel-run-dialog.c:1762
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1394,7 +1394,7 @@ msgstr "_Prisilno zatvori"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:499
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
@@ -1410,7 +1410,7 @@ msgstr "%H:%M"
 #. * in France: 20:10).
 #.
 #: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
-#: modules/clock/clock-location-tile.c:506
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1447,7 +1447,7 @@ msgstr "Rođendani i obljetnice"
 msgid "Weather Information"
 msgstr "Vremenske informacije"
 
-#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:719
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Lokacije"
 
@@ -1487,78 +1487,57 @@ msgstr "Računalni sat"
 msgid "Failed to open the time settings"
 msgstr "Neuspjelo otvaranje postavki vremena"
 
-#: modules/clock/clock-applet.c:1378
+#: modules/clock/clock-applet.c:1430
 msgid "Choose Location"
 msgstr "Odaberi lokaciju"
 
-#: modules/clock/clock-applet.c:1455
+#: modules/clock/clock-applet.c:1509
 msgid "Edit Location"
 msgstr "Uredi lokaciju"
 
-#: modules/clock/clock-applet.c:1491 modules/clock/clock-applet.c:1499
+#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
 msgid "Default"
 msgstr "Zadano"
 
-#: modules/clock/clock-applet.c:1492
+#: modules/clock/clock-applet.c:1546
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1493
+#: modules/clock/clock-applet.c:1547
 msgid "Celsius"
 msgstr "Celzijus"
 
-#: modules/clock/clock-applet.c:1494
+#: modules/clock/clock-applet.c:1548
 msgid "Fahrenheit"
 msgstr "Farenhajt"
 
-#: modules/clock/clock-applet.c:1500
+#: modules/clock/clock-applet.c:1554
 msgid "Meters per second (m/s)"
 msgstr "Metra u sekundi (m/s)"
 
-#: modules/clock/clock-applet.c:1501
+#: modules/clock/clock-applet.c:1555
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometara na sat (km/h)"
 
-#: modules/clock/clock-applet.c:1502
+#: modules/clock/clock-applet.c:1556
 msgid "Miles per hour (mph)"
 msgstr "Milja na sat (mph)"
 
-#: modules/clock/clock-applet.c:1503
+#: modules/clock/clock-applet.c:1557
 msgid "Knots"
 msgstr "Čvorova"
 
-#: modules/clock/clock-applet.c:1504
+#: modules/clock/clock-applet.c:1558
 msgid "Beaufort scale"
 msgstr "Boforova ljestvica"
 
-#: modules/clock/clock-applet.c:1557
+#: modules/clock/clock-applet.c:1611
 msgid "City Name"
 msgstr "Naziv grada"
 
-#: modules/clock/clock-applet.c:1561
+#: modules/clock/clock-applet.c:1615
 msgid "City Time Zone"
 msgstr "Vremenska zona grada"
-
-#. Recurse, adding the ADM1 name to the country name
-#. Translators: this is the name of a location followed by a region, for example:
-#. * 'London, United Kingdom'
-#. * You shouldn't need to translate this string unless the language has a different comma.
-#.
-#. <location> with no parent <city>
-#. Translators: this is the name of a location followed by a region, for example:
-#. * 'London, United Kingdom'
-#. * You shouldn't need to translate this string unless the language has a different comma.
-#.
-#: modules/clock/clock-location-entry.c:553
-#: modules/clock/clock-location-entry.c:582
-#: modules/clock/clock-location-tile.c:605
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#: modules/clock/clock-location-entry.c:860
-msgid "Loading…"
-msgstr "Učitavanje…"
 
 #: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
@@ -1605,13 +1584,18 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%H:%M <small>%p</small>"
 
+#: modules/clock/clock-location-tile.c:614
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:618
+#: modules/clock/clock-location-tile.c:627
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, kao da je %s"
 
-#: modules/clock/clock-location-tile.c:639
+#: modules/clock/clock-location-tile.c:648
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Izlazak sunca: %s / Zalazak sunca: %s"
@@ -1653,113 +1637,117 @@ msgstr "Sjever"
 msgid "South"
 msgstr "Jug"
 
-#: modules/clock/clock.ui:162
+#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
+msgid "(optional)"
+msgstr "(neobavezno)"
+
+#: modules/clock/clock.ui:265
 msgid "_Location Name:"
 msgstr "_Naziv lokacije:"
 
+#: modules/clock/clock.ui:278
+msgid "L_atitude:"
+msgstr "Zemljopisna _širina:"
+
+#: modules/clock/clock.ui:292
+msgid "L_ongitude:"
+msgstr "Zemljopisna _dužina:"
+
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: modules/clock/clock.ui:177
+#: modules/clock/clock.ui:308
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
 "Upišite naziv grada, regije ili države i tada odaberite podudaranje iz "
 "skočnog prozora."
 
-#: modules/clock/clock.ui:194
-msgid "L_atitude:"
-msgstr "Zemljopisna _širina:"
+#: modules/clock/clock.ui:325
+msgid "_Timezone:"
+msgstr "_Vremenska zona:"
 
-#: modules/clock/clock.ui:207
-msgid "L_ongitude:"
-msgstr "Zemljopisna _dužina:"
-
-#: modules/clock/clock.ui:249 modules/clock/clock.ui:293
-msgid "(optional)"
-msgstr "(neobavezno)"
-
-#: modules/clock/clock.ui:331
+#: modules/clock/clock.ui:360
 msgid "Clock Preferences"
 msgstr "Osobitosti sata"
 
-#: modules/clock/clock.ui:347 modules/fish/fish.ui:36
+#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
 msgid "_Help"
 msgstr "_Priručnik"
 
-#: modules/clock/clock.ui:362
+#: modules/clock/clock.ui:391
 msgid "Time _Settings"
 msgstr "Postavke _vremena"
 
-#: modules/clock/clock.ui:377 modules/fish/fish-applet.c:567
-#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:689
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:566
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
 #: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "_Zatvori"
 
-#: modules/clock/clock.ui:421
+#: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Format sata"
 
-#: modules/clock/clock.ui:441
+#: modules/clock/clock.ui:470
 msgid "_12 hour format"
 msgstr "_12-satni"
 
-#: modules/clock/clock.ui:458
+#: modules/clock/clock.ui:487
 msgid "_24 hour format"
 msgstr "_24 satni"
 
-#: modules/clock/clock.ui:497
+#: modules/clock/clock.ui:527
 msgid "Panel Display"
 msgstr "Prikaz panela"
 
-#: modules/clock/clock.ui:518
+#: modules/clock/clock.ui:547
 msgid "Show the _date"
 msgstr "Prikaži _datum"
 
-#: modules/clock/clock.ui:534
+#: modules/clock/clock.ui:563
 msgid "Show seco_nds"
 msgstr "Prikaži seku_nde"
 
-#: modules/clock/clock.ui:550
+#: modules/clock/clock.ui:579
 msgid "Show _weather"
 msgstr "Prikaži _vrijeme"
 
-#: modules/clock/clock.ui:566
+#: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Prikaži _temperaturu"
 
-#: modules/clock/clock.ui:653
+#: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Dodaj"
 
-#: modules/clock/clock.ui:668
+#: modules/clock/clock.ui:697
 msgid "_Edit"
 msgstr "_Uredi"
 
-#: modules/clock/clock.ui:683
+#: modules/clock/clock.ui:712
 msgid "_Remove"
 msgstr "_Ukloni"
 
-#: modules/clock/clock.ui:743
+#: modules/clock/clock.ui:773
 msgid "Display"
 msgstr "Prikaz"
 
-#: modules/clock/clock.ui:776
+#: modules/clock/clock.ui:805
 msgid "_Visibility unit:"
 msgstr "_Jedinica vidljivosti:"
 
-#: modules/clock/clock.ui:799
+#: modules/clock/clock.ui:828
 msgid "_Pressure unit:"
 msgstr "_Jedinica tlaka:"
 
-#: modules/clock/clock.ui:835
+#: modules/clock/clock.ui:864
 msgid "_Temperature unit:"
 msgstr "_Jedinica temperature:"
 
-#: modules/clock/clock.ui:849
+#: modules/clock/clock.ui:878
 msgid "_Wind speed unit:"
 msgstr "_Jedinica brzine vjetra:"
 
-#: modules/clock/clock.ui:894
+#: modules/clock/clock.ui:910
 msgid "Weather"
 msgstr "Vremenska prognoza"
 
@@ -1806,16 +1794,16 @@ msgstr ""
 "\n"
 "Pojedinosti: %s"
 
-#: modules/fish/fish-applet.c:566
+#: modules/fish/fish-applet.c:565
 msgid "_Speak again"
 msgstr "_Recite ponovno"
 
-#: modules/fish/fish-applet.c:638
+#: modules/fish/fish-applet.c:637
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Podešena naredba ne radi i zamijenjena je sa: %s"
 
-#: modules/fish/fish-applet.c:667
+#: modules/fish/fish-applet.c:666
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -1826,7 +1814,7 @@ msgstr ""
 "\n"
 "Pojedinosti: %s"
 
-#: modules/fish/fish-applet.c:683
+#: modules/fish/fish-applet.c:682
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -1837,15 +1825,15 @@ msgstr ""
 "\n"
 "Pojedinosti: %s"
 
-#: modules/fish/fish-applet.c:1066
+#: modules/fish/fish-applet.c:1065
 msgid "The water needs changing"
 msgstr "Vodu treba promijeniti"
 
-#: modules/fish/fish-applet.c:1068
+#: modules/fish/fish-applet.c:1067
 msgid "Look at today's date!"
 msgstr "Pogledajte današnji datum!"
 
-#: modules/fish/fish-applet.c:1162
+#: modules/fish/fish-applet.c:1161
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s riba, proricateljica sudbine"
@@ -2028,11 +2016,11 @@ msgstr "Kopiraj pokretača iz izbornika aplikacija"
 msgid "Could not save launcher"
 msgstr "Nemoguće spremanje poketača"
 
-#: modules/launcher/gp-launcher-properties.c:681
+#: modules/launcher/gp-launcher-properties.c:672
 msgid "_Revert"
 msgstr "_Vrati"
 
-#: modules/launcher/gp-launcher-properties.c:701
+#: modules/launcher/gp-launcher-properties.c:692
 msgid "Launcher Properties"
 msgstr "Osobitosti pokretača"
 
@@ -2103,32 +2091,32 @@ msgstr "Ponovno pokreni"
 msgid "Restart the computer"
 msgstr "Ponovno pokreni računalo"
 
-#: modules/menu/gp-menu-bar-applet.c:148
+#: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
 msgstr "Aplikacije"
 
-#: modules/menu/gp-menu-bar-applet.c:153
+#: modules/menu/gp-menu-bar-applet.c:150
 msgid "Browse and run installed applications"
 msgstr "Pregledajte i pokrenite instalirane aplikacije"
 
-#: modules/menu/gp-menu-bar-applet.c:188
+#: modules/menu/gp-menu-bar-applet.c:185
 #: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
 msgid "Places"
 msgstr "Lokacije"
 
-#: modules/menu/gp-menu-bar-applet.c:192
+#: modules/menu/gp-menu-bar-applet.c:189
 msgid "Access documents, folders and network places"
 msgstr "Pristupite dokumentima, mapama i mrežnim lokacijama"
 
-#: modules/menu/gp-menu-bar-applet.c:228
+#: modules/menu/gp-menu-bar-applet.c:225
 msgid "System"
 msgstr "Sustav"
 
-#: modules/menu/gp-menu-bar-applet.c:232
+#: modules/menu/gp-menu-bar-applet.c:229
 msgid "Change system appearance and behavior, or get help"
 msgstr "Promijenite izgled i ponašanje sustava, ili nabavite pomoć"
 
-#: modules/menu/gp-menu-bar-applet.c:282
+#: modules/menu/gp-menu-bar-applet.c:279
 #: modules/menu/gp-menu-button-applet.c:486
 #, c-format
 msgid "Please install the '%s' application."
@@ -2469,3 +2457,6 @@ msgstr "Prikaži _nazive radnih prostora u izmjenjivaču"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Radni prostori"
+
+#~ msgid "Loading…"
+#~ msgstr "Učitavanje…"
