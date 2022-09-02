@@ -11,8 +11,8 @@
 msgid ""
 msgstr "Project-Id-Version: gnome-panel gnome-3-8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-04-24 15:51+0000\n"
-"PO-Revision-Date: 2021-05-08 10:00+0200\n"
+"POT-Creation-Date: 2022-08-26 13:50+0000\n"
+"PO-Revision-Date: 2022-09-02 10:00+0200\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -20,7 +20,6 @@ msgstr "Project-Id-Version: gnome-panel gnome-3-8\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.4\n"
 "X-Project-Style: gnome\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -624,19 +623,23 @@ msgstr "Bilatu elementu bat “%s”(r)i gehitzeko"
 msgid "Find an item to add to the panel"
 msgstr "Bilatu elementu bat panelari gehitzeko"
 
-#: gnome-panel/gp-applet-manager.c:426
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Laguntza"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Honi buruz"
+
+#: gnome-panel/gp-applet-list-row.c:207
+msgid "Remove"
+msgstr "Kendu"
+
+#: gnome-panel/gp-applet-manager.c:420
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr "Desgaituta miniaplikazio hau “org.gnome.gnome-panel.lockdown” GSettings eskemako “disabled-applets” ezarpenean zerrendatuta dagoelako.."
-
-#: gnome-panel/gp-applet-row.c:110
-msgid "Help"
-msgstr "Laguntza"
-
-#: gnome-panel/gp-applet-row.c:120
-msgid "About"
-msgstr "Honi buruz"
 
 #: gnome-panel/gp-applet-row.c:270
 msgid "Add"
@@ -654,37 +657,37 @@ msgstr "Ordeztu unean exekutatzen dagoen panela"
 msgid "Print version"
 msgstr "Bistaratu bertsioa"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:224
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Goian"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:225
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Behean"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Ezkerrean"
 
-#: gnome-panel/gp-properties-dialog.c:217
+#: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Eskuinean"
 
-#: gnome-panel/gp-properties-dialog.c:221
+#: gnome-panel/gp-properties-dialog.c:231
 msgctxt "Alignment"
 msgid "Start"
 msgstr "Hasieran"
 
-#: gnome-panel/gp-properties-dialog.c:222
+#: gnome-panel/gp-properties-dialog.c:232
 msgctxt "Alignment"
 msgid "Center"
 msgstr "Erdian"
 
-#: gnome-panel/gp-properties-dialog.c:223
+#: gnome-panel/gp-properties-dialog.c:233
 msgctxt "Alignment"
 msgid "End"
 msgstr "Amaieran"
@@ -771,13 +774,29 @@ msgstr "Testu-kolorea:"
 msgid "Theme"
 msgstr "Gaia"
 
+#: gnome-panel/gp-properties-dialog.ui:676
+msgid "Left"
+msgstr "Ezkerrean"
+
+#: gnome-panel/gp-properties-dialog.ui:699
+msgid "Center"
+msgstr "Zentratuta"
+
+#: gnome-panel/gp-properties-dialog.ui:722
+msgid "Right"
+msgstr "Eskuinean"
+
+#: gnome-panel/gp-properties-dialog.ui:754
+msgid "Applets"
+msgstr "Miniaplikazioak"
+
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:941
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Errorea"
 
@@ -786,42 +805,42 @@ msgstr "Errorea"
 msgid "Could not open location '%s'"
 msgstr "Ezin izan da '%s' kokalekua ireki"
 
-#: gnome-panel/panel-applet-frame.c:396
+#: gnome-panel/panel-applet-frame.c:395
 msgid "_Move"
 msgstr "_Lekuz aldatu"
 
-#: gnome-panel/panel-applet-frame.c:403
+#: gnome-panel/panel-applet-frame.c:402
 msgid "_Remove From Panel"
 msgstr "_Kendu paneletik"
 
-#: gnome-panel/panel-applet-frame.c:904
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelak arazoak izan ditu “%s” kargatzean."
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "Ados"
 
-#: gnome-panel/panel-applet-frame.c:920
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Miniaplikazio hori konfiguraziotik ezabatu nahi duzu?"
 
-#: gnome-panel/panel-applet-frame.c:923
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "E_z ezabatu"
 
-#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "Ez_abatu"
 
-#: gnome-panel/panel.c:604
+#: gnome-panel/panel.c:587
 #, c-format
 msgid "Open URL: %s"
 msgstr "Ireki URLa: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:642 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -830,45 +849,45 @@ msgstr "Ireki '%s'"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:697 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Ireki zure karpeta pertsonala"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:707 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Ordenagailua"
 
 #. name
-#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:708 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "Ordenagailu honetatik atzigarriak diren lokaleko eta urruneko disko eta karpeta guztiak arakatu"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:716 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Sarea"
 
 #. name
-#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:717 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Arakatu laster-marka jarritako eta lokaleko sareko kokalekuak"
 
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1240
 msgid "Delete this panel?"
 msgstr "Ezabatu tiradera hau?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "Panel bat ezabatzen denean, panela eta bere\n"
 "ezarpenak galdu egiten dira."
 
-#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
 #: gnome-panel/panel-run-dialog.ui:236
 #: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -993,67 +1012,67 @@ msgstr "Egin klik botoi honetan hautatutako aplikazioa edo komandoa sartzeko ere
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1499
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Top Expanded Edge Panel"
 msgstr "Goian zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Top Centered Panel"
 msgstr "Goian zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1501
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Top Start Panel"
 msgstr "Goian hasieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1502
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Top End Panel"
 msgstr "Goian amaieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1506
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Bottom Expanded Edge Panel"
 msgstr "Behean zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1507
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Centered Panel"
 msgstr "Behean zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1508
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Bottom Start Panel"
 msgstr "Behean hasieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1509
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Bottom End Panel"
 msgstr "Behean amaieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1513
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Left Expanded Edge Panel"
 msgstr "Ezkerrean zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1514
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Left Centered Panel"
 msgstr "Ezkerrean zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1515
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Left Start Panel"
 msgstr "Ezkerrean hasieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1516
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Left End Panel"
 msgstr "Ezkerrean amaieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1520
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Right Expanded Edge Panel"
 msgstr "Eskuinean zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1521
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Right Centered Panel"
 msgstr "Eskuinean zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1522
+#: gnome-panel/panel-toplevel.c:1517
 msgid "Right Start Panel"
 msgstr "Eskuinean hasieran kokatutako panela"
 
-#: gnome-panel/panel-toplevel.c:1523
+#: gnome-panel/panel-toplevel.c:1518
 msgid "Right End Panel"
 msgstr "Eskuinean amaieran kokatutako panela"
 
@@ -1297,84 +1316,84 @@ msgstr "Egutegia"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:174
 msgid "%A %B %d (%Z)"
 msgstr "%A %B %d (%Z)"
 
-#: modules/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:183
 msgid "Click to hide your appointments and tasks"
 msgstr "Egin klik hitzorduak eta zereginak ezkutatzeko"
 
-#: modules/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:186
 msgid "Click to view your appointments and tasks"
 msgstr "Egin klik hitzorduak eta zereginak ikusteko"
 
-#: modules/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:190
 msgid "Click to hide month calendar"
 msgstr "Egin klik hileko egutegia ezkutatzeko"
 
-#: modules/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:193
 msgid "Click to view month calendar"
 msgstr "Egin klik hileko egutegia ikusteko"
 
 #. Done!
-#: modules/clock/clock-applet.c:848
+#: modules/clock/clock-applet.c:725
 msgid "Computer Clock"
 msgstr "Ordenagailuaren erlojua"
 
-#: modules/clock/clock-applet.c:981
+#: modules/clock/clock-applet.c:811
 msgid "Failed to open the time settings"
 msgstr "Huts egin du orduaren ezarpenak irekitzean"
 
-#: modules/clock/clock-applet.c:1607
+#: modules/clock/clock-applet.c:1430
 msgid "Choose Location"
 msgstr "Aukeratu kokalekua"
 
-#: modules/clock/clock-applet.c:1686
+#: modules/clock/clock-applet.c:1509
 msgid "Edit Location"
 msgstr "Editatu kokalekua"
 
-#: modules/clock/clock-applet.c:1722 modules/clock/clock-applet.c:1730
+#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
 msgid "Default"
 msgstr "Lehenetsia"
 
-#: modules/clock/clock-applet.c:1723
+#: modules/clock/clock-applet.c:1546
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1724
+#: modules/clock/clock-applet.c:1547
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1725
+#: modules/clock/clock-applet.c:1548
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1731
+#: modules/clock/clock-applet.c:1554
 msgid "Meters per second (m/s)"
 msgstr "Metro segundoko (m/s)"
 
-#: modules/clock/clock-applet.c:1732
+#: modules/clock/clock-applet.c:1555
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometro orduko (k/o)"
 
-#: modules/clock/clock-applet.c:1733
+#: modules/clock/clock-applet.c:1556
 msgid "Miles per hour (mph)"
 msgstr "Miliak orduko (mi/o)"
 
-#: modules/clock/clock-applet.c:1734
+#: modules/clock/clock-applet.c:1557
 msgid "Knots"
 msgstr "Korapilo"
 
-#: modules/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1558
 msgid "Beaufort scale"
 msgstr "Beaufort eskala"
 
-#: modules/clock/clock-applet.c:1788
+#: modules/clock/clock-applet.c:1611
 msgid "City Name"
 msgstr "Herriaren izena"
 
-#: modules/clock/clock-applet.c:1792
+#: modules/clock/clock-applet.c:1615
 msgid "City Time Zone"
 msgstr "Herriaren ordu-zona"
 
@@ -2099,7 +2118,7 @@ msgstr "Menuan erakusteko argibidea"
 msgid "The text to display in a tooltip for this menu."
 msgstr "Testua menu honen argibidean aurkezteko."
 
-#: modules/notification-area/na-applet.c:155
+#: modules/notification-area/na-applet.c:173
 msgid "Panel Notification Area"
 msgstr "Paneleko jakinarazpen-area"
 
@@ -2127,30 +2146,30 @@ msgstr "Egoeraren jakinarazpenen ostalaria"
 msgid "Display all Status Notifier Items"
 msgstr "Bistaratu egoeraren jakinarazpenen elementu guztiak"
 
-#: modules/wncklet/showdesktop.c:100
+#: modules/wncklet/showdesktop.c:71
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Huts egin du %s kargatzean: %s\n"
 
-#: modules/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:72
 msgid "Icon not found"
 msgstr "Ikonoa ez da aurkitu"
 
-#: modules/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:103
 msgid "Click here to restore hidden windows."
 msgstr "Egin klik hemen ezkutatutako leihoak leheneratzeko."
 
-#: modules/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Egin klik hemen leiho guztiak ezkutatu eta mahaigaina ikusteko."
 
-#: modules/wncklet/showdesktop.c:214
+#: modules/wncklet/showdesktop.c:136
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr "Zure leiho-kudeatzaileak ez du onartzen mahaigaina erakusteko botoia, edo ez zara leiho-kudeatzailea erabiltzen ari."
 
-#: modules/wncklet/showdesktop.c:411
+#: modules/wncklet/showdesktop.c:333
 msgid "Show Desktop Button"
 msgstr "Erakutsi mahaigainaren botoia"
 
@@ -2695,9 +2714,6 @@ msgstr "Laneko areak"
 
 #~ msgid "Test applet utility"
 #~ msgstr "Probatu miniaplikazioen utilitatea"
-
-#~ msgid "_Applet:"
-#~ msgstr "_Miniaplikazioa:"
 
 #~ msgid "_Prefs Dir:"
 #~ msgstr "_Hobsp Dir:"
