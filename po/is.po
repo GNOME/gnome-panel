@@ -3,22 +3,21 @@
 #
 # Tryggvi Björgvinsson <tryggvib@hi.is>, 2008.
 # Anna Jonna Ármannsdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2016, 2017, 2018.
+# Sveinn í Felli <sv1@fellsnet.is>, 2016, 2017, 2018, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-17 20:36+0000\n"
-"PO-Revision-Date: 2018-03-19 07:49+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2022-07-29 05:21+0000\n"
+"PO-Revision-Date: 2022-09-07 16:04+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -36,7 +35,7 @@ msgstr "Birta veður í klukku"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:11
 msgid "If true, display a weather icon."
-msgstr "Ef satt, þá verður veðurteikn birt."
+msgstr "Ef satt, þá verður veðurtákn birt."
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:15
 msgid "Show temperature in clock"
@@ -44,7 +43,7 @@ msgstr "Birta hitastig í klukku"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:16
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Ef satt, þá verður hitastig sýnt við hlið veðurteikns."
+msgstr "Ef satt, þá verður hitastig sýnt við hlið veðurtákns."
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:20
 msgid "Show week numbers in calendar"
@@ -238,11 +237,19 @@ msgstr ""
 "(fyrir lóðrétt snið) vinnusvæðaskiptarinn sýnir vinnusvæðin á. Þetta skiptir "
 "aðeins máli ef valið er að sýna öll vinnusvæðin."
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:28
+msgid "Default panel layout"
+msgstr "Sjálfgefin framsetning spjalds"
+
+#: data/org.gnome.gnome-panel.gschema.xml:29
+msgid "The default panel layout to use when panels are created."
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid "Enable tooltips"
 msgstr "Virkja ábendingar"
 
-#: data/org.gnome.gnome-panel.gschema.xml:36
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -252,10 +259,14 @@ msgstr ""
 "tooltips' eiginleikanum í GTK+."
 
 #: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "Prefer symbolic icons in panels"
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
 msgstr "Staðfesta að fjarlægja stiku"
 
-#: data/org.gnome.gnome-panel.gschema.xml:41
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -263,41 +274,31 @@ msgstr ""
 "Ef valið, er svargluggi birtur til að fá staðfestingu á að notandi vil eyða "
 "stiku."
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
-#| msgid "Icon size in the menus"
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Icon size in menus"
 msgstr "Táknmyndastærð í valmyndum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:47
-#| msgid "Icon size in the menus"
+#: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
 msgstr "Táknmyndastærð í valmyndum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:57
 msgid "Maximum icon size in panels"
 msgstr "Hámarksstærð táknmynda á spjöldum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:53
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "The maximum size of icons in panels."
 msgstr "Hámarksstærð táknmynda á spjöldum."
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
-msgid "Icon size in the menus"
-msgstr "Táknmyndastærð í valmyndum"
-
-#: data/org.gnome.gnome-panel.gschema.xml:62
-msgid "Icon size for only Applications item in the Menu Bar applet"
-msgstr "Stærð táknmynda einungis fyrir forrit í smáforriti fyrir valmyndastiku"
-
-#: data/org.gnome.gnome-panel.gschema.xml:66
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Which theme variant to use"
 msgstr "Hvaða tilbrigði við þema á að nota"
 
-#: data/org.gnome.gnome-panel.gschema.xml:73
+#: data/org.gnome.gnome-panel.gschema.xml:70
 msgid "Panel ID list"
 msgstr "Listi yfir gluggakenni"
 
-#: data/org.gnome.gnome-panel.gschema.xml:74
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -306,11 +307,11 @@ msgstr ""
 "Uppsetningin fyrir hverja af þessum stikum er geymd í /apps/panel/toplevels/"
 "$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:78
+#: data/org.gnome.gnome-panel.gschema.xml:75
 msgid "Panel object ID list"
 msgstr "Listi yfir stikuhlutakenni"
 
-#: data/org.gnome.gnome-panel.gschema.xml:79
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -320,11 +321,11 @@ msgstr ""
 "stikuhlut (t.d. ræsi, aðgerðahnapp, eða valmyndarhnapp/slá). Uppsetningin "
 "fyrir hvern af þessum hlutum er geymd í /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:86
+#: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
 msgstr "Algjör stikulæsing"
 
-#: data/org.gnome.gnome-panel.gschema.xml:87
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -334,11 +335,11 @@ msgstr ""
 "Vera kann að nauðsunlegt verið að læsa einstökum forrit sérstaklega. "
 "Endurræsa þarf stikuna svo þetta taki gildi."
 
-#: data/org.gnome.gnome-panel.gschema.xml:91
+#: data/org.gnome.gnome-panel.gschema.xml:88
 msgid "Applet IIDs to disable from loading"
 msgstr "Forritakenni sem á hindra í að hlaðast"
 
-#: data/org.gnome.gnome-panel.gschema.xml:92
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -350,11 +351,11 @@ msgstr ""
 "að hindra mini-commander forritið bætið ,OAFIID:GNOME_MiniCommanderApple' "
 "við listan. Endurræsa þarf stikuna til þess að virkja þetta."
 
-#: data/org.gnome.gnome-panel.gschema.xml:96
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid "Disable Force Quit"
 msgstr "Gera lokunarþvingun óvirka"
 
-#: data/org.gnome.gnome-panel.gschema.xml:97
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -362,20 +363,20 @@ msgstr ""
 "Ef valið, mun stikan ekki leyfa notandanum að þvinga forrit til að hætta með "
 "þvi að fjarlægja aðgang að þvinga til að hætta hnappnum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:101
 msgid "History of \"Run Application\" dialog"
 msgstr "Ferill fyrir „Keyra forrit‟ samskiptagluggann"
 
-#: data/org.gnome.gnome-panel.gschema.xml:105
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr "Listi yfir áður notaðar skipanir í \"Keyra Forrit\"-valglugganum."
 
-#: data/org.gnome.gnome-panel.gschema.xml:109
+#: data/org.gnome.gnome-panel.gschema.xml:106
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Virkja forritalista í „Keyra forrit‟ svarglugganum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:110
+#: data/org.gnome.gnome-panel.gschema.xml:107
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -385,11 +386,11 @@ msgstr ""
 "svarglugganum þegar sá gluggi er opnaður. Hvort listinn er opnaður þegar "
 "gluggin er opnaður veltur á sýna_forrita_lista lyklinum."
 
-#: data/org.gnome.gnome-panel.gschema.xml:114
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Opna forritalista í „Keyra forrit‟ svarglugganum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:115
+#: data/org.gnome.gnome-panel.gschema.xml:112
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -399,61 +400,16 @@ msgstr ""
 "þegar sá gluggi er opnaður. Þessi lykill er því aðeins virkur að "
 "virkja_forrita_lista lykillin hafi verið valinn."
 
-#: data/org.gnome.gnome-panel.gschema.xml:119
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Virkja sjálfvirka fyllingu  „Keyra forrit‟ svarglugganum"
 
-#: data/org.gnome.gnome-panel.gschema.xml:120
+#: data/org.gnome.gnome-panel.gschema.xml:117
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 "Ef valið, er sjálfvirk fylling gerð aðgengileg í „Keyra forrit‟ "
 "svarglugganum."
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Staðsetning ræsis"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Staðsetning .desktop skrárinnar sem lýsir ræsinum. Þessi lykill er því "
-"aðeins virkur að hlutar_tegund sé „ræsishlutur‟."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
-msgid "Tooltip displayed for menu"
-msgstr "Ábending birt fyrir valmynd"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
-msgid "The text to display in a tooltip for this menu."
-msgstr "Texti til birtningar í ábendingu fyrir þessa valmynd."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
-msgid "Icon used for button"
-msgstr "Táknmynd fyrir hnapp"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
-msgid ""
-"The location of the image file used as the icon for the object's button. If "
-"empty, the default icon for the menu will be used."
-msgstr ""
-"Staðsetning myndskráarinnar sem notuð verður sem tákn fyrir hnapp hlutarins. "
-"Ef tómt, verður sjálfgefið tákn fyrir valmyndina notað."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
-msgid "Menu content path"
-msgstr "Slóð á innihald valmyndar"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
-msgid ""
-"The path from which the menu contents is constructed. If empty, the menu "
-"will be the default applications menu."
-msgstr ""
-"Slóðin þar sem innihald valmyndarinnar er byggt.  Þessi lykill er því aðeins "
-"virkur að nota_valmyndar_slóð sé valinn og hlutar_tegund sé "
-"„valmyndarhlutur‟."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
@@ -490,9 +446,13 @@ msgid "Object's position on the panel"
 msgstr "Staðsetning hlutar á stikunni"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
+#, fuzzy
+#| msgid ""
+#| "The position of this panel object. The position is specified by the "
+#| "number of pixels from the left (or top if vertical) panel edge."
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
 "Staðsetning þessa stikuhlutar. Staðsetningin er tilgreind með fjölda díla "
 "frá vinstri brún stiku (eða toppnum ef hún er lóðrétt)"
@@ -563,10 +523,21 @@ msgstr ""
 "valmyndir að birtast fyrir ofan stikuna."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
+#| msgid "Panel ID list"
+msgid "Panel alignment"
+msgstr "Hliðjöfnun spjalds"
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+msgid ""
+"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
+"\"."
+msgstr ""
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
 msgstr "Stærð stiku"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -577,111 +548,11 @@ msgstr ""
 "lágmarkstærð byggða á leturstærð og öðrum vísbreytum. Hámarksstærð er "
 "fastsett sem fjórðungur af hæð skjásins (eða breidd)"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
-msgid "X co-ordinate of panel"
-msgstr "X-hnit stiku"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Staðsetning stikunnar á x-ásnum. Þessi lykil er aðeins viðeigandi í óþöndum "
-"ham. Í þöndum ham er horft fram hjá þessum lykli og stikan er sett á þá brún "
-"sem tilgreind er með snúningslyklinum."
-
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:35
-msgid "Y co-ordinate of panel"
-msgstr "Y-hnit stiku"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Staðsetning stikunnar á y-ásnum. Þessi lykil er aðeins viðeigandi í óþöndum "
-"ham. Í þöndum ham er horft fram hjá þessum lykli og stikan er sett á þá brún "
-"sem tilgreind er með snúningslyklinum."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "X hnit skjástikunnar, sem byrjar frá hægri hlið skjásins"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Staðsetning skjástikunnar eftir x-ás, sem byrjar frá hægri hluta skjásins. "
-"Ef það er skráð sem -1, þá verður gildið hunsað og gildið fyrir x lykilinn "
-"notað. Ef gildið er stærra en 0, þá verður gildi x lykilsins notað. Þessi "
-"lykill á einungis við í óútvíkkuðum ham. Í útvíkkuðum ham er þessi lykill "
-"hunsaður og skjástikan er staðsett á skjájaðri sem er tilgreindur með "
-"áttunarlykli."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "Y hnit skjástikunnar, sem byrjar frá botni skjásins"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Staðsetning skjástikunnar eftir y-ás, sem byrjar frá hægri hluta skjásins. "
-"Ef það er skráð sem -1, þá verður gildið hunsað og gildið fyrir y lykilinn "
-"notað. Ef gildið er stærra en 0, þá verður gildi y lykilsins notað. Þessi "
-"lykill á einungis við í óútvíkkuðum ham. Í útvíkkuðum ham er þessi lykill "
-"hunsaður og skjástikan er staðsett á skjájaðri sem er tilgreindur með "
-"áttunarlykli."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:50
-msgid "Center panel on x-axis"
-msgstr "Miðja stiku á x-ás"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"Ef satt, þá verður x og x_hægri lyklarnir hunsaðir og skjástikan staðsett í "
-"miðju x-ás skjásins. Ef stærð skjástikunnar er breytt mun hún halda þeirri "
-"stöðu - þ.e. skjástikan mun stækka á báða vegu. Ef ekki satt, þá mun x og "
-"x_hægri lyklarnir tilgreina staðsetningu skjástikunnar."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
-msgid "Center panel on y-axis"
-msgstr "Miðja stiku á y-ás"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"Ef satt, þá verður y og y_botn lyklarnir hunsaðir og skjástikan staðsett í "
-"miðju y-ás skjásins. Ef stærð skjástikunnar er breytt mun hún halda þeirri "
-"stöðu - þ.e. skjástikan mun stækka á báða vegu. Ef ekki satt, þá mun y og "
-"y_botn lyklarnir tilgreina staðsetningu skjástikunnar."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
 msgstr "Fela stiku sjálfkrafa inní horn"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:61
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -691,11 +562,11 @@ msgstr ""
 "fer að stikusvæðinu. Hægt er að láta stikuna birtast aftur með því að færa "
 "músarbendilinn í hornið sem stikan er falin."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
 msgid "Enable hide buttons"
 msgstr "Virkja felutakka"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:66
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -704,11 +575,11 @@ msgstr ""
 "flytja stikuna út að brún skjásins þannig að einungis verði hnappur "
 "sjánlegur."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
 msgid "Enable arrows on hide buttons"
 msgstr "Nota örvar á felutökkum"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:71
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -716,11 +587,11 @@ msgstr ""
 "Ef valið, eru settar örvar í feluhnappana. Þessi lykil skiptir því aðeins "
 "máli að virkja_hnappa lykillin sé valinn"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
 msgid "Panel autohide delay"
 msgstr "Bið eftir stika sé falin sjálfvirkt"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:77
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:52
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -730,11 +601,11 @@ msgstr ""
 "stikusvæðinu þar til stikan er falin sjálfvirkt. Þessi lykill skiptir því "
 "aðeins máli að fela_sjálfvirkt lykillin sé valinn."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:82
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:57
 msgid "Panel autounhide delay"
 msgstr "Bið eftir að stikan komi sjálfvirkt úr felum"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:58
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -744,11 +615,11 @@ msgstr ""
 "stikusvæðið þar til stikan birtist sjálfvirkt. Þessi lykill skiptir því "
 "aðeins máli að fela_sjálfvirkt lykillin sé valinn."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:63
 msgid "Visible pixels when hidden"
 msgstr "Sjáanlegir dílar þegar falin"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:89
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:64
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -757,11 +628,11 @@ msgstr ""
 "sjálfvirkt í horninu. Þessi lykill skiptir því aðeins máli að "
 "fela_sjálfvirkt lykillin sé valinn."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:68
 msgid "Animation speed"
 msgstr "Hraði hreyfimynda"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -771,23 +642,23 @@ msgstr ""
 "„hægt‟, „meðal‟ og „hratt‟. Þessi lykill skiptir því aðeins máli að "
 "virkja_hreyfimyndir lykillinn sé valinn."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
 msgid "Use custom background color"
 msgstr "Nota sérsniðinn bakgrunnslit"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
 msgid "Background Color"
 msgstr "Bakgrunnslitur"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
 msgid "Use custom background image"
 msgstr "Nota sérsniðna bakgrunnsmynd"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
 msgid "Background image"
 msgstr "Bakgrunnsmynd"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:119
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -796,11 +667,11 @@ msgstr ""
 "Tilgreinir hvaða skrá verður notuð fyrir bakgrunnsmynd. Ef myndin inniheldur "
 "alfarás verður hún sett saman við bakgrunnsmyndina."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:124
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:99
 msgid "Image options"
 msgstr "Myndastillingar"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:125
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:100
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -814,67 +685,25 @@ msgstr ""
 "haldið. Með \"passa\", verður myndin teygð (en stærðahlutföllum haldið) upp "
 "í stikuhæð (ef hún er lárétt)."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:130
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:105
 msgid "Rotate image on vertical panels"
 msgstr "Snúa myndum á lóðréttum stikum"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:131
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:106
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr "Ef valið, verður bakgrunnsmyndinni snúið ef stikunni er snúið lóðrétt."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:111
 msgid "Use custom text color"
 msgstr "Nota sérsniðinn lit á texta"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:141
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:116
 msgid "Text Color"
 msgstr "Textalitur"
 
-#: gnome-panel/applet.c:337
-msgid "???"
-msgstr "???"
-
-#: gnome-panel/applet.c:475
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "_Færa"
-
-#: gnome-panel/applet.c:482
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "_Fjarlægja af stiku"
-
-#: gnome-panel/gnome-desktop-item-edit.c:27
-msgid "Create new file in the given directory"
-msgstr "Búa til nýja skrá í gefinni möppu"
-
-#: gnome-panel/gnome-desktop-item-edit.c:28
-msgid "[FILE...]"
-msgstr "[SKRÁ...]"
-
-#: gnome-panel/gnome-desktop-item-edit.c:106
-msgid "- Edit .desktop files"
-msgstr "- Breyta .desktop skrám"
-
-#: gnome-panel/gnome-desktop-item-edit.c:144
-#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Búa til ræsi"
-
-#: gnome-panel/gnome-desktop-item-edit.c:169
-#: gnome-panel/gnome-desktop-item-edit.c:192
-msgid "Directory Properties"
-msgstr "Eiginleikar möppu"
-
-#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Eiginleikar ræsis"
-
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:140
 msgid "Panel"
 msgstr "Skjástika"
 
@@ -886,65 +715,103 @@ msgstr ""
 "Ræsa önnur forrit og bjóða upp á ýmis tól til þess að stjórna gluggum, sýna "
 "tímann, o.s.frv."
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
-
-#: gnome-panel/gp-add-applet-window.c:137
-#| msgid "_Help"
-msgid "Help"
-msgstr "Hjálp"
-
-#: gnome-panel/gp-add-applet-window.c:148
-#| msgid "_About"
-msgid "About"
-msgstr "Um hugbúnaðinn"
-
-#: gnome-panel/gp-add-applet-window.c:193
-#| msgid "_Add"
-msgid "Add"
-msgstr "Bæta við"
-
-#: gnome-panel/gp-add-applet-window.c:380 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
 msgstr "Bæta við stiku"
 
-#: gnome-panel/gp-add-applet-window.c:553
-#| msgid "Icon not found"
+#: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
 msgstr "Engin smáforrit fundust"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, c-format
+#| msgid "Find an _item to add to \"%s\":"
+msgid "Find an item to add to “%s”"
+msgstr "Finna atriði til þess að bæta við \"%s\":"
+
+#: gnome-panel/gp-add-applet-window.c:558
+#| msgid "Find an item to add to the panel:"
+msgid "Find an item to add to the panel"
+msgstr "Finna atriði til þess að bæta við spjaldið"
+
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Hjálp"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Um hugbúnaðinn"
+
+#: gnome-panel/gp-applet-list-row.c:207
+#| msgid "_Remove"
+msgid "Remove"
+msgstr "Fjarlægja"
+
+#: gnome-panel/gp-applet-manager.c:420
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "Bæta við"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
 msgstr "Fela stiku"
 
-#: gnome-panel/gp-properties-dialog.c:213
+#: gnome-panel/gp-main.c:49
+msgid "Replace a currently running panel"
+msgstr "Skipti út stiku sem er í gangi"
+
+#: gnome-panel/gp-main.c:55
+msgid "Print version"
+msgstr "Prenta útgáfunúmer"
+
+#: gnome-panel/gp-properties-dialog.c:224
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Efst"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:225
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Neðst"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Vinstri"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Hægri"
+
+#: gnome-panel/gp-properties-dialog.c:231
+#| msgid "Restart"
+msgctxt "Alignment"
+msgid "Start"
+msgstr "Byrjar"
+
+#: gnome-panel/gp-properties-dialog.c:232
+msgctxt "Alignment"
+msgid "Center"
+msgstr "Miðjað"
+
+#: gnome-panel/gp-properties-dialog.c:233
+#| msgid "E_xpand"
+msgctxt "Alignment"
+msgid "End"
+msgstr "Endar"
 
 #: gnome-panel/gp-properties-dialog.ui:15
 msgid "Panel Properties"
 msgstr "Eiginleikar stiku"
 
 #: gnome-panel/gp-properties-dialog.ui:53
-#: gnome-panel/gp-properties-dialog.ui:323
+#: gnome-panel/gp-properties-dialog.ui:366
 msgid "Some of these properties are locked down"
 msgstr "Sumir eiginleikarnir er læstir"
 
@@ -953,112 +820,95 @@ msgid "_Orientation:"
 msgstr "_Snúningur:"
 
 #: gnome-panel/gp-properties-dialog.ui:122
+#| msgid "Appointments"
+msgid "_Alignment:"
+msgstr "_Jöfnun:"
+
+#: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
 msgstr "_Stærð:"
 
-#: gnome-panel/gp-properties-dialog.ui:158
+#: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
 msgstr "pixlar"
 
-#: gnome-panel/gp-properties-dialog.ui:191
+#: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
 msgstr "Ýmislegt:"
 
-#: gnome-panel/gp-properties-dialog.ui:210
+#: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
 msgstr "Þ_enja"
 
-#: gnome-panel/gp-properties-dialog.ui:225
+#: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
 msgstr "_Fela sjálfvirkt"
 
-#: gnome-panel/gp-properties-dialog.ui:240
+#: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
 msgstr "Sýna _feluhnappa"
 
-#: gnome-panel/gp-properties-dialog.ui:255
+#: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
 msgstr "Ör_var á feluhnöppum"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Almennt"
 
-#: gnome-panel/gp-properties-dialog.ui:355
+#: gnome-panel/gp-properties-dialog.ui:398
 msgid "Background color:"
 msgstr "Bakgrunnslitur:"
 
-#: gnome-panel/gp-properties-dialog.ui:418
+#: gnome-panel/gp-properties-dialog.ui:461
 msgid "Background image:"
 msgstr "Bakgrunnsmynd:"
 
-#: gnome-panel/gp-properties-dialog.ui:457
+#: gnome-panel/gp-properties-dialog.ui:500
 msgid "Tile"
 msgstr "Flísaleggja"
 
-#: gnome-panel/gp-properties-dialog.ui:472
+#: gnome-panel/gp-properties-dialog.ui:515
 msgid "Stretch"
 msgstr "Teygja"
 
-#: gnome-panel/gp-properties-dialog.ui:487
+#: gnome-panel/gp-properties-dialog.ui:530
 msgid "Fit"
 msgstr "Aðlaga"
 
-#: gnome-panel/gp-properties-dialog.ui:509
+#: gnome-panel/gp-properties-dialog.ui:552
 msgid "Rotate image on vertical panel"
 msgstr "Snúa myndum á lóðréttum stikum"
 
-#: gnome-panel/gp-properties-dialog.ui:552
+#: gnome-panel/gp-properties-dialog.ui:595
 msgid "Text color:"
 msgstr "Textalitur:"
 
-#: gnome-panel/gp-properties-dialog.ui:607
+#: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
 msgstr "Þema"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Gat ekki sýnt þetta veffang"
+#: gnome-panel/gp-properties-dialog.ui:676
+#| msgctxt "Orientation"
+#| msgid "Left"
+msgid "Left"
+msgstr "Vinstri"
 
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Ekkert veffang var gefið."
+#: gnome-panel/gp-properties-dialog.ui:699
+msgid "Center"
+msgstr "Miðjað"
 
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Gat ekki ræst forrit"
+#: gnome-panel/gp-properties-dialog.ui:722
+#| msgctxt "Orientation"
+#| msgid "Right"
+msgid "Right"
+msgstr "Hægri"
 
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Gat ekki notað slepptan hlut"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Ekkert URI var gefið fyrir skjáborðskrá stikuræsis\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Gat ekki opnað skjáborðsskrá %s fyrir stikuræsis %s%s\n"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "_Ræsa"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
-#: gnome-panel/panel-context-menu.c:135
-msgid "_Properties"
-msgstr "_Eiginleikar"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Staðsetning ræsis er ekki stillt, get ekki keyrt upp ræsi\n"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1315
-#: gnome-panel/panel-ditem-editor.c:1349 gnome-panel/panel-ditem-editor.c:1380
-msgid "Could not save launcher"
-msgstr "Get ekki vistað ræsara"
+#: gnome-panel/gp-properties-dialog.ui:754
+#| msgid "_Applet:"
+msgid "Applets"
+msgstr "Smáforrit"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1066,223 +916,52 @@ msgstr "Get ekki vistað ræsara"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:800
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Villa"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:383
-msgid "Choose an icon"
-msgstr "Veldu táknmynd"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1264
-#: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
-#: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
-#: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:191
-msgid "_Cancel"
-msgstr "_Hætta við"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:388
-#: gnome-panel/panel-ditem-editor.c:999
-msgid "_Open"
-msgstr "_Opna"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:345
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "Gat ekki ræst '%s'"
-
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:379
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Gat ekki opnað slóð '%s'"
 
-#: gnome-panel/main.c:37
-msgid "Replace a currently running panel"
-msgstr "Skipti út stiku sem er í gangi"
+#: gnome-panel/panel-applet-frame.c:395
+msgid "_Move"
+msgstr "_Færa"
 
-#: gnome-panel/main.c:38
-msgid "Print version"
-msgstr "Prenta útgáfunúmer"
+#: gnome-panel/panel-applet-frame.c:402
+msgid "_Remove From Panel"
+msgstr "_Fjarlægja af stiku"
 
-#: gnome-panel/panel-action-button.c:159
-msgid "_Lock Screen"
-msgstr "_Læsa skjá"
-
-#: gnome-panel/panel-action-button.c:164
-msgid "_Activate Screensaver"
-msgstr "_Virkja skjáhvílu"
-
-#: gnome-panel/panel-action-button.c:356
-msgid "Lock Screen"
-msgstr "Læsa skjá"
-
-#: gnome-panel/panel-action-button.c:357
-msgid "Protect your computer from unauthorized use"
-msgstr "Verja tölvuna þína frá óheimiluðum aðgangi"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370
-msgid "Log Out"
-msgstr "Skrá út"
-
-#: gnome-panel/panel-action-button.c:371
-msgid "Log out of this session to log in as a different user"
-msgstr "Útská sig úr setunni til að skrá sig inn sem annan notanda"
-
-#: gnome-panel/panel-action-button.c:379
-msgid "Run Application..."
-msgstr "Keyra forrit..."
-
-#: gnome-panel/panel-action-button.c:380
-msgid "Run an application by typing a command or choosing from a list"
-msgstr "Ræsa forrit með því að slá inn skipun eða velja úr lista"
-
-#: gnome-panel/panel-action-button.c:388
-msgid "Search for Files..."
-msgstr "Leita að skrám..."
-
-#: gnome-panel/panel-action-button.c:389
-msgid "Locate documents and folders on this computer by name or content"
-msgstr "Staðsetja skrár og möppur á þessari tölvu eftir nafni eða innihaldi"
-
-#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
-msgid "Force Quit"
-msgstr "Þvinga til að hætta"
-
-#: gnome-panel/panel-action-button.c:397
-msgid "Force a misbehaving application to quit"
-msgstr "Þvinga forrit sem haga sér ekki vel til að hætta"
-
-#: gnome-panel/panel-action-button.c:405
-msgid "Hibernate"
-msgstr "Leggja í dvala"
-
-#: gnome-panel/panel-action-button.c:414
-msgid "Suspend"
-msgstr "Setja í bið"
-
-#: gnome-panel/panel-action-button.c:423
-msgid "Hybrid sleep"
-msgstr "Blönduð svæfing"
-
-#: gnome-panel/panel-action-button.c:432
-msgid "Restart"
-msgstr "Endurræsa"
-
-#: gnome-panel/panel-action-button.c:433
-msgid "Restart the computer"
-msgstr "Endurræsa tölvuna"
-
-#: gnome-panel/panel-action-button.c:441
-msgid "Power Off"
-msgstr "Slökkva"
-
-#: gnome-panel/panel-action-button.c:442
-msgid "Power off the computer"
-msgstr "Slökkva á tölvunni"
-
-#: gnome-panel/panel-addto-dialog.c:138 gnome-panel/panel-menu-button.c:953
-#: modules/menu/gp-menu-module.c:39
-msgid "Main Menu"
-msgstr "Aðal valmyndin"
-
-#: gnome-panel/panel-addto-dialog.c:139 modules/menu/gp-menu-module.c:40
-msgid "The main GNOME menu"
-msgstr "Aðal valmynd GNOME"
-
-#: gnome-panel/panel-addto-dialog.c:147 modules/menu/gp-menu-module.c:53
-msgid "User menu"
-msgstr "Valmynd notanda"
-
-#: gnome-panel/panel-addto-dialog.c:148 modules/menu/gp-menu-module.c:54
-msgid "Menu to change your settings and log out"
-msgstr "Valmynd til að breyta stillingum og skrá þig út"
-
-#: gnome-panel/panel-addto-dialog.c:196
-msgid "(empty)"
-msgstr "(tómt)"
-
-#: gnome-panel/panel-addto-dialog.c:395
-msgid "Custom Application Launcher"
-msgstr "Sérsniðinn forritaræsari"
-
-#: gnome-panel/panel-addto-dialog.c:396
-msgid "Create a new launcher"
-msgstr "Búa til nýjan ræsi"
-
-#: gnome-panel/panel-addto-dialog.c:405
-msgid "Application Launcher..."
-msgstr "Forritaræsari..."
-
-#: gnome-panel/panel-addto-dialog.c:406
-msgid "Copy a launcher from the applications menu"
-msgstr "Afrita ræsi úr forritavalmynd"
-
-#: gnome-panel/panel-addto-dialog.c:895
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "Finna _hlut til þess að bæta við \"%s\":"
-
-#: gnome-panel/panel-addto-dialog.c:899
-msgid "Find an _item to add to the panel:"
-msgstr "Finna _hlut til þess að bæta við skjástiku:"
-
-#: gnome-panel/panel-addto-dialog.c:1021
-msgid "_Forward"
-msgstr "Á_fram"
-
-#: gnome-panel/panel-addto-dialog.c:1024 gnome-panel/panel-addto-dialog.ui:158
-#: modules/clock/clock.ui:682
-msgid "_Add"
-msgstr "Bæt_a við"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-msgid "Find an item to add to the panel:"
-msgstr "Finna _hlut til þess að bæta við skjástiku:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "Til_baka"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
-#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
-#: modules/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "_Loka"
-
-#: gnome-panel/panel-applet-frame.c:763
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Þessi stika hefur rekist á vandamál við að hlaða \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:775
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "Í lagi"
 
-#: gnome-panel/panel-applet-frame.c:779
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Viltu eyða smáforritinu úr uppsetningunni þinni?"
 
-#: gnome-panel/panel-applet-frame.c:782
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "Ekk_i eyða"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1265
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "_Eyða"
 
-#: gnome-panel/panel.c:420
+#: gnome-panel/panel.c:587
 #, c-format
 msgid "Open URL: %s"
 msgstr "Opna veffang: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:120
+#: gnome-panel/panel.c:642 modules/menu/gp-bookmarks.c:101
+#: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
 msgstr "Opna '%s'"
@@ -1290,21 +969,18 @@ msgstr "Opna '%s'"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:537 gnome-panel/panel-menu-items.c:1066
-#: modules/menu/gp-places-menu.c:414
+#: gnome-panel/panel.c:697 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Opna einkamöppuna þína"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:546 gnome-panel/panel-menu-items.c:1095
-#: modules/menu/gp-places-menu.c:497
+#: gnome-panel/panel.c:707 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Tölvan"
 
 #. name
-#: gnome-panel/panel.c:547 gnome-panel/panel-menu-items.c:1096
-#: modules/menu/gp-places-menu.c:498
+#: gnome-panel/panel.c:708 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1313,28 +989,34 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:554 gnome-panel/panel-menu-items.c:1105
-#: modules/menu/gp-places-menu.c:553
+#: gnome-panel/panel.c:716 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Netkerfi"
 
 #. name
-#: gnome-panel/panel.c:555 gnome-panel/panel-menu-items.c:1106
-#: modules/menu/gp-places-menu.c:554
+#: gnome-panel/panel.c:717 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Flakka um bókamerktar og staðværar nettengingar"
 
-#: gnome-panel/panel.c:1256
+#: gnome-panel/panel.c:1240
 msgid "Delete this panel?"
 msgstr "Eyða þessari stiku?"
 
-#: gnome-panel/panel.c:1260
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Þegar stiku er eytt, þá tapast stikan\n"
 "og stillingar hennar."
+
+#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "_Hætta við"
 
 #: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
@@ -1344,271 +1026,63 @@ msgstr "Gat ekki eytt þessari stiku"
 msgid "You must always have at least one panel."
 msgstr "Þú verður alltaf að hafa í það eina stiku."
 
-#: gnome-panel/panel-context-menu.c:126
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "_Bæta á stiku..."
 
-#: gnome-panel/panel-context-menu.c:142
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "_Eiginleikar"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "_Eyða þessari stiku"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "_Ný stika"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Forrit"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Forrit í útstöð"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Staðsetning"
-
-#. Type
-#: gnome-panel/panel-ditem-editor.c:600
-msgid "_Type:"
-msgstr "_Gerð:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:607
-msgid "_Name:"
-msgstr "_Nafn:"
-
-#: gnome-panel/panel-ditem-editor.c:632
-msgid "_Browse..."
-msgstr "_Flakka..."
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:639
-msgid "Co_mment:"
-msgstr "A_thugasemd:"
-
-#: gnome-panel/panel-ditem-editor.c:646
-msgid "_Revert"
-msgstr "Aftu_rkalla"
-
-#: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
-#: modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "Í _lagi"
-
-#: gnome-panel/panel-ditem-editor.c:966
-msgid "Choose an application..."
-msgstr "Veldu forrit..."
-
-#: gnome-panel/panel-ditem-editor.c:970
-msgid "Choose a file..."
-msgstr "Veldu skrá..."
-
-#: gnome-panel/panel-ditem-editor.c:1135 gnome-panel/panel-ditem-editor.c:1144
-msgid "Comm_and:"
-msgstr "_Skipun:"
-
-#: gnome-panel/panel-ditem-editor.c:1153
-msgid "_Location:"
-msgstr "_Staðsetning:"
-
-#: gnome-panel/panel-ditem-editor.c:1316
-msgid "The name of the launcher is not set."
-msgstr "Nafn ræsarans er ekki tilgreint."
-
-#: gnome-panel/panel-ditem-editor.c:1320
-msgid "Could not save directory properties"
-msgstr "Ekki var hægt að vista eigindi möppu"
-
-#: gnome-panel/panel-ditem-editor.c:1321
-msgid "The name of the directory is not set."
-msgstr "Heiti möppu hefur ekki verið valið"
-
-#: gnome-panel/panel-ditem-editor.c:1337
-msgid "The command of the launcher is not set."
-msgstr "Ræsinum hefur ekki verið gefin skipun"
-
-#: gnome-panel/panel-ditem-editor.c:1340
-msgid "The location of the launcher is not set."
-msgstr "Staðsetning ræsarans er ekki tilgreind."
-
-#: gnome-panel/panel-force-quit.c:75
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Smelltu á gluggan til að þvinga forritið til að hætta. Þú getur hætt við með "
-"því að ýta á <ESC>."
-
-#: gnome-panel/panel-force-quit.c:220
-msgid "Force this application to exit?"
-msgstr "Neyða þetta forrit til að hætta?"
-
-#: gnome-panel/panel-force-quit.c:223
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Ef þú þvingar forrit til að hætta þá geta tapast allar óvistaðar breytingar "
-"á þeim skjölum sem það var að vinna með."
-
-#: gnome-panel/panel-force-quit.c:230
-msgid "_Force quit"
-msgstr "_Þvinga til að hætta"
-
-#: gnome-panel/panel-layout.c:1095 gnome-panel/panel-layout.c:1110
+#: gnome-panel/panel-layout.c:1097 gnome-panel/panel-layout.c:1112
 msgid "Cannot create initial panel layout.\n"
 msgstr "Get ekki búið til frumuppsetningu stiku.\n"
 
-#: gnome-panel/panel-menu-button.c:552 modules/menu/main-menu-menu.ui:5
-#: modules/menu/menu-bar-menu.ui:5
-msgid "_Edit Menus"
-msgstr "_Breyta valmynd"
-
-#: gnome-panel/panel-menu-items.c:362
-msgid "Switch User"
-msgstr "Skipta um notanda"
-
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:460
-msgid "Bookmarks"
-msgstr "Bókmerki"
-
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:79
-#, c-format
-msgid "Unable to scan %s for media changes"
-msgstr "Gat ekki skannað %s eftir miðilsbreytingum"
-
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:280
-#, c-format
-msgid "Rescan %s"
-msgstr "Endurskanna %s"
-
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:129
-#, c-format
-msgid "Unable to mount %s"
-msgstr "Ófær um að festa %s"
-
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:323
-#, c-format
-msgid "Mount %s"
-msgstr "Festa %s"
-
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:520
-msgid "Removable Media"
-msgstr "Fjarlæganlegir miðlar"
-
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:576
-msgid "Network Places"
-msgstr "Netstaðir"
-
-#. Translators: Desktop is used here as in
-#. * "Desktop Folder" (this is not the Desktop
-#. * environment).
-#. Translators: Desktop is used here as in "Desktop Folder"
-#. * (this is not the Desktop environment).
-#.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:437
-msgctxt "Desktop Folder"
-msgid "Desktop"
-msgstr "Skjáborð"
-
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:438
-msgid "Open the contents of your desktop in a folder"
-msgstr "Opna innihald skjáborðsins í möppu"
-
-#: gnome-panel/panel-menu-items.c:1363 modules/menu/gp-menu-bar-applet.c:156
-msgid "Places"
-msgstr "Staðir"
-
-#: gnome-panel/panel-image-menu-item.c:125
-msgid "Image widget"
-msgstr "Myndviðmótshluti (widget)"
-
-#: gnome-panel/panel-image-menu-item.c:126
-msgid "Child widget to appear next to the menu text"
-msgstr "Undirviðmótshluti sem birtist næst texta valmyndarinnar"
-
-#: gnome-panel/panel-image-menu-item.c:133
-msgid "Always show image"
-msgstr "Alltaf birta mynd"
-
-#: gnome-panel/panel-image-menu-item.c:134
-msgid "Whether the image will always be shown"
-msgstr "Hvort alltaf eigi að sýna myndina"
-
-#: gnome-panel/panel-recent.c:76 gnome-panel/panel-recent.c:86
-#, c-format
-msgid "Could not open recently used document \"%s\""
-msgstr "Gat ekki opnað nýlega notað skjal \"%s\""
-
-#: gnome-panel/panel-recent.c:88
-#, c-format
-msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "Óþekkt villa kom upp þegar reynt var að opna \"%s\"."
-
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:179
-msgid "Clear the Recent Documents list?"
-msgstr "Hreinsa lista nýlegra skjala?"
-
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:184
-msgid ""
-"If you clear the Recent Documents list, you clear the following:\n"
-"• All items from the Places → Recent Documents menu item.\n"
-"• All items from the recent documents list in all applications."
-msgstr ""
-"Ef þú hreinsar listann fyrir nýleg skjöl, hreinsar þú eftirfarandi:\n"
-"• Alla hluti úr Staðir → Nýleg skjöl valmyndaratriðinu.\n"
-"• Alla hluti úr listanum yfir nýleg skjöl í öllum forritum."
-
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:192
-msgid "C_lear"
-msgstr "Hr_einsa"
-
-#: gnome-panel/panel-recent.c:159
-msgid "Clear Recent Documents"
-msgstr "Hreinsa nýleg skjöl"
-
-#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:603
-msgid "Recent Documents"
-msgstr "Nýleg skjöl"
-
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:224
-msgid "Clear Recent Documents..."
-msgstr "Hreinsa lista yfir nýleg skjöl..."
-
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:229
-msgid "Clear all items from the recent documents list"
-msgstr "Hreinsa alla hluta úr lista nýlegara skjala"
-
-#: gnome-panel/panel-run-dialog.c:426
+#: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Ekki tókst að finna skjáhermi, nota xterm, jafnvel þó svo það muni jafnvel "
 "ekki virka"
 
-#: gnome-panel/panel-run-dialog.c:490
+#: gnome-panel/panel-run-dialog.c:488
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Gat ekki keyrt skipun '%s'"
 
-#: gnome-panel/panel-run-dialog.c:531
+#: gnome-panel/panel-run-dialog.c:528
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Gat ekki breytt '%s' frá UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1274
+#: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Veldu skrá til að bæta við skipunina..."
 
-#: gnome-panel/panel-run-dialog.c:1657 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "Í _lagi"
+
+#: gnome-panel/panel-run-dialog.c:1691 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Veldu forrit til að sjá lýsinguna á því"
 
-#: gnome-panel/panel-run-dialog.c:1695
+#: gnome-panel/panel-run-dialog.c:1729
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Mun keyra skipun '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1728
+#: gnome-panel/panel-run-dialog.c:1762
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1669,87 +1143,98 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Top Expanded Edge Panel"
 msgstr "Þanin efribrúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Top Centered Panel"
 msgstr "Miðjuð efristika"
 
-#: gnome-panel/panel-toplevel.c:1567
-msgid "Top Floating Panel"
-msgstr "Fljótandi efristika"
+#: gnome-panel/panel-toplevel.c:1496
+#, fuzzy
+#| msgid "Top Centered Panel"
+msgid "Top Start Panel"
+msgstr "Miðjuð efristika"
 
-#: gnome-panel/panel-toplevel.c:1568
-msgid "Top Edge Panel"
+#: gnome-panel/panel-toplevel.c:1497
+#, fuzzy
+#| msgid "Top Edge Panel"
+msgid "Top End Panel"
 msgstr "Efri brúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Bottom Expanded Edge Panel"
 msgstr "Þanin neðribrúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Centered Panel"
 msgstr "Miðjuð neðristika"
 
-#: gnome-panel/panel-toplevel.c:1574
-msgid "Bottom Floating Panel"
-msgstr "Fljótandi neðristika"
+#: gnome-panel/panel-toplevel.c:1503
+#, fuzzy
+#| msgid "Bottom Centered Panel"
+msgid "Bottom Start Panel"
+msgstr "Miðjuð neðristika"
 
-#: gnome-panel/panel-toplevel.c:1575
-msgid "Bottom Edge Panel"
+#: gnome-panel/panel-toplevel.c:1504
+#, fuzzy
+#| msgid "Bottom Edge Panel"
+msgid "Bottom End Panel"
 msgstr "Neðri brúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Left Expanded Edge Panel"
 msgstr "Þanin vinstribrúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Left Centered Panel"
 msgstr "Miðjuð vinstristika"
 
-#: gnome-panel/panel-toplevel.c:1581
-msgid "Left Floating Panel"
-msgstr "Fljótandi vinstristika"
+#: gnome-panel/panel-toplevel.c:1510
+#, fuzzy
+#| msgid "Left Centered Panel"
+msgid "Left Start Panel"
+msgstr "Miðjuð vinstristika"
 
-#: gnome-panel/panel-toplevel.c:1582
-msgid "Left Edge Panel"
+#: gnome-panel/panel-toplevel.c:1511
+#, fuzzy
+#| msgid "Left Edge Panel"
+msgid "Left End Panel"
 msgstr "Vinstribrúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1586
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Right Expanded Edge Panel"
 msgstr "Þanin hægribrúnarstika"
 
-#: gnome-panel/panel-toplevel.c:1587
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Right Centered Panel"
 msgstr "Miðjuð hægristika"
 
-#: gnome-panel/panel-toplevel.c:1588
-msgid "Right Floating Panel"
-msgstr "Fljótandi hægristika"
+#: gnome-panel/panel-toplevel.c:1517
+#, fuzzy
+#| msgid "Right Centered Panel"
+msgid "Right Start Panel"
+msgstr "Miðjuð hægristika"
 
-#: gnome-panel/panel-toplevel.c:1589
-msgid "Right Edge Panel"
+#: gnome-panel/panel-toplevel.c:1518
+#, fuzzy
+#| msgid "Right Edge Panel"
+msgid "Right End Panel"
 msgstr "Hægribrúnarstika"
 
-#: gnome-panel/panel-util.c:312
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "Táknmynd ,%s' fannst ekki"
-
-#: gnome-panel/panel-util.c:555
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "skrá"
 
-#: gnome-panel/panel-util.c:723 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:212
 msgid "Home"
 msgstr "Heim"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:732 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:229
 msgid "File System"
 msgstr "Skráarkerfi"
 
@@ -1762,10 +1247,153 @@ msgstr "Skráarkerfi"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:946 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:127
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:167
+msgid "Initial Setup"
+msgstr "Upphafsstillingar"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
+#| msgid "_Cancel"
+msgid "Cancel"
+msgstr "Hætta við"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:175
+msgid "Done"
+msgstr "Lokið"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Gat ekki birt hjálparskjalið '%s'"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "Villa við birtingu hjálparskjals"
+
+#: libgnome-panel/gp-module.c:697
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr "Bakensinn '%s' er ekki studdur."
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Þvinga til að hætta"
+
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Þvinga forrit sem haga sér ekki vel til að hætta"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1003
+msgid "Lock Screen"
+msgstr "Læsa skjá"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1004
+msgid "Protect your computer from unauthorized use"
+msgstr "Verja tölvuna þína frá óheimiluðum aðgangi"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:982
+msgid "Log Out"
+msgstr "Skrá út"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:983
+msgid "Log out of this session to log in as a different user"
+msgstr "Útská sig úr setunni til að skrá sig inn sem annan notanda"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Keyra forrit..."
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Ræsa forrit með því að slá inn skipun eða velja úr lista"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1115
+msgid "Power Off"
+msgstr "Slökkva"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1116
+msgid "Power off the computer"
+msgstr "Slökkva á tölvunni"
+
+#: modules/action-button/gp-force-quit-applet.c:134
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Gat ekki ræst forrit"
+
+#: modules/action-button/gp-lock-screen-applet.c:434
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "_Læsa skjá"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "_Virkja skjáhvílu"
+
+#: modules/action-button/gp-logout-applet.c:222
+#: modules/action-button/gp-shutdown-applet.c:266
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-run-applet.c:135
+#: modules/launcher/gp-launcher-module.c:33
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Smelltu á gluggan til að þvinga forritið til að hætta. Þú getur hætt við með "
+"því að ýta á <ESC>."
+
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Neyða þetta forrit til að hætta?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Ef þú þvingar forrit til að hætta þá geta tapast allar óvistaðar breytingar "
+"á þeim skjölum sem það var að vinna með."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "_Þvinga til að hætta"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1776,7 +1404,7 @@ msgstr "%1$s: %2$s"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
@@ -1791,8 +1419,8 @@ msgstr "%H:%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
-#: modules/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1800,149 +1428,140 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:282
 msgid "%b %d"
 msgstr "%d %b"
 
-#: modules/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:787
 msgid "Tasks"
 msgstr "Verkefni"
 
-#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
-#: modules/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
+#: modules/clock/calendar-window.c:1568
 msgid "Edit"
 msgstr "Breyta"
 
-#: modules/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:910
 msgid "All Day"
 msgstr "Allan daginn"
 
-#: modules/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1054
 msgid "Appointments"
 msgstr "Fundir"
 
-#: modules/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1079
 msgid "Birthdays and Anniversaries"
 msgstr "Afmælisdagar"
 
-#: modules/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1104
 msgid "Weather Information"
 msgstr "Veðurupplýsingar"
 
-#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Staðsetningar"
 
-#: modules/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1827
 msgid "Calendar"
 msgstr "Dagatal"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:227
+#: modules/clock/clock-applet.c:174
 msgid "%A %B %d (%Z)"
 msgstr "%A %d. %B (%Z)"
 
-#: modules/clock/clock-applet.c:236
+#: modules/clock/clock-applet.c:183
 msgid "Click to hide your appointments and tasks"
 msgstr "Smelltu til að fela tímabókanir og verkefni"
 
-#: modules/clock/clock-applet.c:239
+#: modules/clock/clock-applet.c:186
 msgid "Click to view your appointments and tasks"
 msgstr "Smelltu á til að sýna fundi og verkefni"
 
-#: modules/clock/clock-applet.c:243
+#: modules/clock/clock-applet.c:190
 msgid "Click to hide month calendar"
 msgstr "Smelltu til að fela dagatal"
 
-#: modules/clock/clock-applet.c:246
+#: modules/clock/clock-applet.c:193
 msgid "Click to view month calendar"
 msgstr "Smelltu á til að sýna mánaðardagatalið"
 
 #. Done!
-#: modules/clock/clock-applet.c:850
+#: modules/clock/clock-applet.c:725
 msgid "Computer Clock"
 msgstr "Tölvu klukka"
 
-#: modules/clock/clock-applet.c:983
+#: modules/clock/clock-applet.c:811
 msgid "Failed to open the time settings"
 msgstr "Mistókst að opna tímastillingar"
 
-#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Gat ekki birt hjálparskjalið '%s'"
-
-#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Villa við birtingu hjálparskjals"
-
-#: modules/clock/clock-applet.c:1621
+#: modules/clock/clock-applet.c:1430
 msgid "Choose Location"
 msgstr "Veldu staðsetningu"
 
-#: modules/clock/clock-applet.c:1700
+#: modules/clock/clock-applet.c:1509
 msgid "Edit Location"
 msgstr "Breyta staðsetningu"
 
-#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
 msgid "Default"
 msgstr "Sjálfgefið"
 
-#: modules/clock/clock-applet.c:1737
+#: modules/clock/clock-applet.c:1546
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1738
+#: modules/clock/clock-applet.c:1547
 msgid "Celsius"
 msgstr "Selsíus"
 
-#: modules/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1548
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1745
+#: modules/clock/clock-applet.c:1554
 msgid "Meters per second (m/s)"
 msgstr "Metrar á sekúndu (m/sek)"
 
-#: modules/clock/clock-applet.c:1746
+#: modules/clock/clock-applet.c:1555
 msgid "Kilometers per hour (kph)"
 msgstr "Kílómetrar á klukkustund (km/klst)"
 
-#: modules/clock/clock-applet.c:1747
+#: modules/clock/clock-applet.c:1556
 msgid "Miles per hour (mph)"
 msgstr "Mílur á klukkustund (mi/klst)"
 
-#: modules/clock/clock-applet.c:1748
+#: modules/clock/clock-applet.c:1557
 msgid "Knots"
 msgstr "Hnútar"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1558
 msgid "Beaufort scale"
 msgstr "Beaufort kvarði (vindhraði)"
 
-#: modules/clock/clock-applet.c:1802
+#: modules/clock/clock-applet.c:1611
 msgid "City Name"
 msgstr "Nafn borgar"
 
-#: modules/clock/clock-applet.c:1806
+#: modules/clock/clock-applet.c:1615
 msgid "City Time Zone"
 msgstr "Tímasvæði borgar"
 
-#: modules/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
 msgstr "Mistókst að stilla tímasvæði kerfis"
 
-#: modules/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
 msgstr "<small>Stilla...</small>"
 
-#: modules/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
 msgstr "<small>Stilla</small>"
 
-#: modules/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Setja staðsetningu sem núverandi staðsetningu og nota tímabelti hennar fyrir "
@@ -1954,7 +1573,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:438
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -1963,7 +1582,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:446
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1971,22 +1590,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:627
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, upplifunin er %s"
 
-#: modules/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:648
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sólarupprás: %s / Sólsetur: %s"
@@ -2068,6 +1687,12 @@ msgstr "_Hjálp"
 msgid "Time _Settings"
 msgstr "Tíma_stillingar"
 
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:566
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "_Loka"
+
 #: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Snið klukku"
@@ -2099,6 +1724,10 @@ msgstr "Sýna_veður"
 #: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Sýna_hitastig"
+
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "Bæt_a við"
 
 #: modules/clock/clock.ui:697
 msgid "_Edit"
@@ -2132,7 +1761,7 @@ msgstr "Eining _vindhraða"
 msgid "Weather"
 msgstr "Veður"
 
-#: modules/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -2146,26 +1775,26 @@ msgstr ""
 "Við mælum eindregið gegn því að þú notir %s fyrir eitthvað\n"
 "sem myndi gera þetta smáforrit \"praktískt\" eða gagnlegt."
 
-#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fiskurinn %s"
 
-#: modules/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Fiskurinn %s, nútíma völva"
 
-#: modules/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "Get ekki fundið skipunina sem á að keyra"
 
-#: modules/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Fiskurinn %s segir:"
 
-#: modules/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2176,16 +1805,16 @@ msgstr ""
 "\n"
 "Nánar:%s"
 
-#: modules/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:565
 msgid "_Speak again"
 msgstr "_Talaðu aftur"
 
-#: modules/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:637
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Stillta skipuninn er ekki að virka og hefur verið skipt út fyrir: %s"
 
-#: modules/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:666
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2196,7 +1825,7 @@ msgstr ""
 "\n"
 "Nánar:%s"
 
-#: modules/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:682
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2207,15 +1836,15 @@ msgstr ""
 "\n"
 "Nánar:%s"
 
-#: modules/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1065
 msgid "The water needs changing"
 msgstr "Það þarf að skipta um vatn"
 
-#: modules/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1067
 msgid "Look at today's date!"
 msgstr "Sjá dagsetningu dagsins í dag!"
 
-#: modules/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1161
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fiskurinn %s, spákonan"
@@ -2264,42 +1893,418 @@ msgstr "sekúndur"
 msgid "_Rotate on vertical panels"
 msgstr "_Snúa á lóðréttri stiku"
 
-#: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
-#, c-format
-#| msgid "Browse and run installed applications"
-msgid "Please install the '%s' application."
-msgstr "Settu upp '%s' forritið."
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "_Ræsa"
 
-#: modules/menu/gp-menu-bar-applet.c:131
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Forrit"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Forrit í útstöð"
+
+#: modules/launcher/gp-editor.c:43
+#| msgid "Directory Properties"
+msgid "Directory"
+msgstr "Mappa"
+
+#: modules/launcher/gp-editor.c:44
+#| msgid "_File:"
+msgid "File"
+msgstr "Skrá"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+#| msgid "Choose a file..."
+msgid "Choose Icon File"
+msgstr "Veldu táknmyndarskrá..."
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "_Opna"
+
+#: modules/launcher/gp-editor.c:347
+#| msgid "Choose an icon"
+msgid "Choose Icon Name"
+msgstr "Veldu heiti táknmyndar"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Veldu forrit..."
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+#| msgid "Choose a file..."
+msgid "Choose a directory..."
+msgstr "Veldu möppu..."
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Veldu skrá..."
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "_Skipun:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "_Staðsetning:"
+
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Gerð:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Nafn:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "_Flakka..."
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "A_thugasemd:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+#| msgid "All Day"
+msgid "All"
+msgstr "Allt"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+#| msgid "Select an animation"
+msgid "Select Icon Name"
+msgstr "Veldu heiti táknmyndar"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Velja"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr "Samhengi:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+#| msgid "_Location Name:"
+msgid "Icon Names:"
+msgstr "Heiti táknmynda:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr "Einungis birta staðlaðar táknmyndir"
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(tómt)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr ""
+
+#: modules/launcher/gp-launcher-applet.c:885
+#| msgid "Could not open location '%s'"
+msgid "Could not open location"
+msgstr "Gat ekki opnað staðsetninguna"
+
+#: modules/launcher/gp-launcher-applet.c:1008
+#, c-format
+#| msgid "Failed to load %s: %s\n"
+msgid "Failed to load key file “%s”: %s"
+msgstr "Mistókst að hlaða inn lykilskránni \"%s\": %s"
+
+#: modules/launcher/gp-launcher-module.c:57
+msgid "Custom Application Launcher"
+msgstr "Sérsniðinn forritaræsari"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Create a new launcher"
+msgstr "Búa til nýjan ræsi"
+
+#: modules/launcher/gp-launcher-module.c:67
+msgid "Application Launcher..."
+msgstr "Forritaræsari..."
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Copy a launcher from the applications menu"
+msgstr "Afrita ræsi úr forritavalmynd"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "Get ekki vistað ræsara"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "Aftu_rkalla"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Eiginleikar ræsis"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr ""
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr ""
+
+#: modules/launcher/gp-launcher-utils.c:156
+#| msgid "The command of the launcher is not set."
+msgid "The icon of the launcher is not set."
+msgstr "Táknmynd ræsisins er ekki stillt."
+
+#: modules/launcher/gp-launcher-utils.c:164
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher is not set."
+msgstr "Tegund ræsisins er ekki tilgreind."
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, c-format
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "Tegund ræsisins verður að vera “%s” eða “%s”."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "Nafn ræsarans er ekki tilgreint."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "Ræsinum hefur ekki verið gefin skipun"
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "Staðsetning ræsarans er ekki tilgreind."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Staðsetning ræsis"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+#| msgid ""
+#| "The location of the .desktop file describing the launcher. This key is "
+#| "only relevant if the object_type key is \"launcher-object\"."
+msgid "The location of the .desktop file describing the launcher."
+msgstr "Staðsetning .desktop skrárinnar sem lýsir ræsinum."
+
+#: modules/menu/gp-lock-logout.c:966
+msgid "Switch User"
+msgstr "Skipta um notanda"
+
+#: modules/menu/gp-lock-logout.c:1049
+msgid "Hibernate"
+msgstr "Leggja í dvala"
+
+#: modules/menu/gp-lock-logout.c:1065
+msgid "Suspend"
+msgstr "Setja í bið"
+
+#: modules/menu/gp-lock-logout.c:1081
+#| msgid "Hybrid sleep"
+msgid "Hybrid Sleep"
+msgstr "Blönduð svæfing"
+
+#: modules/menu/gp-lock-logout.c:1099
+msgid "Restart"
+msgstr "Endurræsa"
+
+#: modules/menu/gp-lock-logout.c:1100
+msgid "Restart the computer"
+msgstr "Endurræsa tölvuna"
+
+#: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
 msgstr "Forrit"
 
-#: modules/menu/gp-menu-bar-applet.c:136
+#: modules/menu/gp-menu-bar-applet.c:150
 msgid "Browse and run installed applications"
 msgstr "Skoða og keyra uppsett forrit"
 
-#: modules/menu/gp-menu-bar-applet.c:160
+#: modules/menu/gp-menu-bar-applet.c:185
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
+msgid "Places"
+msgstr "Staðir"
+
+#: modules/menu/gp-menu-bar-applet.c:189
 msgid "Access documents, folders and network places"
 msgstr "Nálgast sköl, möppur og netstaði"
 
-#: modules/menu/gp-menu-bar-applet.c:181
+#: modules/menu/gp-menu-bar-applet.c:225
 msgid "System"
 msgstr "Kerfið"
 
-#: modules/menu/gp-menu-bar-applet.c:185
-#| msgid "Change desktop appearance and behavior, get help, or log out"
+#: modules/menu/gp-menu-bar-applet.c:229
 msgid "Change system appearance and behavior, or get help"
 msgstr "Breyta stillingum og útliti kerfisins, eða fá aðstoð"
 
-#: modules/menu/gp-menu-module.c:46
+#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-button-applet.c:486
+#, c-format
+msgid "Please install the '%s' application."
+msgstr "Settu upp '%s' forritið."
+
+#: modules/menu/gp-menu-module.c:375
+msgid "Main Menu"
+msgstr "Aðal valmyndin"
+
+#: modules/menu/gp-menu-module.c:376
+msgid "The main GNOME menu"
+msgstr "Aðal valmynd GNOME"
+
+#: modules/menu/gp-menu-module.c:382
+#| msgid "Menu Bar"
+msgid "Menu Button"
+msgstr "Valmyndarhnappur"
+
+#: modules/menu/gp-menu-module.c:383
+#| msgid "A custom menu bar"
+msgid "A custom menu button"
+msgstr "Sérsniðinn valmyndarhnappur"
+
+#: modules/menu/gp-menu-module.c:391
 msgid "Menu Bar"
 msgstr "Valmyndarslá"
 
-#: modules/menu/gp-menu-module.c:47
+#: modules/menu/gp-menu-module.c:392
 msgid "A custom menu bar"
 msgstr "Sérsniðin valmyndarslá"
 
-#: modules/notification-area/na-applet.c:155
+#: modules/menu/gp-menu-module.c:398
+msgid "User menu"
+msgstr "Valmynd notanda"
+
+#: modules/menu/gp-menu-module.c:399
+msgid "Menu to change your settings and log out"
+msgstr "Valmynd til að breyta stillingum og skrá þig út"
+
+#: modules/menu/gp-menu-utils.c:441
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Gat ekki ræst '%s'"
+
+#: modules/menu/gp-places-menu.c:94
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Gat ekki skannað %s eftir miðilsbreytingum"
+
+#: modules/menu/gp-places-menu.c:144
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Ófær um að festa %s"
+
+#: modules/menu/gp-places-menu.c:292
+#, c-format
+msgid "Rescan %s"
+msgstr "Endurskanna %s"
+
+#: modules/menu/gp-places-menu.c:333
+#, c-format
+msgid "Mount %s"
+msgstr "Festa %s"
+
+#. Translators: Desktop is used here as in "Desktop Folder"
+#. * (this is not the Desktop environment).
+#.
+#: modules/menu/gp-places-menu.c:446
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Skjáborð"
+
+#: modules/menu/gp-places-menu.c:447
+msgid "Open the contents of your desktop in a folder"
+msgstr "Opna innihald skjáborðsins í möppu"
+
+#: modules/menu/gp-places-menu.c:467
+msgid "Bookmarks"
+msgstr "Bókmerki"
+
+#: modules/menu/gp-places-menu.c:525
+msgid "Removable Media"
+msgstr "Fjarlæganlegir miðlar"
+
+#: modules/menu/gp-places-menu.c:579
+msgid "Network Places"
+msgstr "Netstaðir"
+
+#: modules/menu/gp-places-menu.c:604
+msgid "Recent Documents"
+msgstr "Nýleg skjöl"
+
+#: modules/menu/gp-recent-menu.c:193
+msgid "Clear the Recent Documents list?"
+msgstr "Hreinsa lista nýlegra skjala?"
+
+#: modules/menu/gp-recent-menu.c:198
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Ef þú hreinsar listann fyrir nýleg skjöl, hreinsar þú eftirfarandi:\n"
+"• Alla hluti úr Staðir → Nýleg skjöl valmyndaratriðinu.\n"
+"• Alla hluti úr listanum yfir nýleg skjöl í öllum forritum."
+
+#: modules/menu/gp-recent-menu.c:206
+msgid "C_lear"
+msgstr "Hr_einsa"
+
+#: modules/menu/gp-recent-menu.c:236
+msgid "Clear Recent Documents..."
+msgstr "Hreinsa lista yfir nýleg skjöl..."
+
+#: modules/menu/gp-recent-menu.c:241
+msgid "Clear all items from the recent documents list"
+msgstr "Hreinsa alla hluta úr lista nýlegara skjala"
+
+#: modules/menu/main-menu-menu.ui:5 modules/menu/menu-bar-menu.ui:5
+msgid "_Edit Menus"
+msgstr "_Breyta valmynd"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:5
+msgid "Icon used for button"
+msgstr "Táknmynd fyrir hnapp"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:6
+msgid ""
+"The location of the image file used as the icon for the object's button. If "
+"empty, the default icon for the menu will be used."
+msgstr ""
+"Staðsetning myndskráarinnar sem notuð verður sem tákn fyrir hnapp hlutarins. "
+"Ef tómt, verður sjálfgefið tákn fyrir valmyndina notað."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:11
+msgid "Menu content path"
+msgstr "Slóð á innihald valmyndar"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
+msgid ""
+"The path from which the menu contents is constructed. If empty, the menu "
+"will be the default applications menu."
+msgstr ""
+"Slóðin þar sem innihald valmyndarinnar er byggt.  Þessi lykill er því aðeins "
+"virkur að nota_valmyndar_slóð sé valinn og hlutar_tegund sé "
+"„valmyndarhlutur‟."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
+msgid "Show arrow on menu icon"
+msgstr "Birta ör á táknmynd valmyndar"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:22
+msgid "Tooltip displayed for menu"
+msgstr "Ábending birt fyrir valmynd"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:23
+msgid "The text to display in a tooltip for this menu."
+msgstr "Texti til birtningar í ábendingu fyrir þessa valmynd."
+
+#: modules/notification-area/na-applet.c:173
 msgid "Panel Notification Area"
 msgstr "Tilkynningasvæði stiku"
 
@@ -2327,24 +2332,24 @@ msgstr "Stöðutilkynningahýsill"
 msgid "Display all Status Notifier Items"
 msgstr "Birta öll atriði stöðutilkynninga"
 
-#: modules/wncklet/showdesktop.c:100
+#: modules/wncklet/showdesktop.c:71
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Mistókst að hlaða %s:%s\n"
 
-#: modules/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:72
 msgid "Icon not found"
 msgstr "Táknmynd fannst ekki"
 
-#: modules/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:103
 msgid "Click here to restore hidden windows."
 msgstr "Smelltu hér til að endurheimta falda glugga."
 
-#: modules/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Smelltu hér til að fela alla glugga og sýna skjáborðið."
 
-#: modules/wncklet/showdesktop.c:214
+#: modules/wncklet/showdesktop.c:136
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2352,7 +2357,7 @@ msgstr ""
 "Gluggastjórinn þinn styður ekki að sýna skjáborðið hnappinn eða þú ert ekki "
 "að keyra gluggastjóra."
 
-#: modules/wncklet/showdesktop.c:411
+#: modules/wncklet/showdesktop.c:333
 msgid "Show Desktop Button"
 msgstr "Sýna skjáborðið hnappur"
 
@@ -2484,6 +2489,201 @@ msgstr "Sýna _nöfn á vinnusvæðum í skiptara"
 msgid "Workspaces"
 msgstr "Vinnusvæði"
 
+#~ msgid "Icon size in the menus"
+#~ msgstr "Táknmyndastærð í valmyndum"
+
+#~ msgid "Icon size for only Applications item in the Menu Bar applet"
+#~ msgstr ""
+#~ "Stærð táknmynda einungis fyrir forrit í smáforriti fyrir valmyndastiku"
+
+#~ msgid "X co-ordinate of panel"
+#~ msgstr "X-hnit stiku"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Staðsetning stikunnar á x-ásnum. Þessi lykil er aðeins viðeigandi í "
+#~ "óþöndum ham. Í þöndum ham er horft fram hjá þessum lykli og stikan er "
+#~ "sett á þá brún sem tilgreind er með snúningslyklinum."
+
+#~ msgid "Y co-ordinate of panel"
+#~ msgstr "Y-hnit stiku"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Staðsetning stikunnar á y-ásnum. Þessi lykil er aðeins viðeigandi í "
+#~ "óþöndum ham. Í þöndum ham er horft fram hjá þessum lykli og stikan er "
+#~ "sett á þá brún sem tilgreind er með snúningslyklinum."
+
+#~ msgid "X co-ordinate of panel, starting from the right of the screen"
+#~ msgstr "X hnit skjástikunnar, sem byrjar frá hægri hlið skjásins"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis, starting from the right of "
+#~ "the screen. If set to -1, the value is ignored and the value of the x key "
+#~ "is used. If the value is greater than 0, then the value of the x key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Staðsetning skjástikunnar eftir x-ás, sem byrjar frá hægri hluta "
+#~ "skjásins. Ef það er skráð sem -1, þá verður gildið hunsað og gildið fyrir "
+#~ "x lykilinn notað. Ef gildið er stærra en 0, þá verður gildi x lykilsins "
+#~ "notað. Þessi lykill á einungis við í óútvíkkuðum ham. Í útvíkkuðum ham er "
+#~ "þessi lykill hunsaður og skjástikan er staðsett á skjájaðri sem er "
+#~ "tilgreindur með áttunarlykli."
+
+#~ msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+#~ msgstr "Y hnit skjástikunnar, sem byrjar frá botni skjásins"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis, starting from the bottom of "
+#~ "the screen. If set to -1, the value is ignored and the value of the y key "
+#~ "is used. If the value is greater than 0, then the value of the y key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Staðsetning skjástikunnar eftir y-ás, sem byrjar frá hægri hluta "
+#~ "skjásins. Ef það er skráð sem -1, þá verður gildið hunsað og gildið fyrir "
+#~ "y lykilinn notað. Ef gildið er stærra en 0, þá verður gildi y lykilsins "
+#~ "notað. Þessi lykill á einungis við í óútvíkkuðum ham. Í útvíkkuðum ham er "
+#~ "þessi lykill hunsaður og skjástikan er staðsett á skjájaðri sem er "
+#~ "tilgreindur með áttunarlykli."
+
+#~ msgid "Center panel on x-axis"
+#~ msgstr "Miðja stiku á x-ás"
+
+#~ msgid ""
+#~ "If true, the x and x_right keys are ignored and the panel is placed at "
+#~ "the center of the x-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the x and x_right keys specify the location of the panel."
+#~ msgstr ""
+#~ "Ef satt, þá verður x og x_hægri lyklarnir hunsaðir og skjástikan staðsett "
+#~ "í miðju x-ás skjásins. Ef stærð skjástikunnar er breytt mun hún halda "
+#~ "þeirri stöðu - þ.e. skjástikan mun stækka á báða vegu. Ef ekki satt, þá "
+#~ "mun x og x_hægri lyklarnir tilgreina staðsetningu skjástikunnar."
+
+#~ msgid "Center panel on y-axis"
+#~ msgstr "Miðja stiku á y-ás"
+
+#~ msgid ""
+#~ "If true, the y and y_bottom keys are ignored and the panel is placed at "
+#~ "the center of the y-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the y and y_bottom keys specify the location of the panel."
+#~ msgstr ""
+#~ "Ef satt, þá verður y og y_botn lyklarnir hunsaðir og skjástikan staðsett "
+#~ "í miðju y-ás skjásins. Ef stærð skjástikunnar er breytt mun hún halda "
+#~ "þeirri stöðu - þ.e. skjástikan mun stækka á báða vegu. Ef ekki satt, þá "
+#~ "mun y og y_botn lyklarnir tilgreina staðsetningu skjástikunnar."
+
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "Create new file in the given directory"
+#~ msgstr "Búa til nýja skrá í gefinni möppu"
+
+#~ msgid "[FILE...]"
+#~ msgstr "[SKRÁ...]"
+
+#~ msgid "- Edit .desktop files"
+#~ msgstr "- Breyta .desktop skrám"
+
+#~ msgid "Create Launcher"
+#~ msgstr "Búa til ræsi"
+
+#~ msgid "gnome-panel"
+#~ msgstr "gnome-panel"
+
+#~ msgid "Could not show this URL"
+#~ msgstr "Gat ekki sýnt þetta veffang"
+
+#~ msgid "No URL was specified."
+#~ msgstr "Ekkert veffang var gefið."
+
+#~ msgid "Could not use dropped item"
+#~ msgstr "Gat ekki notað slepptan hlut"
+
+#~ msgid "No URI provided for panel launcher desktop file\n"
+#~ msgstr "Ekkert URI var gefið fyrir skjáborðskrá stikuræsis\n"
+
+#, c-format
+#~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+#~ msgstr "Gat ekki opnað skjáborðsskrá %s fyrir stikuræsis %s%s\n"
+
+#~ msgid "Launcher location is not set, cannot load launcher\n"
+#~ msgstr "Staðsetning ræsis er ekki stillt, get ekki keyrt upp ræsi\n"
+
+#~ msgid "Search for Files..."
+#~ msgstr "Leita að skrám..."
+
+#~ msgid "Locate documents and folders on this computer by name or content"
+#~ msgstr "Staðsetja skrár og möppur á þessari tölvu eftir nafni eða innihaldi"
+
+#~ msgid "Find an _item to add to the panel:"
+#~ msgstr "Finna _hlut til þess að bæta við skjástiku:"
+
+#~ msgid "_Forward"
+#~ msgstr "Á_fram"
+
+#~ msgid "_Back"
+#~ msgstr "Til_baka"
+
+#~ msgid "Location"
+#~ msgstr "Staðsetning"
+
+#~ msgid "Could not save directory properties"
+#~ msgstr "Ekki var hægt að vista eigindi möppu"
+
+#~ msgid "The name of the directory is not set."
+#~ msgstr "Heiti möppu hefur ekki verið valið"
+
+#~ msgid "Image widget"
+#~ msgstr "Myndviðmótshluti (widget)"
+
+#~ msgid "Child widget to appear next to the menu text"
+#~ msgstr "Undirviðmótshluti sem birtist næst texta valmyndarinnar"
+
+#~ msgid "Always show image"
+#~ msgstr "Alltaf birta mynd"
+
+#~ msgid "Whether the image will always be shown"
+#~ msgstr "Hvort alltaf eigi að sýna myndina"
+
+#, c-format
+#~ msgid "Could not open recently used document \"%s\""
+#~ msgstr "Gat ekki opnað nýlega notað skjal \"%s\""
+
+#, c-format
+#~ msgid "An unknown error occurred while trying to open \"%s\"."
+#~ msgstr "Óþekkt villa kom upp þegar reynt var að opna \"%s\"."
+
+#~ msgid "Clear Recent Documents"
+#~ msgstr "Hreinsa nýleg skjöl"
+
+#~ msgid "Top Floating Panel"
+#~ msgstr "Fljótandi efristika"
+
+#~ msgid "Bottom Floating Panel"
+#~ msgstr "Fljótandi neðristika"
+
+#~ msgid "Left Floating Panel"
+#~ msgstr "Fljótandi vinstristika"
+
+#~ msgid "Right Floating Panel"
+#~ msgstr "Fljótandi hægristika"
+
+#, c-format
+#~ msgid "Icon '%s' not found"
+#~ msgstr "Táknmynd ,%s' fannst ekki"
+
 #~ msgid "No application to handle search folders is installed."
 #~ msgstr "Ekkert forrit til meðhöndlunar leitamappa er uppsett."
 
@@ -2548,9 +2748,6 @@ msgstr "Vinnusvæði"
 
 #~ msgid "Close"
 #~ msgstr "Loka"
-
-#~ msgid "_Applet:"
-#~ msgstr "S_máforrit:"
 
 #~ msgid "X screen where the panel is displayed"
 #~ msgstr "X skjá sem stikan er birt á"
@@ -2908,12 +3105,6 @@ msgstr "Vinnusvæði"
 
 #~ msgid "<b>General</b>"
 #~ msgstr "<b>Almennar</b>"
-
-#~ msgid "Select an animation"
-#~ msgstr "Veldu hreyfimynd"
-
-#~ msgid "_File:"
-#~ msgstr "_Skrá:"
 
 #~ msgid "_Total frames in animation:"
 #~ msgstr "_Fjöldi ramma í hreyfimynd:"
