@@ -212,7 +212,7 @@ AC_CHECK_FUNCS(nl_langinfo)
 
 PKG_CHECK_MODULES([CLOCK], [
   dconf >= $DCONF_REQUIRED
-  geocode-glib-1.0
+  geocode-glib-2.0
   gio-2.0 >= $GLIB_REQUIRED
   gio-unix-2.0 >= $GLIB_REQUIRED
   glib-2.0 >= $GLIB_REQUIRED
