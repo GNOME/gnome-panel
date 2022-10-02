@@ -202,30 +202,6 @@ theme_changed_callback (GtkIconTheme      *icon_theme,
 	update_icon (sdd);
 }
 
-static void
-applet_destroyed (GtkWidget         *applet,
-                  ShowDesktopApplet *sdd)
-{
-	if (sdd->button_activate != 0) {
-		g_source_remove (sdd->button_activate);
-		sdd->button_activate = 0;
-	}
-
-	if (sdd->wnck_screen != NULL) {
-		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
-						      show_desktop_changed_callback,
-						      sdd);
-		sdd->wnck_screen = NULL;
-	}
-
-	if (sdd->icon_theme != NULL) {
-		g_signal_handlers_disconnect_by_func (sdd->icon_theme,
-						      theme_changed_callback,
-						      sdd);
-		sdd->icon_theme = NULL;
-	}
-}
-
 static gboolean
 do_not_eat_button_press (GtkWidget      *widget,
                          GdkEventButton *event)
@@ -350,10 +326,6 @@ show_desktop_applet_fill (GpApplet *applet)
                           G_CALLBACK (panel_icon_size_cb),
                           sdd);
 
-        g_signal_connect (sdd, "destroy",
-                          G_CALLBACK (applet_destroyed),
-                          sdd);
-
 	gtk_drag_dest_set (GTK_WIDGET(sdd->button), 0, NULL, 0, 0);
 
 	g_signal_connect (G_OBJECT(sdd->button), "drag_motion",
@@ -380,6 +352,25 @@ show_desktop_applet_dispose (GObject *object)
 	ShowDesktopApplet *sdd;
 
 	sdd = SHOW_DESKTOP_APPLET (object);
+
+	if (sdd->button_activate != 0) {
+		g_source_remove (sdd->button_activate);
+		sdd->button_activate = 0;
+	}
+
+	if (sdd->wnck_screen != NULL) {
+		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
+		                                      show_desktop_changed_callback,
+		                                      sdd);
+		sdd->wnck_screen = NULL;
+	}
+
+	if (sdd->icon_theme != NULL) {
+		g_signal_handlers_disconnect_by_func (sdd->icon_theme,
+		                                      theme_changed_callback,
+		                                      sdd);
+		sdd->icon_theme = NULL;
+	}
 
 	g_clear_object (&sdd->handle);
 
