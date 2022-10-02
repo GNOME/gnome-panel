@@ -198,6 +198,9 @@ main (int argc, char *argv[])
   session = gp_session_new (replace, autostart_id != NULL ? autostart_id : "");
   g_unsetenv ("DESKTOP_AUTOSTART_ID");
 
+  g_unsetenv ("GNOME_TERMINAL_SCREEN");
+  g_unsetenv ("GNOME_TERMINAL_SERVICE");
+
   g_signal_connect (session,
                     "name-lost",
                     G_CALLBACK (name_lost_cb),
