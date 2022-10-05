@@ -4,19 +4,13 @@ SUBDIRS = \
 	libgnome-panel \
 	modules \
 	gnome-panel \
-	docs \
 	help \
 	data \
 	man \
 	po \
 	$(NULL)
 
-AM_DISTCHECK_CONFIGURE_FLAGS = \
-	--enable-gtk-doc \
-	$(NULL)
-
 EXTRA_DIST = \
-	COPYING-DOCS \
 	HACKING \
 	README.md \
 	$(NULL)
@@ -31,7 +25,6 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/INSTALL \
 	$(srcdir)/config.h.in~ \
 	$(srcdir)/configure \
-	$(srcdir)/gtk-doc.make \
 	$(srcdir)/po/Makefile.in.in \
 	$(srcdir)/po/Makevars.template \
 	$(srcdir)/po/Rules-quot \

@@ -256,10 +256,6 @@ dnl **************************************************************************
 
 AC_STRUCT_DIRENT_D_TYPE
 
-dnl gtk-doc stuff
-
-GTK_DOC_CHECK([1.25], [--flavour no-tmpl])
-
 dnl yelp-tools stuff
 
 YELP_HELP_INIT
@@ -291,10 +287,6 @@ AC_CONFIG_FILES([
   gnome-panel/libpanel-util/Makefile
 
   libgnome-panel/Makefile
-
-  docs/Makefile
-  docs/reference/Makefile
-  docs/reference/libgnome-panel/Makefile
 
   help/Makefile
   help/clock/Makefile
@@ -345,5 +337,4 @@ echo ""
 echo "  Maintainer mode .................: ${USE_MAINTAINER_MODE}"
 echo ""
 echo "  Evolution-Data-Server support ...: ${enable_eds}"
-echo "  Build gtk-doc documentation .....: ${enable_gtk_doc}"
 echo ""
