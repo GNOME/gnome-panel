@@ -457,6 +457,10 @@ window_list_applet_fill (GpApplet *applet)
 	wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
 	                               icon_loader_func, tasklist, NULL);
 
+	g_object_bind_property (tasklist, "enable-tooltips",
+	                        tasklist->tasklist, "tooltips-enabled",
+	                        G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
 			  tasklist);
