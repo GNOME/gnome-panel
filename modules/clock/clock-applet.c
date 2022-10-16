@@ -210,18 +210,6 @@ update_clock (GnomeWallClock *wall_clock, GParamSpec *pspec, ClockApplet *cd)
                 clock_map_update_time (CLOCK_MAP (cd->map_widget));
 }
 
-static void
-free_locations (ClockApplet *cd)
-{
-        GList *l;
-
-        for (l = cd->locations; l; l = l->next)
-                g_object_unref (l->data);
-
-        g_list_free (cd->locations);
-        cd->locations = NULL;
-}
-
 static gboolean
 close_on_escape (GtkWidget       *widget,
 		 GdkEventKey     *event,
@@ -1750,7 +1738,10 @@ clock_applet_dispose (GObject *object)
 
         g_clear_object (&applet->world);
 
-        free_locations (applet);
+        if (applet->locations != NULL) {
+                g_list_free_full (applet->locations, g_object_unref);
+                applet->locations = NULL;
+        }
 
         if (applet->location_tiles != NULL) {
                 g_list_free (applet->location_tiles);
