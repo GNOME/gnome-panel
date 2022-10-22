@@ -1711,11 +1711,11 @@ calendar_window_set_property (GObject       *object,
 static void
 calendar_window_dispose (GObject *object)
 {
-#ifdef HAVE_EDS
 	CalendarWindow *calwin;
 
 	calwin = CALENDAR_WINDOW (object);
 
+#ifdef HAVE_EDS
         if (calwin->priv->client)
                 g_object_unref (calwin->priv->client);
         calwin->priv->client = NULL;
@@ -1743,9 +1743,9 @@ calendar_window_dispose (GObject *object)
         if (calwin->priv->weather_filter)
                 g_object_unref (calwin->priv->weather_filter);
         calwin->priv->weather_filter = NULL;
+#endif /* HAVE_EDS */
 
 	g_clear_object (&calwin->priv->settings);
-#endif /* HAVE_EDS */
 
 	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
 }
