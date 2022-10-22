@@ -75,6 +75,8 @@ GDesktopClockFormat calendar_window_get_time_format (CalendarWindow      *calwin
 void                calendar_window_set_time_format (CalendarWindow      *calwin,
 						     GDesktopClockFormat  time_format);
 
+GPermission *calendar_window_get_permission (CalendarWindow *self);
+
 G_END_DECLS
 
 #endif /* CALENDAR_WINDOW_H */

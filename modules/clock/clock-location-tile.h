@@ -45,5 +45,8 @@ void weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, Gt
 void clock_location_tile_refresh (ClockLocationTile *this,
                                   gboolean           force_refresh);
 
+void clock_location_tile_set_permission (ClockLocationTile *self,
+                                         GPermission       *permission);
+
 G_END_DECLS
 #endif /* __CLOCK_H__ */

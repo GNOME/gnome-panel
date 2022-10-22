@@ -22,22 +22,12 @@
 #endif
 
 #include <gio/gio.h>
-#include <polkit/polkit.h>
 
 #include "set-timezone.h"
-
-#define CACHE_VALIDITY_SEC 20
 
 #define MECHANISM_BUS_NAME    "org.freedesktop.timedate1"
 #define MECHANISM_OBJECT_PATH "/org/freedesktop/timedate1"
 #define MECHANISM_INTERFACE   "org.freedesktop.timedate1"
-
-typedef struct {
-  gint     value;
-  guint64  stamp;
-} Cache;
-
-static Cache can_set_timezone_cache;
 
 static GDBusConnection *
 get_system_bus (GError **error)
@@ -56,57 +46,6 @@ get_system_bus (GError **error)
     *error = g_error_copy (saved_error);
 
   return system;
-}
-
-static int
-can_set (Cache *cache, const gchar *method_name)
-{
-  guint64 now = g_get_monotonic_time ();
-
-  if (now - cache->stamp > (CACHE_VALIDITY_SEC * 1000000))
-    {
-      PolkitAuthority *authority;
-      PolkitSubject   *subject;
-      PolkitAuthorizationResult *res;
-
-      authority = polkit_authority_get_sync (NULL, NULL);
-      subject = polkit_unix_session_new_for_process_sync (getpid (), NULL, NULL);
-
-      res = polkit_authority_check_authorization_sync (authority,
-                                                       subject,
-                                                       "org.freedesktop.timedate1.set-timezone",
-                                                       NULL,
-                                                       POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE,
-                                                       NULL,
-                                                       NULL);
-
-	cache->stamp = g_get_monotonic_time ();
-
-        if (res == NULL)
-          cache->value = 0;
-        else
-          {
-            if (polkit_authorization_result_get_is_authorized (res))
-              cache->value = 2;
-            else if (polkit_authorization_result_get_is_challenge (res))
-              cache->value = 1;
-            else
-              cache->value = 0;
-
-            g_object_unref (res);
-          }
-
-        g_object_unref (authority);
-        g_object_unref (subject);
-    }
-
-  return cache->value;
-}
-
-gint
-can_set_system_timezone (void)
-{
-  return can_set (&can_set_timezone_cache, "CanSetTimezone");
 }
 
 gboolean

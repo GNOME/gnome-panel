@@ -492,11 +492,22 @@ location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
 }
 
 static void
+permission_ready_cb (CalendarWindow    *window,
+                     ClockLocationTile *tile)
+{
+        GPermission *permission;
+
+        permission = calendar_window_get_permission (window);
+        clock_location_tile_set_permission (tile, permission);
+}
+
+static void
 create_cities_section (ClockApplet *cd)
 {
         GList *node;
         ClockLocationTile *city;
         GList *cities;
+        GPermission *permission;
 
         if (cd->cities_section) {
                 gtk_widget_destroy (cd->cities_section);
@@ -517,6 +528,8 @@ create_cities_section (ClockApplet *cd)
                 return;
         }
 
+        permission = calendar_window_get_permission (CALENDAR_WINDOW (cd->calendar_popup));
+
         /* Copy the existing list, so we can sort it nondestructively */
         node = g_list_copy (cities);
         node = g_list_sort (node, sort_locations_by_time);
@@ -526,6 +539,17 @@ create_cities_section (ClockApplet *cd)
                 ClockLocation *loc = node->data;
 
                 city = clock_location_tile_new (loc);
+
+                if (permission != NULL) {
+                        clock_location_tile_set_permission (city, permission);
+                } else {
+                        g_signal_connect_object (cd->calendar_popup,
+                                                 "permission-ready",
+                                                 G_CALLBACK (permission_ready_cb),
+                                                 city,
+                                                 0);
+                }
+
                 g_signal_connect (city, "tile-pressed",
                                   G_CALLBACK (location_tile_pressed_cb), cd);
                 g_signal_connect (city, "need-clock-format",

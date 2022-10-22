@@ -42,6 +42,8 @@ struct _ClockLocationTilePrivate {
         GtkWidget *weather_icon;
 
 	gulong location_weather_updated_id;
+
+        GPermission *permission;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
@@ -81,10 +83,23 @@ clock_location_tile_new (ClockLocation *loc)
 }
 
 static void
+clock_location_tile_dispose (GObject *object)
+{
+  ClockLocationTile *self;
+
+  self = CLOCK_LOCATION_TILE (object);
+
+  g_clear_object (&self->priv->permission);
+
+  G_OBJECT_CLASS (clock_location_tile_parent_class)->dispose (object);
+}
+
+static void
 clock_location_tile_class_init (ClockLocationTileClass *this_class)
 {
         GObjectClass *g_obj_class = G_OBJECT_CLASS (this_class);
 
+        g_obj_class->dispose = clock_location_tile_dispose;
         g_obj_class->finalize = clock_location_tile_finalize;
 
 	signals[TILE_PRESSED] = g_signal_new ("tile-pressed",
@@ -209,10 +224,18 @@ enter_or_leave_tile (GtkWidget             *widget,
 	if (event->type == GDK_ENTER_NOTIFY) {
 		gint can_set;
 
+		can_set = 0;
+
+		if (priv->permission != NULL) {
+			if (g_permission_get_allowed (priv->permission))
+				can_set = 2;
+			else if (g_permission_get_can_acquire (priv->permission))
+				can_set = 1;
+		}
+
 		if (clock_location_is_current_timezone (priv->location))
 			can_set = 2;
-		else
-			can_set = can_set_system_timezone ();
+
 		if (can_set != 0) {
 			gtk_label_set_markup (GTK_LABEL (priv->current_label),
 						can_set == 1 ?
@@ -692,4 +715,12 @@ clock_location_tile_get_location (ClockLocationTile *this)
 	g_return_val_if_fail (IS_CLOCK_LOCATION_TILE (this), NULL);
 
 	return g_object_ref (this->priv->location);
+}
+
+void
+clock_location_tile_set_permission (ClockLocationTile *self,
+                                    GPermission       *permission)
+{
+  g_clear_object (&self->priv->permission);
+  self->priv->permission = g_object_ref (permission);
 }

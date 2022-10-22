@@ -22,8 +22,6 @@
 #include <glib.h>
 #include <time.h>
 
-gint     can_set_system_timezone (void);
-
 void     set_system_timezone_async   (const gchar          *tz,
                                       GAsyncReadyCallback   callback,
                                       gpointer              user_data);

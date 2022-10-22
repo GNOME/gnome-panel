@@ -39,6 +39,7 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <polkit/polkit.h>
 
 #include "calendar-window.h"
 
@@ -62,6 +63,7 @@
 
 enum {
 	EDIT_LOCATIONS,
+	PERMISSION_READY,
 	LAST_SIGNAL
 };
 
@@ -99,6 +101,9 @@ struct _CalendarWindowPrivate {
         GtkTreeModelFilter *tasks_filter;
         GtkTreeModelFilter *weather_filter;
 #endif /* HAVE_EDS */
+
+	GCancellable *cancellable;
+	GPermission *permission;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
@@ -1617,6 +1622,40 @@ calendar_window_get_locations_box (CalendarWindow *calwin)
 	return calwin->priv->locations_list;
 }
 
+static void
+permission_cb (GObject      *object,
+               GAsyncResult *res,
+               gpointer      user_data)
+{
+  GError *error;
+  GPermission *permission;
+  CalendarWindow *self;
+
+  error = NULL;
+  permission = polkit_permission_new_finish (res, &error);
+
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      return;
+    }
+
+  self = CALENDAR_WINDOW (user_data);
+
+  g_clear_object (&self->priv->cancellable);
+
+  if (error != NULL)
+    {
+      g_warning ("%s", error->message);
+      g_error_free (error);
+      return;
+    }
+
+  self->priv->permission = permission;
+
+  g_signal_emit (self, signals[PERMISSION_READY], 0);
+}
+
 static GObject *
 calendar_window_constructor (GType                  type,
 			     guint                  n_construct_properties,
@@ -1747,6 +1786,13 @@ calendar_window_dispose (GObject *object)
 
 	g_clear_object (&calwin->priv->settings);
 
+	if (calwin->priv->cancellable != NULL) {
+		g_cancellable_cancel (calwin->priv->cancellable);
+		g_clear_object (&calwin->priv->cancellable);
+	}
+
+	g_clear_object (&calwin->priv->permission);
+
 	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
 }
 
@@ -1772,6 +1818,17 @@ calendar_window_class_init (CalendarWindowClass *klass)
 						NULL,
 						NULL,
 						G_TYPE_NONE, 0);
+
+	signals[PERMISSION_READY] =
+		g_signal_new ("permission-ready",
+		              G_TYPE_FROM_CLASS (gobject_class),
+		              G_SIGNAL_RUN_FIRST,
+		              0,
+		              NULL,
+		              NULL,
+		              NULL,
+		              G_TYPE_NONE,
+		              0);
 
 	g_object_class_install_property (
 		gobject_class,
@@ -1830,6 +1887,13 @@ calendar_window_init (CalendarWindow *calwin)
 #ifdef HAVE_EDS
 	calwin->priv->previous_selection = NULL;
 #endif
+
+	calwin->priv->cancellable = g_cancellable_new ();
+	polkit_permission_new ("org.freedesktop.timedate1.set-timezone",
+	                       NULL,
+	                       calwin->priv->cancellable,
+	                       permission_cb,
+	                       calwin);
 }
 
 GtkWidget *
@@ -1996,4 +2060,10 @@ calendar_window_set_locked_down (CalendarWindow *calwin,
 	calwin->priv->locked_down = locked_down;
 
 	g_object_notify (G_OBJECT (calwin), "locked-down");
+}
+
+GPermission *
+calendar_window_get_permission (CalendarWindow *self)
+{
+  return self->priv->permission;
 }
