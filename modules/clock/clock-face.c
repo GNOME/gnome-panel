@@ -22,8 +22,6 @@
 
 #define CLOCK_FACE_SIZE 48
 
-static GHashTable *pixbuf_cache = NULL;
-
 static void     clock_face_finalize             (GObject *);
 static gboolean clock_face_draw                 (GtkWidget     *clock,
                                                  cairo_t       *cr);
@@ -256,19 +254,6 @@ clock_face_finalize (GObject *obj)
         }
 
         G_OBJECT_CLASS (clock_face_parent_class)->finalize (obj);
-
-        if (pixbuf_cache && g_hash_table_size (pixbuf_cache) == 0) {
-                g_hash_table_destroy (pixbuf_cache);
-                pixbuf_cache = NULL;
-        }
-}
-
-/* The pixbuf is being disposed, so remove it from the cache */
-static void
-remove_pixbuf_from_cache (const char *key,
-                          GObject    *pixbuf)
-{
-        g_hash_table_remove (pixbuf_cache, key);
 }
 
 static void
@@ -278,17 +263,9 @@ clock_face_load_face (ClockFace *this)
         const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
         int width;
         int height;
-	gchar *cache_name;
 	gchar *name;
 
-        if (!pixbuf_cache)
-                pixbuf_cache = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                      g_free, NULL);
-
         if (priv->face_pixbuf != NULL) {
-                /* This might empty the cache, but it's useless to destroy
-                 * it since this object is still alive and might add another
-                 * pixbuf in the cache later (eg, a few lines below) */
                 g_object_unref (priv->face_pixbuf);
                 priv->face_pixbuf = NULL;
         }
@@ -296,18 +273,6 @@ clock_face_load_face (ClockFace *this)
         width = CLOCK_FACE_SIZE;
         height = CLOCK_FACE_SIZE;
 
-        /* Look for the pixbuf in the process-wide cache first */
-        cache_name = g_strdup_printf ("%d-%d-%d",
-                                      priv->timeofday,
-                                      width, height);
-
-        priv->face_pixbuf = g_hash_table_lookup (pixbuf_cache, cache_name);
-        if (priv->face_pixbuf) {
-                g_object_ref (priv->face_pixbuf);
-                return;
-        }
-
-        /* The pixbuf is not cached, let's load it */
 	name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
 	                    "clock-face-small-", daytime_string[priv->timeofday], ".svg",
 	                    NULL);
@@ -323,16 +288,4 @@ clock_face_load_face (ClockFace *this)
 		                                                           FALSE, NULL);
                 g_free (name);
         }
-
-        /* Save the found pixbuf in the cache */
-        if (priv->face_pixbuf) {
-                g_hash_table_replace (pixbuf_cache,
-                                      cache_name, priv->face_pixbuf);
-                /* This will handle automatic removal from the cache when
-                 * the pixbuf isn't needed anymore */
-                g_object_weak_ref (G_OBJECT (priv->face_pixbuf),
-                                   (GWeakNotify) remove_pixbuf_from_cache,
-                                   cache_name);
-        } else
-                g_free (cache_name);
 }
