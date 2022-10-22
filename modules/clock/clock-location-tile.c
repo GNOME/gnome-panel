@@ -29,8 +29,6 @@ struct _ClockLocationTilePrivate {
         GDateTime *last_refresh;
 	long last_offset;
 
-        ClockFaceSize size;
-
 	GtkWidget *box;
         GtkWidget *clock_face;
         GtkWidget *city_label;
@@ -59,8 +57,7 @@ static gboolean weather_tooltip (GtkWidget *widget,
 		                 gpointer    data);
 
 ClockLocationTile *
-clock_location_tile_new (ClockLocation *loc,
-			 ClockFaceSize size)
+clock_location_tile_new (ClockLocation *loc)
 {
         ClockLocationTile *this;
         ClockLocationTilePrivate *priv;
@@ -69,7 +66,6 @@ clock_location_tile_new (ClockLocation *loc,
         priv = this->priv;
 
         priv->location = g_object_ref (loc);
-        priv->size = size;
 
         clock_location_tile_fill (this);
 
@@ -121,8 +117,6 @@ clock_location_tile_init (ClockLocationTile *this)
 
 	priv->last_refresh = NULL;
 	priv->last_offset = 0;
-
-        priv->size = CLOCK_FACE_SMALL;
 
         priv->clock_face = NULL;
         priv->city_label = NULL;
@@ -341,7 +335,7 @@ clock_location_tile_fill (ClockLocationTile *this)
                           G_CALLBACK (make_current), this);
 
         priv->clock_face = clock_face_new_with_location (
-                priv->size, priv->location, head_section);
+                priv->location, head_section);
 
         gtk_box_pack_start (GTK_BOX (tile), priv->clock_face, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (tile), head_section, TRUE, TRUE, 0);
@@ -371,11 +365,6 @@ clock_needs_face_refresh (ClockLocationTile *this)
             || g_date_time_get_hour (now) > g_date_time_get_hour (priv->last_refresh)
             || g_date_time_get_minute (now) > g_date_time_get_minute (priv->last_refresh)) {
 		retval = TRUE;
-        }
-
-        if ((priv->size == CLOCK_FACE_LARGE)
-            && g_date_time_get_second (now) > g_date_time_get_second (priv->last_refresh)) {
-                retval = TRUE;
         }
 
 	g_date_time_unref (now);

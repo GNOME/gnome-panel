@@ -35,8 +35,7 @@ typedef struct
 
 GType clock_location_tile_get_type (void);
 
-ClockLocationTile *clock_location_tile_new (ClockLocation *loc,
-					    ClockFaceSize size);
+ClockLocationTile *clock_location_tile_new (ClockLocation *loc);
 
 ClockLocation *clock_location_tile_get_location (ClockLocationTile *this);
 

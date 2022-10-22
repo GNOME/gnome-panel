@@ -52,7 +52,6 @@ struct _ClockFacePrivate
 	GDateTime *time; /* the time on the clock face */
         int minute_offset; /* the offset of the minutes hand */
 
-        ClockFaceSize size;
 	ClockFaceTimeOfDay timeofday;
         ClockLocation *location;
         GdkPixbuf *face_pixbuf;
@@ -87,7 +86,6 @@ clock_face_init (ClockFace *this)
 
         priv = this->priv = clock_face_get_instance_private (this);
 
-        priv->size = CLOCK_FACE_SMALL;
         priv->timeofday = CLOCK_FACE_INVALID;
         priv->location = NULL;
         priv->size_widget = NULL;
@@ -102,22 +100,15 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         int width, height;
         double x, y;
         double radius;
-        int hours, minutes, seconds;
+        int hours, minutes;
         /* Hand lengths as a multiple of the clock radius */
-        double hour_length, min_length, sec_length;
+        double hour_length, min_length;
 
         if (GTK_WIDGET_CLASS (clock_face_parent_class)->draw)
                 GTK_WIDGET_CLASS (clock_face_parent_class)->draw (this, cr);
 
-        if (priv->size == CLOCK_FACE_LARGE) {
-                hour_length = 0.45;
-                min_length = 0.6;
-                sec_length = 0.65;
-        } else {
-                hour_length = 0.5;
-                min_length = 0.7;
-                sec_length = 0.8;   /* not drawn currently */
-        }
+        hour_length = 0.5;
+        min_length = 0.7;
 
         width = gtk_widget_get_allocated_width (this);
         height = gtk_widget_get_allocated_width (this);
@@ -137,7 +128,6 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         /* clock hands */
         hours = g_date_time_get_hour (priv->time);
         minutes = g_date_time_get_minute (priv->time) + priv->minute_offset;
-        seconds = g_date_time_get_seconds (priv->time);
 
         cairo_set_line_width (cr, 1);
 
@@ -160,19 +150,6 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         cairo_line_to (cr, x + radius * min_length * sin (M_PI / 30 * minutes),
                            y + radius * min_length * -cos (M_PI / 30 * minutes));
         cairo_stroke (cr);
-
-        /* seconds hand:
-         * operates identically to the minute hand
-         */
-        if (priv->size == CLOCK_FACE_LARGE) {
-                cairo_save (cr);
-                cairo_set_source_rgb (cr, 0.937, 0.161, 0.161); /* tango red */
-                cairo_move_to (cr, x, y);
-                cairo_line_to (cr, x + radius * sec_length * sin (M_PI / 30 * seconds),
-                               y + radius * sec_length * -cos (M_PI / 30 * seconds));
-                cairo_stroke (cr);
-                cairo_restore (cr);
-        }
 
         return FALSE;
 }
@@ -209,10 +186,7 @@ clock_face_get_preferred_width (GtkWidget *this,
         } else {
                 /* we don't know anything, so use known dimensions for the svg
                  * files */
-                if (priv->size == CLOCK_FACE_LARGE)
-                        *minimal_width = *natural_width = 50;
-                else
-                        *minimal_width = *natural_width = 36;
+                *minimal_width = *natural_width = 36;
         }
 }
 
@@ -242,10 +216,7 @@ clock_face_get_preferred_height (GtkWidget *this,
         } else {
                 /* we don't know anything, so use known dimensions for the svg
                  * files */
-                if (priv->size == CLOCK_FACE_LARGE)
-                        *minimal_height = *natural_height = 50;
-                else
-                        *minimal_height = *natural_height = 36;
+                *minimal_height = *natural_height = 36;
         }
 }
 
@@ -338,14 +309,12 @@ clock_face_refresh (ClockFace *this)
 }
 
 GtkWidget *
-clock_face_new_with_location (ClockFaceSize size,
-			      ClockLocation *loc,
+clock_face_new_with_location (ClockLocation *loc,
 			      GtkWidget *size_widget)
 {
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
         ClockFacePrivate *priv = CLOCK_FACE (obj)->priv;
 
-        priv->size = size;
         priv->location = g_object_ref (loc);
         priv->size_widget = g_object_ref (size_widget);
 
@@ -393,7 +362,6 @@ static void
 clock_face_load_face (ClockFace *this, gint width, gint height)
 {
         ClockFacePrivate *priv = this->priv;
-	const gchar *size_string[2] = { "small", "large" };
         const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
 	gchar *cache_name;
 	gchar *name;
@@ -411,8 +379,8 @@ clock_face_load_face (ClockFace *this, gint width, gint height)
         }
 
         /* Look for the pixbuf in the process-wide cache first */
-        cache_name = g_strdup_printf ("%d-%d-%d-%d",
-                                      priv->size, priv->timeofday,
+        cache_name = g_strdup_printf ("%d-%d-%d",
+                                      priv->timeofday,
                                       width, height);
 
         priv->face_pixbuf = g_hash_table_lookup (pixbuf_cache, cache_name);
@@ -423,18 +391,15 @@ clock_face_load_face (ClockFace *this, gint width, gint height)
 
         /* The pixbuf is not cached, let's load it */
 	name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
-			    "clock-face-", size_string[priv->size],
-                            "-", daytime_string[priv->timeofday], ".svg",
-                            NULL);
+	                    "clock-face-small-", daytime_string[priv->timeofday], ".svg",
+	                    NULL);
 	priv->face_pixbuf = gdk_pixbuf_new_from_resource_at_scale (name,
 	                                                           width, height,
 	                                                           FALSE, NULL);
 	g_free (name);
 
 	if (!priv->face_pixbuf) {
-		name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
-				    "clock-face-", size_string[priv->size], ".svg",
-				    NULL);
+		name = g_strdup (CLOCK_RESOURCE_PATH "icons/clock-face-small.svg");
 		priv->face_pixbuf = gdk_pixbuf_new_from_resource_at_scale (name,
 		                                                           width, height,
 		                                                           FALSE, NULL);
