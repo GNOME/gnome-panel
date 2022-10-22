@@ -338,17 +338,6 @@ clock_face_refresh (ClockFace *this)
 }
 
 GtkWidget *
-clock_face_new (ClockFaceSize size)
-{
-        GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
-        ClockFacePrivate *priv = CLOCK_FACE (obj)->priv;
-
-        priv->size = size;
-
-        return GTK_WIDGET (obj);
-}
-
-GtkWidget *
 clock_face_new_with_location (ClockFaceSize size,
 			      ClockLocation *loc,
 			      GtkWidget *size_widget)

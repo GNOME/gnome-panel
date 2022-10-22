@@ -50,7 +50,6 @@ typedef enum {
 
 GType clock_face_get_type (void);
 
-GtkWidget *clock_face_new (ClockFaceSize size);
 GtkWidget *clock_face_new_with_location (ClockFaceSize size,
 					 ClockLocation *loc,
 					 GtkWidget *size_widget);
