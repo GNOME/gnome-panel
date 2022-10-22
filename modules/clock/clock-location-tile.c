@@ -12,8 +12,8 @@
 #include "clock-face.h"
 #include "clock-location-tile.h"
 #include "clock-location.h"
+#include "clock-timedate1-gen.h"
 #include "clock-utils.h"
-#include "set-timezone.h"
 
 enum {
 	TILE_PRESSED,
@@ -42,6 +42,9 @@ struct _ClockLocationTilePrivate {
         GtkWidget *weather_icon;
 
 	gulong location_weather_updated_id;
+
+        GCancellable *cancellable;
+        ClockTimedate1Gen *timedate1;
 
         GPermission *permission;
 };
@@ -83,12 +86,51 @@ clock_location_tile_new (ClockLocation *loc)
 }
 
 static void
+timedate1_cb (GObject      *object,
+              GAsyncResult *res,
+              gpointer      user_data)
+{
+  GError *error;
+  ClockTimedate1Gen *timedate1;
+  ClockLocationTile *self;
+
+  error = NULL;
+  timedate1 = clock_timedate1_gen_proxy_new_for_bus_finish (res, &error);
+
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      return;
+    }
+
+  self = CLOCK_LOCATION_TILE (user_data);
+
+  g_clear_object (&self->priv->cancellable);
+
+  if (error != NULL)
+    {
+      g_warning ("%s", error->message);
+      g_error_free (error);
+      return;
+    }
+
+  self->priv->timedate1 = timedate1;
+}
+
+static void
 clock_location_tile_dispose (GObject *object)
 {
   ClockLocationTile *self;
 
   self = CLOCK_LOCATION_TILE (object);
 
+  if (self->priv->cancellable != NULL)
+    {
+      g_cancellable_cancel (self->priv->cancellable);
+      g_clear_object (&self->priv->cancellable);
+    }
+
+  g_clear_object (&self->priv->timedate1);
   g_clear_object (&self->priv->permission);
 
   G_OBJECT_CLASS (clock_location_tile_parent_class)->dispose (object);
@@ -136,6 +178,16 @@ clock_location_tile_init (ClockLocationTile *this)
         priv->clock_face = NULL;
         priv->city_label = NULL;
         priv->time_label = NULL;
+
+        priv->cancellable = g_cancellable_new ();
+        clock_timedate1_gen_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,
+                                               G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
+                                               G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
+                                               "org.freedesktop.timedate1",
+                                               "/org/freedesktop/timedate1",
+                                               priv->cancellable,
+                                               timedate1_cb,
+                                               this);
 }
 
 static void
@@ -174,30 +226,77 @@ press_on_tile      (GtkWidget             *widget,
 }
 
 static void
-make_current_cb (gpointer data, GError *error)
+set_timezone_cb (GObject      *object,
+                 GAsyncResult *res,
+                 gpointer      user_data)
 {
-	GtkWidget *dialog;
+  GError *error;
+  ClockLocationTile *self;
 
-        if (error) {
-                dialog = gtk_message_dialog_new (NULL,
-                                                 0,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
-                                                 _("Failed to set the system timezone"));
-                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
-                g_signal_connect (dialog, "response",
-                                  G_CALLBACK (gtk_widget_destroy), NULL);
-                gtk_window_present (GTK_WINDOW (dialog));
+  error = NULL;
+  clock_timedate1_gen_call_set_timezone_finish (CLOCK_TIMEDATE1_GEN (object),
+                                                res,
+                                                &error);
 
-                g_error_free (error);
-        }
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      return;
+    }
+
+  self = CLOCK_LOCATION_TILE (user_data);
+
+  if (error != NULL)
+    {
+      GtkWidget *dialog;
+
+      dialog = gtk_message_dialog_new (NULL,
+                                       0,
+                                       GTK_MESSAGE_ERROR,
+                                       GTK_BUTTONS_CLOSE,
+                                       _("Failed to set the system timezone"));
+
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                "%s",
+                                                error->message);
+
+      g_signal_connect (dialog,
+                        "response",
+                        G_CALLBACK (gtk_widget_destroy),
+                        NULL);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+      g_error_free (error);
+      return;
+    }
+
+  clock_location_set_current (self->priv->location);
 }
 
 static void
-make_current (GtkWidget *widget, ClockLocationTile *tile)
+make_current (GtkWidget         *widget,
+              ClockLocationTile *self)
 {
-	clock_location_make_current (tile->priv->location,
-				     (GFunc)make_current_cb, tile, NULL);
+  if (clock_location_is_current_timezone (self->priv->location))
+    {
+      clock_location_set_current (self->priv->location);
+      return;
+    }
+
+  if (self->priv->cancellable != NULL)
+    {
+      g_cancellable_cancel (self->priv->cancellable);
+      g_object_unref (self->priv->cancellable);
+    }
+
+  self->priv->cancellable = g_cancellable_new ();
+
+  clock_timedate1_gen_call_set_timezone (self->priv->timedate1,
+                                         clock_location_get_timezone_identifier (self->priv->location),
+                                         TRUE,
+                                         self->priv->cancellable,
+                                         set_timezone_cb,
+                                         self);
 }
 
 static gboolean
@@ -226,7 +325,8 @@ enter_or_leave_tile (GtkWidget             *widget,
 
 		can_set = 0;
 
-		if (priv->permission != NULL) {
+		if (priv->timedate1 != NULL &&
+		    priv->permission != NULL) {
 			if (g_permission_get_allowed (priv->permission))
 				can_set = 2;
 			else if (g_permission_get_can_acquire (priv->permission))

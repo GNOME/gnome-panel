@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.freedesktop.timedate1">
+    <annotation name="org.gtk.GDBus.C.Name" value="Timedate1Gen" />
+
+    <method name="SetTimezone">
+      <arg name="timezone" type="s" direction="in"/>
+      <arg name="user_interaction" type="b" direction="in"/>
+    </method>
+
+  </interface>
+</node>

@@ -57,10 +57,7 @@ void clock_location_get_coords (ClockLocation *loc, gdouble *latitude, gdouble *
 GDateTime *clock_location_localtime (ClockLocation *loc);
 
 gboolean clock_location_is_current (ClockLocation *loc);
-void clock_location_make_current (ClockLocation *loc,
-				  GFunc          callback,
-				  gpointer       data,
-				  GDestroyNotify destroy);
+void clock_location_set_current (ClockLocation *self);
 gboolean clock_location_is_current_timezone (ClockLocation *loc);
 
 const gchar *clock_location_get_weather_code (ClockLocation *loc);

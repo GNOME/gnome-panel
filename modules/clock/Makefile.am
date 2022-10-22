@@ -37,8 +37,6 @@ org_gnome_gnome_panel_clock_la_SOURCES = \
 	clock-sunpos.h \
 	clock-utils.c \
 	clock-utils.h \
-	set-timezone.c \
-	set-timezone.h \
 	$(BUILT_SOURCES) \
 	$(CALENDAR_SOURCES) \
 	$(NULL)
@@ -106,7 +104,15 @@ clock-typebuiltins.h: $(clock_enum_headers) Makefile.am
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(clock_enum_headers) > $@
 
+clock-timedate1-gen.h:
+clock-timedate1-gen.c: org.freedesktop.timedate1.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Clock \
+		--generate-c-code clock-timedate1-gen \
+		$(srcdir)/org.freedesktop.timedate1.xml
+
 BUILT_SOURCES = \
+	clock-timedate1-gen.c \
+	clock-timedate1-gen.h \
 	clock-resources.c \
 	clock-resources.h \
 	clock-typebuiltins.c \
@@ -126,6 +132,7 @@ clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 
 EXTRA_DIST = \
 	clock.gresource.xml \
+	org.freedesktop.timedate1.xml \
 	$(ui_FILES) \
 	$(NULL)
 
