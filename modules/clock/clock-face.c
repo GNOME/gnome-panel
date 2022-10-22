@@ -111,7 +111,7 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         min_length = 0.7;
 
         width = gtk_widget_get_allocated_width (this);
-        height = gtk_widget_get_allocated_width (this);
+        height = gtk_widget_get_allocated_height (this);
 
         x = width / 2;
         y = height / 2;
