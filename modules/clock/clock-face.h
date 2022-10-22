@@ -45,8 +45,7 @@ struct _ClockFaceClass
 
 GType clock_face_get_type (void);
 
-GtkWidget *clock_face_new_with_location (ClockLocation *loc,
-					 GtkWidget *size_widget);
+GtkWidget *clock_face_new_with_location (ClockLocation *loc);
 gboolean clock_face_refresh (ClockFace *this);
 
 

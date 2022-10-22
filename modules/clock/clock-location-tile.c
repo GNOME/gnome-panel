@@ -334,8 +334,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         g_signal_connect (priv->current_button, "clicked",
                           G_CALLBACK (make_current), this);
 
-        priv->clock_face = clock_face_new_with_location (
-                priv->location, head_section);
+        priv->clock_face = clock_face_new_with_location (priv->location);
 
         gtk_box_pack_start (GTK_BOX (tile), priv->clock_face, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (tile), head_section, TRUE, TRUE, 0);
