@@ -31,7 +31,6 @@ static void     clock_face_get_preferred_width  (GtkWidget     *this,
 static void     clock_face_get_preferred_height (GtkWidget     *this,
                                                  gint          *minimal_height,
                                                  gint          *natural_height);
-static void     clock_face_load_face            (ClockFace     *this);
 
 typedef enum {
 	CLOCK_FACE_MORNING,
@@ -48,7 +47,7 @@ struct _ClockFacePrivate
 
 	ClockFaceTimeOfDay timeofday;
         ClockLocation *location;
-        GdkPixbuf *face_pixbuf;
+        cairo_surface_t *face;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockFace, clock_face, GTK_TYPE_WIDGET)
@@ -84,6 +83,52 @@ clock_face_init (ClockFace *this)
         gtk_widget_set_has_window (GTK_WIDGET (this), FALSE);
 }
 
+static void
+ensure_clock_face (ClockFace *this)
+{
+        ClockFacePrivate *priv = this->priv;
+        const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
+        int scale;
+        int width;
+        int height;
+        char *name;
+        GdkPixbuf *pixbuf;
+
+        if (priv->face != NULL)
+                return;
+
+        scale = gtk_widget_get_scale_factor (GTK_WIDGET (this));
+        width = CLOCK_FACE_SIZE * scale;
+        height = CLOCK_FACE_SIZE * scale;
+
+        name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
+                            "clock-face-small-", daytime_string[priv->timeofday], ".svg",
+                            NULL);
+
+        pixbuf = gdk_pixbuf_new_from_resource_at_scale (name,
+                                                        width,
+                                                        height,
+                                                        FALSE,
+                                                        NULL);
+        g_free (name);
+
+        if (pixbuf == NULL) {
+                name = g_strdup (CLOCK_RESOURCE_PATH "icons/clock-face-small.svg");
+                pixbuf = gdk_pixbuf_new_from_resource_at_scale (name,
+                                                                width,
+                                                                height,
+                                                                FALSE,
+                                                                NULL);
+                g_free (name);
+        }
+
+        if (pixbuf == NULL)
+                return;
+
+        priv->face = gdk_cairo_surface_create_from_pixbuf (pixbuf, scale, NULL);
+        g_clear_object (&pixbuf);
+}
+
 static gboolean
 clock_face_draw (GtkWidget *this, cairo_t *cr)
 {
@@ -94,6 +139,8 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         int hours, minutes;
         /* Hand lengths as a multiple of the clock radius */
         double hour_length, min_length;
+
+        ensure_clock_face (CLOCK_FACE (this));
 
         if (GTK_WIDGET_CLASS (clock_face_parent_class)->draw)
                 GTK_WIDGET_CLASS (clock_face_parent_class)->draw (this, cr);
@@ -109,15 +156,15 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         radius = MIN (width / 2, height / 2) - 5;
 
         /* clock back */
-        if (priv->face_pixbuf) {
+        if (priv->face != NULL) {
                 double offset_x;
                 double offset_y;
 
-                offset_x = (width - gdk_pixbuf_get_width (priv->face_pixbuf)) / 2.;
-                offset_y = (height - gdk_pixbuf_get_height (priv->face_pixbuf)) / 2.;
+                offset_x = (width - CLOCK_FACE_SIZE) / 2.;
+                offset_y = (height - CLOCK_FACE_SIZE) / 2.;
 
                 cairo_save (cr);
-                gdk_cairo_set_source_pixbuf (cr, priv->face_pixbuf, offset_x, offset_y);
+                cairo_set_source_surface (cr, priv->face, offset_x, offset_y);
                 cairo_paint (cr);
                 cairo_restore (cr);
         }
@@ -213,7 +260,7 @@ update_time_and_face (ClockFace *this)
 	if (priv->timeofday != timeofday) {
 		priv->timeofday = timeofday;
 
-		clock_face_load_face (this);
+		g_clear_pointer (&priv->face, cairo_surface_destroy);
 	}
 }
 
@@ -248,44 +295,7 @@ clock_face_finalize (GObject *obj)
                 priv->location = NULL;
         }
 
-        if (priv->face_pixbuf) {
-                g_object_unref (priv->face_pixbuf);
-                priv->face_pixbuf = NULL;
-        }
+        g_clear_pointer (&priv->face, cairo_surface_destroy);
 
         G_OBJECT_CLASS (clock_face_parent_class)->finalize (obj);
-}
-
-static void
-clock_face_load_face (ClockFace *this)
-{
-        ClockFacePrivate *priv = this->priv;
-        const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
-        int width;
-        int height;
-	gchar *name;
-
-        if (priv->face_pixbuf != NULL) {
-                g_object_unref (priv->face_pixbuf);
-                priv->face_pixbuf = NULL;
-        }
-
-        width = CLOCK_FACE_SIZE;
-        height = CLOCK_FACE_SIZE;
-
-	name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
-	                    "clock-face-small-", daytime_string[priv->timeofday], ".svg",
-	                    NULL);
-	priv->face_pixbuf = gdk_pixbuf_new_from_resource_at_scale (name,
-	                                                           width, height,
-	                                                           FALSE, NULL);
-	g_free (name);
-
-	if (!priv->face_pixbuf) {
-		name = g_strdup (CLOCK_RESOURCE_PATH "icons/clock-face-small.svg");
-		priv->face_pixbuf = gdk_pixbuf_new_from_resource_at_scale (name,
-		                                                           width, height,
-		                                                           FALSE, NULL);
-                g_free (name);
-        }
 }
