@@ -28,7 +28,7 @@ G_BEGIN_DECLS
  *
  * The version of the module system's ABI.
  */
-#define GP_MODULE_ABI_VERSION 0x0001
+#define GP_MODULE_ABI_VERSION 0x0002
 
 /**
  * GpGetAppletInfoFunc:
