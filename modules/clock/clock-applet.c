@@ -107,6 +107,7 @@ struct _ClockApplet
         GWeatherLocation *world;
         GList *locations;
         GList *location_tiles;
+        ClockLocation *current;
 
 	/* runtime data */
         GnomeWallClock    *wall_clock;
@@ -662,26 +663,23 @@ weather_tooltip (GtkWidget   *widget,
                  GtkTooltip  *tooltip,
                  ClockApplet *cd)
 {
-        GList *locations, *l;
         GWeatherInfo *info;
 
-        locations = cd->locations;
+        if (cd->current == NULL)
+                return FALSE;
 
-        for (l = locations; l; l = l->next) {
-		ClockLocation *location = l->data;
-                if (clock_location_is_current (location)) {
-                        info = clock_location_get_weather_info (location);
-                        if (!info || !gweather_info_is_valid (info))
-                                continue;
+        info = clock_location_get_weather_info (cd->current);
 
-                        weather_info_setup_tooltip (info, location, tooltip,
-                                                    g_settings_get_enum (cd->clock_settings, "clock-format"));
+        if (info == NULL || !gweather_info_is_valid (info))
+                return FALSE;
 
-                        return TRUE;
-                }
-        }
+        weather_info_setup_tooltip (info,
+                                    cd->current,
+                                    tooltip,
+                                    g_settings_get_enum (cd->clock_settings,
+                                                         "clock-format"));
 
-        return FALSE;
+        return TRUE;
 }
 
 static void
@@ -899,6 +897,16 @@ location_set_current_cb (ClockLocation *loc,
 	ClockApplet *cd = data;
 	GWeatherInfo *info;
 
+	if (!clock_location_is_current (loc))
+	        return;
+
+        if (cd->current != NULL) {
+                clock_location_set_current (cd->current, FALSE);
+                g_object_unref (cd->current);
+        }
+
+        cd->current = g_object_ref (loc);
+
 	info = clock_location_get_weather_info (loc);
 	location_weather_updated_cb (loc, info, cd);
 
@@ -957,24 +965,97 @@ show_week_changed (GSettings   *settings,
 }
 
 static void
+migrate_cities_to_locations (ClockApplet *self)
+{
+        GVariant *cities;
+        GVariantIter iter;
+        GVariantBuilder builder;
+        gboolean current_set;
+        const char *name;
+        const char *code;
+        gboolean latlon_override;
+        double latitude;
+        double longitude;
+
+        cities = g_settings_get_user_value (self->applet_settings, "cities");
+        if (cities == NULL)
+                return;
+
+        g_variant_iter_init (&iter, cities);
+        g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(ss(dd)b)"));
+
+        current_set = FALSE;
+
+        while (g_variant_iter_loop (&iter,
+                                    "(&s&sm(dd))",
+                                    &name,
+                                    &code,
+                                    &latlon_override,
+                                    &latitude,
+                                    &longitude)) {
+                gboolean current;
+
+                current = FALSE;
+                if (!current_set) {
+                        ClockLocation *loc;
+
+                        loc = clock_location_new (self->wall_clock,
+                                                  self->world,
+                                                  name,
+                                                  code,
+                                                  latlon_override,
+                                                  latitude,
+                                                  longitude,
+                                                  FALSE);
+
+                        if (clock_location_is_current_timezone (loc)) {
+                                current_set = TRUE;
+                                current = TRUE;
+                        }
+
+                        g_clear_object (&loc);
+                }
+
+                g_variant_builder_add (&builder,
+                                       "(ss(dd)b)",
+                                       name,
+                                       code,
+                                       latitude,
+                                       longitude,
+                                       current);
+        }
+
+        g_variant_unref (cities);
+
+        g_settings_set_value (self->applet_settings,
+                              "locations",
+                              g_variant_builder_end (&builder));
+
+        g_settings_reset (self->applet_settings, "cities");
+}
+
+static void
 load_cities (ClockApplet *cd)
 {
         GVariantIter *iter;
         const char *name;
         const char *code;
-        gboolean latlon_override;
         gdouble latitude, longitude;
+        gboolean current;
 
-        g_settings_get (cd->applet_settings, "cities", "a(ssm(dd))", &iter);
+        migrate_cities_to_locations (cd);
 
-        while (g_variant_iter_loop (iter, "(&s&sm(dd))", &name, &code, &latlon_override,
-                                    &latitude, &longitude)) {
+        g_settings_get (cd->applet_settings, "locations", "a(ss(dd)b)", &iter);
+
+        while (g_variant_iter_loop (iter, "(&s&s(dd)b)", &name, &code,
+                                    &latitude, &longitude, &current)) {
                 ClockLocation *loc;
 
                 loc = clock_location_new (cd->wall_clock,
                                           cd->world,
                                           name, code,
-                                          latlon_override, latitude, longitude);
+                                          TRUE, latitude, longitude,
+                                          current);
 
                 cd->locations = g_list_prepend (cd->locations, loc);
         }
@@ -1049,10 +1130,11 @@ location_serialize (ClockLocation *loc)
         gdouble lat, lon;
 
         clock_location_get_coords (loc, &lat, &lon);
-        return g_variant_new ("(ssm(dd))",
+        return g_variant_new ("(ss(dd)b)",
                               clock_location_get_name (loc),
                               clock_location_get_weather_code (loc),
-                              TRUE, lat, lon);
+                              lat, lon,
+                              clock_location_is_current (loc));
 }
 
 static void
@@ -1062,7 +1144,7 @@ save_cities_store (ClockApplet *cd)
         GVariantBuilder builder;
         GList *list;
 
-        g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(ssm(dd))"));
+        g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(ss(dd)b)"));
 
         list = cd->locations;
         while (list) {
@@ -1073,7 +1155,7 @@ save_cities_store (ClockApplet *cd)
                 list = list->next;
         }
 
-        g_settings_set_value (cd->applet_settings, "cities",
+        g_settings_set_value (cd->applet_settings, "locations",
                               g_variant_builder_end (&builder));
 
         create_cities_store (cd);
@@ -1200,11 +1282,8 @@ run_prefs_edit_save (GtkButton   *button,
                                   weather_code,
                                   TRUE,
                                   lat,
-                                  lon);
-        /* has the side-effect of setting the current location if
-         * there's none and this one can be considered as a current one
-         */
-        clock_location_is_current (loc);
+                                  lon,
+                                  cd->locations == NULL);
 
         cd->locations = g_list_append (cd->locations, loc);
 
@@ -1772,6 +1851,8 @@ clock_applet_dispose (GObject *object)
                 g_list_free (applet->location_tiles);
                 applet->location_tiles = NULL;
         }
+
+        g_clear_object (&applet->current);
 
         g_clear_object (&applet->cities_store);
         g_clear_object (&applet->builder);

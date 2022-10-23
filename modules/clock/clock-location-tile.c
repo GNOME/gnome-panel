@@ -268,7 +268,7 @@ set_timezone_cb (GObject      *object,
       return;
     }
 
-  clock_location_set_current (self->priv->location);
+  clock_location_set_current (self->priv->location, TRUE);
 }
 
 static void
@@ -277,7 +277,7 @@ make_current (GtkWidget         *widget,
 {
   if (clock_location_is_current_timezone (self->priv->location))
     {
-      clock_location_set_current (self->priv->location);
+      clock_location_set_current (self->priv->location, TRUE);
       return;
     }
 

@@ -31,6 +31,8 @@ struct _ClockLocationPrivate {
         gdouble latitude;
         gdouble longitude;
 
+        gboolean current;
+
         GWeatherInfo *weather_info;
 	gint          weather_timeout;
 	gint          weather_retry_time;
@@ -106,7 +108,8 @@ clock_location_new (GnomeWallClock   *wall_clock,
                     const char       *metar_code,
                     gboolean          override_latlon,
                     gdouble           latitude,
-                    gdouble           longitude)
+                    gdouble           longitude,
+                    gboolean          current)
 {
         ClockLocation *this;
         ClockLocationPrivate *priv;
@@ -132,6 +135,8 @@ clock_location_new (GnomeWallClock   *wall_clock,
 		gweather_location_get_coords (priv->loc, &priv->latitude, &priv->longitude);
 	}
 
+	priv->current = current;
+
 	priv->tz = get_gweather_timezone (this);
 
 	if (priv->tz == NULL) {
@@ -145,8 +150,6 @@ clock_location_new (GnomeWallClock   *wall_clock,
 
         return this;
 }
-
-static ClockLocation *current_location = NULL;
 
 static void
 clock_location_class_init (ClockLocationClass *this_class)
@@ -326,25 +329,7 @@ clock_location_is_current_timezone (ClockLocation *loc)
 gboolean
 clock_location_is_current (ClockLocation *loc)
 {
-	if (current_location == loc)
-		return TRUE;
-	else if (current_location != NULL)
-		return FALSE;
-
-	if (clock_location_is_current_timezone (loc)) {
-		/* Note that some code in clock.c depends on the fact that
-		 * calling this function can set the current location if
-		 * there's none */
-		current_location = loc;
-		g_object_add_weak_pointer (G_OBJECT (current_location), 
-					   (gpointer *)&current_location);
-		g_signal_emit (current_location, location_signals[SET_CURRENT],
-			       0, NULL);
-
-		return TRUE;
-	}
-
-	return FALSE;
+  return loc->priv->current;
 }
 
 glong
@@ -373,20 +358,15 @@ clock_location_get_offset (ClockLocation *loc)
 }
 
 void
-clock_location_set_current (ClockLocation *self)
+clock_location_set_current (ClockLocation *self,
+                            gboolean       current)
 {
-  if (current_location != NULL)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (current_location),
-                                    (gpointer *) &current_location);
-    }
+  if (self->priv->current == current)
+    return;
 
-  current_location = self;
+  self->priv->current = current;
 
-  g_object_add_weak_pointer (G_OBJECT (current_location),
-                             (gpointer *) &current_location);
-
-  g_signal_emit (current_location,
+  g_signal_emit (self,
                  location_signals[SET_CURRENT],
                  0,
                  NULL);

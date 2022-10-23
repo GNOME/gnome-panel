@@ -42,7 +42,8 @@ ClockLocation *clock_location_new (GnomeWallClock   *wall_clock,
                                    const gchar      *metar_code,
                                    gboolean          override_latlon,
                                    gdouble           latitude,
-                                   gdouble           longitude);
+                                   gdouble           longitude,
+                                   gboolean          current);
 
 GTimeZone  *clock_location_get_timezone (ClockLocation *self);
 const char *clock_location_get_timezone_identifier (ClockLocation *self);
@@ -57,7 +58,8 @@ void clock_location_get_coords (ClockLocation *loc, gdouble *latitude, gdouble *
 GDateTime *clock_location_localtime (ClockLocation *loc);
 
 gboolean clock_location_is_current (ClockLocation *loc);
-void clock_location_set_current (ClockLocation *self);
+void clock_location_set_current (ClockLocation *self,
+                                 gboolean       current);
 gboolean clock_location_is_current_timezone (ClockLocation *loc);
 
 const gchar *clock_location_get_weather_code (ClockLocation *loc);
