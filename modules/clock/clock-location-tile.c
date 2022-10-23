@@ -34,10 +34,8 @@ struct _ClockLocationTilePrivate {
         GtkWidget *city_label;
         GtkWidget *time_label;
 
+        GtkWidget *current_stack;
         GtkWidget *current_button;
-        GtkWidget *current_label;
-        GtkWidget *current_marker;
-        GtkWidget *current_spacer;
 
         GtkWidget *weather_icon;
 
@@ -313,9 +311,7 @@ enter_or_leave_tile (GtkWidget             *widget,
 	}
 
 	if (clock_location_is_current (priv->location)) {
-		gtk_widget_hide (priv->current_button);
-		gtk_widget_hide (priv->current_spacer);
-		gtk_widget_show (priv->current_marker);
+		gtk_stack_set_visible_child_name (GTK_STACK (priv->current_stack), "marker");
 
 		return TRUE;
 	}
@@ -350,23 +346,17 @@ enter_or_leave_tile (GtkWidget             *widget,
 				tooltip = _("Click “Unlock” to set location as current location and use its timezone for this computer");
 			}
 
-			gtk_widget_hide (priv->current_spacer);
-			gtk_widget_hide (priv->current_marker);
 			gtk_widget_set_sensitive (priv->current_button, allowed);
 			gtk_widget_set_tooltip_text (priv->current_button, tooltip);
-			gtk_widget_show (priv->current_button);
+			gtk_stack_set_visible_child_name (GTK_STACK (priv->current_stack), "button");
 		}
 		else {
-			gtk_widget_hide (priv->current_marker);
-			gtk_widget_hide (priv->current_button);
-			gtk_widget_show (priv->current_spacer);
+			gtk_stack_set_visible_child_name (GTK_STACK (priv->current_stack), "spacer");
 		}
 	}
 	else {
 		if (event->detail != GDK_NOTIFY_INFERIOR) {
-			gtk_widget_hide (priv->current_button);
-			gtk_widget_hide (priv->current_marker);
-			gtk_widget_show (priv->current_spacer);
+			gtk_stack_set_visible_child_name (GTK_STACK (priv->current_stack), "spacer");
 		}
 	}
 
@@ -377,13 +367,12 @@ static void
 clock_location_tile_fill (ClockLocationTile *this)
 {
         ClockLocationTilePrivate *priv;
-        GtkWidget *strut;
         GtkWidget *box;
         GtkWidget *tile;
         GtkWidget *head_section;
-        GtkSizeGroup *current_group;
-        GtkSizeGroup *button_group;
         GtkStyleContext *context;
+        GtkWidget *child;
+        GtkWidget *label;
 
         priv = this->priv;
         priv->box = gtk_event_box_new ();
@@ -421,50 +410,34 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (box), priv->weather_icon, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->time_label, FALSE, FALSE, 0);
 
+        priv->current_stack = gtk_stack_new ();
+        gtk_box_pack_end (GTK_BOX (box), priv->current_stack, FALSE, FALSE, 0);
+        gtk_widget_show (priv->current_stack);
+
         priv->current_button = gtk_button_new ();
         context = gtk_widget_get_style_context (priv->current_button);
         gtk_style_context_add_class (context, "calendar-window-button");
-        gtk_widget_set_no_show_all (priv->current_button, TRUE);
+        gtk_stack_add_named (GTK_STACK (priv->current_stack), priv->current_button, "button");
+        gtk_widget_set_halign (priv->current_button, GTK_ALIGN_END);
+        gtk_widget_show (priv->current_button);
 
-        priv->current_label = gtk_label_new (_("Set"));
-        gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
-        gtk_widget_show (priv->current_label);
+        label = gtk_label_new (_("Set"));
+        gtk_container_add (GTK_CONTAINER (priv->current_button), label);
+        gtk_widget_show (label);
 
-	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
-	gtk_widget_set_no_show_all (priv->current_marker, TRUE);
+        child = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
+        gtk_stack_add_named (GTK_STACK (priv->current_stack), child, "marker");
+        gtk_widget_set_halign (child, GTK_ALIGN_END);
+        gtk_widget_show (child);
 
-	priv->current_spacer = gtk_event_box_new ();
-	gtk_widget_set_no_show_all (priv->current_spacer, TRUE);
+        child = gtk_event_box_new ();
+        gtk_stack_add_named (GTK_STACK (priv->current_stack), child, "spacer");
+        gtk_widget_show (child);
 
-        strut = gtk_event_box_new ();
-        gtk_box_pack_start (GTK_BOX (box), strut, TRUE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (box), priv->current_button, FALSE, FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (box), priv->current_marker, FALSE, FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (box), priv->current_spacer, FALSE, FALSE, 0);
-
-        button_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
-        gtk_size_group_add_widget (button_group, strut);
-        gtk_size_group_add_widget (button_group, priv->current_button);
-        g_object_unref (button_group);
-
-	/* 
-	 * Avoid resizing the popup as the tiles display the current marker, 
-	 * set button or nothing. For that purpose, replace 'nothing' with 
-	 * an event box, and force the button, marker and spacer to have the 
-	 * same size via a size group. The visibility of the three is managed
- 	 * manually to ensure that only one of them is shown at any time. 
- 	 * (The all have to be shown initially to get the sizes worked out, 
- 	 * but they are never visible together). 
-	 */
-        current_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
-        gtk_size_group_add_widget (current_group, priv->current_button);
-        gtk_size_group_add_widget (current_group, priv->current_marker);
-        gtk_size_group_add_widget (current_group, priv->current_spacer);
-        g_object_unref (current_group);
-	
-	gtk_widget_show (priv->current_button);
-	gtk_widget_show (priv->current_marker);
-	gtk_widget_show (priv->current_spacer);
+        if (clock_location_is_current (priv->location))
+                gtk_stack_set_visible_child_name (GTK_STACK (priv->current_stack), "marker");
+        else
+                gtk_stack_set_visible_child_name (GTK_STACK (priv->current_stack), "spacer");
 
         g_signal_connect (priv->current_button, "clicked",
                           G_CALLBACK (make_current), this);
@@ -644,6 +617,7 @@ void
 clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 {
         ClockLocationTilePrivate *priv;
+        GtkStack *stack;
         gchar *tmp;
 	const char *tzname;
 	GDateTime *now;
@@ -653,18 +627,14 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 	g_return_if_fail (IS_CLOCK_LOCATION_TILE (this));
 
 	priv = this->priv;
+	stack = GTK_STACK (priv->current_stack);
 
         if (clock_location_is_current (priv->location)) {
-		gtk_widget_hide (priv->current_spacer);
-		gtk_widget_hide (priv->current_button);
-		gtk_widget_show (priv->current_marker);
+		gtk_stack_set_visible_child_name (stack, "marker");
 	}
 	else {
-		if (gtk_widget_get_visible (priv->current_marker)) {
-			gtk_widget_hide (priv->current_marker);
-			gtk_widget_hide (priv->current_button);
-			gtk_widget_show (priv->current_spacer);
-		}
+		if (g_strcmp0 (gtk_stack_get_visible_child_name (stack), "marker") == 0)
+			gtk_stack_set_visible_child_name (stack, "spacer");
 	}
 
         if (clock_needs_face_refresh (this)) {
