@@ -891,6 +891,9 @@ location_weather_updated_cb (ClockLocation  *location,
 }
 
 static void
+save_cities_store (ClockApplet *cd);
+
+static void
 location_set_current_cb (ClockLocation *loc, 
 			 gpointer       data)
 {
@@ -913,6 +916,8 @@ location_set_current_cb (ClockLocation *loc,
 	if (cd->map_widget)
 		clock_map_refresh (CLOCK_MAP (cd->map_widget));
         update_location_tiles (cd);
+
+        save_cities_store (cd);
 }
 
 static void
@@ -1058,6 +1063,9 @@ load_cities (ClockApplet *cd)
                                           current);
 
                 cd->locations = g_list_prepend (cd->locations, loc);
+
+                if (cd->current == NULL && clock_location_is_current (loc))
+                        cd->current = g_object_ref (loc);
         }
 
         cd->locations = g_list_reverse (cd->locations);
@@ -1079,7 +1087,7 @@ fill_clock_applet (ClockApplet *cd)
                           G_CALLBACK (format_changed), cd);
         g_signal_connect (cd->clock_settings, "changed::clock-show-weeks",
                           G_CALLBACK (show_week_changed), cd);
-        g_signal_connect (cd->applet_settings, "changed::cities",
+        g_signal_connect (cd->applet_settings, "changed::locations",
                           G_CALLBACK (locations_changed), cd);
 
         cd->wall_clock = g_object_new (GNOME_TYPE_WALL_CLOCK, NULL);
