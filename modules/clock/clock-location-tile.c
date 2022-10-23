@@ -321,28 +321,39 @@ enter_or_leave_tile (GtkWidget             *widget,
 	}
 
 	if (event->type == GDK_ENTER_NOTIFY) {
-		gint can_set;
+		gboolean allowed;
+		gboolean can_acquire;
 
-		can_set = 0;
+		allowed = FALSE;
+		can_acquire = FALSE;
 
 		if (priv->timedate1 != NULL &&
 		    priv->permission != NULL) {
 			if (g_permission_get_allowed (priv->permission))
-				can_set = 2;
-			else if (g_permission_get_can_acquire (priv->permission))
-				can_set = 1;
+				allowed = TRUE;
+			if (g_permission_get_can_acquire (priv->permission))
+				can_acquire = TRUE;
 		}
 
 		if (clock_location_is_current_timezone (priv->location))
-			can_set = 2;
+			allowed = TRUE;
 
-		if (can_set != 0) {
-			gtk_label_set_markup (GTK_LABEL (priv->current_label),
-						can_set == 1 ?
-							_("<small>Set...</small>") :
-							_("<small>Set</small>"));
+		if (allowed || can_acquire) {
+			const char *tooltip;
+
+			if (allowed) {
+				if (!clock_location_is_current_timezone (priv->location))
+					tooltip = _("Set location as current location and use its timezone for this computer");
+				else
+					tooltip = _("Set location as current location");
+			} else {
+				tooltip = _("Click “Unlock” to set location as current location and use its timezone for this computer");
+			}
+
 			gtk_widget_hide (priv->current_spacer);
 			gtk_widget_hide (priv->current_marker);
+			gtk_widget_set_sensitive (priv->current_button, allowed);
+			gtk_widget_set_tooltip_text (priv->current_button, tooltip);
 			gtk_widget_show (priv->current_button);
 		}
 		else {
@@ -372,6 +383,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         GtkWidget *head_section;
         GtkSizeGroup *current_group;
         GtkSizeGroup *button_group;
+        GtkStyleContext *context;
 
         priv = this->priv;
         priv->box = gtk_event_box_new ();
@@ -410,13 +422,13 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (box), priv->time_label, FALSE, FALSE, 0);
 
         priv->current_button = gtk_button_new ();
-	/* The correct label is set on EnterNotify events */
-	priv->current_label = gtk_label_new ("");
-        gtk_widget_show (priv->current_label);
+        context = gtk_widget_get_style_context (priv->current_button);
+        gtk_style_context_add_class (context, "calendar-window-button");
         gtk_widget_set_no_show_all (priv->current_button, TRUE);
+
+        priv->current_label = gtk_label_new (_("Set"));
         gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
-        gtk_widget_set_tooltip_text (priv->current_button,
-				     _("Set location as current location and use its timezone for this computer"));
+        gtk_widget_show (priv->current_label);
 
 	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
 	gtk_widget_set_no_show_all (priv->current_marker, TRUE);

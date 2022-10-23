@@ -79,6 +79,7 @@ struct _CalendarWindowPrivate {
 
 	gboolean     locked_down;
 
+	GtkWidget *locations_lock_btn;
 	GtkWidget *locations_list;
 
 #ifdef HAVE_EDS
@@ -163,16 +164,15 @@ create_hig_frame_button (CalendarWindow *self,
                          gboolean        bind_to_locked_down)
 {
   GtkWidget *button;
-  char *text;
+  GtkStyleContext *context;
   GtkWidget *label;
 
   button = gtk_button_new ();
 
-  text = g_markup_printf_escaped ("<small>%s</small>", button_label);
-  label = gtk_label_new (text);
-  g_free (text);
+  context = gtk_widget_get_style_context (button);
+  gtk_style_context_add_class (context, "calendar-window-button");
 
-  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+  label = gtk_label_new (button_label);
   gtk_container_add (GTK_CONTAINER (button), label);
   gtk_widget_show (label);
 
@@ -240,7 +240,7 @@ create_hig_frame (CalendarWindow *calwin,
         g_signal_connect (vbox, "add", G_CALLBACK (add_child), expander);
         g_signal_connect (hbox, "add", G_CALLBACK (add_child), expander);
 
-        button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+        button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
         gtk_box_pack_end (GTK_BOX (hbox), button_box, FALSE, FALSE, 0);
         gtk_widget_show (button_box);
 
@@ -1603,6 +1603,17 @@ static void
 calendar_window_pack_locations (CalendarWindow *calwin, GtkWidget *vbox)
 {
 	GtkWidget *edit_btn;
+	GtkStyleContext *context;
+
+	calwin->priv->locations_lock_btn = gtk_lock_button_new (NULL);
+
+	context = gtk_widget_get_style_context (calwin->priv->locations_lock_btn);
+	gtk_style_context_add_class (context, "calendar-window-button");
+
+	g_object_set (calwin->priv->locations_lock_btn,
+	              "tooltip-lock", _("Click to prevent further changes to timezone"),
+	              "tooltip-unlock", _("Click to make changes to timezone"),
+	              NULL);
 
 	edit_btn = create_hig_frame_button (calwin,
 	                                    _("Edit"),
@@ -1612,6 +1623,7 @@ calendar_window_pack_locations (CalendarWindow *calwin, GtkWidget *vbox)
 	calwin->priv->locations_list = create_hig_frame (calwin,
 	                                                 _("Locations"),
 	                                                 KEY_LOCATIONS_EXPANDED,
+	                                                 calwin->priv->locations_lock_btn,
 	                                                 edit_btn,
 	                                                 NULL);
 
@@ -1692,6 +1704,9 @@ permission_cb (GObject      *object,
     }
 
   self->priv->permission = permission;
+
+  gtk_lock_button_set_permission (GTK_LOCK_BUTTON (self->priv->locations_lock_btn),
+                                  self->priv->permission);
 
   g_signal_emit (self, signals[PERMISSION_READY], 0);
 }
