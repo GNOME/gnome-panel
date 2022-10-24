@@ -29,17 +29,17 @@ gboolean  gp_launcher_read_from_key_file  (GKeyFile    *key_file,
                                            char       **name,
                                            char       **command,
                                            char       **comment,
-                                           char       **error);
+                                           GError     **error);
 
 gboolean  gp_launcher_validate            (const char  *icon,
                                            const char  *type,
                                            const char  *name,
                                            const char  *command,
                                            const char  *comment,
-                                           char       **error);
+                                           GError     **error);
 
 gboolean  gp_launcher_validate_key_file   (GKeyFile    *key_file,
-                                           char       **error);
+                                           GError     **error);
 
 char     *gp_launcher_get_launchers_dir   (void);
 

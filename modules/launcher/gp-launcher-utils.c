@@ -35,7 +35,7 @@ gp_launcher_read_from_key_file (GKeyFile  *key_file,
                                 char     **name,
                                 char     **command,
                                 char     **comment,
-                                char     **error)
+                                GError   **error)
 {
   char *start_group;
   char *type_string;
@@ -52,9 +52,11 @@ gp_launcher_read_from_key_file (GKeyFile  *key_file,
   if (start_group == NULL ||
       g_strcmp0 (start_group, G_KEY_FILE_DESKTOP_GROUP) != 0)
     {
-      if (error != NULL)
-        *error = g_strdup_printf (_("Launcher does not start with required “%s” group."),
-                                  G_KEY_FILE_DESKTOP_GROUP);
+      g_set_error (error,
+                   G_IO_ERROR,
+                   G_IO_ERROR_FAILED,
+                   _("Launcher does not start with required “%s” group."),
+                   G_KEY_FILE_DESKTOP_GROUP);
 
       g_free (start_group);
       return FALSE;
@@ -70,9 +72,11 @@ gp_launcher_read_from_key_file (GKeyFile  *key_file,
       (g_strcmp0 (type_string, G_KEY_FILE_DESKTOP_TYPE_APPLICATION) != 0 &&
        g_strcmp0 (type_string, G_KEY_FILE_DESKTOP_TYPE_LINK) != 0))
     {
-      if (error != NULL)
-        *error = g_strdup_printf (_("Launcher has invalid Type key value “%s”."),
-                                  type_string != NULL ? type_string : "(null)");
+      g_set_error (error,
+                   G_IO_ERROR,
+                   G_IO_ERROR_FAILED,
+                   _("Launcher has invalid Type key value “%s”."),
+                   type_string != NULL ? type_string : "(null)");
 
       g_free (type_string);
       return FALSE;
@@ -146,22 +150,26 @@ gp_launcher_validate (const char  *icon,
                       const char  *name,
                       const char  *command,
                       const char  *comment,
-                      char       **error)
+                      GError     **error)
 {
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (icon == NULL || *icon == '\0')
     {
-      if (error != NULL)
-        *error = g_strdup (_("The icon of the launcher is not set."));
+      g_set_error_literal (error,
+                           G_IO_ERROR,
+                           G_IO_ERROR_FAILED,
+                           _("The icon of the launcher is not set."));
 
       return FALSE;
     }
 
   if (type == NULL || *type == '\0')
     {
-      if (error != NULL)
-        *error = g_strdup (_("The type of the launcher is not set."));
+      g_set_error_literal (error,
+                           G_IO_ERROR,
+                           G_IO_ERROR_FAILED,
+                           _("The type of the launcher is not set."));
 
       return FALSE;
     }
@@ -169,18 +177,22 @@ gp_launcher_validate (const char  *icon,
   if (g_strcmp0 (type, G_KEY_FILE_DESKTOP_TYPE_APPLICATION) != 0 &&
       g_strcmp0 (type, G_KEY_FILE_DESKTOP_TYPE_LINK) != 0)
     {
-      if (error != NULL)
-        *error = g_strdup_printf (_("The type of the launcher must be “%s” or “%s”."),
-                                  G_KEY_FILE_DESKTOP_TYPE_APPLICATION,
-                                  G_KEY_FILE_DESKTOP_TYPE_LINK);
+      g_set_error (error,
+                   G_IO_ERROR,
+                   G_IO_ERROR_FAILED,
+                   _("The type of the launcher must be “%s” or “%s”."),
+                   G_KEY_FILE_DESKTOP_TYPE_APPLICATION,
+                   G_KEY_FILE_DESKTOP_TYPE_LINK);
 
       return FALSE;
     }
 
   if (name == NULL || *name == '\0')
     {
-      if (error != NULL)
-        *error = g_strdup (_("The name of the launcher is not set."));
+      g_set_error_literal (error,
+                           G_IO_ERROR,
+                           G_IO_ERROR_FAILED,
+                           _("The name of the launcher is not set."));
 
       return FALSE;
     }
@@ -189,13 +201,17 @@ gp_launcher_validate (const char  *icon,
     {
       if (g_strcmp0 (type, G_KEY_FILE_DESKTOP_TYPE_APPLICATION) == 0)
         {
-          if (error != NULL)
-            *error = g_strdup (_("The command of the launcher is not set."));
+          g_set_error_literal (error,
+                               G_IO_ERROR,
+                               G_IO_ERROR_FAILED,
+                               _("The command of the launcher is not set."));
         }
       else if (g_strcmp0 (type, G_KEY_FILE_DESKTOP_TYPE_LINK) == 0)
         {
-          if (error != NULL)
-            *error = g_strdup (_("The location of the launcher is not set."));
+          g_set_error_literal (error,
+                               G_IO_ERROR,
+                               G_IO_ERROR_FAILED,
+                               _("The location of the launcher is not set."));
         }
 
       return FALSE;
@@ -206,7 +222,7 @@ gp_launcher_validate (const char  *icon,
 
 gboolean
 gp_launcher_validate_key_file (GKeyFile  *key_file,
-                               char     **error)
+                               GError   **error)
 {
   char *icon;
   char *type;

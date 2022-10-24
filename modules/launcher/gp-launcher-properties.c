@@ -115,7 +115,6 @@ static gboolean
 launcher_save (GpLauncherProperties *self,
                gboolean              interactive)
 {
-  char *error_message;
   gboolean location_changed;
   char *filename;
   GError *error;
@@ -129,12 +128,12 @@ launcher_save (GpLauncherProperties *self,
   if (!self->dirty)
     return TRUE;
 
-  error_message = NULL;
-  if (!gp_launcher_validate_key_file (self->file, &error_message))
+  error = NULL;
+  if (!gp_launcher_validate_key_file (self->file, &error))
     {
       if (interactive)
-        show_error_message (self, error_message);
-      g_free (error_message);
+        show_error_message (self, error->message);
+      g_error_free (error);
 
       return FALSE;
     }

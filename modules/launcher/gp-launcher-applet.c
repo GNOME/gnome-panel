@@ -989,7 +989,6 @@ update_launcher (GpLauncherApplet *self)
 {
   GpLauncherAppletPrivate *priv;
   GError *error;
-  char *error_message;
   char *icon;
   char *name;
   char *comment;
@@ -998,21 +997,24 @@ update_launcher (GpLauncherApplet *self)
   priv = gp_launcher_applet_get_instance_private (self);
 
   error = NULL;
-  error_message = NULL;
 
   if (!g_key_file_load_from_file (priv->key_file,
                                   priv->location,
                                   G_KEY_FILE_NONE,
                                   &error))
     {
-      error_message = g_strdup_printf (_("Failed to load key file “%s”: %s"),
-                                       priv->location,
-                                       error->message);
+      GError *tmp_error;
+
+      tmp_error = g_error_new (G_IO_ERROR,
+                               G_IO_ERROR_FAILED,
+                               _("Failed to load key file “%s”: %s"),
+                               priv->location,
+                               error->message);
 
       g_error_free (error);
 
-      launcher_error (self, error_message);
-      g_free (error_message);
+      launcher_error (self, tmp_error->message);
+      g_error_free (tmp_error);
 
       return;
     }
@@ -1027,10 +1029,10 @@ update_launcher (GpLauncherApplet *self)
                                        &name,
                                        NULL,
                                        &comment,
-                                       &error_message))
+                                       &error))
     {
-      launcher_error (self, error_message);
-      g_free (error_message);
+      launcher_error (self, error->message);
+      g_error_free (error);
 
       return;
     }
