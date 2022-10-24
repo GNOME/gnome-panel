@@ -566,9 +566,20 @@ gp_module_applet_new (GpModule     *module,
                          "module", module,
                          "id", applet_id,
                          "settings-path", settings_path,
-                         "initial-settings", initial_settings,
                          "gettext-domain", module->gettext_domain,
                          NULL);
+
+  if (initial_settings != NULL)
+    {
+      if (!GP_APPLET_GET_CLASS (applet)->initial_setup (applet,
+                                                        initial_settings,
+                                                        error))
+        {
+          g_object_ref_sink (applet);
+          g_object_unref (applet);
+          return NULL;
+        }
+    }
 
   if (!g_initable_init (G_INITABLE (applet), NULL, error))
     {

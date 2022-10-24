@@ -59,7 +59,6 @@ typedef struct
 
   gchar              *id;
   gchar              *settings_path;
-  GVariant           *initial_settings;
   gchar              *gettext_domain;
   gboolean            locked_down;
   GpLockdownFlags     lockdowns;
@@ -90,7 +89,6 @@ enum
 
   PROP_ID,
   PROP_SETTINGS_PATH,
-  PROP_INITIAL_SETTINGS,
   PROP_GETTEXT_DOMAIN,
   PROP_LOCKED_DOWN,
   PROP_LOCKDOWNS,
@@ -269,7 +267,6 @@ static void
 gp_applet_constructed (GObject *object)
 {
   GpApplet *applet;
-  GpAppletClass *applet_class;
   GpAppletPrivate *priv;
   GActionGroup *group;
   GtkStyleContext *context;
@@ -277,12 +274,7 @@ gp_applet_constructed (GObject *object)
   G_OBJECT_CLASS (gp_applet_parent_class)->constructed (object);
 
   applet = GP_APPLET (object);
-  applet_class = GP_APPLET_GET_CLASS (applet);
   priv = gp_applet_get_instance_private (applet);
-
-  if (applet_class->initial_setup != NULL && priv->initial_settings != NULL)
-    applet_class->initial_setup (applet, priv->initial_settings, NULL);
-  g_clear_pointer (&priv->initial_settings, g_variant_unref);
 
   gtk_builder_set_translation_domain (priv->builder, priv->gettext_domain);
 
@@ -313,7 +305,6 @@ gp_applet_dispose (GObject *object)
       priv->icon_resize_id = 0;
     }
 
-  g_clear_pointer (&priv->initial_settings, g_variant_unref);
   g_clear_object (&priv->general_settings);
 
   g_clear_pointer (&priv->about_dialog, gtk_widget_destroy);
@@ -360,10 +351,6 @@ gp_applet_get_property (GObject    *object,
 
       case PROP_SETTINGS_PATH:
         g_value_set_string (value, priv->settings_path);
-        break;
-
-      case PROP_INITIAL_SETTINGS:
-        g_value_set_variant (value, priv->initial_settings);
         break;
 
       case PROP_GETTEXT_DOMAIN:
@@ -435,11 +422,6 @@ gp_applet_set_property (GObject      *object,
       case PROP_SETTINGS_PATH:
         g_assert (priv->settings_path == NULL);
         priv->settings_path = g_value_dup_string (value);
-        break;
-
-      case PROP_INITIAL_SETTINGS:
-        g_assert (priv->initial_settings == NULL);
-        priv->initial_settings = g_value_dup_variant (value);
         break;
 
       case PROP_GETTEXT_DOMAIN:
@@ -585,6 +567,14 @@ gp_applet_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
+gp_applet_initial_setup (GpApplet  *self,
+                         GVariant  *initial_settings,
+                         GError   **error)
+{
+  return TRUE;
+}
+
+static gboolean
 gp_applet_initable_init (GpApplet  *self,
                          GError   **error)
 {
@@ -627,17 +617,6 @@ install_properties (GObjectClass *object_class)
                          NULL,
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
                          G_PARAM_STATIC_STRINGS);
-
-  /**
-   * GpApplet:initial-settings:
-   *
-   * The GVariant with initial settings.
-   */
-  properties[PROP_INITIAL_SETTINGS] =
-    g_param_spec_variant ("initial-settings", "Initial Settings", "Initial Settings",
-                          G_VARIANT_TYPE ("a{sv}"), NULL,
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
-                          G_PARAM_STATIC_STRINGS);
 
   /**
    * GpApplet:gettext-domain:
@@ -801,6 +780,7 @@ gp_applet_class_init (GpAppletClass *applet_class)
   widget_class->get_request_mode = gp_applet_get_request_mode;
   widget_class->size_allocate = gp_applet_size_allocate;
 
+  applet_class->initial_setup = gp_applet_initial_setup;
   applet_class->initable_init = gp_applet_initable_init;
 
   install_properties (object_class);
