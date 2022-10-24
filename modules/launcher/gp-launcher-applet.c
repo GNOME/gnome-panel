@@ -1276,13 +1276,6 @@ gp_launcher_applet_setup (GpLauncherApplet *self)
 }
 
 static void
-gp_launcher_applet_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (gp_launcher_applet_parent_class)->constructed (object);
-  gp_launcher_applet_setup (GP_LAUNCHER_APPLET (object));
-}
-
-static void
 gp_launcher_applet_dispose (GObject *object)
 {
   GpLauncherApplet *self;
@@ -1438,6 +1431,15 @@ gp_launcher_applet_initial_setup (GpApplet  *applet,
   return ret;
 }
 
+static gboolean
+gp_launcher_applet_initable_init (GpApplet  *applet,
+                                  GError   **error)
+{
+  gp_launcher_applet_setup (GP_LAUNCHER_APPLET (applet));
+
+  return TRUE;
+}
+
 static void
 delete_cb (GObject      *source_object,
            GAsyncResult *res,
@@ -1498,11 +1500,11 @@ gp_launcher_applet_class_init (GpLauncherAppletClass *self_class)
   object_class = G_OBJECT_CLASS (self_class);
   applet_class = GP_APPLET_CLASS (self_class);
 
-  object_class->constructed = gp_launcher_applet_constructed;
   object_class->dispose = gp_launcher_applet_dispose;
   object_class->finalize = gp_launcher_applet_finalize;
 
   applet_class->initial_setup = gp_launcher_applet_initial_setup;
+  applet_class->initable_init = gp_launcher_applet_initable_init;
   applet_class->remove_from_panel = gp_launcher_applet_remove_from_panel;
 
   self_class->get_menu_resource = gp_launcher_applet_get_menu_resource;
