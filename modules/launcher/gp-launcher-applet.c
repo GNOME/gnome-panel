@@ -984,39 +984,38 @@ update_tooltip (GpLauncherApplet *self,
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 }
 
-static void
-update_launcher (GpLauncherApplet *self)
+static gboolean
+update_launcher (GpLauncherApplet  *self,
+                 GError           **error)
 {
   GpLauncherAppletPrivate *priv;
-  GError *error;
+  GError *local_error;
   char *icon;
   char *name;
   char *comment;
   AtkObject *atk;
 
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   priv = gp_launcher_applet_get_instance_private (self);
 
-  error = NULL;
+  local_error = NULL;
 
   if (!g_key_file_load_from_file (priv->key_file,
                                   priv->location,
                                   G_KEY_FILE_NONE,
-                                  &error))
+                                  &local_error))
     {
-      GError *tmp_error;
+      g_set_error (error,
+                   G_IO_ERROR,
+                   G_IO_ERROR_FAILED,
+                   _("Failed to load key file “%s”: %s"),
+                   priv->location,
+                   local_error->message);
 
-      tmp_error = g_error_new (G_IO_ERROR,
-                               G_IO_ERROR_FAILED,
-                               _("Failed to load key file “%s”: %s"),
-                               priv->location,
-                               error->message);
+      g_error_free (local_error);
 
-      g_error_free (error);
-
-      launcher_error (self, tmp_error->message);
-      g_error_free (tmp_error);
-
-      return;
+      return FALSE;
     }
 
   icon = NULL;
@@ -1029,12 +1028,9 @@ update_launcher (GpLauncherApplet *self)
                                        &name,
                                        NULL,
                                        &comment,
-                                       &error))
+                                       error))
     {
-      launcher_error (self, error->message);
-      g_error_free (error);
-
-      return;
+      return FALSE;
     }
 
   update_icon (self, icon);
@@ -1047,6 +1043,8 @@ update_launcher (GpLauncherApplet *self)
   g_free (icon);
   g_free (name);
   g_free (comment);
+
+  return TRUE;
 }
 
 static void
@@ -1085,12 +1083,22 @@ file_changed_cb (GFileMonitor     *monitor,
                  GFileMonitorEvent event_type,
                  GpLauncherApplet *self)
 {
-  update_launcher (self);
+  GError *error;
+
+  error = NULL;
+
+  if (!update_launcher (self, &error))
+    {
+      launcher_error (self, error->message);
+      g_error_free (error);
+    }
+
   lockdown_changed (self);
 }
 
-static void
-location_changed (GpLauncherApplet *self)
+static gboolean
+location_changed (GpLauncherApplet  *self,
+                  GError           **error)
 {
   GpLauncherAppletPrivate *priv;
   GFile *file;
@@ -1129,7 +1137,7 @@ location_changed (GpLauncherApplet *self)
                     G_CALLBACK (file_changed_cb),
                     self);
 
-  update_launcher (self);
+  return update_launcher (self, error);
 }
 
 static void
@@ -1137,7 +1145,15 @@ location_changed_cb (GSettings        *settings,
                      const char       *key,
                      GpLauncherApplet *self)
 {
-  location_changed (self);
+  GError *error;
+
+  error = NULL;
+
+  if (!location_changed (self, &error))
+    {
+      launcher_error (self, error->message);
+      g_error_free (error);
+    }
 }
 
 static void
@@ -1245,8 +1261,9 @@ setup_button (GpLauncherApplet *self)
   gtk_image_set_pixel_size (GTK_IMAGE (priv->image), icon_size);
 }
 
-static void
-gp_launcher_applet_setup (GpLauncherApplet *self)
+static gboolean
+gp_launcher_applet_setup (GpLauncherApplet  *self,
+                          GError           **error)
 {
   GpLauncherAppletPrivate *priv;
 
@@ -1274,7 +1291,7 @@ gp_launcher_applet_setup (GpLauncherApplet *self)
 
   setup_drop_destination (self);
 
-  location_changed (self);
+  return location_changed (self, error);
 }
 
 static void
@@ -1437,9 +1454,7 @@ static gboolean
 gp_launcher_applet_initable_init (GpApplet  *applet,
                                   GError   **error)
 {
-  gp_launcher_applet_setup (GP_LAUNCHER_APPLET (applet));
-
-  return TRUE;
+  return gp_launcher_applet_setup (GP_LAUNCHER_APPLET (applet), error);
 }
 
 static void
