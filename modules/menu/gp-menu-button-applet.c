@@ -635,13 +635,6 @@ gp_menu_button_applet_setup (GpMenuButtonApplet *menu_button)
 }
 
 static void
-gp_menu_button_applet_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (gp_menu_button_applet_parent_class)->constructed (object);
-  gp_menu_button_applet_setup (GP_MENU_BUTTON_APPLET (object));
-}
-
-static void
 gp_menu_button_applet_dispose (GObject *object)
 {
   GpMenuButtonApplet *menu_button;
@@ -678,6 +671,15 @@ gp_menu_button_applet_initial_setup (GpApplet  *applet,
   return TRUE;
 }
 
+static gboolean
+gp_menu_button_applet_initable_init (GpApplet  *applet,
+                                     GError   **error)
+{
+  gp_menu_button_applet_setup (GP_MENU_BUTTON_APPLET (applet));
+
+  return TRUE;
+}
+
 static void
 gp_menu_button_applet_placement_changed (GpApplet        *applet,
                                          GtkOrientation   orientation,
@@ -699,10 +701,10 @@ gp_menu_button_applet_class_init (GpMenuButtonAppletClass *menu_button_class)
   object_class = G_OBJECT_CLASS (menu_button_class);
   applet_class = GP_APPLET_CLASS (menu_button_class);
 
-  object_class->constructed = gp_menu_button_applet_constructed;
   object_class->dispose = gp_menu_button_applet_dispose;
 
   applet_class->initial_setup = gp_menu_button_applet_initial_setup;
+  applet_class->initable_init = gp_menu_button_applet_initable_init;
   applet_class->placement_changed = gp_menu_button_applet_placement_changed;
 }
 
