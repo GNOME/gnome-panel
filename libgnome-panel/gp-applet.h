@@ -76,6 +76,9 @@ struct _GpAppletClass
                                   GVariant         *initial_settings,
                                   GError          **error);
 
+  gboolean (* initable_init)     (GpApplet         *self,
+                                  GError          **error);
+
   void     (* placement_changed) (GpApplet         *self,
                                   GtkOrientation    orientation,
                                   GtkPositionType   position);

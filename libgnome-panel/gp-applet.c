@@ -120,7 +120,12 @@ enum
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX)
+static void initable_iface_init (GInitableIface *iface);
+
+G_DEFINE_TYPE_WITH_CODE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX,
+                         G_ADD_PRIVATE (GpApplet)
+                         G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
+                                                initable_iface_init))
 
 static void
 update_enable_tooltips (GpApplet *applet)
@@ -240,6 +245,24 @@ icon_resize_cb (gpointer user_data)
   priv->icon_resize_id = 0;
 
   return G_SOURCE_REMOVE;
+}
+
+static gboolean
+initable_init (GInitable     *initable,
+               GCancellable  *cancellable,
+               GError       **error)
+{
+  GpApplet *self;
+
+  self = GP_APPLET (initable);
+
+  return GP_APPLET_GET_CLASS (self)->initable_init (self, error);
+}
+
+static void
+initable_iface_init (GInitableIface *iface)
+{
+  iface->init = initable_init;
 }
 
 static void
@@ -561,6 +584,13 @@ gp_applet_size_allocate (GtkWidget     *widget,
     }
 }
 
+static gboolean
+gp_applet_initable_init (GpApplet  *self,
+                         GError   **error)
+{
+  return TRUE;
+}
+
 static void
 install_properties (GObjectClass *object_class)
 {
@@ -770,6 +800,8 @@ gp_applet_class_init (GpAppletClass *applet_class)
   widget_class->focus = gp_applet_focus;
   widget_class->get_request_mode = gp_applet_get_request_mode;
   widget_class->size_allocate = gp_applet_size_allocate;
+
+  applet_class->initable_init = gp_applet_initable_init;
 
   install_properties (object_class);
   install_signals ();

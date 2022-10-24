@@ -523,7 +523,7 @@ gp_module_get_standalone_menu (GpModule *module,
 /**
  * gp_module_applet_new:
  * @module: a #GpModule
- * @applet: the applet id
+ * @applet_id: the applet id
  * @settings_path: the #GSettings path to the per-instance settings
  * @initial_settings: initial settings
  * @error: return location for a #GError, or %NULL
@@ -534,20 +534,21 @@ gp_module_get_standalone_menu (GpModule *module,
  */
 GpApplet *
 gp_module_applet_new (GpModule     *module,
-                      const gchar  *applet,
+                      const gchar  *applet_id,
                       const gchar  *settings_path,
                       GVariant     *initial_settings,
                       GError      **error)
 {
   GpAppletInfo *info;
   GType type;
+  GpApplet *applet;
 
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (!is_valid_applet (module, applet, error))
+  if (!is_valid_applet (module, applet_id, error))
     return NULL;
 
-  info = get_applet_info (module, applet, error);
+  info = get_applet_info (module, applet_id, error);
   if (info == NULL)
     return NULL;
 
@@ -556,18 +557,27 @@ gp_module_applet_new (GpModule     *module,
     {
       g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,
                    "Module '%s' did not return required info about applet '%s'",
-                   module->id, applet);
+                   module->id, applet_id);
 
       return NULL;
     }
 
-  return g_object_new (type,
-                       "module", module,
-                       "id", applet,
-                       "settings-path", settings_path,
-                       "initial-settings", initial_settings,
-                       "gettext-domain", module->gettext_domain,
-                       NULL);
+  applet = g_object_new (type,
+                         "module", module,
+                         "id", applet_id,
+                         "settings-path", settings_path,
+                         "initial-settings", initial_settings,
+                         "gettext-domain", module->gettext_domain,
+                         NULL);
+
+  if (!g_initable_init (G_INITABLE (applet), NULL, error))
+    {
+      g_object_ref_sink (applet);
+      g_object_unref (applet);
+      return NULL;
+    }
+
+  return applet;
 }
 
 GtkWidget *
