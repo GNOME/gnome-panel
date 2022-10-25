@@ -103,7 +103,6 @@ gnome_panel_LDADD =		\
 	$(NULL)
 
 gnome_panel_LDFLAGS = \
-	-export-dynamic \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
