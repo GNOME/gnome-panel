@@ -2,6 +2,7 @@ NULL =
 
 SUBDIRS = \
 	libgnome-panel \
+	libpanel-util \
 	modules \
 	gnome-panel \
 	help \

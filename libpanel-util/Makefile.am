@@ -4,7 +4,7 @@ noinst_LTLIBRARIES = libpanel-util.la
 
 libpanel_util_la_CFLAGS = \
 	-I$(srcdir) \
-	-I$(top_builddir)/gnome-panel/libpanel-util \
+	-I$(top_builddir)/libpanel-util \
 	$(PANEL_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \

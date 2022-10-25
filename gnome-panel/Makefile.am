@@ -1,9 +1,5 @@
 NULL =
 
-SUBDIRS = \
-	libpanel-util \
-	$(NULL)
-
 bin_PROGRAMS = \
 	gnome-panel \
 	$(NULL)
@@ -95,7 +91,7 @@ gnome_panel_CFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir) \
 	-I$(top_builddir)/gnome-panel \
-	-I$(top_builddir)/gnome-panel/libpanel-util \
+	-I$(top_builddir)/libpanel-util \
 	-I$(top_srcdir) \
 	$(XRANDR_CFLAGS) \
 	$(PANEL_CFLAGS) \
@@ -105,7 +101,7 @@ gnome_panel_CFLAGS = \
 
 gnome_panel_LDADD =		\
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
-	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
+	$(top_builddir)/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS)									\
 	$(NULL)
 
