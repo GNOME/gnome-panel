@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-07-15 22:31+0000\n"
-"PO-Revision-Date: 2022-10-01 12:13+0200\n"
+"POT-Creation-Date: 2022-10-23 14:46+0000\n"
+"PO-Revision-Date: 2022-10-25 07:19+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -91,10 +91,12 @@ msgid "If true, expand the list of locations in the calendar window."
 msgstr ""
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:50
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:58
 msgid "List of locations"
 msgstr ""
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:51
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:59
 msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
@@ -233,7 +235,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
-msgstr ""
+msgstr "დაადასტურეთ პანელის წაშლა"
 
 #: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
@@ -243,7 +245,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Icon size in menus"
-msgstr ""
+msgstr "ხატულის ზომა მენიუებში"
 
 #: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
@@ -428,7 +430,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:20
 msgid "Panel orientation"
-msgstr ""
+msgstr "პანელის ორიენტაცია"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
@@ -444,7 +446,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
 msgid "Panel alignment"
-msgstr ""
+msgstr "პანელის სწორება"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
@@ -454,7 +456,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
-msgstr ""
+msgstr "პანელის ზომა"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
 msgid ""
@@ -477,7 +479,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
 msgid "Enable hide buttons"
-msgstr ""
+msgstr "დამალვის ღილაკების ჩართვა"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
 msgid ""
@@ -604,7 +606,7 @@ msgstr ""
 
 #: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
-msgstr ""
+msgstr "პანელზე დამატება"
 
 #: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
@@ -666,7 +668,7 @@ msgstr "ქვემოთ"
 #: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Left"
-msgstr ""
+msgstr "მარცხენა"
 
 #: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
@@ -690,7 +692,7 @@ msgstr "End"
 
 #: gnome-panel/gp-properties-dialog.ui:15
 msgid "Panel Properties"
-msgstr ""
+msgstr "პანელის თვისებები"
 
 #: gnome-panel/gp-properties-dialog.ui:53
 #: gnome-panel/gp-properties-dialog.ui:366
@@ -703,7 +705,7 @@ msgstr "_პრეზენტაცია:"
 
 #: gnome-panel/gp-properties-dialog.ui:122
 msgid "_Alignment:"
-msgstr ""
+msgstr "_სწორება:"
 
 #: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
@@ -719,15 +721,15 @@ msgstr "სხვადასხვა:"
 
 #: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
-msgstr ""
+msgstr "_გაფართოება"
 
 #: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
-msgstr ""
+msgstr "_ავტოდამალვა"
 
 #: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
-msgstr ""
+msgstr "დამალვის _ღილაკების ჩართვა"
 
 #: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
@@ -772,7 +774,7 @@ msgstr "გაფორმების თემა"
 
 #: gnome-panel/gp-properties-dialog.ui:676
 msgid "Left"
-msgstr ""
+msgstr "მარცხენა"
 
 #: gnome-panel/gp-properties-dialog.ui:699
 msgid "Center"
@@ -793,8 +795,9 @@ msgstr "აპლეტები"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
 #: gnome-panel/panel-applet-frame.c:944
+#, fuzzy
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
 #, c-format
@@ -874,7 +877,7 @@ msgstr ""
 
 #: gnome-panel/panel.c:1240
 msgid "Delete this panel?"
-msgstr ""
+msgstr "წავშალო პანელი?"
 
 #: gnome-panel/panel.c:1244
 msgid ""
@@ -915,7 +918,7 @@ msgstr ""
 
 #: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
-msgstr ""
+msgstr "_ახალი პანელი"
 
 #: gnome-panel/panel-layout.c:1097 gnome-panel/panel-layout.c:1112
 msgid "Cannot create initial panel layout.\n"
@@ -1236,7 +1239,7 @@ msgstr ""
 
 #: modules/action-button/panel-force-quit.c:216
 msgid "_Force quit"
-msgstr ""
+msgstr "_ძალით გასვლა"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1247,7 +1250,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:499
+#: modules/clock/calendar-window.c:408 modules/clock/clock-location-tile.c:595
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -1262,8 +1265,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
-#: modules/clock/clock-location-tile.c:506
+#: modules/clock/calendar-window.c:414 modules/clock/clock-location-tile.c:557
+#: modules/clock/clock-location-tile.c:602
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1271,124 +1274,132 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:282
+#: modules/clock/calendar-window.c:421
 msgid "%b %d"
 msgstr "%b %d"
 
-#: modules/clock/calendar-window.c:787
+#: modules/clock/calendar-window.c:927 modules/clock/calendar-window.c:1116
+#: modules/clock/calendar-window.c:1619
+msgid "Edit"
+msgstr "ჩასწორება"
+
+#: modules/clock/calendar-window.c:932
 msgid "Tasks"
 msgstr "Tasks"
 
-#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
-#: modules/clock/calendar-window.c:1568
-msgid "Edit"
-msgstr ""
-
-#: modules/clock/calendar-window.c:910
+#: modules/clock/calendar-window.c:1055
 msgid "All Day"
 msgstr "მთელი დღე"
 
-#: modules/clock/calendar-window.c:1054
+#: modules/clock/calendar-window.c:1204
 msgid "Appointments"
 msgstr ""
 
-#: modules/clock/calendar-window.c:1079
+#: modules/clock/calendar-window.c:1229
 msgid "Birthdays and Anniversaries"
 msgstr ""
 
-#: modules/clock/calendar-window.c:1104
+#: modules/clock/calendar-window.c:1254
 msgid "Weather Information"
 msgstr ""
 
-#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:719
+#: modules/clock/calendar-window.c:1614
+msgid "Click to prevent further changes to timezone"
+msgstr ""
+
+#: modules/clock/calendar-window.c:1615
+msgid "Click to make changes to timezone"
+msgstr ""
+
+#: modules/clock/calendar-window.c:1624 modules/clock/clock.ui:719
 msgid "Locations"
 msgstr "მდებარეობები"
 
-#: modules/clock/calendar-window.c:1827
+#: modules/clock/calendar-window.c:1939
 msgid "Calendar"
 msgstr "კალენდარი"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:174
+#: modules/clock/clock-applet.c:175
 msgid "%A %B %d (%Z)"
 msgstr "%A %B %d (%Z)"
 
-#: modules/clock/clock-applet.c:183
+#: modules/clock/clock-applet.c:184
 msgid "Click to hide your appointments and tasks"
 msgstr ""
 
-#: modules/clock/clock-applet.c:186
+#: modules/clock/clock-applet.c:187
 msgid "Click to view your appointments and tasks"
 msgstr ""
 
-#: modules/clock/clock-applet.c:190
+#: modules/clock/clock-applet.c:191
 msgid "Click to hide month calendar"
 msgstr ""
 
-#: modules/clock/clock-applet.c:193
+#: modules/clock/clock-applet.c:194
 msgid "Click to view month calendar"
 msgstr ""
 
 #. Done!
-#: modules/clock/clock-applet.c:725
+#: modules/clock/clock-applet.c:735
 msgid "Computer Clock"
-msgstr ""
+msgstr "კომპიუტერის საათი"
 
-#: modules/clock/clock-applet.c:811
+#: modules/clock/clock-applet.c:821
 msgid "Failed to open the time settings"
 msgstr ""
 
-#: modules/clock/clock-applet.c:1378
+#: modules/clock/clock-applet.c:1469
 msgid "Choose Location"
 msgstr "აირჩიეთ მდებარეობა"
 
-#: modules/clock/clock-applet.c:1455
+#: modules/clock/clock-applet.c:1546
 msgid "Edit Location"
 msgstr "მდებარეობის ჩასწორება"
 
-#: modules/clock/clock-applet.c:1491 modules/clock/clock-applet.c:1499
+#: modules/clock/clock-applet.c:1582 modules/clock/clock-applet.c:1590
 msgid "Default"
 msgstr "ნაგულისხმევი"
 
-#: modules/clock/clock-applet.c:1492
+#: modules/clock/clock-applet.c:1583
 msgid "Kelvin"
 msgstr "კელვინი"
 
-#: modules/clock/clock-applet.c:1493
+#: modules/clock/clock-applet.c:1584
 msgid "Celsius"
 msgstr "ცელსიუსი"
 
-#: modules/clock/clock-applet.c:1494
+#: modules/clock/clock-applet.c:1585
 msgid "Fahrenheit"
 msgstr "ფარენჰეიტი"
 
-#: modules/clock/clock-applet.c:1500
+#: modules/clock/clock-applet.c:1591
 msgid "Meters per second (m/s)"
 msgstr "მეტრი წამში (მ/წმ)"
 
-#: modules/clock/clock-applet.c:1501
+#: modules/clock/clock-applet.c:1592
 msgid "Kilometers per hour (kph)"
 msgstr "კილომეტრი საათში (კმ/სთ)"
 
-#: modules/clock/clock-applet.c:1502
+#: modules/clock/clock-applet.c:1593
 msgid "Miles per hour (mph)"
 msgstr "მილი საათში (მ/სთ)"
 
-#: modules/clock/clock-applet.c:1503
+#: modules/clock/clock-applet.c:1594
 msgid "Knots"
 msgstr "კვანძები"
 
-#: modules/clock/clock-applet.c:1504
+#: modules/clock/clock-applet.c:1595
 msgid "Beaufort scale"
 msgstr "ბიუფორტის შკალა"
 
-#: modules/clock/clock-applet.c:1557
+#: modules/clock/clock-applet.c:1648
 msgid "City Name"
 msgstr "ქალაქის სახელი"
 
-#: modules/clock/clock-applet.c:1561
+#: modules/clock/clock-applet.c:1652
 msgid "City Time Zone"
 msgstr "ქალაქის დროის სარტყელი"
 
@@ -1404,30 +1415,36 @@ msgstr "ქალაქის დროის სარტყელი"
 #.
 #: modules/clock/clock-location-entry.c:553
 #: modules/clock/clock-location-entry.c:582
-#: modules/clock/clock-location-tile.c:605
+#: modules/clock/clock-location-tile.c:698
 #, c-format
 msgid "%s, %s"
-msgstr ""
+msgstr "%s, %s"
 
 #: modules/clock/clock-location-entry.c:860
 msgid "Loading…"
 msgstr "ჩატვირთვა…"
 
-#: modules/clock/clock-location-tile.c:177
+#: modules/clock/clock-location-tile.c:255
 msgid "Failed to set the system timezone"
 msgstr ""
 
-#: modules/clock/clock-location-tile.c:225
-msgid "<small>Set...</small>"
-msgstr ""
-
-#: modules/clock/clock-location-tile.c:226
-msgid "<small>Set</small>"
-msgstr ""
-
-#: modules/clock/clock-location-tile.c:302
+#: modules/clock/clock-location-tile.c:342
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
+
+#: modules/clock/clock-location-tile.c:344
+msgid "Set location as current location"
+msgstr ""
+
+#: modules/clock/clock-location-tile.c:346
+msgid ""
+"Click “Unlock” to set location as current location and use its timezone for "
+"this computer"
+msgstr ""
+
+#: modules/clock/clock-location-tile.c:424
+msgid "Set"
+msgstr "დაყენება"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1435,7 +1452,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:534
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr ""
 
@@ -1444,7 +1461,7 @@ msgstr ""
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/clock/clock-location-tile.c:446
+#: modules/clock/clock-location-tile.c:542
 msgid "%H:%M <small>(%A)</small>"
 msgstr ""
 
@@ -1452,17 +1469,17 @@ msgstr ""
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:455
+#: modules/clock/clock-location-tile.c:551
 msgid "%l:%M <small>%p</small>"
 msgstr ""
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:618
+#: modules/clock/clock-location-tile.c:711
 #, c-format
 msgid "%s, feels like %s"
 msgstr ""
 
-#: modules/clock/clock-location-tile.c:639
+#: modules/clock/clock-location-tile.c:732
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr ""
@@ -1582,7 +1599,7 @@ msgstr "დამატება"
 
 #: modules/clock/clock.ui:668
 msgid "_Edit"
-msgstr ""
+msgstr "_ჩასწორება"
 
 #: modules/clock/clock.ui:683
 msgid "_Remove"
@@ -1704,7 +1721,7 @@ msgstr ""
 
 #: modules/fish/fish.ui:134
 msgid "_Name of fish:"
-msgstr ""
+msgstr "თევზის _სახელი:"
 
 #: modules/fish/fish.ui:174
 msgid "Co_mmand to run when clicked:"
@@ -1869,8 +1886,9 @@ msgid "_Revert"
 msgstr "და_ბრუნება"
 
 #: modules/launcher/gp-launcher-properties.c:701
+#, fuzzy
 msgid "Launcher Properties"
-msgstr ""
+msgstr "გამშვების ფუნქციები"
 
 #: modules/launcher/gp-launcher-utils.c:56
 #, c-format
@@ -2142,30 +2160,30 @@ msgstr ""
 msgid "Display all Status Notifier Items"
 msgstr ""
 
-#: modules/wncklet/showdesktop.c:71
+#: modules/wncklet/showdesktop.c:73
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr ""
 
-#: modules/wncklet/showdesktop.c:72
+#: modules/wncklet/showdesktop.c:74
 msgid "Icon not found"
 msgstr ""
 
-#: modules/wncklet/showdesktop.c:103
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to restore hidden windows."
 msgstr ""
 
-#: modules/wncklet/showdesktop.c:105
+#: modules/wncklet/showdesktop.c:107
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 
-#: modules/wncklet/showdesktop.c:136
+#: modules/wncklet/showdesktop.c:138
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 
-#: modules/wncklet/showdesktop.c:333
+#: modules/wncklet/showdesktop.c:313
 msgid "Show Desktop Button"
 msgstr ""
 
@@ -2213,7 +2231,7 @@ msgstr ""
 msgid "Restore to na_tive workspace"
 msgstr ""
 
-#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
+#: modules/wncklet/window-menu.c:171 modules/wncklet/wncklet-module.c:55
 msgid "Window Selector"
 msgstr ""
 
@@ -2245,14 +2263,14 @@ msgstr "სამუშაო სივრცის გადამრთვე�
 msgid "Switch between workspaces"
 msgstr ""
 
-#: modules/wncklet/workspace-switcher.c:578
-#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:579
+#: modules/wncklet/workspace-switcher.c:768
 #: modules/wncklet/workspace-switcher.ui:145
 msgid "rows"
 msgstr "მწკრივები"
 
-#: modules/wncklet/workspace-switcher.c:578
-#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:579
+#: modules/wncklet/workspace-switcher.c:768
 msgid "columns"
 msgstr "სვეტები"
 
