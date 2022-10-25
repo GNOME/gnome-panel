@@ -90,8 +90,11 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 		return;
 
 	panels = panel_widget_get_panels ();
-	menu = panel_applets_manager_get_standalone_menu ();
 
+	menu = panel_applets_manager_get_standalone_menu ();
+	g_object_ref_sink (menu);
+
+	g_signal_connect (menu, "deactivate", G_CALLBACK (g_object_unref), NULL);
 	g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), panels->data);
 }
 
