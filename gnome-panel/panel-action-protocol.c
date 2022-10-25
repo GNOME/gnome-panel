@@ -39,13 +39,6 @@ static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
 
 static void
-menu_destroy_cb (GtkWidget   *widget,
-                 PanelWidget *panel_widget)
-{
-	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
-}
-
-static void
 menu_loaded_cb (GtkWidget   *widget,
                 PanelWidget *panel_widget)
 {
@@ -54,9 +47,6 @@ menu_loaded_cb (GtkWidget   *widget,
 	GdkDisplay *display;
 	GdkSeat *seat;
 	GdkDevice *device;
-
-	g_signal_connect (widget, "destroy", G_CALLBACK (menu_destroy_cb), panel_widget);
-	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 
 	window = gtk_widget_get_window (GTK_WIDGET (panel_widget));
 
