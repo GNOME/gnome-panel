@@ -52,10 +52,14 @@ G_DEFINE_TYPE_WITH_CODE (GpMenuBarApplet, gp_menu_bar_applet, GP_TYPE_APPLET,
                          G_IMPLEMENT_INTERFACE (GP_TYPE_ACTION, gp_action_interface_init))
 
 static gboolean
-gp_menu_bar_applet_main_menu (GpAction *action,
-                              guint32   time)
+gp_menu_bar_applet_handle_action (GpAction     *action,
+                                  GpActionFlags flags,
+                                  uint32_t      time)
 {
   GpMenuBarApplet *applet;
+
+  if ((flags & GP_ACTION_MAIN_MENU) != GP_ACTION_MAIN_MENU)
+    return FALSE;
 
   applet = GP_MENU_BAR_APPLET (action);
 
@@ -68,7 +72,7 @@ gp_menu_bar_applet_main_menu (GpAction *action,
 static void
 gp_action_interface_init (GpActionInterface *iface)
 {
-  iface->main_menu = gp_menu_bar_applet_main_menu;
+  iface->handle_action = gp_menu_bar_applet_handle_action;
 }
 
 static gboolean

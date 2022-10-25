@@ -19,6 +19,7 @@
 #define GP_ACTION_H
 
 #include <glib-object.h>
+#include <stdint.h>
 
 G_BEGIN_DECLS
 
@@ -36,8 +37,9 @@ struct _GpActionInterface
 {
   GTypeInterface parent;
 
-  gboolean (* main_menu) (GpAction *action,
-                          guint32   time);
+  gboolean (* handle_action) (GpAction      *self,
+                              GpActionFlags  action,
+                              uint32_t       time);
 
   /*< private >*/
   gpointer padding[10];

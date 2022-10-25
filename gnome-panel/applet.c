@@ -185,7 +185,9 @@ panel_applet_activate_main_menu (guint32 activate_time)
       if (!g_type_is_a (G_TYPE_FROM_INSTANCE (applet), GP_TYPE_ACTION))
         continue;
 
-      if (gp_action_main_menu (GP_ACTION (applet), activate_time))
+      if (gp_action_handle_action (GP_ACTION (applet),
+                                   GP_ACTION_MAIN_MENU,
+                                   activate_time))
         return TRUE;
     }
 

@@ -26,15 +26,16 @@ gp_action_default_init (GpActionInterface *iface)
 }
 
 gboolean
-gp_action_main_menu (GpAction *action,
-                     guint32   time)
+gp_action_handle_action (GpAction      *self,
+                         GpActionFlags  action,
+                         uint32_t       time)
 {
   GpActionInterface *iface;
 
-  iface = GP_ACTION_GET_IFACE (action);
+  iface = GP_ACTION_GET_IFACE (self);
 
-  if (iface->main_menu == NULL)
+  if (iface->handle_action == NULL)
     return FALSE;
 
-  return iface->main_menu (action, time);
+  return iface->handle_action (self, action, time);
 }

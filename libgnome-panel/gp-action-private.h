@@ -22,8 +22,9 @@
 
 G_BEGIN_DECLS
 
-gboolean gp_action_main_menu (GpAction *action,
-                              guint32   time);
+gboolean gp_action_handle_action (GpAction      *self,
+                                  GpActionFlags  action,
+                                  uint32_t       time);
 
 G_END_DECLS
 
