@@ -32,7 +32,6 @@
 #include "applet.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
-#include "panel-run-dialog.h"
 
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
@@ -97,17 +96,6 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), NULL);
 }
 
-static void
-panel_action_protocol_run_dialog (GdkScreen *screen,
-				  guint32    activate_time)
-{
-	if (panel_applets_manager_handle_action (GP_ACTION_RUN_DIALOG,
-	                                         activate_time))
-		return;
-
-	panel_run_dialog_present (screen, activate_time);
-}
-
 static GdkFilterReturn
 panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 			      GdkEvent  *event,
@@ -139,7 +127,8 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (atom == atom_gnome_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
 	else if (atom == atom_gnome_panel_action_run_dialog)
-		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
+		panel_applets_manager_handle_action (GP_ACTION_RUN_DIALOG,
+		                                     xevent->xclient.data.l[1]);
 	else
 		return GDK_FILTER_CONTINUE;
 
