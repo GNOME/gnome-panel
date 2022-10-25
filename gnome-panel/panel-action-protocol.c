@@ -39,24 +39,26 @@ static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
 
 static void
-menu_loaded_cb (GtkWidget   *widget,
-                PanelWidget *panel_widget)
+menu_loaded_cb (GtkWidget *widget,
+                gpointer   user_data)
 {
+	GdkDisplay *display;
+	GdkScreen *screen;
 	GdkWindow *window;
 	GdkRectangle rect;
-	GdkDisplay *display;
 	GdkSeat *seat;
 	GdkDevice *device;
 	GdkEvent *event;
 
-	window = gtk_widget_get_window (GTK_WIDGET (panel_widget));
+	display = gdk_display_get_default ();
+	screen = gdk_display_get_default_screen (display);
+	window = gdk_screen_get_root_window (screen);
 
 	rect.x = 0;
 	rect.y = 0;
 	rect.width = 1;
 	rect.height = 1;
 
-	display = gdk_display_get_default ();
 	seat = gdk_display_get_default_seat (display);
 	device = gdk_seat_get_pointer (seat);
 
@@ -79,19 +81,16 @@ static void
 panel_action_protocol_main_menu (GdkScreen *screen,
 				 guint32    activate_time)
 {
-	GSList *panels;
 	GtkWidget *menu;
 
 	if (panel_applet_activate_main_menu (activate_time))
 		return;
 
-	panels = panel_widget_get_panels ();
-
 	menu = panel_applets_manager_get_standalone_menu ();
 	g_object_ref_sink (menu);
 
 	g_signal_connect (menu, "deactivate", G_CALLBACK (g_object_unref), NULL);
-	g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), panels->data);
+	g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), NULL);
 }
 
 static void
