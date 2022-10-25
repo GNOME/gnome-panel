@@ -139,6 +139,9 @@ struct _GpModule
 
   GetStandaloneMenuFunc    standalone_menu_func;
 
+  GpActionFlags            actions;
+  GpActionFunc             action_func;
+
   GHashTable              *applets;
 };
 
@@ -518,6 +521,32 @@ gp_module_get_standalone_menu (GpModule *module,
   return module->standalone_menu_func (enable_tooltips,
                                        locked_down,
                                        menu_icon_size);
+}
+
+void
+gp_module_set_actions (GpModule      *self,
+                       GpActionFlags  actions,
+                       GpActionFunc   func)
+{
+  self->actions = actions;
+  self->action_func = func;
+}
+
+GpActionFlags
+gp_module_get_actions (GpModule *self)
+{
+  return self->actions;
+}
+
+gboolean
+gp_module_handle_action (GpModule      *self,
+                         GpActionFlags  action,
+                         uint32_t       time)
+{
+  g_return_val_if_fail ((self->actions & action) == action, FALSE);
+  g_return_val_if_fail (self->action_func != NULL, FALSE);
+
+  return self->action_func (self, action, time);
 }
 
 /**

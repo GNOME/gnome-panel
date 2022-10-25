@@ -22,6 +22,13 @@
 
 G_BEGIN_DECLS
 
+typedef enum
+{
+  GP_ACTION_NONE       = 0,
+  GP_ACTION_MAIN_MENU  = (1 << 0),
+  GP_ACTION_RUN_DIALOG = (1 << 1)
+} GpActionFlags;
+
 #define GP_TYPE_ACTION (gp_action_get_type ())
 G_DECLARE_INTERFACE (GpAction, gp_action, GP, ACTION, GObject)
 

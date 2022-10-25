@@ -53,6 +53,12 @@ GtkWidget           *gp_module_get_standalone_menu    (GpModule         *module,
                                                        gboolean          locked_down,
                                                        guint             menu_icon_size);
 
+GpActionFlags        gp_module_get_actions            (GpModule         *self);
+
+gboolean             gp_module_handle_action          (GpModule         *self,
+                                                       GpActionFlags     action,
+                                                       uint32_t          time);
+
 GpApplet            *gp_module_applet_new             (GpModule         *module,
                                                        const gchar      *applet,
                                                        const gchar      *settings_path,

@@ -19,6 +19,7 @@
 #define GP_MODULE_H
 
 #include <gtk/gtk.h>
+#include <libgnome-panel/gp-action.h>
 #include <libgnome-panel/gp-applet-info.h>
 
 G_BEGIN_DECLS
@@ -66,6 +67,11 @@ typedef GtkWidget    * (* GetStandaloneMenuFunc)  (gboolean     enable_tooltips,
                                                    gboolean     locked_down,
                                                    guint        menu_icon_size);
 
+typedef struct _GpModule GpModule;
+typedef gboolean (* GpActionFunc) (GpModule      *self,
+                                   GpActionFlags  action,
+                                   uint32_t       time);
+
 /**
  * GP_TYPE_MODULE:
  *
@@ -97,6 +103,10 @@ void          gp_module_set_compatibility   (GpModule               *module,
 
 void          gp_module_set_standalone_menu (GpModule               *module,
                                              GetStandaloneMenuFunc   func);
+
+void          gp_module_set_actions         (GpModule               *self,
+                                             GpActionFlags           actions,
+                                             GpActionFunc            func);
 
 /**
  * gp_module_load:
