@@ -48,8 +48,6 @@ gboolean         panel_applets_manager_open_initial_setup_dialog (const gchar   
                                                                   gpointer                     user_data,
                                                                   GDestroyNotify               free_func);
 
-GtkWidget       *panel_applets_manager_get_standalone_menu       (void);
-
 gboolean         panel_applets_manager_handle_action             (GpActionFlags                action,
                                                                   uint32_t                     time);
 

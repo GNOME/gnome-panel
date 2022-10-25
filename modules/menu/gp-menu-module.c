@@ -564,6 +564,79 @@ menu_get_standalone_menu (gboolean enable_tooltips,
   return menu;
 }
 
+static void
+menu_loaded_cb (GtkWidget *widget,
+                gpointer   user_data)
+{
+  GdkDisplay *display;
+  GdkScreen *screen;
+  GdkWindow *window;
+  GdkRectangle rect;
+  GdkSeat *seat;
+  GdkDevice *device;
+  GdkEvent *event;
+
+  display = gdk_display_get_default ();
+  screen = gdk_display_get_default_screen (display);
+  window = gdk_screen_get_root_window (screen);
+
+  rect.x = 0;
+  rect.y = 0;
+  rect.width = 1;
+  rect.height = 1;
+
+  seat = gdk_display_get_default_seat (display);
+  device = gdk_seat_get_pointer (seat);
+
+  gdk_window_get_device_position (window, device,
+                                  &rect.x, &rect.y,
+                                  NULL);
+
+  event = gdk_event_new (GDK_BUTTON_PRESS);
+  gdk_event_set_device (event, device);
+
+  gtk_menu_popup_at_rect (GTK_MENU (widget), window, &rect,
+                          GDK_GRAVITY_SOUTH_EAST,
+                          GDK_GRAVITY_NORTH_WEST,
+                          event);
+
+  gdk_event_free (event);
+}
+
+static gboolean
+main_menu_func (GpModule      *module,
+                GpActionFlags  action,
+                uint32_t       time)
+{
+  GSettings *general_settings;
+  GSettings *lockdown_settings;
+  gboolean enable_tooltips;
+  gboolean locked_down;
+  guint menu_icon_size;
+  GtkWidget *menu;
+
+  general_settings = g_settings_new ("org.gnome.gnome-panel.general");
+  lockdown_settings = g_settings_new ("org.gnome.gnome-panel.lockdown");
+
+  enable_tooltips = g_settings_get_boolean (general_settings, "enable-tooltips");
+  locked_down = g_settings_get_boolean (lockdown_settings, "locked-down");
+  menu_icon_size = g_settings_get_enum (general_settings, "menu-icon-size");
+
+  g_object_unref (lockdown_settings);
+  g_object_unref (general_settings);
+
+  menu = menu_get_standalone_menu (enable_tooltips,
+                                   locked_down,
+                                   menu_icon_size);
+
+  g_object_ref_sink (menu);
+
+  g_signal_connect (menu, "deactivate", G_CALLBACK (g_object_unref), NULL);
+  g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), NULL);
+
+  return TRUE;
+}
+
 void
 gp_module_load (GpModule *module)
 {
@@ -582,5 +655,7 @@ gp_module_load (GpModule *module)
   gp_module_set_get_applet_info (module, menu_get_applet_info);
   gp_module_set_compatibility (module, menu_get_applet_id_from_iid);
 
-  gp_module_set_standalone_menu (module, menu_get_standalone_menu);
+  gp_module_set_actions (module,
+                         GP_ACTION_MAIN_MENU,
+                         main_menu_func);
 }

@@ -361,46 +361,6 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
   return TRUE;
 }
 
-GtkWidget *
-gp_applet_manager_get_standalone_menu (GpAppletManager *self)
-{
-  GSettings *general_settings;
-  gboolean enable_tooltips;
-  gboolean locked_down;
-  guint menu_icon_size;
-  GList *modules;
-  GList *l;
-  GtkWidget *menu;
-
-  general_settings = g_settings_new ("org.gnome.gnome-panel.general");
-
-  enable_tooltips = g_settings_get_boolean (general_settings, "enable-tooltips");
-  locked_down = panel_lockdown_get_panels_locked_down_s ();
-  menu_icon_size = g_settings_get_enum (general_settings, "menu-icon-size");
-
-  g_object_unref (general_settings);
-
-  modules = gp_module_manager_get_modules (self->manager);
-  menu = NULL;
-
-  for (l = modules; l != NULL; l = l->next)
-    {
-      GpModule *module;
-
-      module = GP_MODULE (l->data);
-
-      menu = gp_module_get_standalone_menu (module, enable_tooltips,
-                                            locked_down, menu_icon_size);
-
-      if (menu != NULL)
-        break;
-    }
-
-  g_list_free (modules);
-
-  return menu;
-}
-
 gboolean
 gp_applet_manager_handle_action (GpAppletManager *self,
                                  GpActionFlags    action,
