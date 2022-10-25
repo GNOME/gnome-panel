@@ -56,6 +56,10 @@ gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager   
 
 GtkWidget       *gp_applet_manager_get_standalone_menu       (GpAppletManager             *self);
 
+gboolean         gp_applet_manager_handle_action             (GpAppletManager             *self,
+                                                              GpActionFlags                action,
+                                                              uint32_t                     time);
+
 gboolean         gp_applet_manager_is_applet_disabled        (GpAppletManager             *self,
                                                               const char                  *iid,
                                                               char                       **reason);

@@ -130,6 +130,15 @@ panel_applets_manager_get_standalone_menu (void)
 }
 
 gboolean
+panel_applets_manager_handle_action (GpActionFlags action,
+                                     uint32_t      time)
+{
+	_panel_applets_managers_ensure_loaded ();
+
+	return gp_applet_manager_handle_action (manager, action, time);
+}
+
+gboolean
 panel_applets_manager_is_applet_disabled (const char  *iid,
                                           char       **reason)
 {

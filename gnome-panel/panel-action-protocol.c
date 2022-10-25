@@ -86,6 +86,10 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	if (panel_applet_activate_main_menu (activate_time))
 		return;
 
+	if (panel_applets_manager_handle_action (GP_ACTION_MAIN_MENU,
+	                                         activate_time))
+		return;
+
 	menu = panel_applets_manager_get_standalone_menu ();
 	g_object_ref_sink (menu);
 
@@ -97,6 +101,10 @@ static void
 panel_action_protocol_run_dialog (GdkScreen *screen,
 				  guint32    activate_time)
 {
+	if (panel_applets_manager_handle_action (GP_ACTION_RUN_DIALOG,
+	                                         activate_time))
+		return;
+
 	panel_run_dialog_present (screen, activate_time);
 }
 

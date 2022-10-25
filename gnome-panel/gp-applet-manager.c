@@ -402,6 +402,41 @@ gp_applet_manager_get_standalone_menu (GpAppletManager *self)
 }
 
 gboolean
+gp_applet_manager_handle_action (GpAppletManager *self,
+                                 GpActionFlags    action,
+                                 uint32_t         time)
+{
+  GList *modules;
+  GList *l;
+
+  modules = gp_module_manager_get_modules (self->manager);
+
+  for (l = modules; l != NULL; l = l->next)
+    {
+      GpModule *module;
+      GpActionFlags actions;
+
+      module = GP_MODULE (l->data);
+
+      actions = gp_module_get_actions (module);
+
+      if ((actions & action) != action)
+        continue;
+
+      if (gp_module_handle_action (module, action, time))
+        {
+          g_list_free (modules);
+
+          return TRUE;
+        }
+    }
+
+  g_list_free (modules);
+
+  return FALSE;
+}
+
+gboolean
 gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
                                       const char       *iid,
                                       char            **reason)
