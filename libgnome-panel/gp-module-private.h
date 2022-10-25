@@ -48,11 +48,6 @@ GpAppletInfo        *gp_module_get_applet_info        (GpModule         *module,
 const gchar         *gp_module_get_applet_id_from_iid (GpModule         *module,
                                                        const gchar      *old_iid);
 
-GtkWidget           *gp_module_get_standalone_menu    (GpModule         *module,
-                                                       gboolean          enable_tooltips,
-                                                       gboolean          locked_down,
-                                                       guint             menu_icon_size);
-
 GpActionFlags        gp_module_get_actions            (GpModule         *self);
 
 gboolean             gp_module_handle_action          (GpModule         *self,

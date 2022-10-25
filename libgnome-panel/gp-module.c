@@ -137,8 +137,6 @@ struct _GpModule
 
   GetAppletIdFromIidFunc   compatibility_func;
 
-  GetStandaloneMenuFunc    standalone_menu_func;
-
   GpActionFlags            actions;
   GpActionFunc             action_func;
 
@@ -493,34 +491,6 @@ gp_module_get_applet_id_from_iid (GpModule    *module,
     return NULL;
 
   return module->compatibility_func (old_iid);
-}
-
-/**
- * gp_module_set_standalone_menu:
- * @module: a #GpModule
- * @func: the function to call to create a menu
- *
- * Specifies a function to be used to create standalone menu.
- */
-void
-gp_module_set_standalone_menu (GpModule              *module,
-                               GetStandaloneMenuFunc  func)
-{
-  module->standalone_menu_func = func;
-}
-
-GtkWidget *
-gp_module_get_standalone_menu (GpModule *module,
-                               gboolean  enable_tooltips,
-                               gboolean  locked_down,
-                               guint     menu_icon_size)
-{
-  if (module->standalone_menu_func == NULL)
-    return NULL;
-
-  return module->standalone_menu_func (enable_tooltips,
-                                       locked_down,
-                                       menu_icon_size);
 }
 
 void

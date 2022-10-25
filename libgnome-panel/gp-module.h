@@ -52,21 +52,6 @@ typedef GpAppletInfo * (* GpGetAppletInfoFunc)    (const gchar *id);
  */
 typedef const gchar  * (* GetAppletIdFromIidFunc) (const gchar *iid);
 
-/**
- * GetStandaloneMenuFunc:
- * @enable_tooltips: Whether the applet should show tooltips
- * @locked_down: Whether the applet is on locked down panel
- * @menu_icon_size: The size of icons in menus
- *
- * Specifies the type of the module function called to create a
- * standalone menu.
- *
- * Returns: (transfer full): returns a #GtkMenu.
- */
-typedef GtkWidget    * (* GetStandaloneMenuFunc)  (gboolean     enable_tooltips,
-                                                   gboolean     locked_down,
-                                                   guint        menu_icon_size);
-
 typedef struct _GpModule GpModule;
 typedef gboolean (* GpActionFunc) (GpModule      *self,
                                    GpActionFlags  action,
@@ -100,9 +85,6 @@ void          gp_module_set_get_applet_info (GpModule               *module,
 
 void          gp_module_set_compatibility   (GpModule               *module,
                                              GetAppletIdFromIidFunc  func);
-
-void          gp_module_set_standalone_menu (GpModule               *module,
-                                             GetStandaloneMenuFunc   func);
 
 void          gp_module_set_actions         (GpModule               *self,
                                              GpActionFlags           actions,
