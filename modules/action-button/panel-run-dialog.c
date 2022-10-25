@@ -48,14 +48,20 @@
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-xdg.h>
 
-#include "panel-util.h"
-#include "panel-multiscreen.h"
-#include "panel-lockdown.h"
-#include "panel-xutils.h"
-#include "panel-icon-names.h"
-#include "panel-schemas.h"
-
 #define PANEL_GTK_BUILDER_GET(builder, name) GTK_WIDGET (gtk_builder_get_object (builder, name))
+
+#define RUN_DIALOG_RESOURCE_PATH "/org/gnome/gnome-panel/modules/action-button/"
+
+#define PANEL_ICON_RUN      "system-run"
+#define PANEL_ICON_LAUNCHER "gnome-panel-launcher"
+
+#define PANEL_RUN_SCHEMA                "org.gnome.gnome-panel.run-dialog"
+#define PANEL_RUN_HISTORY_KEY           "history"
+#define PANEL_RUN_ENABLE_COMPLETION_KEY "enable-autocompletion"
+#define PANEL_RUN_ENABLE_LIST_KEY       "enable-program-list"
+#define PANEL_RUN_SHOW_LIST_KEY         "show-program-list"
+
+#define sure_string(s) ((const char *) ((s) != NULL ? (s) : ""))
 
 typedef struct {
 	GtkWidget        *run_dialog;
@@ -501,6 +507,33 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	g_strfreev (argv);
 
 	return result;
+}
+
+/* This is similar to what g_file_new_for_commandline_arg() does, but
+ * we end up with something relative to $HOME instead of the current working
+ * directory */
+static GFile *
+panel_util_get_file_optional_homedir (const char *location)
+{
+	GFile *file;
+	char  *path;
+	char  *scheme;
+
+	if (g_path_is_absolute (location))
+		return g_file_new_for_path (location);
+
+	scheme = g_uri_parse_scheme (location);
+	if (scheme) {
+		file = g_file_new_for_uri (location);
+		g_free (scheme);
+		return file;
+	}
+
+	path = g_build_filename (g_get_home_dir (), location, NULL);
+	file = g_file_new_for_path (path);
+	g_free (path);
+
+	return file;
 }
 
 static void
@@ -1843,6 +1876,110 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 }
 
 static char *
+panel_make_unique_desktop_path_from_name (const char *dir,
+					  const char *name)
+{
+	int   num = 1;
+	char *path = NULL;
+#ifndef NAME_MAX
+/* sigh: some OS don't have NAME_MAX (which is POSIX). */
+#ifdef MAXNAMLEN
+#define NAME_MAX MAXNAMLEN
+#else
+#define NAME_MAX 255
+#endif
+#endif
+	char  filename[NAME_MAX];
+
+/* g_file_set_contents() use "%s.XXXXXX"
+ * FIXME: waiting for http://bugzilla.gnome.org/show_bug.cgi?id=437977 */
+#define LENGTH_FOR_TMPFILE_EXT 7
+
+	g_snprintf (filename,
+		    sizeof (filename) - strlen (".desktop") - LENGTH_FOR_TMPFILE_EXT,
+		    "%s", name);
+	g_strlcat (filename, ".desktop", sizeof (filename));
+	path = panel_make_full_path (dir, filename);
+	if (!g_file_test (path, G_FILE_TEST_EXISTS))
+		return path;
+	g_free (path);
+
+	while (TRUE) {
+		char *buf;
+
+		buf = g_strdup_printf ("-%d.desktop", num);
+		g_snprintf (filename,
+			    sizeof (filename) - strlen (buf) - LENGTH_FOR_TMPFILE_EXT,
+			    "%s", name);
+		g_strlcat (filename, buf, sizeof (filename));
+		g_free (buf);
+
+		path = panel_make_full_path (dir, filename);
+		if (!g_file_test (path, G_FILE_TEST_EXISTS))
+			return path;
+		g_free (path);
+
+		num++;
+	}
+
+	return NULL;
+}
+
+static char *
+panel_make_unique_desktop_uri (const char *dir,
+			       const char *source)
+{
+	char     *name, *p;
+	char     *uri;
+	char     *path = NULL;
+
+	/* Accept NULL source. Using an emptry string makes our life easier
+	 * than keeping NULL. */
+	if (!source)
+		source = "";
+
+	/* source may be an exec string, a path, or a URI. We truncate
+	 * it at the first space (to get just the command name if it's
+	 * an exec string), strip the path/URI, and remove the suffix
+	 * if it's ".desktop".
+	 */
+	name = g_strndup (source, strcspn (source, " "));
+	p = strrchr (name, '/');
+	while (p && !*(p + 1)) {
+		*p = '\0';
+		p = strrchr (name, '/');
+	}
+	if (p)
+		memmove (name, p + 1, strlen (p + 1) + 1);
+	p = strrchr (name, '.');
+	if (p && !strcmp (p, ".desktop")) {
+		*p = '\0';
+
+		/* also remove the -%d that might be at the end of the name */
+		p = strrchr (name, '-');
+		if (p) {
+			char *end;
+			strtol ((p + 1), &end, 10);
+			if (!*end)
+				*p = '\0';
+		}
+	}
+
+	if (name[0] == '\0') {
+		g_free (name);
+		name = g_strdup (_("file"));
+	}
+
+	path = panel_make_unique_desktop_path_from_name (dir, name);
+	g_free (name);
+
+	uri = g_filename_to_uri (path, NULL, NULL);
+	g_free (path);
+
+	return uri;
+}
+
+static char *
 panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 {
 	GKeyFile *key_file;
@@ -2023,9 +2160,15 @@ void
 panel_run_dialog_present (GdkScreen *screen,
 			  guint32    activate_time)
 {
+	GSettings *desktop_settings;
+	gboolean disable_command_line;
 	GtkBuilder *gui;
 
-	if (panel_lockdown_get_disable_command_line_s ())
+	desktop_settings = g_settings_new ("org.gnome.desktop.lockdown");
+	disable_command_line = g_settings_get_boolean (desktop_settings, "disable-command-line");
+	g_object_unref (desktop_settings);
+
+	if (disable_command_line)
 		return;
 
 	if (static_dialog) {
@@ -2039,7 +2182,7 @@ panel_run_dialog_present (GdkScreen *screen,
 	gui = gtk_builder_new ();
 	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
 	gtk_builder_add_from_resource (gui,
-				       PANEL_RESOURCE_PATH "panel-run-dialog.ui",
+				       RUN_DIALOG_RESOURCE_PATH "panel-run-dialog.ui",
 				       NULL);
 
 	static_dialog = panel_run_dialog_new (screen, gui, activate_time);

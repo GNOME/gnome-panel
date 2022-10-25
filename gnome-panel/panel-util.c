@@ -94,46 +94,6 @@ panel_pop_window_busy (GtkWidget *window)
 	}
 }
 
-static gboolean
-panel_ensure_dir (const char *dirname)
-{
-	char *parsed, *p;
-
-	if (dirname == NULL)
-		return FALSE;
-
-	parsed = g_strdup (dirname);
-
-	if (g_file_test (parsed, G_FILE_TEST_IS_DIR)) {
-		g_free (parsed);
-		return TRUE;
-	}
-
-	p = strchr (parsed, '/');
-	if (p == parsed)
-		p = strchr (p+1, '/');
-
-	while (p != NULL) {
-		*p = '\0';
-		if (g_mkdir (parsed, 0700) != 0 &&
-		    errno != EEXIST && errno != ENOSYS) {
-			g_free (parsed);
-			return FALSE;
-		}
-		*p = '/';
-		p = strchr (p+1, '/');
-	}
-
-	if (g_mkdir (parsed, 0700) != 0 &&
-	    errno != EEXIST && errno != ENOSYS) {
-		g_free (parsed);
-		return FALSE;
-	}
-
-	g_free (parsed);
-	return TRUE;
-}
-
 static char *
 panel_find_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,
@@ -239,135 +199,6 @@ panel_launcher_get_filename (const char *location)
 }
 
 char *
-panel_make_full_path (const char *dir,
-		      const char *filename)
-{
-	char *retval;
-	char *freeme = NULL;
-
-	g_return_val_if_fail (filename != NULL, NULL);
-
-	if (!dir) {
-		freeme = panel_launcher_get_personal_path ();
-		dir = freeme;
-	}
-
-	/* Make sure the launcher directory exists */
-	if (!g_file_test (dir, G_FILE_TEST_EXISTS))
-		panel_ensure_dir (dir);
-
-	retval = g_build_filename (dir, filename, NULL);
-
-	g_free (freeme);
-
-	return retval;
-}
-
-static char *
-panel_make_unique_desktop_path_from_name (const char *dir,
-					  const char *name)
-{
-	int   num = 1;
-	char *path = NULL;
-#ifndef NAME_MAX
-/* sigh: some OS don't have NAME_MAX (which is POSIX). */
-#ifdef MAXNAMLEN
-#define NAME_MAX MAXNAMLEN
-#else
-#define NAME_MAX 255
-#endif
-#endif
-	char  filename[NAME_MAX];
-
-/* g_file_set_contents() use "%s.XXXXXX"
- * FIXME: waiting for http://bugzilla.gnome.org/show_bug.cgi?id=437977 */
-#define LENGTH_FOR_TMPFILE_EXT 7
-
-	g_snprintf (filename,
-		    sizeof (filename) - strlen (".desktop") - LENGTH_FOR_TMPFILE_EXT,
-		    "%s", name);
-	g_strlcat (filename, ".desktop", sizeof (filename));
-	path = panel_make_full_path (dir, filename);
-	if (!g_file_test (path, G_FILE_TEST_EXISTS))
-		return path;
-	g_free (path);
-
-	while (TRUE) {
-		char *buf;
-
-		buf = g_strdup_printf ("-%d.desktop", num);
-		g_snprintf (filename,
-			    sizeof (filename) - strlen (buf) - LENGTH_FOR_TMPFILE_EXT,
-			    "%s", name);
-		g_strlcat (filename, buf, sizeof (filename));
-		g_free (buf);
-
-		path = panel_make_full_path (dir, filename);
-		if (!g_file_test (path, G_FILE_TEST_EXISTS))
-			return path;
-		g_free (path);
-
-		num++;
-	}
-
-	return NULL;
-}
-
-char *
-panel_make_unique_desktop_uri (const char *dir,
-			       const char *source)
-{
-	char     *name, *p;
-	char     *uri;
-	char     *path = NULL;
-
-	/* Accept NULL source. Using an emptry string makes our life easier
-	 * than keeping NULL. */
-	if (!source)
-		source = "";
-
-	/* source may be an exec string, a path, or a URI. We truncate
-	 * it at the first space (to get just the command name if it's
-	 * an exec string), strip the path/URI, and remove the suffix
-	 * if it's ".desktop".
-	 */
-	name = g_strndup (source, strcspn (source, " "));
-	p = strrchr (name, '/');
-	while (p && !*(p + 1)) {
-		*p = '\0';
-		p = strrchr (name, '/');
-	}
-	if (p)
-		memmove (name, p + 1, strlen (p + 1) + 1);
-	p = strrchr (name, '.');
-	if (p && !strcmp (p, ".desktop")) {
-		*p = '\0';
-
-		/* also remove the -%d that might be at the end of the name */
-		p = strrchr (name, '-');
-		if (p) {
-			char *end;
-			strtol ((p + 1), &end, 10);
-			if (!*end)
-				*p = '\0';
-		}
-	}
-
-	if (name[0] == '\0') {
-		g_free (name);
-		name = g_strdup (_("file"));
-	}
-
-	path = panel_make_unique_desktop_path_from_name (dir, name);
-	g_free (name);
-
-	uri = g_filename_to_uri (path, NULL, NULL);
-	g_free (path);
-
-	return uri;
-}
-
-char *
 guess_icon_from_exec (GtkIconTheme *icon_theme,
 		      GKeyFile     *key_file)
 {
@@ -409,27 +240,6 @@ panel_util_get_gfile_root (GFile *file)
 	}
 
 	return parent_old;
-}
-
-char *
-panel_util_get_icon_name_from_g_icon (GIcon *gicon)
-{
-	const char * const *names;
-	GtkIconTheme *icon_theme;
-	int i;
-
-	if (!G_IS_THEMED_ICON (gicon))
-		return NULL;
-
-	names = g_themed_icon_get_names (G_THEMED_ICON (gicon));
-	icon_theme = gtk_icon_theme_get_default ();
-
-	for (i = 0; names[i] != NULL; i++) {
-		if (gtk_icon_theme_has_icon (icon_theme, names[i]))
-			return g_strdup (names[i]);
-	}
-
-	return NULL;
 }
 
 static char *
@@ -761,33 +571,6 @@ panel_util_get_icon_for_uri (const char *text_uri)
 	g_object_unref (info);
 
 	return retval;
-}
-
-/* This is similar to what g_file_new_for_commandline_arg() does, but
- * we end up with something relative to $HOME instead of the current working
- * directory */
-GFile *
-panel_util_get_file_optional_homedir (const char *location)
-{
-	GFile *file;
-	char  *path;
-	char  *scheme;
-
-	if (g_path_is_absolute (location))
-		return g_file_new_for_path (location);
-
-	scheme = g_uri_parse_scheme (location);
-	if (scheme) {
-		file = g_file_new_for_uri (location);
-		g_free (scheme);
-		return file;
-	}
-
-	path = g_build_filename (g_get_home_dir (), location, NULL);
-	file = g_file_new_for_path (path);
-	g_free (path);
-
-	return file;
 }
 
 /*

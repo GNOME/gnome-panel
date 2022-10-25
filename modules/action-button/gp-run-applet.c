@@ -20,6 +20,8 @@
 
 #include <glib/gi18n-lib.h>
 
+#include "panel-run-dialog.h"
+
 struct _GpRunApplet
 {
   GpActionButtonApplet parent;
@@ -90,9 +92,6 @@ gp_run_applet_dispose (GObject *object)
 {
   G_OBJECT_CLASS (gp_run_applet_parent_class)->dispose (object);
 }
-
-extern void panel_run_dialog_present (GdkScreen *screen,
-                                      guint32    activate_time);
 
 static void
 gp_run_applet_clicked (GpActionButtonApplet *applet)

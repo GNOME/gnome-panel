@@ -5,6 +5,7 @@ action_button_lib_LTLIBRARIES = org.gnome.gnome-panel.action-button.la
 
 org_gnome_gnome_panel_action_button_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DG_LOG_DOMAIN=\""action-button"\" \
 	-DG_LOG_USE_STRUCTURED=1 \
 	-I$(top_srcdir) \
@@ -36,6 +37,8 @@ org_gnome_gnome_panel_action_button_la_SOURCES = \
 	gp-shutdown-applet.h \
 	panel-force-quit.c \
 	panel-force-quit.h \
+	panel-run-dialog.c \
+	panel-run-dialog.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
@@ -53,6 +56,7 @@ org_gnome_gnome_panel_action_button_la_LDFLAGS = \
 
 ui_FILES = \
 	gp-lock-screen-menu.ui \
+	panel-run-dialog.ui \
 	$(NULL)
 
 action_button_resources = \

@@ -24,6 +24,7 @@
 #define PANEL_GLIB_H
 
 #include <glib.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -33,6 +34,11 @@ char       *panel_g_lookup_in_data_dirs         (const char *basename);
 
 const char *panel_g_utf8_strstrcase             (const char *haystack,
 						 const char *needle);
+
+char *panel_make_full_path (const char *dir,
+                            const char *filename);
+
+char *panel_util_get_icon_name_from_g_icon (GIcon *gicon);
 
 G_END_DECLS
 

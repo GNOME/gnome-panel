@@ -14,11 +14,9 @@
 #define PANEL_ICON_FOLDER_TEMPLATES	"folder-templates"
 #define PANEL_ICON_FOLDER_VIDEOS	"folder-videos"
 #define PANEL_ICON_HOME			"user-home"
-#define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_NETWORK		"network-workgroup"
 #define PANEL_ICON_PANEL		"gnome-panel"
 #define PANEL_ICON_REMOTE		"applications-internet"
-#define PANEL_ICON_RUN			"system-run"
 #define PANEL_ICON_UNKNOWN		"image-missing"
 
 #endif /* PANEL_ICON_NAMES_H */

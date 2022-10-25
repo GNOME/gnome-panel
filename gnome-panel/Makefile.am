@@ -32,7 +32,6 @@ panel_sources =			\
 	panel.c			\
 	applet.c		\
 	panel-util.c		\
-	panel-run-dialog.c	\
 	panel-context-menu.c	\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
@@ -54,7 +53,6 @@ panel_headers =			\
 	panel.h			\
 	applet.h		\
 	panel-util.h		\
-	panel-run-dialog.h	\
 	panel-context-menu.h	\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
@@ -84,7 +82,6 @@ gnome_panel_CPPFLAGS = \
 	$(NULL)
 
 gnome_panel_CFLAGS = \
-	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DLAYOUTSDIR=\""$(datadir)/gnome-panel/layouts"\" \
 	-DMODULESDIR=\""$(libdir)/gnome-panel/modules"\" \
@@ -152,7 +149,7 @@ BUILT_SOURCES = \
 
 ui_FILES =					\
 	gp-properties-dialog.ui \
-	panel-run-dialog.ui
+	$(NULL)
 
 panel-resources.c: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/panel.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $<

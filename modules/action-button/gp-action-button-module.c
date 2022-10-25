@@ -25,6 +25,7 @@
 #include "gp-logout-applet.h"
 #include "gp-run-applet.h"
 #include "gp-shutdown-applet.h"
+#include "panel-run-dialog.h"
 
 static GpAppletInfo *
 action_button_get_applet_info (const char *id)
@@ -113,9 +114,6 @@ action_button_get_applet_id_from_iid (const char *iid)
 
   return NULL;
 }
-
-extern void panel_run_dialog_present (GdkScreen *screen,
-                                      guint32    activate_time);
 
 static gboolean
 run_dialog_func (GpModule      *module,

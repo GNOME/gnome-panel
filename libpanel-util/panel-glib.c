@@ -28,6 +28,8 @@
 #include <string.h>
 
 #include <glib.h>
+#include <glib/gstdio.h>
+#include <gtk/gtk.h>
 
 #include "panel-glib.h"
 
@@ -134,6 +136,105 @@ panel_g_utf8_strstrcase (const char *haystack, const char *needle)
 			}
 		}
 		o = p;
+	}
+
+	return NULL;
+}
+
+static gboolean
+panel_ensure_dir (const char *dirname)
+{
+	char *parsed, *p;
+
+	if (dirname == NULL)
+		return FALSE;
+
+	parsed = g_strdup (dirname);
+
+	if (g_file_test (parsed, G_FILE_TEST_IS_DIR)) {
+		g_free (parsed);
+		return TRUE;
+	}
+
+	p = strchr (parsed, '/');
+	if (p == parsed)
+		p = strchr (p+1, '/');
+
+	while (p != NULL) {
+		*p = '\0';
+		if (g_mkdir (parsed, 0700) != 0 &&
+		    errno != EEXIST && errno != ENOSYS) {
+			g_free (parsed);
+			return FALSE;
+		}
+		*p = '/';
+		p = strchr (p+1, '/');
+	}
+
+	if (g_mkdir (parsed, 0700) != 0 &&
+	    errno != EEXIST && errno != ENOSYS) {
+		g_free (parsed);
+		return FALSE;
+	}
+
+	g_free (parsed);
+	return TRUE;
+}
+
+static char *
+panel_util_get_from_personal_path (const char *file)
+{
+	return g_build_filename (g_get_user_config_dir (),
+				 "gnome-panel", file, NULL);
+}
+
+static char *
+panel_launcher_get_personal_path (void)
+{
+	return panel_util_get_from_personal_path ("launchers");
+}
+
+char *
+panel_make_full_path (const char *dir,
+		      const char *filename)
+{
+	char *retval;
+	char *freeme = NULL;
+
+	g_return_val_if_fail (filename != NULL, NULL);
+
+	if (!dir) {
+		freeme = panel_launcher_get_personal_path ();
+		dir = freeme;
+	}
+
+	/* Make sure the launcher directory exists */
+	if (!g_file_test (dir, G_FILE_TEST_EXISTS))
+		panel_ensure_dir (dir);
+
+	retval = g_build_filename (dir, filename, NULL);
+
+	g_free (freeme);
+
+	return retval;
+}
+
+char *
+panel_util_get_icon_name_from_g_icon (GIcon *gicon)
+{
+	const char * const *names;
+	GtkIconTheme *icon_theme;
+	int i;
+
+	if (!G_IS_THEMED_ICON (gicon))
+		return NULL;
+
+	names = g_themed_icon_get_names (G_THEMED_ICON (gicon));
+	icon_theme = gtk_icon_theme_get_default ();
+
+	for (i = 0; names[i] != NULL; i++) {
+		if (gtk_icon_theme_has_icon (icon_theme, names[i]))
+			return g_strdup (names[i]);
 	}
 
 	return NULL;

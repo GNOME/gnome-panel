@@ -150,7 +150,6 @@ PKG_CHECK_MODULES([PANEL], [
   gio-2.0 >= $GLIB_REQUIRED
   gio-unix-2.0 >= $GLIB_REQUIRED
   gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED
-  libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED
   dconf >= $DCONF_REQUIRED
   x11
   xi
@@ -166,6 +165,7 @@ PKG_CHECK_MODULES([LIBGNOME_PANEL], [
 PKG_CHECK_MODULES([ACTION_BUTTON], [
   gio-unix-2.0 >= $GLIB_REQUIRED
   gtk+-3.0 >= $GTK_REQUIRED
+  libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED
   libsystemd >= $LIBSYSTEMD_REQUIRED
   x11
 ])
