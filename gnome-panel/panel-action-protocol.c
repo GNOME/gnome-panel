@@ -47,6 +47,7 @@ menu_loaded_cb (GtkWidget   *widget,
 	GdkDisplay *display;
 	GdkSeat *seat;
 	GdkDevice *device;
+	GdkEvent *event;
 
 	window = gtk_widget_get_window (GTK_WIDGET (panel_widget));
 
@@ -63,10 +64,15 @@ menu_loaded_cb (GtkWidget   *widget,
 	                                &rect.x, &rect.y,
 	                                NULL);
 
+	event = gdk_event_new (GDK_BUTTON_PRESS);
+	gdk_event_set_device (event, device);
+
 	gtk_menu_popup_at_rect (GTK_MENU (widget), window, &rect,
 	                        GDK_GRAVITY_SOUTH_EAST,
 	                        GDK_GRAVITY_NORTH_WEST,
-	                        NULL);
+	                        event);
+
+	gdk_event_free (event);
 }
 
 static void
