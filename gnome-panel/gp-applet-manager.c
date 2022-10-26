@@ -359,6 +359,7 @@ gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
                                       const char       *iid,
                                       char            **reason)
 {
+  PanelLockdown *lockdown;
   const char *applet_id;
   char *module_id;
   GpModule *module;
@@ -367,7 +368,9 @@ gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
   g_return_val_if_fail (iid != NULL, FALSE);
   g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
 
-  if (panel_lockdown_is_applet_disabled (panel_lockdown_get (), iid))
+  lockdown = gp_application_get_lockdown (self->application);
+
+  if (panel_lockdown_is_applet_disabled (lockdown, iid))
     {
       if (reason != NULL)
         *reason = g_strdup (_("Disabled because this applet is listed in "
@@ -392,7 +395,7 @@ gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
     return FALSE;
 
   applet_id += 2;
-  lockdowns = panel_lockdown_get_flags_s (iid);
+  lockdowns = panel_lockdown_get_flags (lockdown, iid);
 
   return gp_module_is_applet_disabled (module,
                                        applet_id,

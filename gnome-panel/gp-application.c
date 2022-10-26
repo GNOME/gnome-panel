@@ -25,6 +25,7 @@
 #include "panel-action-protocol.h"
 #include "panel-enums-gsettings.h"
 #include "panel-layout.h"
+#include "panel-lockdown.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 
@@ -51,6 +52,8 @@ struct _GpApplication
   GpAppletManager  *applet_manager;
 
   GpActionProtocol *action_protocol;
+
+  PanelLockdown    *lockdown;
 
   PanelLayout      *layout;
 
@@ -251,6 +254,7 @@ gp_application_dispose (GObject *object)
   g_clear_object (&self->module_manager);
   g_clear_object (&self->applet_manager);
   g_clear_object (&self->action_protocol);
+  g_clear_object (&self->lockdown);
   g_clear_object (&self->layout);
 
   G_OBJECT_CLASS (gp_application_parent_class)->dispose (object);
@@ -295,6 +299,7 @@ gp_application_init (GpApplication *self)
 
   panel_multiscreen_init ();
 
+  self->lockdown = panel_lockdown_new ();
   self->layout = panel_layout_new (self);
 
   self->toplevels = g_hash_table_new_full (g_str_hash,
@@ -321,6 +326,12 @@ GpAppletManager *
 gp_application_get_applet_manager (GpApplication *self)
 {
   return self->applet_manager;
+}
+
+PanelLockdown *
+gp_application_get_lockdown (GpApplication  *self)
+{
+  return self->lockdown;
 }
 
 PanelLayout *

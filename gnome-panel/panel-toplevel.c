@@ -584,6 +584,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 			      gboolean         grab_keyboard,
 			      guint32          time_)
 {
+	GpApplication *application;
+	PanelLockdown *lockdown;
 	GtkWidget     *widget;
 	GdkWindow     *window;
 	GdkCursorType  cursor_type;
@@ -596,7 +598,10 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
 		return;
 
-	if (panel_lockdown_get_panels_locked_down_s ())
+	application = panel_toplevel_get_application (toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	if (panel_lockdown_get_panels_locked_down (lockdown))
 		return;
 
 	/* If any of the position/orientation are not writable,
@@ -3386,7 +3391,13 @@ panel_toplevel_get_panel_widget (PanelToplevel *toplevel)
 static gboolean
 panel_toplevel_position_is_writable (PanelToplevel *toplevel)
 {
-	if (panel_lockdown_get_panels_locked_down_s () ||
+	GpApplication *application;
+	PanelLockdown *lockdown;
+
+	application = panel_toplevel_get_application (toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	if (panel_lockdown_get_panels_locked_down (lockdown) ||
 	    !(g_settings_is_writable (toplevel->priv->settings,
 				      PANEL_TOPLEVEL_MONITOR_KEY) &&
 	      g_settings_is_writable (toplevel->priv->settings,

@@ -209,10 +209,11 @@ lockdown_changed_cb (PanelLockdown *lockdown,
 
   application = panel_toplevel_get_application (self->toplevel);
   applet_manager = gp_application_get_applet_manager (application);
+  lockdown = gp_application_get_lockdown (application);
   layout = gp_application_get_layout (application);
 
   if (!panel_layout_is_writable (layout) ||
-      panel_lockdown_get_panels_locked_down_s () ||
+      panel_lockdown_get_panels_locked_down (lockdown) ||
       gp_applet_manager_is_applet_disabled (applet_manager, self->iid, NULL))
     {
       gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
@@ -246,6 +247,8 @@ setup_row (GpAppletRow *self)
   GtkWidget *menu_button;
   GtkWidget *title_label;
   GtkWidget *description_label;
+  GpApplication *application;
+  PanelLockdown *lockdown;
 
   info = gp_module_get_applet_info (self->module, self->applet_id, NULL);
   g_assert (info != NULL);
@@ -302,13 +305,16 @@ setup_row (GpAppletRow *self)
   gtk_label_set_xalign (GTK_LABEL (description_label), 0);
   gtk_widget_show (description_label);
 
-  panel_lockdown_on_notify (panel_lockdown_get (),
+  application = panel_toplevel_get_application (self->toplevel);
+  lockdown = gp_application_get_lockdown (application);
+
+  panel_lockdown_on_notify (lockdown,
                             NULL,
                             G_OBJECT (self),
                             lockdown_changed_cb,
                             self);
 
-  lockdown_changed_cb (panel_lockdown_get (), self);
+  lockdown_changed_cb (lockdown, self);
 }
 
 static void

@@ -676,8 +676,8 @@ panel_applet_frame_sync_menu_state (PanelLockdown *lockdown,
 	gboolean          locked_down;
 	GpLockdownFlags   lockdowns;
 
-	locked_down = panel_lockdown_get_panels_locked_down_s ();
-	lockdowns = panel_lockdown_get_flags_s (frame->priv->iid);
+	locked_down = panel_lockdown_get_panels_locked_down (lockdown);
+	lockdowns = panel_lockdown_get_flags (lockdown, frame->priv->iid);
 
 	gp_applet_set_locked_down (frame->priv->applet, locked_down);
 	gp_applet_set_lockdowns (frame->priv->applet, lockdowns);
@@ -782,6 +782,8 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 			       GError                     *error)
 {
 	AppletInfo *info;
+	GpApplication *application;
+	PanelLockdown *lockdown;
 
 	g_assert (frame->priv->iid != NULL);
 
@@ -808,12 +810,15 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 	                              frame_act->settings);
 	frame->priv->applet_info = info;
 
-	panel_lockdown_on_notify (panel_lockdown_get (),
+	application = panel_toplevel_get_application (frame_act->panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	panel_lockdown_on_notify (lockdown,
 				  NULL,
 				  G_OBJECT (frame),
 				  panel_applet_frame_sync_menu_state,
 				  frame);
-	panel_applet_frame_sync_menu_state (panel_lockdown_get (), frame);
+	panel_applet_frame_sync_menu_state (lockdown, frame);
 
 	panel_applet_frame_init_properties (frame);
 
@@ -848,7 +853,13 @@ panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame
 gboolean
 panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act)
 {
-	return panel_lockdown_get_panels_locked_down_s ();
+	GpApplication *application;
+	PanelLockdown *lockdown;
+
+	application = panel_toplevel_get_application (frame_act->panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	return panel_lockdown_get_panels_locked_down (lockdown);
 }
 
 gchar *
@@ -902,15 +913,17 @@ panel_applet_frame_loading_failed_response (GtkWidget  *dialog,
                                             DeleteData *data)
 {
 	GpApplication *application;
+	PanelLockdown *lockdown;
 	PanelLayout *layout;
 
 	gtk_widget_destroy (dialog);
 
 	application = panel_toplevel_get_application (data->panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
 	layout = gp_application_get_layout (application);
 
 	if (response == LOADING_FAILED_RESPONSE_DELETE &&
-	    !panel_lockdown_get_panels_locked_down_s () &&
+	    !panel_lockdown_get_panels_locked_down (lockdown) &&
 	    panel_layout_is_writable (layout)) {
 		GSList *item;
 
@@ -933,13 +946,17 @@ panel_applet_frame_loading_failed (const char  *iid,
 {
 	GtkWidget *dialog;
 	char      *problem_txt;
+	GpApplication *application;
+	PanelLockdown *lockdown;
 	gboolean   locked_down;
 	DeleteData *data;
 
 	no_reload_applets = g_slist_prepend (no_reload_applets,
 					     g_strdup (id));
 
-	locked_down = panel_lockdown_get_panels_locked_down_s ();
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+	locked_down = panel_lockdown_get_panels_locked_down (lockdown);
 
 	problem_txt = g_strdup_printf (_("The panel encountered a problem "
 					 "while loading \"%s\"."),

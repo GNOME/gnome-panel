@@ -1931,6 +1931,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	int movement;
 	GtkWidget *applet;
 	AppletData *ad;
+	GpApplication *application;
+	PanelLockdown *lockdown;
 
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 
@@ -1942,8 +1944,11 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	applet = ad->applet;
 	g_assert(GTK_IS_WIDGET(applet));
 
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
 	if(!panel_widget_is_cursor(panel,10) &&
-	   !panel_lockdown_get_panels_locked_down_s ()) {
+	   !panel_lockdown_get_panels_locked_down (lockdown)) {
 		GSList *list;
 
 		for(list=panels;
@@ -2069,6 +2074,8 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 {
 	GtkWidget   *parent;
 	PanelWidget *panel;
+	GpApplication *application;
+	PanelLockdown *lockdown;
 	guint        modifiers;
 	guint32      event_time;
 
@@ -2087,12 +2094,14 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 		return TRUE;
 	}
 
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
 	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	/* Begin drag if the middle mouse button and modifier are pressed,
 	 * unless the panel is locked down or a grab is active (meaning a menu
 	 * is open) */
-	if (panel_lockdown_get_panels_locked_down_s () ||
+	if (panel_lockdown_get_panels_locked_down (lockdown) ||
 	    event->button != 2 ||
 	    modifiers != panel_bindings_get_mouse_button_modifier_keymask () ||
 	    gtk_grab_get_current() != NULL)
@@ -2558,12 +2567,17 @@ static void
 panel_widget_tab_move (PanelWidget *panel,
                        gboolean     next)
 {
+	GpApplication *application;
+	PanelLockdown *lockdown;
 	PanelWidget *new_panel = NULL;
 	PanelWidget *previous_panel = NULL;
 	AppletData  *ad;
 	GSList      *l;
 
-	if (panel_lockdown_get_panels_locked_down_s ())
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	if (panel_lockdown_get_panels_locked_down (lockdown))
 		return;
 
 	ad = panel->currently_dragged_applet;

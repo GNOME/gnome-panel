@@ -244,9 +244,17 @@ panel_applet_get_panel_widget (AppletInfo *info)
 gboolean
 panel_applet_can_freely_move (AppletInfo *applet)
 {
+	PanelWidget *panel;
+	GpApplication *application;
+	PanelLockdown *lockdown;
+
+	panel = panel_applet_get_panel_widget (applet);
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
 	/* if we check for more lockdown than this, then we'll need to update
 	 * callers that use panel_lockdown_on_notify() */
-	if (panel_lockdown_get_panels_locked_down_s ())
+	if (panel_lockdown_get_panels_locked_down (lockdown))
 		return FALSE;
 
 	return (g_settings_is_writable (applet->settings,

@@ -165,6 +165,9 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 	if (!pd->menu) {
 		pd->menu = panel_context_menu_create (panel);
 		if (pd->menu != NULL) {
+			GpApplication *application;
+			PanelLockdown *lockdown;
+
 			g_object_ref_sink (pd->menu);
 			g_signal_connect (pd->menu, "deactivate",
 					  G_CALLBACK (context_menu_deactivate),
@@ -172,7 +175,10 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 			g_signal_connect (pd->menu, "show",
 					  G_CALLBACK (context_menu_show), pd);
 
-			panel_lockdown_on_notify (panel_lockdown_get (),
+			application = panel_toplevel_get_application (panel->toplevel);
+			lockdown = gp_application_get_lockdown (application);
+
+			panel_lockdown_on_notify (lockdown,
 						  NULL,
 						  G_OBJECT (pd->menu),
 						  panel_menu_lockdown_changed,
@@ -422,6 +428,7 @@ ask_about_custom_launcher (const char          *file,
                            PanelObjectPackType  pack_type)
 {
   GpApplication *application;
+  PanelLockdown *lockdown;
   GpAppletManager *applet_manager;
   int pack_index;
   const char *iid;
@@ -430,10 +437,12 @@ ask_about_custom_launcher (const char          *file,
   GVariant *variant;
   GVariant *settings;
 
-	if (panel_lockdown_get_disable_command_line_s ())
-		return;
-
   application = panel_toplevel_get_application (panel->toplevel);
+  lockdown = gp_application_get_lockdown (application);
+
+  if (panel_lockdown_get_disable_command_line (lockdown))
+    return;
+
   applet_manager = gp_application_get_applet_manager (application);
 
   iid = "org.gnome.gnome-panel.launcher::custom-launcher";
@@ -979,10 +988,16 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 			    guint           info,
 			    guint           time_)
 {
+	GpApplication *application;
+	PanelLockdown *lockdown;
+
 	if (!panel)
 		return FALSE;
 
-	if (panel_lockdown_get_panels_locked_down_s ())
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	if (panel_lockdown_get_panels_locked_down (lockdown))
 		return FALSE;
 
 	if (gdk_drag_context_get_actions (context) & GDK_ACTION_COPY)
@@ -1065,10 +1080,15 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			GdkDragContext      *context,
 			guint                time_)
 {
+	GpApplication *application;
+	PanelLockdown *lockdown;
 	const guchar *data;
 	gboolean      success = FALSE;
 
-	if (panel_lockdown_get_panels_locked_down_s ()) {
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	if (panel_lockdown_get_panels_locked_down (lockdown)) {
 		gtk_drag_finish (context, FALSE, FALSE, time_);
 		return;
 	}
@@ -1101,11 +1121,9 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			return;
 		}
 		if (panel_layout_is_writable (get_layout (panel->toplevel))) {
-			GpApplication *application;
 			GpAppletManager *applet_manager;
 			InitialSetupData *initial_setup_data;
 
-			application = panel_toplevel_get_application (panel->toplevel);
 			applet_manager = gp_application_get_applet_manager (application);
 
 			initial_setup_data = initial_setup_data_new (panel,

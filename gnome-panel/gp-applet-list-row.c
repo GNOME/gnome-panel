@@ -147,9 +147,10 @@ lockdown_changed_cb (PanelLockdown *lockdown,
   application = panel_toplevel_get_application (panel->toplevel);
   applet_manager = gp_application_get_applet_manager (application);
   layout = gp_application_get_layout (application);
+  lockdown = gp_application_get_lockdown (application);
 
   if (!panel_layout_is_writable (layout) ||
-      panel_lockdown_get_panels_locked_down_s () ||
+      panel_lockdown_get_panels_locked_down (lockdown) ||
       gp_applet_manager_is_applet_disabled (applet_manager, self->iid, NULL))
     {
       gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
@@ -183,6 +184,9 @@ setup_row (GpAppletListRow *self)
   GtkWidget *description_label;
   GtkStyleContext *remove_button_style_context;
   char *name;
+  PanelWidget *panel;
+  GpApplication *application;
+  PanelLockdown *lockdown;
 
   info = gp_module_get_applet_info (self->module, self->applet_id, NULL);
   g_assert (info != NULL);
@@ -247,13 +251,17 @@ setup_row (GpAppletListRow *self)
   gtk_label_set_xalign (GTK_LABEL (description_label), 0);
   gtk_widget_show (description_label);
 
-  panel_lockdown_on_notify (panel_lockdown_get (),
+  panel = panel_applet_get_panel_widget (self->info);
+  application = panel_toplevel_get_application (panel->toplevel);
+  lockdown = gp_application_get_lockdown (application);
+
+  panel_lockdown_on_notify (lockdown,
                             NULL,
                             G_OBJECT (self),
                             lockdown_changed_cb,
                             self);
 
-  lockdown_changed_cb (panel_lockdown_get (), self);
+  lockdown_changed_cb (lockdown, self);
 }
 
 static void

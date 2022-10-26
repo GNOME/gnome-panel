@@ -93,17 +93,19 @@ panel_context_menu_setup_delete_panel_item (GtkWidget     *menuitem,
                                             PanelToplevel *toplevel)
 {
 	GpApplication *application;
+	PanelLockdown *lockdown;
 	PanelLayout *layout;
 	gboolean     sensitive;
 
 	g_assert (PANEL_IS_TOPLEVEL (toplevel));
 
 	application = panel_toplevel_get_application (toplevel);
+	lockdown = gp_application_get_lockdown (application);
 	layout = gp_application_get_layout (application);
 
 	sensitive =
 		!is_last_toplevel (toplevel) &&
-		!panel_lockdown_get_panels_locked_down_s () &&
+		!panel_lockdown_get_panels_locked_down (lockdown) &&
 		panel_layout_is_writable (layout);
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
@@ -296,9 +298,14 @@ create_empty_menu (void)
 GtkWidget *
 panel_context_menu_create (PanelWidget *panel)
 {
+	GpApplication *application;
+	PanelLockdown *lockdown;
 	GtkWidget *retval;
 
-	if (panel_lockdown_get_panels_locked_down_s ())
+	application = panel_toplevel_get_application (panel->toplevel);
+	lockdown = gp_application_get_lockdown (application);
+
+	if (panel_lockdown_get_panels_locked_down (lockdown))
 		return NULL;
 
 	retval = create_empty_menu ();

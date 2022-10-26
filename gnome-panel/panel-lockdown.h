@@ -53,6 +53,8 @@ struct _PanelLockdownClass {
 
 GType panel_lockdown_get_type (void);
 
+PanelLockdown *panel_lockdown_new (void);
+
 gboolean panel_lockdown_get_panels_locked_down   (PanelLockdown *lockdown);
 gboolean panel_lockdown_get_disable_command_line (PanelLockdown *lockdown);
 
@@ -68,15 +70,8 @@ void     panel_lockdown_on_notify                (PanelLockdown *      lockdown,
                                                   PanelLockdownNotify  callback,
                                                   gpointer             callback_data);
 
-PanelLockdown *panel_lockdown_get (void);
-
-gboolean panel_lockdown_get_panels_locked_down_s     (void);
-gboolean panel_lockdown_get_disable_command_line_s   (void);
-
 GpLockdownFlags panel_lockdown_get_flags   (PanelLockdown *lockdown,
                                             const char    *iid);
-
-GpLockdownFlags panel_lockdown_get_flags_s (const char    *iid);
 
 G_END_DECLS
 
