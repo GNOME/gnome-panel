@@ -23,6 +23,7 @@
 G_BEGIN_DECLS
 
 typedef struct _GpAppletManager GpAppletManager;
+typedef struct _GpModuleManager GpModuleManager;
 typedef struct _PanelLayout PanelLayout;
 typedef struct _PanelToplevel PanelToplevel;
 
@@ -30,6 +31,8 @@ typedef struct _PanelToplevel PanelToplevel;
 G_DECLARE_FINAL_TYPE (GpApplication, gp_application, GP, APPLICATION, GObject)
 
 GpApplication   *gp_application_new                (GError        **error);
+
+GpModuleManager *gp_application_get_module_manager (GpApplication  *self);
 
 GpAppletManager *gp_application_get_applet_manager (GpApplication  *self);
 

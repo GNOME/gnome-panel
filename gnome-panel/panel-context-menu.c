@@ -180,12 +180,10 @@ add_to_panel_activate_cb (GtkMenuItem   *menuitem,
   if (dialog == NULL)
     {
       GpApplication *application;
-      GpAppletManager *applet_manager;
       GpModuleManager *manager;
 
       application = panel_toplevel_get_application (toplevel);
-      applet_manager = gp_application_get_applet_manager (application);
-      manager = gp_applet_manager_get_module_manager (applet_manager);
+      manager = gp_application_get_module_manager (application);
 
       dialog = gp_add_applet_window_new (manager, toplevel);
 

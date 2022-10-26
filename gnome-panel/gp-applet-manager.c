@@ -122,20 +122,17 @@ static void
 gp_applet_manager_init (GpAppletManager *self)
 {
   self->backend = get_current_backend ();
-
-  self->manager = gp_module_manager_new ();
 }
 
 GpAppletManager *
-gp_applet_manager_new (void)
+gp_applet_manager_new (GpModuleManager *manager)
 {
-  return g_object_new (GP_TYPE_APPLET_MANAGER, NULL);
-}
+  GpAppletManager *self;
 
-GpModuleManager *
-gp_applet_manager_get_module_manager (GpAppletManager *self)
-{
-  return self->manager;
+  self = g_object_new (GP_TYPE_APPLET_MANAGER, NULL);
+  self->manager = g_object_ref (manager);
+
+  return self;
 }
 
 GpAppletInfo *

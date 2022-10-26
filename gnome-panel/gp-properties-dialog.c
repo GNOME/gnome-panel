@@ -489,12 +489,10 @@ setup_applet_box_add_applets (GpPropertiesDialog *dialog,
                               GSList             *applets)
 {
   GSList *iter;
-  GpAppletManager *applet_manager;
   GpModuleManager *manager;
   GpModule *module;
 
-  applet_manager = gp_application_get_applet_manager (dialog->application);
-  manager = gp_applet_manager_get_module_manager (applet_manager);
+  manager = gp_application_get_module_manager (dialog->application);
 
   for (iter = applets; iter; iter = iter->next)
     {

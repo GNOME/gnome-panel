@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "gp-applet-manager.h"
+#include "gp-module-manager.h"
 #include "panel-action-protocol.h"
 #include "panel-enums-gsettings.h"
 #include "panel-layout.h"
@@ -46,6 +47,7 @@ struct _GpApplication
 
   GtkStyleProvider *provider;
 
+  GpModuleManager  *module_manager;
   GpAppletManager  *applet_manager;
 
   GpActionProtocol *action_protocol;
@@ -244,6 +246,7 @@ gp_application_dispose (GObject *object)
 
   g_clear_object (&self->general_settings);
   g_clear_object (&self->provider);
+  g_clear_object (&self->module_manager);
   g_clear_object (&self->applet_manager);
   g_clear_object (&self->action_protocol);
   g_clear_object (&self->layout);
@@ -285,7 +288,8 @@ gp_application_init (GpApplication *self)
 
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 
-  self->applet_manager = gp_applet_manager_new ();
+  self->module_manager = gp_module_manager_new ();
+  self->applet_manager = gp_applet_manager_new (self->module_manager);
 
   self->action_protocol = gp_action_protocol_new (self);
 
@@ -305,6 +309,12 @@ gp_application_new (GError **error)
   return g_initable_new (GP_TYPE_APPLICATION,
                          NULL, error,
                          NULL);
+}
+
+GpModuleManager *
+gp_application_get_module_manager (GpApplication *self)
+{
+  return self->module_manager;
 }
 
 GpAppletManager *
