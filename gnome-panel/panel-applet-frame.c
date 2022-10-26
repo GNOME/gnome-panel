@@ -1049,9 +1049,13 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
 
 	if (!panel_applets_manager_get_applet_info (applet_iid)) {
+		GpApplication *application;
+		GpAppletManager *applet_manager;
 		gchar *new_iid;
 
-		new_iid = panel_applets_manager_get_new_iid (applet_iid);
+		application = panel_toplevel_get_application (panel_widget->toplevel);
+		applet_manager = gp_application_get_applet_manager (application);
+		new_iid = gp_applet_manager_get_new_iid (applet_manager, applet_iid);
 
 		if (new_iid != NULL) {
 			g_settings_set_string (settings, PANEL_OBJECT_IID_KEY, new_iid);
