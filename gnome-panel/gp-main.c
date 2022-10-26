@@ -132,7 +132,6 @@ static void
 session_ready_cb (GpSession  *session,
                   GpMainData *main_data)
 {
-  GdkDisplay *display;
   GError *error;
 
   g_unix_signal_add (SIGTERM, on_term_signal, main_data);
@@ -151,9 +150,6 @@ session_ready_cb (GpSession  *session,
       main_data->exit_status = EXIT_FAILURE;
       return;
     }
-
-  display = gdk_display_get_default ();
-  gdk_display_flush (display);
 
   error = NULL;
   main_data->application = gp_application_new (&error);
