@@ -289,7 +289,7 @@ gp_application_init (GpApplication *self)
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 
   self->module_manager = gp_module_manager_new ();
-  self->applet_manager = gp_applet_manager_new (self->module_manager);
+  self->applet_manager = gp_applet_manager_new (self);
 
   self->action_protocol = gp_action_protocol_new (self);
 

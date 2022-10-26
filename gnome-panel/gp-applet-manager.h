@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GpAppletManager, gp_applet_manager,
                       GP, APPLET_MANAGER, GObject)
 
-GpAppletManager *gp_applet_manager_new                       (GpModuleManager             *manager);
+GpAppletManager *gp_applet_manager_new                       (GpApplication               *application);
 
 GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
                                                               const char                  *iid);

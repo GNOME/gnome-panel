@@ -43,6 +43,7 @@ struct _GpAppletManager
 
   char            *backend;
 
+  GpApplication   *application;
   GpModuleManager *manager;
 };
 
@@ -103,7 +104,6 @@ gp_applet_manager_finalize (GObject *object)
   self = GP_APPLET_MANAGER (object);
 
   g_clear_pointer (&self->backend, g_free);
-  g_clear_object (&self->manager);
 
   G_OBJECT_CLASS (gp_applet_manager_parent_class)->finalize (object);
 }
@@ -125,12 +125,13 @@ gp_applet_manager_init (GpAppletManager *self)
 }
 
 GpAppletManager *
-gp_applet_manager_new (GpModuleManager *manager)
+gp_applet_manager_new (GpApplication *application)
 {
   GpAppletManager *self;
 
   self = g_object_new (GP_TYPE_APPLET_MANAGER, NULL);
-  self->manager = g_object_ref (manager);
+  self->application = application;
+  self->manager = gp_application_get_module_manager (application);
 
   return self;
 }
