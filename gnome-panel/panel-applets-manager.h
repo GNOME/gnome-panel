@@ -31,9 +31,6 @@ G_BEGIN_DECLS
 
 GpModuleManager *panel_applets_manager_get_module_manager        (void);
 
-gboolean         panel_applets_manager_factory_activate          (const gchar                 *iid);
-void             panel_applets_manager_factory_deactivate        (const gchar                 *iid);
-
 GpAppletInfo    *panel_applets_manager_get_applet_info           (const gchar                 *iid);
 
 gboolean         panel_applets_manager_load_applet               (const gchar                 *iid,

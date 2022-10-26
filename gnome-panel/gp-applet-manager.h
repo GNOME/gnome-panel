@@ -30,12 +30,6 @@ GpAppletManager *gp_applet_manager_new                       (void);
 
 GpModuleManager *gp_applet_manager_get_module_manager        (GpAppletManager             *self);
 
-gboolean         gp_applet_manager_factory_activate          (GpAppletManager             *self,
-                                                              const char                  *iid);
-
-void             gp_applet_manager_factory_deactivate        (GpAppletManager             *self,
-                                                              const char                  *iid);
-
 GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
                                                               const char                  *iid);
 

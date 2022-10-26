@@ -54,22 +54,6 @@ panel_applets_manager_get_module_manager (void)
 	return gp_applet_manager_get_module_manager (manager);
 }
 
-gboolean
-panel_applets_manager_factory_activate (const gchar *iid)
-{
-	_panel_applets_managers_ensure_loaded ();
-
-	return gp_applet_manager_factory_activate (manager, iid);
-}
-
-void
-panel_applets_manager_factory_deactivate (const gchar *iid)
-{
-	_panel_applets_managers_ensure_loaded ();
-
-	gp_applet_manager_factory_deactivate (manager, iid);
-}
-
 GpAppletInfo *
 panel_applets_manager_get_applet_info (const gchar *iid)
 {

@@ -492,8 +492,6 @@ panel_applet_frame_finalize (GObject *object)
 {
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (object);
 
-	panel_applets_manager_factory_deactivate (frame->priv->iid);
-
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
 

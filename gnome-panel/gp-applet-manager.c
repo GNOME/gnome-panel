@@ -138,26 +138,6 @@ gp_applet_manager_get_module_manager (GpAppletManager *self)
   return self->manager;
 }
 
-gboolean
-gp_applet_manager_factory_activate (GpAppletManager *self,
-                                    const char      *iid)
-{
-  GpAppletInfo *info;
-
-  info = gp_applet_manager_get_applet_info (self, iid);
-
-  if (info == NULL)
-    return FALSE;
-
-  return TRUE;
-}
-
-void
-gp_applet_manager_factory_deactivate (GpAppletManager *self,
-                                      const char      *iid)
-{
-}
-
 GpAppletInfo *
 gp_applet_manager_get_applet_info (GpAppletManager *self,
                                    const char      *iid)
