@@ -244,14 +244,14 @@ gp_application_dispose (GObject *object)
       self->prefer_dark_id = 0;
     }
 
+  g_clear_pointer (&self->toplevels, g_hash_table_destroy);
+
   g_clear_object (&self->general_settings);
   g_clear_object (&self->provider);
   g_clear_object (&self->module_manager);
   g_clear_object (&self->applet_manager);
   g_clear_object (&self->action_protocol);
   g_clear_object (&self->layout);
-
-  g_clear_pointer (&self->toplevels, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_application_parent_class)->dispose (object);
 }
