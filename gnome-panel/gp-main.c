@@ -25,9 +25,7 @@
 #include "gp-application.h"
 #include "gp-session.h"
 #include "libpanel-util/panel-cleanup.h"
-#include "panel-action-protocol.h"
 #include "panel-icon-names.h"
-#include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 
 typedef struct
@@ -138,9 +136,6 @@ session_ready_cb (GpSession  *session,
 
   g_set_application_name (_("Panel"));
   gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
-
-  panel_action_protocol_init ();
-  panel_multiscreen_init ();
 
   error = NULL;
   main_data->application = gp_application_new (&error);

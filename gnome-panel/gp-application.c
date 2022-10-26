@@ -20,9 +20,11 @@
 
 #include <gtk/gtk.h>
 
+#include "panel-action-protocol.h"
 #include "panel-applets-manager.h"
 #include "panel-enums-gsettings.h"
 #include "panel-layout.h"
+#include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 
 typedef struct
@@ -281,6 +283,9 @@ gp_application_init (GpApplication *self)
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 
   self->applet_manager = panel_applets_manager_get ();
+
+  panel_action_protocol_init ();
+  panel_multiscreen_init ();
 
   self->layout = panel_layout_new (self);
 
