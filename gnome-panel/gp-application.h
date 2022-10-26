@@ -25,7 +25,7 @@ G_BEGIN_DECLS
 #define GP_TYPE_APPLICATION (gp_application_get_type ())
 G_DECLARE_FINAL_TYPE (GpApplication, gp_application, GP, APPLICATION, GObject)
 
-GpApplication *gp_application_new (void);
+GpApplication *gp_application_new (GError **error);
 
 G_END_DECLS
 

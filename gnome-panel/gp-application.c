@@ -42,7 +42,11 @@ struct _GpApplication
   GtkStyleProvider *provider;
 };
 
-G_DEFINE_TYPE (GpApplication, gp_application, G_TYPE_OBJECT)
+static void initable_iface_init (GInitableIface *iface);
+
+G_DEFINE_TYPE_WITH_CODE (GpApplication, gp_application, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
+                                                initable_iface_init))
 
 static GpSupportedTheme supported_themes[] =
 {
@@ -184,6 +188,20 @@ theme_variant_changed_cb (GSettings     *settings,
   update_theme (self);
 }
 
+static gboolean
+initable_init (GInitable     *initable,
+               GCancellable  *cancellable,
+               GError       **error)
+{
+  return TRUE;
+}
+
+static void
+initable_iface_init (GInitableIface *iface)
+{
+  iface->init = initable_init;
+}
+
 static void
 gp_application_dispose (GObject *object)
 {
@@ -247,8 +265,9 @@ gp_application_init (GpApplication *self)
 }
 
 GpApplication *
-gp_application_new (void)
+gp_application_new (GError **error)
 {
-  return g_object_new (GP_TYPE_APPLICATION,
-                       NULL);
+  return g_initable_new (GP_TYPE_APPLICATION,
+                         NULL, error,
+                         NULL);
 }

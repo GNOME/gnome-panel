@@ -133,6 +133,7 @@ session_ready_cb (GpSession  *session,
                   GpMainData *main_data)
 {
   GdkDisplay *display;
+  GError *error;
 
   g_unix_signal_add (SIGTERM, on_term_signal, main_data);
   g_unix_signal_add (SIGINT, on_int_signal, main_data);
@@ -154,7 +155,20 @@ session_ready_cb (GpSession  *session,
   display = gdk_display_get_default ();
   gdk_display_flush (display);
 
-  main_data->application = gp_application_new ();
+  error = NULL;
+  main_data->application = gp_application_new (&error);
+
+  if (error != NULL)
+    {
+      g_warning ("%s", error->message);
+      g_error_free (error);
+
+      main_loop_quit (main_data);
+
+      main_data->exit_status = EXIT_FAILURE;
+      return;
+    }
+
   gp_session_register (session);
 }
 
