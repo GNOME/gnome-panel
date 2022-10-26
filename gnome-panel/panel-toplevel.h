@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "gp-application.h"
 #include "panel-enums-gsettings.h"
 
 G_BEGIN_DECLS
@@ -67,6 +68,8 @@ struct _PanelToplevelClass {
 };
 
 GType                panel_toplevel_get_type               (void) G_GNUC_CONST;
+
+GpApplication       *panel_toplevel_get_application        (PanelToplevel       *self);
 
 PanelWidget         *panel_toplevel_get_panel_widget       (PanelToplevel       *toplevel);
 

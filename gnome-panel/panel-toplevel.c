@@ -78,6 +78,8 @@ typedef enum {
 } PanelGrabOpType;
 
 struct _PanelToplevelPrivate {
+	GpApplication          *application;
+
 	char                   *toplevel_id;
 
 	char                   *settings_path;
@@ -177,6 +179,7 @@ enum {
 
 enum {
 	PROP_0,
+	PROP_APPLICATION,
 	PROP_TOPLEVEL_ID,
 	PROP_SETTINGS_PATH,
 	PROP_NAME,
@@ -2786,6 +2789,10 @@ panel_toplevel_set_property (GObject      *object,
 	toplevel = PANEL_TOPLEVEL (object);
 
 	switch (prop_id) {
+	case PROP_APPLICATION:
+		g_assert (toplevel->priv->application == NULL);
+		toplevel->priv->application = g_value_get_object (value);
+		break;
 	case PROP_TOPLEVEL_ID:
 		panel_toplevel_set_toplevel_id (toplevel, g_value_get_string (value));
 		break;
@@ -2850,6 +2857,9 @@ panel_toplevel_get_property (GObject    *object,
 	toplevel = PANEL_TOPLEVEL (object);
 
 	switch (prop_id) {
+	case PROP_APPLICATION:
+		g_value_set_object (value, toplevel->priv->application);
+		break;
 	case PROP_TOPLEVEL_ID:
 		g_value_set_string (value, toplevel->priv->toplevel_id);
 		break;
@@ -2975,6 +2985,16 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->toggle_hidden    = panel_toplevel_toggle_hidden;
 	klass->begin_move       = panel_toplevel_begin_move;
 	klass->begin_resize     = panel_toplevel_begin_resize;
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_APPLICATION,
+		g_param_spec_object (
+			"app",
+			"GpApplication",
+			"GpApplication",
+			GP_TYPE_APPLICATION,
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (
 		gobject_class,
@@ -3384,6 +3404,12 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	                  NULL);
 
 	update_style_classes (toplevel);
+}
+
+GpApplication *
+panel_toplevel_get_application (PanelToplevel *self)
+{
+	return self->priv->application;
 }
 
 PanelWidget *

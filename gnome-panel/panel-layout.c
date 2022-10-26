@@ -48,9 +48,10 @@ static GSettings *layout_settings = NULL;
 #define DEFAULT_LAYOUT_FILE "default.layout"
 #define PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH "@instance-config/"
 
-static void panel_layout_load_toplevel    (const char *toplevel_id);
+static void panel_layout_load_toplevel    (GpApplication *application,
+                                           const char    *toplevel_id);
 static void panel_layout_load_object      (const char *object_id);
-static void panel_layout_changed_toplevel (void);
+static void panel_layout_changed_toplevel (GpApplication *application);
 static void panel_layout_changed_object   (void);
 
 static GQuark
@@ -860,7 +861,7 @@ panel_layout_delete_object (const char *object_id)
 }
 
 static void
-panel_layout_changed_toplevel (void)
+panel_layout_changed_toplevel (GpApplication *application)
 {
         char       **ids;
         GSList      *to_remove;
@@ -913,7 +914,7 @@ panel_layout_changed_toplevel (void)
                 }
 
                 if (!found) {
-                        panel_layout_load_toplevel (ids[i]);
+                        panel_layout_load_toplevel (application, ids[i]);
                         loading = TRUE;
                 }
         }
@@ -996,8 +997,12 @@ panel_layout_changed (GSettings *settings,
                       char      *key,
                       gpointer   user_data)
 {
+        GpApplication *application;
+
+        application = GP_APPLICATION (user_data);
+
         if (g_strcmp0 (key, PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) == 0)
-                panel_layout_changed_toplevel ();
+                panel_layout_changed_toplevel (application);
         else if (g_strcmp0 (key, PANEL_LAYOUT_OBJECT_ID_LIST_KEY) == 0)
                 panel_layout_changed_object ();
 }
@@ -1008,7 +1013,8 @@ panel_layout_changed (GSettings *settings,
 
 
 static void
-panel_layout_load_toplevel (const char *toplevel_id)
+panel_layout_load_toplevel (GpApplication *application,
+                            const char    *toplevel_id)
 {
         PanelToplevel *toplevel;
         char          *path;
@@ -1020,6 +1026,7 @@ panel_layout_load_toplevel (const char *toplevel_id)
                                 PANEL_LAYOUT_TOPLEVEL_PATH, toplevel_id);
 
         toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
+                                 "app", application,
                                  "decorated", FALSE,
                                  "settings-path", path,
                                  "toplevel-id", toplevel_id,
@@ -1169,7 +1176,7 @@ panel_layout_load (GpApplication  *application,
           }
 
         for (i = 0; toplevels[i] != NULL; i++)
-                panel_layout_load_toplevel (toplevels[i]);
+                panel_layout_load_toplevel (application, toplevels[i]);
 
         g_strfreev (toplevels);
 
@@ -1181,8 +1188,10 @@ panel_layout_load (GpApplication  *application,
 
         g_strfreev (objects);
 
-        g_signal_connect (layout_settings, "changed",
-                          G_CALLBACK (panel_layout_changed), NULL);
+        g_signal_connect (layout_settings,
+                          "changed",
+                          G_CALLBACK (panel_layout_changed),
+                          application);
 
         panel_object_loader_do_load (TRUE);
 
