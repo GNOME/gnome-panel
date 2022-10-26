@@ -1006,6 +1006,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 	PanelAppletFrameActivating *frame_act;
 
 	application = panel_toplevel_get_application (panel->toplevel);
+	applet_manager = gp_application_get_applet_manager (application);
 
 	if (g_slist_find_custom (no_reload_applets, id,
 				 (GCompareFunc) strcmp)) {
@@ -1013,12 +1014,10 @@ panel_applet_frame_load_helper (const gchar *iid,
 		return;
 	}
 
-	if (panel_applets_manager_get_applet_info (iid) == NULL) {
+	if (gp_applet_manager_get_applet_info (applet_manager, iid) == NULL) {
 		panel_applet_frame_loading_failed (iid, panel, id);
 		return;
 	}
-
-	applet_manager = gp_application_get_applet_manager (application);
 
 	if (gp_applet_manager_is_applet_disabled (applet_manager, iid, NULL)) {
 		panel_object_loader_stop_loading (application, id);
@@ -1041,20 +1040,21 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 			 const char  *id,
 			 GSettings   *settings)
 {
+	GpApplication *application;
+	GpAppletManager *applet_manager;
 	gchar *applet_iid;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
+	application = panel_toplevel_get_application (panel_widget->toplevel);
+	applet_manager = gp_application_get_applet_manager (application);
+
 	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
 
-	if (!panel_applets_manager_get_applet_info (applet_iid)) {
-		GpApplication *application;
-		GpAppletManager *applet_manager;
+	if (!gp_applet_manager_get_applet_info (applet_manager, applet_iid)) {
 		gchar *new_iid;
 
-		application = panel_toplevel_get_application (panel_widget->toplevel);
-		applet_manager = gp_application_get_applet_manager (application);
 		new_iid = gp_applet_manager_get_new_iid (applet_manager, applet_iid);
 
 		if (new_iid != NULL) {

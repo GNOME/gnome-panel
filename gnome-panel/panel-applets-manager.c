@@ -54,14 +54,6 @@ panel_applets_manager_get_module_manager (void)
 	return gp_applet_manager_get_module_manager (manager);
 }
 
-GpAppletInfo *
-panel_applets_manager_get_applet_info (const gchar *iid)
-{
-	_panel_applets_managers_ensure_loaded ();
-
-	return gp_applet_manager_get_applet_info (manager, iid);
-}
-
 gboolean
 panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
                                                  GVariant               *settings,
