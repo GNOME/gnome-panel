@@ -1030,7 +1030,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 	frame_act->id       = g_strdup (id);
 	frame_act->settings = g_object_ref (settings);
 
-	if (!panel_applets_manager_load_applet (iid, frame_act)) {
+	if (!gp_applet_manager_load_applet (applet_manager, iid, frame_act)) {
 		panel_applet_frame_loading_failed (iid, panel, id);
 		panel_applet_frame_activating_free (frame_act);
 	}
