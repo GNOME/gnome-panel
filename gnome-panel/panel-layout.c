@@ -539,22 +539,25 @@ panel_layout_append_group (GKeyFile    *keyfile,
         return FALSE;
 }
 
-static void
-panel_layout_append_from_file (const char *layout_file)
+static gboolean
+panel_layout_append_from_file (const char  *layout_file,
+                               GError     **error)
 {
-        GError    *error = NULL;
+        GError    *local_error = NULL;
         GKeyFile  *keyfile = NULL;
         char     **groups = NULL;
         gboolean   found_one = FALSE;
         int        i;
 
+        g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
         panel_layout_init ();
 
         keyfile = g_key_file_new ();
 
-        error = NULL;
+        local_error = NULL;
         if (!g_key_file_load_from_file (keyfile, layout_file,
-                                        G_KEY_FILE_NONE, &error))
+                                        G_KEY_FILE_NONE, &local_error))
                 goto out;
 
         groups = g_key_file_get_groups (keyfile, NULL);
@@ -563,15 +566,15 @@ panel_layout_append_from_file (const char *layout_file)
          * layout; the whole layout has to be valid */
         for (i = 0; groups[i] != NULL; i++) {
                 if (!panel_layout_append_group (keyfile, groups[i],
-                                                TRUE, &error))
+                                                TRUE, &local_error))
                         goto out;
                 else
                         found_one = TRUE;
         }
 
         if (!found_one) {
-                error = g_error_new (PANEL_LAYOUT_ERROR, 0,
-                                     "No defined toplevel or object");
+                local_error = g_error_new (PANEL_LAYOUT_ERROR, 0,
+                                           "No defined toplevel or object");
                 goto out;
         }
 
@@ -582,16 +585,24 @@ panel_layout_append_from_file (const char *layout_file)
                                            FALSE, NULL);
 
 out:
-        if (error) {
-                g_printerr ("Error while parsing default layout from '%s': %s\n",
-                            layout_file, error->message);
-                g_error_free (error);
+        if (local_error != NULL) {
+                g_set_error (error,
+                             PANEL_LAYOUT_ERROR,
+                             0,
+                             "Error while parsing default layout from '%s': %s\n",
+                             layout_file,
+                             local_error->message);
+
+                g_error_free (local_error);
+                return FALSE;
         }
 
         if (groups)
                 g_strfreev (groups);
 
         g_key_file_free (keyfile);
+
+        return TRUE;
 }
 
 
@@ -1084,23 +1095,34 @@ panel_layout_get_default_layout_file (void)
 }
 
 static char **
-panel_layout_load_default (void)
+panel_layout_load_default (GError **error)
 {
   char *default_layout_file;
   char **toplevels;
+
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (!g_settings_is_writable (layout_settings,
                                PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) ||
       !g_settings_is_writable (layout_settings,
                                PANEL_LAYOUT_OBJECT_ID_LIST_KEY))
     {
-      g_printerr (_("Cannot create initial panel layout.\n"));
+      g_set_error_literal (error,
+                           PANEL_LAYOUT_ERROR,
+                           0,
+                           _("Cannot create initial panel layout"));
 
       return NULL;
     }
 
   default_layout_file = panel_layout_get_default_layout_file ();
-  panel_layout_append_from_file (default_layout_file);
+
+  if (!panel_layout_append_from_file (default_layout_file, error))
+    {
+      g_free (default_layout_file);
+      return NULL;
+    }
+
   g_free (default_layout_file);
 
   toplevels = g_settings_get_strv (layout_settings,
@@ -1109,7 +1131,11 @@ panel_layout_load_default (void)
   if (!toplevels[0])
     {
       g_strfreev (toplevels);
-      g_printerr (_("Cannot create initial panel layout.\n"));
+
+      g_set_error_literal (error,
+                           PANEL_LAYOUT_ERROR,
+                           0,
+                           _("Cannot create initial panel layout"));
 
       return NULL;
     }
@@ -1118,11 +1144,14 @@ panel_layout_load_default (void)
 }
 
 gboolean
-panel_layout_load (void)
+panel_layout_load (GpApplication  *application,
+                   GError        **error)
 {
         char **toplevels;
         char **objects;
         int    i;
+
+        g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
         panel_layout_init ();
 
@@ -1133,7 +1162,7 @@ panel_layout_load (void)
           {
             g_strfreev (toplevels);
 
-            toplevels = panel_layout_load_default ();
+            toplevels = panel_layout_load_default (error);
 
             if (!toplevels)
               return FALSE;

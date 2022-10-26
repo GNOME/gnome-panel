@@ -27,7 +27,6 @@
 #include "libpanel-util/panel-cleanup.h"
 #include "panel-action-protocol.h"
 #include "panel-icon-names.h"
-#include "panel-layout.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 
@@ -142,14 +141,6 @@ session_ready_cb (GpSession  *session,
 
   panel_action_protocol_init ();
   panel_multiscreen_init ();
-
-  if (!panel_layout_load ())
-    {
-      main_loop_quit (main_data);
-
-      main_data->exit_status = EXIT_FAILURE;
-      return;
-    }
 
   error = NULL;
   main_data->application = gp_application_new (&error);

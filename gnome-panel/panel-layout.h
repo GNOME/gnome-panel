@@ -26,11 +26,13 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 
+#include "gp-application.h"
 #include "panel-enums-gsettings.h"
 
 G_BEGIN_DECLS
 
-gboolean panel_layout_load         (void);
+gboolean panel_layout_load (GpApplication  *application,
+                            GError        **error);
 
 gboolean panel_layout_is_writable  (void);
 

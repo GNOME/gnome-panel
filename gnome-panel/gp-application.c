@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "panel-enums-gsettings.h"
+#include "panel-layout.h"
 
 typedef struct
 {
@@ -193,7 +194,11 @@ initable_init (GInitable     *initable,
                GCancellable  *cancellable,
                GError       **error)
 {
-  return TRUE;
+  GpApplication *self;
+
+  self = GP_APPLICATION (initable);
+
+  return panel_layout_load (self, error);
 }
 
 static void
