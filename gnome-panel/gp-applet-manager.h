@@ -48,10 +48,6 @@ gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager   
                                                               gpointer                     user_data,
                                                               GDestroyNotify               free_func);
 
-gboolean         gp_applet_manager_handle_action             (GpAppletManager             *self,
-                                                              GpActionFlags                action,
-                                                              uint32_t                     time);
-
 gboolean         gp_applet_manager_is_applet_disabled        (GpAppletManager             *self,
                                                               const char                  *iid,
                                                               char                       **reason);

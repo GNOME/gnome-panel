@@ -29,7 +29,7 @@
 #include <X11/Xlib.h>
 
 #include "applet.h"
-#include "gp-applet-manager.h"
+#include "gp-module-manager.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 
@@ -51,15 +51,15 @@ handle_action (GpActionProtocol *self,
                GpActionFlags     action,
                guint32           time)
 {
-  GpAppletManager *applet_manager;
+  GpModuleManager *module_manager;
 
   if (action == GP_ACTION_MAIN_MENU &&
       panel_applet_activate_main_menu (time))
     return;
 
-  applet_manager = gp_application_get_applet_manager (self->application);
+  module_manager = gp_application_get_module_manager (self->application);
 
-  gp_applet_manager_handle_action (applet_manager, action, time);
+  gp_module_manager_handle_action (module_manager, action, time);
 }
 
 static GdkFilterReturn

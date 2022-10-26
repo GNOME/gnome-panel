@@ -135,3 +135,31 @@ gp_module_manager_get_module (GpModuleManager *self,
 {
   return g_hash_table_lookup (self->modules, id);
 }
+
+gboolean
+gp_module_manager_handle_action (GpModuleManager *self,
+                                 GpActionFlags    action,
+                                 uint32_t         time)
+{
+  GHashTableIter iter;
+  gpointer value;
+
+  g_hash_table_iter_init (&iter, self->modules);
+  while (g_hash_table_iter_next (&iter, NULL, &value))
+    {
+      GpModule *module;
+      GpActionFlags actions;
+
+      module = GP_MODULE (value);
+
+      actions = gp_module_get_actions (module);
+
+      if ((actions & action) != action)
+        continue;
+
+      if (gp_module_handle_action (module, action, time))
+        return TRUE;
+    }
+
+  return FALSE;
+}
