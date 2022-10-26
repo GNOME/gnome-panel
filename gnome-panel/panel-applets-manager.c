@@ -46,14 +46,6 @@ panel_applets_manager_get (void)
 	return manager;
 }
 
-GpModuleManager *
-panel_applets_manager_get_module_manager (void)
-{
-	_panel_applets_managers_ensure_loaded ();
-
-	return gp_applet_manager_get_module_manager (manager);
-}
-
 gboolean
 panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
                                                  GVariant               *settings,

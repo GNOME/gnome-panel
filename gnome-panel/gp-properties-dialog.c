@@ -20,6 +20,7 @@
 #include <glib/gi18n.h>
 #include <libgnome-panel/gp-applet-info.h>
 
+#include "gp-applet-manager.h"
 #include "gp-properties-dialog.h"
 #include "panel-schemas.h"
 #include "panel-applets-manager.h"
@@ -489,10 +490,12 @@ setup_applet_box_add_applets (GpPropertiesDialog *dialog,
                               GSList             *applets)
 {
   GSList *iter;
+  GpAppletManager *applet_manager;
   GpModuleManager *manager;
   GpModule *module;
 
-  manager = panel_applets_manager_get_module_manager ();
+  applet_manager = gp_application_get_applet_manager (dialog->application);
+  manager = gp_applet_manager_get_module_manager (applet_manager);
 
   for (iter = applets; iter; iter = iter->next)
     {

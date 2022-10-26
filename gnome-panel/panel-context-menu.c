@@ -38,6 +38,7 @@
 #include "panel-util.h"
 #include "panel.h"
 #include "gp-add-applet-window.h"
+#include "gp-applet-manager.h"
 #include "gp-properties-dialog.h"
 #include "panel-applets-manager.h"
 #include "panel-layout.h"
@@ -179,9 +180,14 @@ add_to_panel_activate_cb (GtkMenuItem   *menuitem,
 
   if (dialog == NULL)
     {
+      GpApplication *application;
+      GpAppletManager *applet_manager;
       GpModuleManager *manager;
 
-      manager = panel_applets_manager_get_module_manager ();
+      application = panel_toplevel_get_application (toplevel);
+      applet_manager = gp_application_get_applet_manager (application);
+      manager = gp_applet_manager_get_module_manager (applet_manager);
+
       dialog = gp_add_applet_window_new (manager, toplevel);
 
       g_signal_connect (dialog, "destroy",
