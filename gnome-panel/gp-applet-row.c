@@ -20,7 +20,7 @@
 
 #include <glib/gi18n.h>
 
-#include "panel-applets-manager.h"
+#include "gp-applet-manager.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 
@@ -202,16 +202,18 @@ lockdown_changed_cb (PanelLockdown *lockdown,
 {
   GpAppletRow *self;
   GpApplication *application;
+  GpAppletManager *applet_manager;
   PanelLayout *layout;
 
   self = GP_APPLET_ROW (user_data);
 
   application = panel_toplevel_get_application (self->toplevel);
+  applet_manager = gp_application_get_applet_manager (application);
   layout = gp_application_get_layout (application);
 
   if (!panel_layout_is_writable (layout) ||
       panel_lockdown_get_panels_locked_down_s () ||
-      panel_applets_manager_is_applet_disabled (self->iid, NULL))
+      gp_applet_manager_is_applet_disabled (applet_manager, self->iid, NULL))
     {
       gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
       gtk_drag_source_unset (self->event_box);

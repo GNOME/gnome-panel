@@ -31,6 +31,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
 
+#include "gp-applet-manager.h"
 #include "gp-handle.h"
 #include "panel-applets-manager.h"
 #include "panel-bindings.h"
@@ -1000,11 +1001,15 @@ panel_applet_frame_load_helper (const gchar *iid,
 				const char  *id,
 				GSettings   *settings)
 {
+	GpApplication *application;
+	GpAppletManager *applet_manager;
 	PanelAppletFrameActivating *frame_act;
+
+	application = panel_toplevel_get_application (panel->toplevel);
 
 	if (g_slist_find_custom (no_reload_applets, id,
 				 (GCompareFunc) strcmp)) {
-		panel_object_loader_stop_loading (get_application (panel), id);
+		panel_object_loader_stop_loading (application, id);
 		return;
 	}
 
@@ -1013,8 +1018,10 @@ panel_applet_frame_load_helper (const gchar *iid,
 		return;
 	}
 
-	if (panel_applets_manager_is_applet_disabled (iid, NULL)) {
-		panel_object_loader_stop_loading (get_application (panel), id);
+	applet_manager = gp_application_get_applet_manager (application);
+
+	if (gp_applet_manager_is_applet_disabled (applet_manager, iid, NULL)) {
+		panel_object_loader_stop_loading (application, id);
 		return;
 	}
 
