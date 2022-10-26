@@ -19,6 +19,7 @@
 #define GP_PROPERTIES_DIALOG_H
 
 #include <gtk/gtk.h>
+#include "gp-application.h"
 
 G_BEGIN_DECLS
 
@@ -26,7 +27,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GpPropertiesDialog, gp_properties_dialog,
                       GP, PROPERTIES_DIALOG, GtkWindow)
 
-GtkWidget *gp_properties_dialog_new (const gchar *toplevel_id);
+GtkWidget *gp_properties_dialog_new (GpApplication *application,
+                                     const char    *toplevel_id);
 
 G_END_DECLS
 

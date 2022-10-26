@@ -28,35 +28,36 @@
 
 struct _GpPropertiesDialog
 {
-  GtkWindow  parent;
+  GtkWindow      parent;
 
-  gchar     *toplevel_id;
+  GpApplication *application;
+  char          *toplevel_id;
 
-  GSettings *toplevel;
-  GSettings *theme;
+  GSettings     *toplevel;
+  GSettings     *theme;
 
-  GtkWidget *toplevel_writable;
-  GtkWidget *theme_writable;
+  GtkWidget     *toplevel_writable;
+  GtkWidget     *theme_writable;
 
-  GtkWidget *orientation;
-  GtkWidget *alignment;
-  GtkWidget *size;
-  GtkWidget *expand;
-  GtkWidget *auto_hide;
-  GtkWidget *enable_buttons;
-  GtkWidget *enable_arrows;
+  GtkWidget     *orientation;
+  GtkWidget     *alignment;
+  GtkWidget     *size;
+  GtkWidget     *expand;
+  GtkWidget     *auto_hide;
+  GtkWidget     *enable_buttons;
+  GtkWidget     *enable_arrows;
 
-  GtkWidget *custom_bg_color;
-  GtkWidget *bg_color_box;
-  GtkWidget *bg_color;
+  GtkWidget     *custom_bg_color;
+  GtkWidget     *bg_color_box;
+  GtkWidget     *bg_color;
 
-  GtkWidget *custom_bg_image;
-  GtkWidget *bg_image_box;
-  GtkWidget *bg_image;
-  GtkWidget *tile;
-  GtkWidget *stretch;
-  GtkWidget *fit;
-  GtkWidget *rotate;
+  GtkWidget     *custom_bg_image;
+  GtkWidget     *bg_image_box;
+  GtkWidget     *bg_image;
+  GtkWidget     *tile;
+  GtkWidget     *stretch;
+  GtkWidget     *fit;
+  GtkWidget     *rotate;
 
   GtkWidget *custom_fg_color;
   GtkWidget *fg_color_box;
@@ -72,6 +73,7 @@ enum
 {
   PROP_0,
 
+  PROP_APPLICATION,
   PROP_TOPLEVEL_ID,
 
   LAST_PROP
@@ -663,6 +665,10 @@ gp_properties_dialog_set_property (GObject      *object,
 
   switch (property_id)
     {
+      case PROP_APPLICATION:
+        dialog->application = g_value_get_object (value);
+        break;
+
       case PROP_TOPLEVEL_ID:
         dialog->toplevel_id = g_value_dup_string (value);
         break;
@@ -676,6 +682,15 @@ gp_properties_dialog_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
+  properties[PROP_APPLICATION] =
+    g_param_spec_object ("app",
+                         "GpApplication",
+                         "GpApplication",
+                         GP_TYPE_APPLICATION,
+                         G_PARAM_CONSTRUCT_ONLY |
+                         G_PARAM_WRITABLE |
+                         G_PARAM_STATIC_STRINGS);
+
   properties[PROP_TOPLEVEL_ID] =
     g_param_spec_string ("toplevel-id", "toplevel-id", "toplevel-id",
                          NULL, G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
@@ -755,9 +770,11 @@ gp_properties_dialog_init (GpPropertiesDialog *dialog)
 }
 
 GtkWidget *
-gp_properties_dialog_new (const gchar *toplevel_id)
+gp_properties_dialog_new (GpApplication *application,
+                          const char    *toplevel_id)
 {
   return g_object_new (GP_TYPE_PROPERTIES_DIALOG,
+                       "app", application,
                        "toplevel-id", toplevel_id,
                        NULL);
 }

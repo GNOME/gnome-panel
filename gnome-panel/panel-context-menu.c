@@ -127,10 +127,13 @@ present_properties_dialog (GtkWidget     *widget,
 
   if (dialog == NULL)
     {
+      GpApplication *application;
       const gchar *toplevel_id;
 
+      application = panel_toplevel_get_application (toplevel);
       toplevel_id = panel_toplevel_get_id (toplevel);
-      dialog = gp_properties_dialog_new (toplevel_id);
+
+      dialog = gp_properties_dialog_new (application, toplevel_id);
 
       g_signal_connect (dialog, "destroy",
                         G_CALLBACK (dialog_destroy_cb),
