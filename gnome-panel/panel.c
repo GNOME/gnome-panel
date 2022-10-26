@@ -26,7 +26,6 @@
 
 #include "applet.h"
 #include "gp-applet-manager.h"
-#include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
 #include "panel-util.h"

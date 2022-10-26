@@ -23,7 +23,6 @@
 #include "gp-applet-manager.h"
 #include "gp-properties-dialog.h"
 #include "panel-schemas.h"
-#include "panel-applets-manager.h"
 #include "gp-applet-list-row.h"
 #include "panel-layout.h"
 

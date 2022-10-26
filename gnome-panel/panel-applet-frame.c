@@ -33,7 +33,6 @@
 
 #include "gp-applet-manager.h"
 #include "gp-handle.h"
-#include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel.h"
 #include "applet.h"

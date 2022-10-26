@@ -23,7 +23,6 @@
 #include <config.h>
 
 #include "panel-action-protocol.h"
-#include "panel-applets-manager.h"
 
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>

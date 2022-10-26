@@ -20,8 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gp-applet-manager.h"
 #include "panel-action-protocol.h"
-#include "panel-applets-manager.h"
 #include "panel-enums-gsettings.h"
 #include "panel-layout.h"
 #include "panel-multiscreen.h"
@@ -285,7 +285,7 @@ gp_application_init (GpApplication *self)
 
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 
-  self->applet_manager = panel_applets_manager_get ();
+  self->applet_manager = gp_applet_manager_new ();
 
   self->action_protocol = gp_action_protocol_new (self);
 

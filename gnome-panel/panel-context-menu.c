@@ -40,7 +40,6 @@
 #include "gp-add-applet-window.h"
 #include "gp-applet-manager.h"
 #include "gp-properties-dialog.h"
-#include "panel-applets-manager.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"

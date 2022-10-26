@@ -18,7 +18,9 @@
 #ifndef GP_APPLET_MANAGER_H
 #define GP_APPLET_MANAGER_H
 
-#include "panel-applets-manager.h"
+#include "gp-module-manager.h"
+#include "libgnome-panel/gp-initial-setup-dialog-private.h"
+#include "panel-applet-frame.h"
 
 G_BEGIN_DECLS
 

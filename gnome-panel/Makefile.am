@@ -34,7 +34,6 @@ panel_sources =			\
 	panel-util.c		\
 	panel-context-menu.c	\
 	panel-applet-frame.c	\
-	panel-applets-manager.c	\
 	panel-action-protocol.c	\
 	panel-toplevel.c	\
 	panel-struts.c		\
@@ -55,7 +54,6 @@ panel_headers =			\
 	panel-util.h		\
 	panel-context-menu.h	\
 	panel-applet-frame.h	\
-	panel-applets-manager.h	\
 	panel-action-protocol.h	\
 	panel-toplevel.h	\
 	panel-struts.h		\
