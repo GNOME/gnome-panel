@@ -30,12 +30,6 @@ static GSList *registered_applets = NULL;
 static GSList *queued_position_saves = NULL;
 static guint   queued_position_source = 0;
 
-static inline PanelWidget *
-panel_applet_get_panel_widget (AppletInfo *info)
-{
-	return PANEL_WIDGET (gtk_widget_get_parent (info->widget));
-}
-
 /* permanently remove an applet - all non-permanent
  * cleanups should go in panel_applet_destroy()
  */
@@ -239,6 +233,12 @@ panel_applet_register (GtkWidget       *applet,
 	gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
 
 	return info;
+}
+
+PanelWidget *
+panel_applet_get_panel_widget (AppletInfo *info)
+{
+  return PANEL_WIDGET (gtk_widget_get_parent (info->widget));
 }
 
 gboolean

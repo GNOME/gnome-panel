@@ -558,6 +558,16 @@ create_launcher_from_uri (PanelToplevel       *toplevel,
   g_variant_unref (settings);
 }
 
+static PanelLayout *
+get_layout (PanelToplevel *toplevel)
+{
+  GpApplication *application;
+
+  application = panel_toplevel_get_application (toplevel);
+
+  return gp_application_get_layout (application);
+}
+
 static gboolean
 drop_url (PanelWidget         *panel,
 	  PanelObjectPackType  pack_type,
@@ -574,7 +584,7 @@ drop_url (PanelWidget         *panel,
 
 	g_return_val_if_fail (url != NULL, FALSE);
 
-	if (!panel_layout_is_writable ())
+	if (!panel_layout_is_writable (get_layout (panel->toplevel)))
 		return FALSE;
 
 	netscape_url = g_strsplit (url, "\n", 2);
@@ -620,7 +630,7 @@ drop_uri (PanelWidget         *panel,
 	char  *icon;
 	GFile *file;
 
-	if (!panel_layout_is_writable ())
+	if (!panel_layout_is_writable (get_layout (panel->toplevel)))
 		return FALSE;
 
 	name = panel_util_get_label_for_uri (uri);
@@ -810,10 +820,12 @@ drop_urilist (PanelWidget         *panel,
 					  NULL, NULL);
 
 		if (info) {
+			PanelLayout *layout;
 			const char *mime;
 			GFileType   type;
 			gboolean    can_exec;
 
+			layout = get_layout (panel->toplevel);
 			mime = g_file_info_get_content_type (info);
 			type = g_file_info_get_file_type (info);
 			can_exec = g_file_info_get_attribute_boolean (info,
@@ -827,7 +839,7 @@ drop_urilist (PanelWidget         *panel,
 				   (!strcmp (mime, "application/x-gnome-app-info") ||
 				    !strcmp (mime, "application/x-desktop") ||
 				    !strcmp (mime, "application/x-kde-app-info"))) {
-				if (panel_layout_is_writable ())
+				if (panel_layout_is_writable (layout))
 					create_launcher_from_uri (panel->toplevel,
 					                          pack_type,
 					                          pack_index,
@@ -839,7 +851,7 @@ drop_urilist (PanelWidget         *panel,
 
 				filename = g_file_get_path (file);
 
-				if (panel_layout_is_writable ())
+				if (panel_layout_is_writable (layout))
 					/* executable and local, so add a launcher with it */
 					ask_about_custom_launcher (filename, panel, pack_type);
 				else
@@ -1082,7 +1094,7 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			gtk_drag_finish (context, FALSE, FALSE, time_);
 			return;
 		}
-		if (panel_layout_is_writable ()) {
+		if (panel_layout_is_writable (get_layout (panel->toplevel))) {
 			InitialSetupData *initial_setup_data;
 
 			initial_setup_data = initial_setup_data_new (panel,
@@ -1201,7 +1213,8 @@ panel_setup (PanelToplevel *toplevel)
 static void
 panel_delete_without_query (PanelToplevel *toplevel)
 {
-	panel_layout_delete_toplevel (panel_toplevel_get_id (toplevel));
+  panel_layout_delete_toplevel (get_layout (toplevel),
+                                panel_toplevel_get_id (toplevel));
 } 
 
 static void

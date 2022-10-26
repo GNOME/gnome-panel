@@ -20,14 +20,16 @@
 
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-module-private.h"
+#include "panel-toplevel.h"
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_APPLET_ROW (gp_applet_row_get_type ())
 G_DECLARE_FINAL_TYPE (GpAppletRow, gp_applet_row, GP, APPLET_ROW, GtkListBoxRow)
 
-GtkWidget    *gp_applet_row_new      (GpModule    *module,
-                                      const char  *applet_id);
+GtkWidget    *gp_applet_row_new      (PanelToplevel *toplevel,
+                                      GpModule      *module,
+                                      const char    *applet_id);
 
 GpAppletInfo *gp_applet_row_get_info (GpAppletRow *self);
 

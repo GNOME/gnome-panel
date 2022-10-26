@@ -31,28 +31,41 @@
 
 G_BEGIN_DECLS
 
-gboolean panel_layout_load (GpApplication  *application,
-                            GError        **error);
+#define PANEL_TYPE_LAYOUT (panel_layout_get_type ())
+G_DECLARE_FINAL_TYPE (PanelLayout, panel_layout, PANEL, LAYOUT, GObject)
 
-gboolean panel_layout_is_writable  (void);
+PanelLayout *panel_layout_new                 (GpApplication        *application);
 
-void  panel_layout_toplevel_create      (GpApplication        *application,
-                                         GdkScreen            *screen);
-void  panel_layout_object_create        (const char           *iid,
-                                         const char           *toplevel_id,
-                                         PanelObjectPackType   pack_type,
-                                         int                   pack_index,
-                                         GVariant             *initial_settings);
+gboolean     panel_layout_load                (PanelLayout          *self,
+                                               GError              **error);
 
-char *panel_layout_object_create_start  (const char           *iid,
-                                         const char           *toplevel_id,
-                                         PanelObjectPackType   pack_type,
-                                         int                   pack_index,
-                                         GVariant             *initial_settings);
-void  panel_layout_object_create_finish (const char           *object_id);
+gboolean     panel_layout_is_writable         (PanelLayout          *self);
 
-void panel_layout_delete_toplevel (const char *toplevel_id);
-void panel_layout_delete_object   (const char *object_id);
+void         panel_layout_toplevel_create     (PanelLayout          *self,
+                                               GdkScreen            *screen);
+
+void         panel_layout_object_create       (PanelLayout          *self,
+                                               const char           *iid,
+                                               const char           *toplevel_id,
+                                               PanelObjectPackType   pack_type,
+                                               int                   pack_index,
+                                               GVariant             *initial_settings);
+
+char        *panel_layout_object_create_start (PanelLayout          *self,
+                                               const char           *iid,
+                                               const char           *toplevel_id,
+                                               PanelObjectPackType   pack_type,
+                                               int                   pack_index,
+                                               GVariant             *initial_settings);
+
+void        panel_layout_object_create_finish (PanelLayout          *self,
+                                               const char           *object_id);
+
+void        panel_layout_delete_toplevel      (PanelLayout          *self,
+                                               const char           *toplevel_id);
+
+void        panel_layout_delete_object        (PanelLayout          *self,
+                                               const char           *object_id);
 
 G_END_DECLS
 

@@ -22,12 +22,15 @@
 
 G_BEGIN_DECLS
 
+typedef struct _PanelLayout PanelLayout;
 typedef struct _PanelToplevel PanelToplevel;
 
 #define GP_TYPE_APPLICATION (gp_application_get_type ())
 G_DECLARE_FINAL_TYPE (GpApplication, gp_application, GP, APPLICATION, GObject)
 
 GpApplication *gp_application_new                (GError        **error);
+
+PanelLayout   *gp_application_get_layout         (GpApplication  *self);
 
 void           gp_application_add_toplevel       (GpApplication  *self,
                                                   PanelToplevel  *toplevel);

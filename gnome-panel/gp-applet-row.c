@@ -28,6 +28,7 @@ struct _GpAppletRow
 {
   GtkListBoxRow  parent;
 
+  PanelToplevel *toplevel;
   GpModule      *module;
   char          *applet_id;
 
@@ -42,6 +43,7 @@ enum
 {
   PROP_0,
 
+  PROP_TOPLEVEL,
   PROP_MODULE,
   PROP_APPLET_ID,
 
@@ -199,10 +201,15 @@ lockdown_changed_cb (PanelLockdown *lockdown,
                      gpointer       user_data)
 {
   GpAppletRow *self;
+  GpApplication *application;
+  PanelLayout *layout;
 
   self = GP_APPLET_ROW (user_data);
 
-  if (!panel_layout_is_writable () ||
+  application = panel_toplevel_get_application (self->toplevel);
+  layout = gp_application_get_layout (application);
+
+  if (!panel_layout_is_writable (layout) ||
       panel_lockdown_get_panels_locked_down_s () ||
       panel_applets_manager_is_applet_disabled (self->iid, NULL))
     {
@@ -347,6 +354,11 @@ gp_applet_row_set_property (GObject      *object,
 
   switch (property_id)
     {
+      case PROP_TOPLEVEL:
+        g_assert (self->toplevel == NULL);
+        self->toplevel = g_value_get_object (value);
+        break;
+
       case PROP_MODULE:
         g_assert (self->module == NULL);
         self->module = g_value_dup_object (value);
@@ -366,6 +378,15 @@ gp_applet_row_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
+  row_properties[PROP_TOPLEVEL] =
+    g_param_spec_object ("toplevel",
+                         "toplevel",
+                         "toplevel",
+                         PANEL_TYPE_TOPLEVEL,
+                         G_PARAM_WRITABLE |
+                         G_PARAM_CONSTRUCT_ONLY |
+                         G_PARAM_STATIC_STRINGS);
+
   row_properties[PROP_MODULE] =
     g_param_spec_object ("module",
                          "module",
@@ -408,10 +429,12 @@ gp_applet_row_init (GpAppletRow *self)
 }
 
 GtkWidget *
-gp_applet_row_new (GpModule   *module,
-                   const char *applet_id)
+gp_applet_row_new (PanelToplevel *toplevel,
+                   GpModule      *module,
+                   const char    *applet_id)
 {
   return g_object_new (GP_TYPE_APPLET_ROW,
+                       "toplevel", toplevel,
                        "module", module,
                        "applet-id", applet_id,
                        NULL);

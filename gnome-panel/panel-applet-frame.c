@@ -362,6 +362,8 @@ remove_cb (GtkMenuItem      *menuitem,
            PanelAppletFrame *self)
 {
   AppletInfo *info;
+  GpApplication *application;
+  PanelLayout *layout;
 
   gp_applet_remove_from_panel (self->priv->applet);
 
@@ -371,7 +373,10 @@ remove_cb (GtkMenuItem      *menuitem,
   info = self->priv->applet_info;
   self->priv->applet_info = NULL;
 
-  panel_layout_delete_object (panel_applet_get_id (info));
+  application = panel_toplevel_get_application (self->priv->panel->toplevel);
+  layout = gp_application_get_layout (application);
+
+  panel_layout_delete_object (layout, panel_applet_get_id (info));
 }
 
 static void
@@ -382,6 +387,8 @@ frame_popup_edit_menu (PanelAppletFrame *self,
   GtkWidget *menu;
   GtkWidget *menuitem;
   gboolean movable;
+  GpApplication *application;
+  PanelLayout *layout;
   gboolean removable;
 
   menu = gtk_menu_new ();
@@ -390,7 +397,9 @@ frame_popup_edit_menu (PanelAppletFrame *self,
   if (self->priv->applet_info != NULL)
     movable = panel_applet_can_freely_move (self->priv->applet_info);
 
-  removable = panel_layout_is_writable ();
+  application = panel_toplevel_get_application (self->priv->panel->toplevel);
+  layout = gp_application_get_layout (application);
+  removable = panel_layout_is_writable (layout);
 
   menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -871,19 +880,43 @@ panel_applet_frame_activating_get_initial_settings_path (PanelAppletFrameActivat
         return path_instance;
 }
 
-static void
-panel_applet_frame_loading_failed_response (GtkWidget *dialog,
-					    guint      response,
-					    char      *id)
+typedef struct
 {
+  PanelWidget *panel;
+  char        *id;
+} DeleteData;
+
+static void
+delete_data_free (gpointer data,
+                  GClosure *closure)
+{
+  DeleteData *delete_data;
+
+  delete_data = data;
+
+  g_free (delete_data->id);
+  g_free (delete_data);
+}
+
+static void
+panel_applet_frame_loading_failed_response (GtkWidget  *dialog,
+                                            guint       response,
+                                            DeleteData *data)
+{
+	GpApplication *application;
+	PanelLayout *layout;
+
 	gtk_widget_destroy (dialog);
+
+	application = panel_toplevel_get_application (data->panel->toplevel);
+	layout = gp_application_get_layout (application);
 
 	if (response == LOADING_FAILED_RESPONSE_DELETE &&
 	    !panel_lockdown_get_panels_locked_down_s () &&
-	    panel_layout_is_writable ()) {
+	    panel_layout_is_writable (layout)) {
 		GSList *item;
 
-		item = g_slist_find_custom (no_reload_applets, id,
+		item = g_slist_find_custom (no_reload_applets, data->id,
 					    (GCompareFunc) strcmp);
 		if (item) {
 			g_free (item->data);
@@ -891,10 +924,8 @@ panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 								 item);
 		}
 
-		panel_layout_delete_object (id);
+		panel_layout_delete_object (layout, data->id);
 	}
-
-	g_free (id);
 }
 
 static void
@@ -905,6 +936,7 @@ panel_applet_frame_loading_failed (const char  *iid,
 	GtkWidget *dialog;
 	char      *problem_txt;
 	gboolean   locked_down;
+	DeleteData *data;
 
 	no_reload_applets = g_slist_prepend (no_reload_applets,
 					     g_strdup (id));
@@ -941,9 +973,16 @@ panel_applet_frame_loading_failed (const char  *iid,
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_window_get_screen (GTK_WINDOW (panel->toplevel)));
 
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (panel_applet_frame_loading_failed_response),
-			  g_strdup (id));
+	data = g_new0 (DeleteData, 1);
+	data->panel = panel;
+	data->id = g_strdup (id);
+
+	g_signal_connect_data (dialog,
+	                       "response",
+	                       G_CALLBACK (panel_applet_frame_loading_failed_response),
+	                       data,
+	                       delete_data_free,
+	                       0);
 
 	panel_widget_register_open_dialog (panel, dialog);
 	gtk_window_set_urgency_hint (GTK_WINDOW (dialog), TRUE);
@@ -1028,10 +1067,18 @@ panel_applet_frame_create (PanelToplevel       *toplevel,
 			   const char          *iid,
 			   GVariant            *initial_settings)
 {
-	g_return_if_fail (iid != NULL);
+  GpApplication *application;
+  PanelLayout *layout;
 
-	panel_layout_object_create (iid,
-				    panel_toplevel_get_id (toplevel),
-				    pack_type, pack_index,
-				    initial_settings);
+  g_return_if_fail (iid != NULL);
+
+  application = panel_toplevel_get_application (toplevel);
+  layout = gp_application_get_layout (application);
+
+  panel_layout_object_create (layout,
+                              iid,
+                              panel_toplevel_get_id (toplevel),
+                              pack_type,
+                              pack_index,
+                              initial_settings);
 }

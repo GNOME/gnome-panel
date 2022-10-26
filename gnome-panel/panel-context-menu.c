@@ -48,8 +48,13 @@ static void
 panel_context_menu_create_new_panel (GtkWidget     *menuitem,
                                      PanelToplevel *toplevel)
 {
-	panel_layout_toplevel_create (panel_toplevel_get_application (toplevel),
-	                              gtk_widget_get_screen (menuitem));
+  GpApplication *application;
+  PanelLayout *layout;
+
+  application = panel_toplevel_get_application (toplevel);
+  layout = gp_application_get_layout (application);
+
+  panel_layout_toplevel_create (layout, gtk_widget_get_screen (menuitem));
 }
 
 static gboolean
@@ -87,14 +92,19 @@ static void
 panel_context_menu_setup_delete_panel_item (GtkWidget     *menuitem,
                                             PanelToplevel *toplevel)
 {
+	GpApplication *application;
+	PanelLayout *layout;
 	gboolean     sensitive;
 
 	g_assert (PANEL_IS_TOPLEVEL (toplevel));
 
+	application = panel_toplevel_get_application (toplevel);
+	layout = gp_application_get_layout (application);
+
 	sensitive =
 		!is_last_toplevel (toplevel) &&
 		!panel_lockdown_get_panels_locked_down_s () &&
-		panel_layout_is_writable ();
+		panel_layout_is_writable (layout);
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
 }
@@ -190,7 +200,12 @@ static void
 panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  GtkWidget   *menu)
 {
+	GpApplication *application;
+	PanelLayout *layout;
 	GtkWidget *menuitem;
+
+	application = panel_toplevel_get_application (panel_widget->toplevel);
+	layout = gp_application_get_layout (application);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Add to Panel..."));
 	gtk_widget_show (menuitem);
@@ -200,7 +215,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	                  G_CALLBACK (add_to_panel_activate_cb),
 	                  panel_widget->toplevel);
 
-	if (!panel_layout_is_writable ())
+	if (!panel_layout_is_writable (layout))
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Properties"));
@@ -229,7 +244,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 			  G_CALLBACK (panel_context_menu_create_new_panel), 
 			  panel_widget->toplevel);
 	gtk_widget_set_sensitive (menuitem, 
-				  panel_layout_is_writable ());
+				  panel_layout_is_writable (layout));
 }
 
 static GtkWidget *

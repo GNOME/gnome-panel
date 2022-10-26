@@ -299,7 +299,7 @@ add_module (GpAddAppletWindow *window,
           continue;
         }
 
-      row = gp_applet_row_new (module, applets[i]);
+      row = gp_applet_row_new (window->toplevel, module, applets[i]);
       gtk_list_box_prepend (GTK_LIST_BOX (list_box), row);
       gtk_widget_show (row);
     }

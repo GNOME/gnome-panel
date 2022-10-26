@@ -43,6 +43,8 @@ struct _GpApplication
 
   GtkStyleProvider *provider;
 
+  PanelLayout      *layout;
+
   GHashTable       *toplevels;
 };
 
@@ -201,7 +203,7 @@ initable_init (GInitable     *initable,
 
   self = GP_APPLICATION (initable);
 
-  return panel_layout_load (self, error);
+  return panel_layout_load (self->layout, error);
 }
 
 static void
@@ -235,6 +237,7 @@ gp_application_dispose (GObject *object)
 
   g_clear_object (&self->general_settings);
   g_clear_object (&self->provider);
+  g_clear_object (&self->layout);
 
   g_clear_pointer (&self->toplevels, g_hash_table_destroy);
 
@@ -273,6 +276,8 @@ gp_application_init (GpApplication *self)
 
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 
+  self->layout = panel_layout_new (self);
+
   self->toplevels = g_hash_table_new_full (g_str_hash,
                                            g_str_equal,
                                            g_free,
@@ -285,6 +290,12 @@ gp_application_new (GError **error)
   return g_initable_new (GP_TYPE_APPLICATION,
                          NULL, error,
                          NULL);
+}
+
+PanelLayout *
+gp_application_get_layout (GpApplication *self)
+{
+  return self->layout;
 }
 
 void

@@ -440,12 +440,19 @@ row_activated_cb (GtkListBox         *box,
                   GpPropertiesDialog *self)
 {
   AppletInfo *info;
+  PanelWidget *panel;
+  GpApplication *application;
+  PanelLayout *layout;
 
   info = gp_applet_list_row_get_applet_info (GP_APPLET_LIST_ROW (row));
 
   gtk_container_remove (GTK_CONTAINER (box), GTK_WIDGET (row));
 
-  panel_layout_delete_object (panel_applet_get_id (info));
+  panel = panel_applet_get_panel_widget (info);
+  application = panel_toplevel_get_application (panel->toplevel);
+  layout = gp_application_get_layout (application);
+
+  panel_layout_delete_object (layout, panel_applet_get_id (info));
 }
 
 static void

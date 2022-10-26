@@ -41,18 +41,28 @@
 
 #include "panel-layout.h"
 
-static GSettings *layout_settings = NULL;
+struct _PanelLayout
+{
+  GObject        parent;
+
+  GSettings     *settings;
+
+  GpApplication *application;
+};
+
+G_DEFINE_TYPE (PanelLayout, panel_layout, G_TYPE_OBJECT)
 
 #define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
 
 #define DEFAULT_LAYOUT_FILE "default.layout"
 #define PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH "@instance-config/"
 
-static void panel_layout_load_toplevel    (GpApplication *application,
-                                           const char    *toplevel_id);
-static void panel_layout_load_object      (const char *object_id);
-static void panel_layout_changed_toplevel (GpApplication *application);
-static void panel_layout_changed_object   (GpApplication *application);
+static void panel_layout_load_toplevel    (PanelLayout *self,
+                                           const char  *toplevel_id);
+static void panel_layout_load_object      (PanelLayout *self,
+                                           const char  *object_id);
+static void panel_layout_changed_toplevel (PanelLayout *self);
+static void panel_layout_changed_object   (PanelLayout *self);
 
 static GQuark
 panel_layout_error_quark (void)
@@ -64,17 +74,6 @@ panel_layout_error_quark (void)
 
         return ret;
 }
-
-static void
-panel_layout_init (void)
-{
-        if (layout_settings == NULL) {
-                layout_settings = g_settings_new (PANEL_LAYOUT_SCHEMA);
-                panel_cleanup_register (panel_cleanup_unref_and_nullify,
-                                        &layout_settings);
-        }
-}
-
 
 /************************************\
  * Adding to the layout from a file *
@@ -180,10 +179,11 @@ panel_layout_append_self_check (GSettings                 *settings,
 }
 
 static char *
-panel_layout_find_free_id (const char *id_list_key,
-                           const char *schema,
-                           const char *path_prefix,
-                           const char *try_id)
+panel_layout_find_free_id (PanelLayout *self,
+                           const char  *id_list_key,
+                           const char  *schema,
+                           const char  *path_prefix,
+                           const char  *try_id)
 {
         char      *unique_id;
         char     **existing_ids;
@@ -192,7 +192,7 @@ panel_layout_find_free_id (const char *id_list_key,
         int        index;
         int        i;
 
-        existing_ids = g_settings_get_strv (layout_settings,
+        existing_ids = g_settings_get_strv (self->settings,
                                             id_list_key);
         existing_dirs = panel_dconf_list_subdirs (path_prefix, TRUE);
 
@@ -334,7 +334,8 @@ panel_layout_maybe_append_object_instance_config (GKeyFile    *keyfile,
 }
 
 static gboolean
-panel_layout_append_group_helper (GKeyFile                  *keyfile,
+panel_layout_append_group_helper (PanelLayout               *self,
+                                  GKeyFile                  *keyfile,
                                   const char                *group,
                                   const char                *group_prefix,
                                   const char                *id_list_key,
@@ -374,7 +375,11 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         if (id && !panel_gsettings_is_valid_keyname (id, error))
                 return FALSE;
 
-        unique_id = panel_layout_find_free_id (id_list_key, schema, path_prefix, id);
+        unique_id = panel_layout_find_free_id (self,
+                                               id_list_key,
+                                               schema,
+                                               path_prefix,
+                                               id);
 
         path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
         settings = g_settings_new_with_path (schema, path);
@@ -485,7 +490,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         }
 
         if (!dry_run) {
-                panel_gsettings_append_strv (layout_settings,
+                panel_gsettings_append_strv (self->settings,
                                              id_list_key,
                                              unique_id);
         }
@@ -504,16 +509,18 @@ out:
 }
 
 static gboolean
-panel_layout_append_group (GKeyFile    *keyfile,
-                           const char  *group,
-                           gboolean     dry_run,
-                           GError     **error)
+panel_layout_append_group (PanelLayout  *self,
+                           GKeyFile     *keyfile,
+                           const char   *group,
+                           gboolean      dry_run,
+                           GError      **error)
 {
         g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
         if (g_strcmp0 (group, "Toplevel") == 0 ||
             g_str_has_prefix (group, "Toplevel "))
                 return panel_layout_append_group_helper (
+                                        self,
                                         keyfile, group,
                                         "Toplevel",
                                         PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
@@ -525,6 +532,7 @@ panel_layout_append_group (GKeyFile    *keyfile,
         else if (g_strcmp0 (group, "Object") == 0 ||
                  g_str_has_prefix (group, "Object "))
                 return panel_layout_append_group_helper (
+                                        self,
                                         keyfile, group,
                                         "Object",
                                         PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
@@ -541,8 +549,9 @@ panel_layout_append_group (GKeyFile    *keyfile,
 }
 
 static gboolean
-panel_layout_append_from_file (const char  *layout_file,
-                               GError     **error)
+panel_layout_append_from_file (PanelLayout  *self,
+                               const char   *layout_file,
+                               GError      **error)
 {
         GError    *local_error = NULL;
         GKeyFile  *keyfile = NULL;
@@ -551,8 +560,6 @@ panel_layout_append_from_file (const char  *layout_file,
         int        i;
 
         g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-        panel_layout_init ();
 
         keyfile = g_key_file_new ();
 
@@ -566,8 +573,11 @@ panel_layout_append_from_file (const char  *layout_file,
         /* First pass to validate: we don't want to add only a subset of the
          * layout; the whole layout has to be valid */
         for (i = 0; groups[i] != NULL; i++) {
-                if (!panel_layout_append_group (keyfile, groups[i],
-                                                TRUE, &local_error))
+                if (!panel_layout_append_group (self,
+                                                keyfile,
+                                                groups[i],
+                                                TRUE,
+                                                &local_error))
                         goto out;
                 else
                         found_one = TRUE;
@@ -582,8 +592,11 @@ panel_layout_append_from_file (const char  *layout_file,
         /* Second pass to really add the layout. We know there'll be no error
          * since the first pass worked. */
         for (i = 0; groups[i] != NULL; i++)
-                panel_layout_append_group (keyfile, groups[i],
-                                           FALSE, NULL);
+                panel_layout_append_group (self,
+                                           keyfile,
+                                           groups[i],
+                                           FALSE,
+                                           NULL);
 
 out:
         if (local_error != NULL) {
@@ -613,8 +626,8 @@ out:
 
 
 void
-panel_layout_toplevel_create (GpApplication *application,
-                              GdkScreen     *screen)
+panel_layout_toplevel_create (PanelLayout *self,
+                              GdkScreen   *screen)
 {
         char             *unique_id;
         char             *path;
@@ -622,7 +635,8 @@ panel_layout_toplevel_create (GpApplication *application,
 	PanelOrientation  orientation;
 	int               monitor;
 
-        unique_id = panel_layout_find_free_id (PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
+        unique_id = panel_layout_find_free_id (self,
+                                               PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
                                                PANEL_TOPLEVEL_SCHEMA,
                                                PANEL_LAYOUT_TOPLEVEL_PATH,
                                                NULL);
@@ -631,7 +645,7 @@ panel_layout_toplevel_create (GpApplication *application,
         settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
         g_free (path);
 
-        if (panel_toplevel_find_empty_spot (application,
+        if (panel_toplevel_find_empty_spot (self->application,
                                             screen,
                                             &orientation,
                                             &monitor)) {
@@ -645,7 +659,7 @@ panel_layout_toplevel_create (GpApplication *application,
 
         g_object_unref (settings);
 
-        panel_gsettings_append_strv (layout_settings,
+        panel_gsettings_append_strv (self->settings,
                                      PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
                                      unique_id);
 
@@ -653,7 +667,8 @@ panel_layout_toplevel_create (GpApplication *application,
 }
 
 void
-panel_layout_object_create (const char          *iid,
+panel_layout_object_create (PanelLayout         *self,
+                            const char          *iid,
                             const char          *toplevel_id,
                             PanelObjectPackType  pack_type,
                             int                  pack_index,
@@ -661,14 +676,14 @@ panel_layout_object_create (const char          *iid,
 {
         char *id;
 
-        id = panel_layout_object_create_start (iid,
+        id = panel_layout_object_create_start (self, iid,
                                                toplevel_id, pack_type, pack_index,
                                                initial_settings);
 
         if (!id)
                 return;
 
-        panel_layout_object_create_finish (id);
+        panel_layout_object_create_finish (self, id);
 
         g_free (id);
 }
@@ -704,7 +719,8 @@ panel_layout_object_generate_id (const char *iid)
 }
 
 char *
-panel_layout_object_create_start (const char           *iid,
+panel_layout_object_create_start (PanelLayout          *self,
+                                  const char           *iid,
                                   const char           *toplevel_id,
                                   PanelObjectPackType   pack_type,
                                   int                   pack_index,
@@ -719,7 +735,8 @@ panel_layout_object_create_start (const char           *iid,
                 return NULL;
 
         try_id = panel_layout_object_generate_id (iid);
-        unique_id = panel_layout_find_free_id (PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
+        unique_id = panel_layout_find_free_id (self,
+                                               PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                                PANEL_OBJECT_SCHEMA,
                                                PANEL_LAYOUT_OBJECT_PATH,
                                                try_id);
@@ -760,9 +777,10 @@ panel_layout_object_create_start (const char           *iid,
 }
 
 void
-panel_layout_object_create_finish (const char *object_id)
+panel_layout_object_create_finish (PanelLayout *self,
+                                   const char  *object_id)
 {
-        panel_gsettings_append_strv (layout_settings,
+        panel_gsettings_append_strv (self->settings,
                                      PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                      object_id);
 }
@@ -774,16 +792,17 @@ panel_layout_object_create_finish (const char *object_id)
 
 
 gboolean
-panel_layout_is_writable (void)
+panel_layout_is_writable (PanelLayout *self)
 {
-        return (g_settings_is_writable (layout_settings,
+        return (g_settings_is_writable (self->settings,
                                         PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) &&
-                g_settings_is_writable (layout_settings,
+                g_settings_is_writable (self->settings,
                                         PANEL_LAYOUT_OBJECT_ID_LIST_KEY));
 }
 
 void
-panel_layout_delete_toplevel (const char *toplevel_id)
+panel_layout_delete_toplevel (PanelLayout *self,
+                              const char  *toplevel_id)
 {
         char  *path;
         char  *id_copy;
@@ -796,7 +815,7 @@ panel_layout_delete_toplevel (const char *toplevel_id)
         /* The original will be freed if removal succeeds */
         id_copy = g_strdup (toplevel_id);
 
-        if (!panel_gsettings_remove_all_from_strv (layout_settings,
+        if (!panel_gsettings_remove_all_from_strv (self->settings,
                                                    PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
                                                    id_copy)) {
                 g_free (id_copy);
@@ -809,7 +828,7 @@ panel_layout_delete_toplevel (const char *toplevel_id)
 
         /* remove all applets that were on this toplevel */
 
-        objects = g_settings_get_strv (layout_settings,
+        objects = g_settings_get_strv (self->settings,
                                        PANEL_LAYOUT_OBJECT_ID_LIST_KEY);
 
         for (i = 0; objects[i] != NULL; i++) {
@@ -827,7 +846,7 @@ panel_layout_delete_toplevel (const char *toplevel_id)
                 g_free (path);
 
                 if (g_strcmp0 (id_copy, object_toplevel_id) == 0)
-                        panel_layout_delete_object (objects[i]);
+                        panel_layout_delete_object (self, objects[i]);
 
                 g_free (object_toplevel_id);
         }
@@ -838,7 +857,8 @@ panel_layout_delete_toplevel (const char *toplevel_id)
 }
 
 void
-panel_layout_delete_object (const char *object_id)
+panel_layout_delete_object (PanelLayout *self,
+                            const char  *object_id)
 {
         char *path;
         char *id_copy;
@@ -849,7 +869,7 @@ panel_layout_delete_object (const char *object_id)
         /* The original will be freed if removal succeeds */
         id_copy = g_strdup (object_id);
 
-        if (!panel_gsettings_remove_all_from_strv (layout_settings,
+        if (!panel_gsettings_remove_all_from_strv (self->settings,
                                                    PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                                    id_copy)) {
                 g_free (id_copy);
@@ -865,7 +885,7 @@ panel_layout_delete_object (const char *object_id)
 }
 
 static void
-panel_layout_changed_toplevel (GpApplication *application)
+panel_layout_changed_toplevel (PanelLayout *self)
 {
         char **ids;
         GList *toplevels;
@@ -874,12 +894,12 @@ panel_layout_changed_toplevel (GpApplication *application)
         gboolean loading;
         int i;
 
-        ids = g_settings_get_strv (layout_settings,
+        ids = g_settings_get_strv (self->settings,
                                    PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
         /* Remove what is not in the layout anymore */
 
-        toplevels = gp_application_get_toplevels (application);
+        toplevels = gp_application_get_toplevels (self->application);
         to_remove = NULL;
 
         for (l = toplevels; l != NULL; l = l->next) {
@@ -903,7 +923,7 @@ panel_layout_changed_toplevel (GpApplication *application)
         g_list_free (toplevels);
 
         for (l = to_remove; l != NULL; l = l->next) {
-                gp_application_remove_toplevel (application,
+                gp_application_remove_toplevel (self->application,
                                                 PANEL_TOPLEVEL (l->data));
         }
 
@@ -916,7 +936,7 @@ panel_layout_changed_toplevel (GpApplication *application)
         for (i = 0; ids[i] != NULL; i++) {
                 gboolean found;
 
-                toplevels = gp_application_get_toplevels (application);
+                toplevels = gp_application_get_toplevels (self->application);
                 found = FALSE;
 
                 for (l = toplevels; l != NULL; l = l->next) {
@@ -932,7 +952,7 @@ panel_layout_changed_toplevel (GpApplication *application)
                 g_list_free (toplevels);
 
                 if (!found) {
-                        panel_layout_load_toplevel (application, ids[i]);
+                        panel_layout_load_toplevel (self, ids[i]);
                         loading = TRUE;
                 }
         }
@@ -942,11 +962,11 @@ panel_layout_changed_toplevel (GpApplication *application)
         /* Reload list of objects to get those that might be on the new
          * toplevels */
         if (loading)
-                panel_layout_changed_object (application);
+                panel_layout_changed_object (self);
 }
 
 static void
-panel_layout_changed_object (GpApplication *application)
+panel_layout_changed_object (PanelLayout *self)
 {
         char       **ids;
         GSList      *to_remove;
@@ -955,7 +975,7 @@ panel_layout_changed_object (GpApplication *application)
         GSList      *l;
         int          i;
 
-        ids = g_settings_get_strv (layout_settings,
+        ids = g_settings_get_strv (self->settings,
                                    PANEL_LAYOUT_OBJECT_ID_LIST_KEY);
 
         /* Remove what is not in the layout anymore */
@@ -999,7 +1019,7 @@ panel_layout_changed_object (GpApplication *application)
                 }
 
                 if (!found)
-                        panel_layout_load_object (ids[i]);
+                        panel_layout_load_object (self, ids[i]);
         }
 
         g_strfreev (ids);
@@ -1007,7 +1027,7 @@ panel_layout_changed_object (GpApplication *application)
         /* Always do this, even if there is no object that got loaded: if a
          * panel has been created, we want a do_load() to unhide it, even if
          * there is no object to load */
-        panel_object_loader_do_load (application, FALSE);
+        panel_object_loader_do_load (self->application, FALSE);
 }
 
 static void
@@ -1015,14 +1035,14 @@ panel_layout_changed (GSettings *settings,
                       char      *key,
                       gpointer   user_data)
 {
-        GpApplication *application;
+        PanelLayout *self;
 
-        application = GP_APPLICATION (user_data);
+        self = PANEL_LAYOUT (user_data);
 
         if (g_strcmp0 (key, PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) == 0)
-                panel_layout_changed_toplevel (application);
+                panel_layout_changed_toplevel (self);
         else if (g_strcmp0 (key, PANEL_LAYOUT_OBJECT_ID_LIST_KEY) == 0)
-                panel_layout_changed_object (application);
+                panel_layout_changed_object (self);
 }
 
 /******************\
@@ -1031,8 +1051,8 @@ panel_layout_changed (GSettings *settings,
 
 
 static void
-panel_layout_load_toplevel (GpApplication *application,
-                            const char    *toplevel_id)
+panel_layout_load_toplevel (PanelLayout *self,
+                            const char  *toplevel_id)
 {
         PanelToplevel *toplevel;
         char          *path;
@@ -1044,14 +1064,14 @@ panel_layout_load_toplevel (GpApplication *application,
                                 PANEL_LAYOUT_TOPLEVEL_PATH, toplevel_id);
 
         toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
-                                 "app", application,
+                                 "app", self->application,
                                  "decorated", FALSE,
                                  "settings-path", path,
                                  "toplevel-id", toplevel_id,
                                  "type-hint", GDK_WINDOW_TYPE_HINT_DOCK,
                                  NULL);
 
-        gp_application_add_toplevel (application, toplevel);
+        gp_application_add_toplevel (self->application, toplevel);
 
         g_free (path);
 
@@ -1062,7 +1082,8 @@ panel_layout_load_toplevel (GpApplication *application,
 }
 
 static void
-panel_layout_load_object (const char *object_id)
+panel_layout_load_object (PanelLayout *self,
+                          const char  *object_id)
 {
         char *path;
 
@@ -1078,7 +1099,7 @@ panel_layout_load_object (const char *object_id)
 }
 
 static char *
-panel_layout_get_default_layout_file (void)
+panel_layout_get_default_layout_file (PanelLayout *self)
 {
         GSettings *settings;
         char *default_layout;
@@ -1122,16 +1143,17 @@ panel_layout_get_default_layout_file (void)
 }
 
 static char **
-panel_layout_load_default (GError **error)
+panel_layout_load_default (PanelLayout  *self,
+                           GError      **error)
 {
   char *default_layout_file;
   char **toplevels;
 
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (!g_settings_is_writable (layout_settings,
+  if (!g_settings_is_writable (self->settings,
                                PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) ||
-      !g_settings_is_writable (layout_settings,
+      !g_settings_is_writable (self->settings,
                                PANEL_LAYOUT_OBJECT_ID_LIST_KEY))
     {
       g_set_error_literal (error,
@@ -1142,9 +1164,9 @@ panel_layout_load_default (GError **error)
       return NULL;
     }
 
-  default_layout_file = panel_layout_get_default_layout_file ();
+  default_layout_file = panel_layout_get_default_layout_file (self);
 
-  if (!panel_layout_append_from_file (default_layout_file, error))
+  if (!panel_layout_append_from_file (self, default_layout_file, error))
     {
       g_free (default_layout_file);
       return NULL;
@@ -1152,7 +1174,7 @@ panel_layout_load_default (GError **error)
 
   g_free (default_layout_file);
 
-  toplevels = g_settings_get_strv (layout_settings,
+  toplevels = g_settings_get_strv (self->settings,
                                    PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
   if (!toplevels[0])
@@ -1170,9 +1192,31 @@ panel_layout_load_default (GError **error)
   return toplevels;
 }
 
+static void
+panel_layout_class_init (PanelLayoutClass *self_class)
+{
+}
+
+static void
+panel_layout_init (PanelLayout *self)
+{
+  self->settings = g_settings_new (PANEL_LAYOUT_SCHEMA);
+}
+
+PanelLayout *
+panel_layout_new (GpApplication *application)
+{
+  PanelLayout *layout;
+
+  layout = g_object_new (PANEL_TYPE_LAYOUT, NULL);
+  layout->application = application;
+
+  return layout;
+}
+
 gboolean
-panel_layout_load (GpApplication  *application,
-                   GError        **error)
+panel_layout_load (PanelLayout  *self,
+                   GError      **error)
 {
         char **toplevels;
         char **objects;
@@ -1180,40 +1224,38 @@ panel_layout_load (GpApplication  *application,
 
         g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-        panel_layout_init ();
-
-        toplevels = g_settings_get_strv (layout_settings,
+        toplevels = g_settings_get_strv (self->settings,
                                          PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
         if (!toplevels[0])
           {
             g_strfreev (toplevels);
 
-            toplevels = panel_layout_load_default (error);
+            toplevels = panel_layout_load_default (self, error);
 
             if (!toplevels)
               return FALSE;
           }
 
         for (i = 0; toplevels[i] != NULL; i++)
-                panel_layout_load_toplevel (application, toplevels[i]);
+                panel_layout_load_toplevel (self, toplevels[i]);
 
         g_strfreev (toplevels);
 
-        objects = g_settings_get_strv (layout_settings,
+        objects = g_settings_get_strv (self->settings,
                                        PANEL_LAYOUT_OBJECT_ID_LIST_KEY);
 
         for (i = 0; objects[i] != NULL; i++)
-                panel_layout_load_object (objects[i]);
+                panel_layout_load_object (self, objects[i]);
 
         g_strfreev (objects);
 
-        g_signal_connect (layout_settings,
+        g_signal_connect (self->settings,
                           "changed",
                           G_CALLBACK (panel_layout_changed),
-                          application);
+                          self);
 
-        panel_object_loader_do_load (application, TRUE);
+        panel_object_loader_do_load (self->application, TRUE);
 
         return TRUE;
 }

@@ -25,6 +25,8 @@ AppletInfo *panel_applet_register           (GtkWidget   *applet,
                                              const char  *id,
                                              GSettings   *settings);
 
+PanelWidget *panel_applet_get_panel_widget  (AppletInfo  *info);
+
 const char *panel_applet_get_id             (AppletInfo  *info);
 
 const char *panel_applet_get_toplevel_id    (AppletInfo  *info);
