@@ -558,6 +558,7 @@ panel_layout_append_from_file (PanelLayout  *self,
         char     **groups = NULL;
         gboolean   found_one = FALSE;
         int        i;
+        gboolean ret;
 
         g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -599,6 +600,8 @@ panel_layout_append_from_file (PanelLayout  *self,
                                            NULL);
 
 out:
+        ret = TRUE;
+
         if (local_error != NULL) {
                 g_set_error (error,
                              PANEL_LAYOUT_ERROR,
@@ -608,7 +611,8 @@ out:
                              local_error->message);
 
                 g_error_free (local_error);
-                return FALSE;
+
+                ret = FALSE;
         }
 
         if (groups)
@@ -616,7 +620,7 @@ out:
 
         g_key_file_free (keyfile);
 
-        return TRUE;
+        return ret;
 }
 
 
