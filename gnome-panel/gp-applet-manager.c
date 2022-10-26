@@ -303,20 +303,35 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
 
   applet_id = g_strrstr (iid, "::");
   if (!applet_id)
-    return FALSE;
+    {
+      if (free_func != NULL)
+        free_func (user_data);
+
+      return FALSE;
+    }
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
   module = gp_module_manager_get_module (self->manager, module_id);
   g_free (module_id);
 
   if (!module)
-    return FALSE;
+    {
+      if (free_func != NULL)
+        free_func (user_data);
+
+      return FALSE;
+    }
 
   applet_id += 2;
   info = gp_module_get_applet_info (module, applet_id, NULL);
 
   if (!info || !info->initial_setup_dialog_func)
-    return FALSE;
+    {
+      if (free_func != NULL)
+        free_func (user_data);
+
+      return FALSE;
+    }
 
   dialog = gp_initial_setup_dialog_new ();
 

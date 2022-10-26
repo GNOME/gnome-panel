@@ -21,6 +21,7 @@
 #include <glib/gi18n.h>
 
 #include "gp-add-applet-window.h"
+#include "gp-applet-manager.h"
 #include "gp-applet-row.h"
 #include "gp-module-manager.h"
 #include "libgnome-panel/gp-applet-info-private.h"
@@ -203,11 +204,16 @@ row_activated_cb (GtkListBox        *box,
                   GtkListBoxRow     *row,
                   GpAddAppletWindow *self)
 {
+  GpApplication *application;
+  GpAppletManager *applet_manager;
   const char *iid;
   PanelWidget *panel;
   PanelObjectPackType pack_type;
   int pack_index;
   InitialSetupData *data;
+
+  application = panel_toplevel_get_application (self->toplevel);
+  applet_manager = gp_application_get_applet_manager (application);
 
   iid = gp_applet_row_get_iid (GP_APPLET_ROW (row));
 
@@ -218,12 +224,13 @@ row_activated_cb (GtkListBox        *box,
 
   data = initial_setup_data_new (self->toplevel, pack_type, pack_index, iid);
 
-  if (panel_applets_manager_open_initial_setup_dialog (iid,
-                                                       NULL,
-                                                       GTK_WINDOW (self),
-                                                       initial_setup_dialog_cb,
-                                                       data,
-                                                       initial_setup_data_free))
+  if (gp_applet_manager_open_initial_setup_dialog (applet_manager,
+                                                   iid,
+                                                   NULL,
+                                                   GTK_WINDOW (self),
+                                                   initial_setup_dialog_cb,
+                                                   data,
+                                                   initial_setup_data_free))
     return;
 
   panel_applet_frame_create (self->toplevel, pack_type, pack_index, iid, NULL);

@@ -45,29 +45,3 @@ panel_applets_manager_get (void)
 
 	return manager;
 }
-
-gboolean
-panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
-                                                 GVariant               *settings,
-                                                 GtkWindow              *parent,
-                                                 GpInitialSetupCallback  callback,
-                                                 gpointer                user_data,
-                                                 GDestroyNotify          free_func)
-{
-	gboolean ret;
-
-	_panel_applets_managers_ensure_loaded ();
-
-	ret = gp_applet_manager_open_initial_setup_dialog (manager,
-	                                                   iid,
-	                                                   settings,
-	                                                   parent,
-	                                                   callback,
-	                                                   user_data,
-	                                                   free_func);
-
-	if (!ret && user_data != NULL && free_func != NULL)
-		free_func (user_data);
-
-	return ret;
-}

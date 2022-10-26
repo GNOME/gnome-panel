@@ -25,6 +25,7 @@
 #include "panel.h"
 
 #include "applet.h"
+#include "gp-applet-manager.h"
 #include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
@@ -421,6 +422,8 @@ ask_about_custom_launcher (const char          *file,
                            PanelWidget         *panel,
                            PanelObjectPackType  pack_type)
 {
+  GpApplication *application;
+  GpAppletManager *applet_manager;
   int pack_index;
   const char *iid;
   InitialSetupData *initial_setup_data;
@@ -430,6 +433,9 @@ ask_about_custom_launcher (const char          *file,
 
 	if (panel_lockdown_get_disable_command_line_s ())
 		return;
+
+  application = panel_toplevel_get_application (panel->toplevel);
+  applet_manager = gp_application_get_applet_manager (application);
 
   iid = "org.gnome.gnome-panel.launcher::custom-launcher";
   pack_index = panel_widget_get_new_pack_index (panel, pack_type);
@@ -449,12 +455,13 @@ ask_about_custom_launcher (const char          *file,
   settings = g_variant_builder_end (&builder);
   g_variant_ref_sink (settings);
 
-  panel_applets_manager_open_initial_setup_dialog (iid,
-                                                   settings,
-                                                   NULL,
-                                                   initial_setup_dialog_cb,
-                                                   initial_setup_data,
-                                                   initial_setup_data_free);
+  gp_applet_manager_open_initial_setup_dialog (applet_manager,
+                                               iid,
+                                               settings,
+                                               NULL,
+                                               initial_setup_dialog_cb,
+                                               initial_setup_data,
+                                               initial_setup_data_free);
 
   g_variant_unref (settings);
 }
@@ -1095,18 +1102,24 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			return;
 		}
 		if (panel_layout_is_writable (get_layout (panel->toplevel))) {
+			GpApplication *application;
+			GpAppletManager *applet_manager;
 			InitialSetupData *initial_setup_data;
+
+			application = panel_toplevel_get_application (panel->toplevel);
+			applet_manager = gp_application_get_applet_manager (application);
 
 			initial_setup_data = initial_setup_data_new (panel,
 			                                             pack_type, pack_index,
 			                                             (char *) data);
 
-			if (!panel_applets_manager_open_initial_setup_dialog ((char *) data,
-			                                                      NULL,
-			                                                      NULL,
-			                                                      initial_setup_dialog_cb,
-			                                                      initial_setup_data,
-			                                                      initial_setup_data_free)) {
+			if (!gp_applet_manager_open_initial_setup_dialog (applet_manager,
+			                                                  (char *) data,
+			                                                  NULL,
+			                                                  NULL,
+			                                                  initial_setup_dialog_cb,
+			                                                  initial_setup_data,
+			                                                  initial_setup_data_free)) {
 				panel_applet_frame_create (panel->toplevel,
 				                           pack_type, pack_index,
 				                           (char *) data, NULL);
