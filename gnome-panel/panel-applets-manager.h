@@ -29,6 +29,8 @@
 
 G_BEGIN_DECLS
 
+GpAppletManager *panel_applets_manager_get                       (void);
+
 GpModuleManager *panel_applets_manager_get_module_manager        (void);
 
 GpAppletInfo    *panel_applets_manager_get_applet_info           (const gchar                 *iid);

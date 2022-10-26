@@ -30,20 +30,20 @@
 static GpAppletManager *manager = NULL;
 
 static void
-_panel_applets_manager_cleanup (gpointer data)
-{
-	g_clear_object (&manager);
-}
-
-static void
 _panel_applets_managers_ensure_loaded (void)
 {
 	if (manager != NULL)
 		return;
 
-	panel_cleanup_register (PANEL_CLEAN_FUNC (_panel_applets_manager_cleanup), NULL);
-
 	manager = gp_applet_manager_new ();
+}
+
+GpAppletManager *
+panel_applets_manager_get (void)
+{
+	_panel_applets_managers_ensure_loaded ();
+
+	return manager;
 }
 
 GpModuleManager *

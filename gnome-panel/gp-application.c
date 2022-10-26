@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "panel-applets-manager.h"
 #include "panel-enums-gsettings.h"
 #include "panel-layout.h"
 #include "panel-toplevel.h"
@@ -42,6 +43,8 @@ struct _GpApplication
   gulong            prefer_dark_id;
 
   GtkStyleProvider *provider;
+
+  GpAppletManager  *applet_manager;
 
   PanelLayout      *layout;
 
@@ -237,6 +240,7 @@ gp_application_dispose (GObject *object)
 
   g_clear_object (&self->general_settings);
   g_clear_object (&self->provider);
+  g_clear_object (&self->applet_manager);
   g_clear_object (&self->layout);
 
   g_clear_pointer (&self->toplevels, g_hash_table_destroy);
@@ -276,6 +280,8 @@ gp_application_init (GpApplication *self)
 
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 
+  self->applet_manager = panel_applets_manager_get ();
+
   self->layout = panel_layout_new (self);
 
   self->toplevels = g_hash_table_new_full (g_str_hash,
@@ -290,6 +296,12 @@ gp_application_new (GError **error)
   return g_initable_new (GP_TYPE_APPLICATION,
                          NULL, error,
                          NULL);
+}
+
+GpAppletManager *
+gp_application_get_applet_manager (GpApplication *self)
+{
+  return self->applet_manager;
 }
 
 PanelLayout *
