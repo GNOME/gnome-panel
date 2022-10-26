@@ -21,11 +21,10 @@
  *      Vincent Untz <vuntz@gnome.org>
  */
 
-#include <libpanel-util/panel-cleanup.h>
+#include "config.h"
+#include "panel-lockdown.h"
 
 #include "panel-schemas.h"
-
-#include "panel-lockdown.h"
 
 struct _PanelLockdownPrivate {
         GSettings *desktop_settings;

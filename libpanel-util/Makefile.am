@@ -11,8 +11,6 @@ libpanel_util_la_CFLAGS = \
 	$(NULL)
 
 libpanel_util_la_SOURCES =		\
-	panel-cleanup.c			\
-	panel-cleanup.h			\
 	panel-dconf.c			\
 	panel-dconf.h			\
 	panel-error.c			\

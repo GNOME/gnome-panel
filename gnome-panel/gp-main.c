@@ -24,9 +24,7 @@
 
 #include "gp-application.h"
 #include "gp-session.h"
-#include "libpanel-util/panel-cleanup.h"
 #include "panel-icon-names.h"
-#include "panel-toplevel.h"
 
 typedef struct
 {
@@ -214,8 +212,6 @@ main (int argc, char *argv[])
 
   g_main_loop_unref (main_data.loop);
   g_object_unref (session);
-
-  panel_cleanup_do ();
 
   return main_data.exit_status;
 }

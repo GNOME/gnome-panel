@@ -28,7 +28,6 @@
 #include <gio/gio.h>
 #include <gdk/gdk.h>
 
-#include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-dconf.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gsettings.h>
