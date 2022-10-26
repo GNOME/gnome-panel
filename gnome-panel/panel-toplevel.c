@@ -198,7 +198,6 @@ enum {
 };
 
 static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
-static GSList       *toplevel_list = NULL;
 
 G_DEFINE_TYPE_WITH_PRIVATE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 
@@ -260,50 +259,15 @@ update_style_classes (PanelToplevel *toplevel)
 	}
 }
 
-GSList *
-panel_toplevel_list_toplevels (void)
-{
-	return toplevel_list;
-}
-
-PanelToplevel *
-panel_toplevel_get_by_id (const char *toplevel_id)
-{
-	GSList *l;
-
-	if (PANEL_GLIB_STR_EMPTY (toplevel_id))
-		return NULL;
-
-	for (l = toplevel_list; l; l = l->next) {
-		PanelToplevel *toplevel = l->data;
-
-		if (!g_strcmp0 (toplevel->priv->toplevel_id, toplevel_id))
-			return toplevel;
-	}
-
-	return NULL;
-}
-
 gboolean
-panel_toplevel_is_last (PanelToplevel *toplevel)
-{
-	GSList *l;
-
-	for (l = toplevel_list; l; l = l->next) {
-		if (l->data != toplevel)
-			return FALSE;
-	}
-
-	return TRUE;
-}
-
-gboolean
-panel_toplevel_find_empty_spot (GdkScreen        *screen,
-				PanelOrientation *orientation,
-				int              *monitor)
+panel_toplevel_find_empty_spot (GpApplication    *application,
+                                GdkScreen        *screen,
+                                PanelOrientation *orientation,
+                                int              *monitor)
 {
 	int      *filled_spots;
-	GSList   *li;
+	GList    *toplevels;
+	GList    *li;
 	int       i;
 	gboolean  found_a_spot = FALSE;
 	GdkDisplay *display;
@@ -316,8 +280,9 @@ panel_toplevel_find_empty_spot (GdkScreen        *screen,
 	n_monitors = gdk_display_get_n_monitors (display);
 
 	filled_spots = g_new0 (int, n_monitors);
+	toplevels = gp_application_get_toplevels (application);
 
-	for (li = panel_toplevel_list_toplevels (); li != NULL; li = li->next) {
+	for (li = toplevels; li != NULL; li = li->next) {
 		PanelToplevel *toplevel = li->data;
 		GdkScreen *toplevel_screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 		int toplevel_monitor = panel_toplevel_get_monitor (toplevel);
@@ -328,6 +293,8 @@ panel_toplevel_find_empty_spot (GdkScreen        *screen,
 
 		filled_spots[toplevel_monitor] |= panel_toplevel_get_orientation (toplevel);
 	}
+
+	g_list_free (toplevels);
 
 	for (i = 0; i < n_monitors; i++) {
 		/* These are ordered based on "priority" of the
@@ -2918,8 +2885,6 @@ panel_toplevel_finalize (GObject *object)
 
 	panel_struts_unregister_strut (toplevel);
 
-	toplevel_list = g_slist_remove (toplevel_list, toplevel);
-
 	panel_toplevel_disconnect_gtk_settings (toplevel);
 	toplevel->priv->gtk_settings = NULL;
 
@@ -3392,8 +3357,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
 	panel_toplevel_update_gtk_settings (toplevel);
-
-	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
 
 	/* Prevent the window from being deleted via Alt+F4 by accident.  This
 	 * happens with "alternative" window managers such as Sawfish or XFWM4.

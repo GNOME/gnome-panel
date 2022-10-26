@@ -36,7 +36,8 @@ gboolean panel_layout_load (GpApplication  *application,
 
 gboolean panel_layout_is_writable  (void);
 
-void  panel_layout_toplevel_create      (GdkScreen            *screen);
+void  panel_layout_toplevel_create      (GpApplication        *application,
+                                         GdkScreen            *screen);
 void  panel_layout_object_create        (const char           *iid,
                                          const char           *toplevel_id,
                                          PanelObjectPackType   pack_type,

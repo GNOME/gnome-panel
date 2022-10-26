@@ -118,14 +118,12 @@ void                 panel_toplevel_set_animation_speed    (PanelToplevel       
 void                 panel_toplevel_set_enable_buttons     (PanelToplevel       *toplevel,
 							    gboolean             enable_buttons);
 
-gboolean             panel_toplevel_is_last                (PanelToplevel       *toplevel);
 int                  panel_toplevel_get_maximum_size       (PanelToplevel *toplevel);
 
-GSList              *panel_toplevel_list_toplevels         (void);
-PanelToplevel       *panel_toplevel_get_by_id              (const char    *toplevel_id);
-gboolean             panel_toplevel_find_empty_spot        (GdkScreen        *screen,
-							    PanelOrientation *orientation,
-							    int              *monitor);
+gboolean             panel_toplevel_find_empty_spot        (GpApplication       *application,
+                                                            GdkScreen           *screen,
+                                                            PanelOrientation    *orientation,
+                                                            int                 *monitor);
 
 G_END_DECLS
 

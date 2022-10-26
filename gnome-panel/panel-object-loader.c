@@ -83,21 +83,28 @@ free_object_to_load (PanelObjectToLoad *object)
 static gboolean
 panel_object_loader_queue_initial_unhide_toplevels (gpointer user_data)
 {
-        GSList *l;
+        GpApplication *application;
+        GList *toplevels;
+        GList *l;
+
+        application = GP_APPLICATION (user_data);
 
         if (panel_object_loader_unhide_toplevels_timeout != 0) {
                 g_source_remove (panel_object_loader_unhide_toplevels_timeout);
                 panel_object_loader_unhide_toplevels_timeout = 0;
         }
 
-        for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next)
+        toplevels = gp_application_get_toplevels (application);
+        for (l = toplevels; l != NULL; l = l->next)
                 panel_toplevel_queue_initial_unhide ((PanelToplevel *) l->data);
+        g_list_free (toplevels);
 
         return FALSE;
 }
 
 void
-panel_object_loader_stop_loading (const char *id)
+panel_object_loader_stop_loading (GpApplication *application,
+                                  const char    *id)
 {
         PanelObjectToLoad *object;
         GSList *l;
@@ -130,7 +137,7 @@ panel_object_loader_stop_loading (const char *id)
         g_free (tmp_id);
 
         if (panel_objects_loading == NULL && panel_objects_to_load == NULL)
-                panel_object_loader_queue_initial_unhide_toplevels (NULL);
+                panel_object_loader_queue_initial_unhide_toplevels (application);
 }
 
 static gboolean
@@ -146,13 +153,16 @@ is_valid_iid (const char *iid)
 }
 
 static gboolean
-panel_object_loader_idle_handler (gpointer dummy)
+panel_object_loader_idle_handler (gpointer data)
 {
+        GpApplication *application;
         PanelObjectToLoad *object = NULL;
         PanelToplevel     *toplevel = NULL;
         PanelWidget       *panel_widget;
         GSList            *l;
         char              *iid = NULL;
+
+        application = GP_APPLICATION (data);
 
         if (!panel_objects_to_load) {
                 panel_object_loader_have_idle = FALSE;
@@ -162,7 +172,9 @@ panel_object_loader_idle_handler (gpointer dummy)
         for (l = panel_objects_to_load; l; l = l->next) {
                 object = l->data;
 
-                toplevel = panel_toplevel_get_by_id (object->toplevel_id);
+                toplevel = gp_application_get_toplevel_by_id (application,
+                                                              object->toplevel_id);
+
                 if (toplevel)
                         break;
         }
@@ -177,7 +189,7 @@ panel_object_loader_idle_handler (gpointer dummy)
 
                 if (panel_objects_loading == NULL) {
                         /* unhide any potential initially hidden toplevel */
-                        panel_object_loader_queue_initial_unhide_toplevels (NULL);
+                        panel_object_loader_queue_initial_unhide_toplevels (application);
                 }
 
                 return FALSE;
@@ -193,7 +205,7 @@ panel_object_loader_idle_handler (gpointer dummy)
         if (!is_valid_iid (iid)) {
                 g_printerr ("Object '%s' has an invalid iid ('%s')\n",
                             object->id, iid);
-                panel_object_loader_stop_loading (object->id);
+                panel_object_loader_stop_loading (application, object->id);
                 g_free (iid);
                 return TRUE;
         }
@@ -263,10 +275,11 @@ panel_object_compare (const PanelObjectToLoad *a,
 }
 
 void
-panel_object_loader_do_load (gboolean initial_load)
+panel_object_loader_do_load (GpApplication *application,
+                             gboolean       initial_load)
 {
         if (!panel_objects_to_load) {
-                panel_object_loader_queue_initial_unhide_toplevels (NULL);
+                panel_object_loader_queue_initial_unhide_toplevels (application);
                 return;
         }
 
@@ -276,7 +289,7 @@ panel_object_loader_do_load (gboolean initial_load)
                 panel_object_loader_unhide_toplevels_timeout =
                         g_timeout_add_seconds (UNHIDE_TOPLEVELS_TIMEOUT_SECONDS,
                                                panel_object_loader_queue_initial_unhide_toplevels,
-                                               NULL);
+                                               application);
         }
 
         panel_objects_to_load = g_slist_sort (panel_objects_to_load,
@@ -289,9 +302,9 @@ panel_object_loader_do_load (gboolean initial_load)
                 if (initial_load)
                         g_idle_add_full (G_PRIORITY_HIGH_IDLE,
                                          panel_object_loader_idle_handler,
-                                         NULL, NULL);
+                                         application, NULL);
                 else
-                        g_idle_add (panel_object_loader_idle_handler, NULL);
+                        g_idle_add (panel_object_loader_idle_handler, application);
 
                 panel_object_loader_have_idle = TRUE;
         }

@@ -763,6 +763,12 @@ _panel_applet_frame_set_iid (PanelAppletFrame *frame,
 	frame->priv->iid = g_strdup (iid);
 }
 
+static GpApplication *
+get_application (PanelWidget *panel)
+{
+  return panel_toplevel_get_application (panel->toplevel);
+}
+
 void
 _panel_applet_frame_activated (PanelAppletFrame           *frame,
 			       PanelAppletFrameActivating *frame_act,
@@ -804,7 +810,8 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 
 	panel_applet_frame_init_properties (frame);
 
-	panel_object_loader_stop_loading (frame_act->id);
+	panel_object_loader_stop_loading (get_application (frame_act->panel),
+	                                  frame_act->id);
 	panel_applet_frame_activating_free (frame_act);
 }
 
@@ -947,7 +954,7 @@ panel_applet_frame_loading_failed (const char  *iid,
 
 	/* Note: this call will free the memory for id, so the variable should
 	 * not get accessed afterwards. */
-	panel_object_loader_stop_loading (id);
+	panel_object_loader_stop_loading (get_application (panel), id);
 }
 
 static void
@@ -960,7 +967,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 
 	if (g_slist_find_custom (no_reload_applets, id,
 				 (GCompareFunc) strcmp)) {
-		panel_object_loader_stop_loading (id);
+		panel_object_loader_stop_loading (get_application (panel), id);
 		return;
 	}
 
@@ -970,7 +977,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 	}
 
 	if (panel_applets_manager_is_applet_disabled (iid, NULL)) {
-		panel_object_loader_stop_loading (id);
+		panel_object_loader_stop_loading (get_application (panel), id);
 		return;
 	}
 

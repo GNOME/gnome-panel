@@ -22,6 +22,7 @@
 
 #include "panel-enums-gsettings.h"
 #include "panel-layout.h"
+#include "panel-toplevel.h"
 
 typedef struct
 {
@@ -41,6 +42,8 @@ struct _GpApplication
   gulong            prefer_dark_id;
 
   GtkStyleProvider *provider;
+
+  GHashTable       *toplevels;
 };
 
 static void initable_iface_init (GInitableIface *iface);
@@ -233,6 +236,8 @@ gp_application_dispose (GObject *object)
   g_clear_object (&self->general_settings);
   g_clear_object (&self->provider);
 
+  g_clear_pointer (&self->toplevels, g_hash_table_destroy);
+
   G_OBJECT_CLASS (gp_application_parent_class)->dispose (object);
 }
 
@@ -267,6 +272,11 @@ gp_application_init (GpApplication *self)
                                            self);
 
   theme_variant_changed_cb (self->general_settings, "theme-variant", self);
+
+  self->toplevels = g_hash_table_new_full (g_str_hash,
+                                           g_str_equal,
+                                           g_free,
+                                           (GDestroyNotify) gtk_widget_destroy);
 }
 
 GpApplication *
@@ -275,4 +285,34 @@ gp_application_new (GError **error)
   return g_initable_new (GP_TYPE_APPLICATION,
                          NULL, error,
                          NULL);
+}
+
+void
+gp_application_add_toplevel (GpApplication *self,
+                             PanelToplevel *toplevel)
+{
+  g_hash_table_insert (self->toplevels,
+                       g_strdup (panel_toplevel_get_id (toplevel)),
+                       toplevel);
+}
+
+void
+gp_application_remove_toplevel (GpApplication *self,
+                                PanelToplevel *toplevel)
+{
+  g_hash_table_remove (self->toplevels,
+                       panel_toplevel_get_id (toplevel));
+}
+
+GList *
+gp_application_get_toplevels (GpApplication *self)
+{
+  return g_hash_table_get_values (self->toplevels);
+}
+
+PanelToplevel *
+gp_application_get_toplevel_by_id (GpApplication *self,
+                                   const char    *id)
+{
+  return g_hash_table_lookup (self->toplevels, id);
 }

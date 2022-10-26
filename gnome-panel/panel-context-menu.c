@@ -45,15 +45,33 @@
 #include "panel-icon-names.h"
 
 static void
-panel_context_menu_create_new_panel (GtkWidget *menuitem)
+panel_context_menu_create_new_panel (GtkWidget     *menuitem,
+                                     PanelToplevel *toplevel)
 {
-	panel_layout_toplevel_create (gtk_widget_get_screen (menuitem));
+	panel_layout_toplevel_create (panel_toplevel_get_application (toplevel),
+	                              gtk_widget_get_screen (menuitem));
+}
+
+static gboolean
+is_last_toplevel (PanelToplevel *toplevel)
+{
+  GpApplication *application;
+  GList *toplevels;
+  gboolean is_last;
+
+  application = panel_toplevel_get_application (toplevel);
+  toplevels = gp_application_get_toplevels (application);
+
+  is_last = toplevels->next == NULL ? TRUE : FALSE;
+  g_list_free (toplevels);
+
+  return is_last;
 }
 
 static void
 panel_context_menu_delete_panel (PanelToplevel *toplevel)
 {
-	if (panel_toplevel_is_last (toplevel)) {
+	if (is_last_toplevel (toplevel)) {
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
 				    "cannot_delete_last_panel", TRUE,
@@ -74,7 +92,7 @@ panel_context_menu_setup_delete_panel_item (GtkWidget     *menuitem,
 	g_assert (PANEL_IS_TOPLEVEL (toplevel));
 
 	sensitive =
-		!panel_toplevel_is_last (toplevel) &&
+		!is_last_toplevel (toplevel) &&
 		!panel_lockdown_get_panels_locked_down_s () &&
 		panel_layout_is_writable ();
 
@@ -209,7 +227,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_context_menu_create_new_panel), 
-			  NULL);
+			  panel_widget->toplevel);
 	gtk_widget_set_sensitive (menuitem, 
 				  panel_layout_is_writable ());
 }

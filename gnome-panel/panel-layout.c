@@ -52,7 +52,7 @@ static void panel_layout_load_toplevel    (GpApplication *application,
                                            const char    *toplevel_id);
 static void panel_layout_load_object      (const char *object_id);
 static void panel_layout_changed_toplevel (GpApplication *application);
-static void panel_layout_changed_object   (void);
+static void panel_layout_changed_object   (GpApplication *application);
 
 static GQuark
 panel_layout_error_quark (void)
@@ -613,7 +613,8 @@ out:
 
 
 void
-panel_layout_toplevel_create (GdkScreen *screen)
+panel_layout_toplevel_create (GpApplication *application,
+                              GdkScreen     *screen)
 {
         char             *unique_id;
         char             *path;
@@ -630,7 +631,10 @@ panel_layout_toplevel_create (GdkScreen *screen)
         settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
         g_free (path);
 
-        if (panel_toplevel_find_empty_spot (screen, &orientation, &monitor)) {
+        if (panel_toplevel_find_empty_spot (application,
+                                            screen,
+                                            &orientation,
+                                            &monitor)) {
                 g_settings_set_enum (settings,
                                      PANEL_TOPLEVEL_ORIENTATION_KEY,
                                      orientation);
@@ -863,24 +867,27 @@ panel_layout_delete_object (const char *object_id)
 static void
 panel_layout_changed_toplevel (GpApplication *application)
 {
-        char       **ids;
-        GSList      *to_remove;
-        gboolean     loading;
-        gboolean     found;
-        const char  *id;
-        GSList      *l;
-        int          i;
+        char **ids;
+        GList *toplevels;
+        GList *to_remove;
+        GList *l;
+        gboolean loading;
+        int i;
 
         ids = g_settings_get_strv (layout_settings,
                                    PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
         /* Remove what is not in the layout anymore */
 
+        toplevels = gp_application_get_toplevels (application);
         to_remove = NULL;
 
-        for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
-                id = panel_toplevel_get_id (l->data);
+        for (l = toplevels; l != NULL; l = l->next) {
+                gboolean found;
+                const char *id;
+
                 found = FALSE;
+                id = panel_toplevel_get_id (l->data);
 
                 for (i = 0; ids[i] != NULL; i++) {
                         if (g_strcmp0 (ids[i], id) == 0) {
@@ -890,28 +897,39 @@ panel_layout_changed_toplevel (GpApplication *application)
                 }
 
                 if (!found)
-                        to_remove = g_slist_prepend (to_remove, l->data);
+                        to_remove = g_list_prepend (to_remove, l->data);
         }
 
-        for (l = to_remove; l != NULL; l = l->next)
-                gtk_widget_destroy (GTK_WIDGET (l->data));
+        g_list_free (toplevels);
 
-        g_slist_free (to_remove);
+        for (l = to_remove; l != NULL; l = l->next) {
+                gp_application_remove_toplevel (application,
+                                                PANEL_TOPLEVEL (l->data));
+        }
+
+        g_list_free (to_remove);
 
         /* Add what appeared in the layout */
 
         loading = FALSE;
 
         for (i = 0; ids[i] != NULL; i++) {
+                gboolean found;
+
+                toplevels = gp_application_get_toplevels (application);
                 found = FALSE;
 
-                for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
+                for (l = toplevels; l != NULL; l = l->next) {
+                        const char *id;
+
                         id = panel_toplevel_get_id (l->data);
                         if (g_strcmp0 (ids[i], id) == 0) {
                                 found = TRUE;
                                 break;
                         }
                 }
+
+                g_list_free (toplevels);
 
                 if (!found) {
                         panel_layout_load_toplevel (application, ids[i]);
@@ -924,11 +942,11 @@ panel_layout_changed_toplevel (GpApplication *application)
         /* Reload list of objects to get those that might be on the new
          * toplevels */
         if (loading)
-                panel_layout_changed_object ();
+                panel_layout_changed_object (application);
 }
 
 static void
-panel_layout_changed_object (void)
+panel_layout_changed_object (GpApplication *application)
 {
         char       **ids;
         GSList      *to_remove;
@@ -989,7 +1007,7 @@ panel_layout_changed_object (void)
         /* Always do this, even if there is no object that got loaded: if a
          * panel has been created, we want a do_load() to unhide it, even if
          * there is no object to load */
-        panel_object_loader_do_load (FALSE);
+        panel_object_loader_do_load (application, FALSE);
 }
 
 static void
@@ -1004,7 +1022,7 @@ panel_layout_changed (GSettings *settings,
         if (g_strcmp0 (key, PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) == 0)
                 panel_layout_changed_toplevel (application);
         else if (g_strcmp0 (key, PANEL_LAYOUT_OBJECT_ID_LIST_KEY) == 0)
-                panel_layout_changed_object ();
+                panel_layout_changed_object (application);
 }
 
 /******************\
@@ -1032,6 +1050,8 @@ panel_layout_load_toplevel (GpApplication *application,
                                  "toplevel-id", toplevel_id,
                                  "type-hint", GDK_WINDOW_TYPE_HINT_DOCK,
                                  NULL);
+
+        gp_application_add_toplevel (application, toplevel);
 
         g_free (path);
 
@@ -1193,7 +1213,7 @@ panel_layout_load (GpApplication  *application,
                           G_CALLBACK (panel_layout_changed),
                           application);
 
-        panel_object_loader_do_load (TRUE);
+        panel_object_loader_do_load (application, TRUE);
 
         return TRUE;
 }

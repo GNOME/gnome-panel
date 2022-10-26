@@ -24,16 +24,20 @@
 #ifndef __PANEL_OBJECT_LOADER_H__
 #define __PANEL_OBJECT_LOADER_H__
 
-#include <glib.h>
+#include "gp-application.h"
 
 G_BEGIN_DECLS
 
 void     panel_object_loader_queue         (const char *id,
                                             const char *settings_path);
-void     panel_object_loader_do_load       (gboolean initial_load);
+
+void     panel_object_loader_do_load       (GpApplication *application,
+                                            gboolean       initial_load);
 
 gboolean panel_object_loader_is_queued     (const char *id);
-void     panel_object_loader_stop_loading  (const char *id);
+
+void     panel_object_loader_stop_loading  (GpApplication *application,
+                                            const char    *id);
 
 G_END_DECLS
 

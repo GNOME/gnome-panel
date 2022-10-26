@@ -172,8 +172,6 @@ main (int argc, char *argv[])
   const char *autostart_id;
   GpMainData main_data;
   GpSession *session;
-  GSList *toplevels_to_destroy;
-  GSList *l;
 
   bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -221,12 +219,6 @@ main (int argc, char *argv[])
 
   g_main_loop_unref (main_data.loop);
   g_object_unref (session);
-
-  toplevels_to_destroy = g_slist_copy (panel_toplevel_list_toplevels ());
-  for (l = toplevels_to_destroy; l != NULL; l = l->next)
-    gtk_widget_destroy (l->data);
-
-  g_slist_free (toplevels_to_destroy);
 
   panel_cleanup_do ();
 
