@@ -48,6 +48,8 @@ struct _GpApplication
 
   GpAppletManager  *applet_manager;
 
+  GpActionProtocol *action_protocol;
+
   PanelLayout      *layout;
 
   GHashTable       *toplevels;
@@ -243,6 +245,7 @@ gp_application_dispose (GObject *object)
   g_clear_object (&self->general_settings);
   g_clear_object (&self->provider);
   g_clear_object (&self->applet_manager);
+  g_clear_object (&self->action_protocol);
   g_clear_object (&self->layout);
 
   g_clear_pointer (&self->toplevels, g_hash_table_destroy);
@@ -284,7 +287,8 @@ gp_application_init (GpApplication *self)
 
   self->applet_manager = panel_applets_manager_get ();
 
-  panel_action_protocol_init ();
+  self->action_protocol = gp_action_protocol_new (self);
+
   panel_multiscreen_init ();
 
   self->layout = panel_layout_new (self);

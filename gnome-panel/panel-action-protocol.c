@@ -33,6 +33,15 @@
 #include "panel-toplevel.h"
 #include "panel-util.h"
 
+struct _GpActionProtocol
+{
+  GObject        parent;
+
+  GpApplication *application;
+};
+
+G_DEFINE_TYPE (GpActionProtocol, gp_action_protocol, G_TYPE_OBJECT)
+
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
@@ -87,8 +96,30 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	return GDK_FILTER_REMOVE;
 }
 
-void
-panel_action_protocol_init (void)
+static void
+gp_action_protocol_finalize (GObject *object)
+{
+  GpActionProtocol *self;
+
+  self = GP_ACTION_PROTOCOL (object);
+
+  gdk_window_remove_filter (NULL, panel_action_protocol_filter, self);
+
+  G_OBJECT_CLASS (gp_action_protocol_parent_class)->finalize (object);
+}
+
+static void
+gp_action_protocol_class_init (GpActionProtocolClass *self_class)
+{
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (self_class);
+
+  object_class->finalize = gp_action_protocol_finalize;
+}
+
+static void
+gp_action_protocol_init (GpActionProtocol *self)
 {
 	GdkDisplay *display;
 
@@ -108,5 +139,16 @@ panel_action_protocol_init (void)
 			     FALSE);
 
 	/* We'll filter event sent on non-root windows later */
-	gdk_window_add_filter (NULL, panel_action_protocol_filter, NULL);
+	gdk_window_add_filter (NULL, panel_action_protocol_filter, self);
+}
+
+GpActionProtocol *
+gp_action_protocol_new (GpApplication *application)
+{
+  GpActionProtocol *action_protocol;
+
+  action_protocol = g_object_new (GP_TYPE_ACTION_PROTOCOL, NULL);
+  action_protocol->application = application;
+
+  return action_protocol;
 }

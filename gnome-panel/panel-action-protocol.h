@@ -25,9 +25,15 @@
 
 #include <glib.h>
 
+#include "gp-application.h"
+
 G_BEGIN_DECLS
 
-void panel_action_protocol_init (void);
+#define GP_TYPE_ACTION_PROTOCOL (gp_action_protocol_get_type ())
+G_DECLARE_FINAL_TYPE (GpActionProtocol, gp_action_protocol,
+                      GP, ACTION_PROTOCOL, GObject)
+
+GpActionProtocol *gp_action_protocol_new (GpApplication *application);
 
 G_END_DECLS
 
