@@ -79,12 +79,3 @@ panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
 
 	return ret;
 }
-
-gboolean
-panel_applets_manager_handle_action (GpActionFlags action,
-                                     uint32_t      time)
-{
-	_panel_applets_managers_ensure_loaded ();
-
-	return gp_applet_manager_handle_action (manager, action, time);
-}

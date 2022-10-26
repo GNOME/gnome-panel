@@ -40,9 +40,6 @@ gboolean         panel_applets_manager_open_initial_setup_dialog (const gchar   
                                                                   gpointer                     user_data,
                                                                   GDestroyNotify               free_func);
 
-gboolean         panel_applets_manager_handle_action             (GpActionFlags                action,
-                                                                  uint32_t                     time);
-
 G_END_DECLS
 
 #endif /* __PANEL_APPLETS_MANAGER_H__ */

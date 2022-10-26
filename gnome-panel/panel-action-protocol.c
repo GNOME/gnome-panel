@@ -30,6 +30,7 @@
 #include <X11/Xlib.h>
 
 #include "applet.h"
+#include "gp-applet-manager.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 
@@ -47,14 +48,19 @@ static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
 
 static void
-panel_action_protocol_main_menu (GdkScreen *screen,
-				 guint32    activate_time)
+handle_action (GpActionProtocol *self,
+               GpActionFlags     action,
+               guint32           time)
 {
-	if (panel_applet_activate_main_menu (activate_time))
-		return;
+  GpAppletManager *applet_manager;
 
-	panel_applets_manager_handle_action (GP_ACTION_MAIN_MENU,
-	                                     activate_time);
+  if (action == GP_ACTION_MAIN_MENU &&
+      panel_applet_activate_main_menu (time))
+    return;
+
+  applet_manager = gp_application_get_applet_manager (self->application);
+
+  gp_applet_manager_handle_action (applet_manager, action, time);
 }
 
 static GdkFilterReturn
@@ -67,6 +73,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	GdkDisplay *display;
 	XEvent    *xevent = (XEvent *) gdk_xevent;
 	Atom       atom;
+	GpActionFlags action;
 
 	if (xevent->type != ClientMessage)
 		return GDK_FILTER_CONTINUE;
@@ -84,14 +91,17 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 		return GDK_FILTER_CONTINUE;
 
 	atom = xevent->xclient.data.l[0];
+	action = GP_ACTION_NONE;
 
 	if (atom == atom_gnome_panel_action_main_menu)
-		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
+		action = GP_ACTION_MAIN_MENU;
 	else if (atom == atom_gnome_panel_action_run_dialog)
-		panel_applets_manager_handle_action (GP_ACTION_RUN_DIALOG,
-		                                     xevent->xclient.data.l[1]);
-	else
+		action = GP_ACTION_RUN_DIALOG;
+
+	if (action == GP_ACTION_NONE)
 		return GDK_FILTER_CONTINUE;
+
+	handle_action (GP_ACTION_PROTOCOL (data), action, xevent->xclient.data.l[1]);
 
 	return GDK_FILTER_REMOVE;
 }
