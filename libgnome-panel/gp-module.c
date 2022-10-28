@@ -161,6 +161,24 @@ get_applets (va_list args)
 }
 
 static gboolean
+check_abi (GpModule  *module,
+           GError   **error)
+{
+  if (module->abi_version != GP_MODULE_ABI_VERSION)
+    {
+      g_set_error (error,
+                   GP_MODULE_ERROR,
+                   GP_MODULE_ERROR_ABI_DOES_NOT_MATCH,
+                   "Module “%s” ABI version does not match",
+                   module->id);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
 is_valid_applet (GpModule     *module,
                  const gchar  *applet,
                  GError      **error)
@@ -310,14 +328,6 @@ gp_module_new_from_path (const gchar *path)
 
   load_func (module);
 
-  if (module->abi_version != GP_MODULE_ABI_VERSION)
-    {
-      g_warning ("Module '%s' ABI version does not match", path);
-
-      g_object_unref (module);
-      return NULL;
-    }
-
   if (module->id == NULL || *module->id == '\0')
     {
       g_warning ("Module '%s' does not have valid id", module->path);
@@ -460,6 +470,9 @@ gp_module_get_applet_info (GpModule     *module,
 {
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  if (!check_abi (module, error))
+    return NULL;
+
   if (!is_valid_applet (module, applet, error))
     return NULL;
 
@@ -487,6 +500,9 @@ const gchar *
 gp_module_get_applet_id_from_iid (GpModule    *module,
                                   const gchar *old_iid)
 {
+  if (!check_abi (module, NULL))
+    return NULL;
+
   if (module->compatibility_func == NULL)
     return NULL;
 
@@ -505,6 +521,9 @@ gp_module_set_actions (GpModule      *self,
 GpActionFlags
 gp_module_get_actions (GpModule *self)
 {
+  if (!check_abi (self, NULL))
+    return GP_ACTION_NONE;
+
   return self->actions;
 }
 
@@ -515,6 +534,9 @@ gp_module_handle_action (GpModule      *self,
 {
   g_return_val_if_fail ((self->actions & action) == action, FALSE);
   g_return_val_if_fail (self->action_func != NULL, FALSE);
+
+  if (!check_abi (self, NULL))
+    return FALSE;
 
   return self->action_func (self, action, time);
 }
@@ -543,6 +565,9 @@ gp_module_applet_new (GpModule     *module,
   GpApplet *applet;
 
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (!check_abi (module, error))
+    return NULL;
 
   if (!is_valid_applet (module, applet_id, error))
     return NULL;
@@ -598,6 +623,9 @@ gp_module_create_about_dialog (GpModule   *module,
   GpAppletInfo *info;
   GtkAboutDialog *dialog;
 
+  if (!check_abi (module, NULL))
+    return NULL;
+
   info = get_applet_info (module, applet, NULL);
   g_assert (info != NULL);
 
@@ -627,6 +655,9 @@ gp_module_show_help (GpModule   *module,
   GError *error;
   char *message;
   GtkWidget *dialog;
+
+  if (!check_abi (module, NULL))
+    return;
 
   info = get_applet_info (module, applet, NULL);
   g_assert (info != NULL);
@@ -697,6 +728,9 @@ gp_module_is_applet_disabled (GpModule         *module,
   gboolean is_disabled;
 
   g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
+
+  if (!check_abi (module, NULL))
+    return FALSE;
 
   info = get_applet_info (module, applet, NULL);
   g_assert (info != NULL);
