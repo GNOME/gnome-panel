@@ -130,10 +130,26 @@ gp_module_manager_get_modules (GpModuleManager *self)
 }
 
 GpModule *
-gp_module_manager_get_module (GpModuleManager *self,
-                              const char      *id)
+gp_module_manager_get_module (GpModuleManager  *self,
+                              const char       *id,
+                              GError          **error)
 {
-  return g_hash_table_lookup (self->modules, id);
+  GpModule *module;
+
+  module = g_hash_table_lookup (self->modules, id);
+
+  if (module == NULL)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   G_IO_ERROR_NOT_FOUND,
+                   "Module “%s” does not exist",
+                   id);
+
+      return NULL;
+    }
+
+  return module;
 }
 
 gboolean

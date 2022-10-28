@@ -29,14 +29,15 @@ G_DECLARE_FINAL_TYPE (GpModuleManager, gp_module_manager,
 
 GpModuleManager *gp_module_manager_new           (void);
 
-GList           *gp_module_manager_get_modules   (GpModuleManager *self);
+GList           *gp_module_manager_get_modules   (GpModuleManager  *self);
 
-GpModule        *gp_module_manager_get_module    (GpModuleManager *self,
-                                                  const char      *id);
+GpModule        *gp_module_manager_get_module    (GpModuleManager  *self,
+                                                  const char       *id,
+                                                  GError          **error);
 
-gboolean         gp_module_manager_handle_action (GpModuleManager *self,
-                                                  GpActionFlags    action,
-                                                  uint32_t         time);
+gboolean         gp_module_manager_handle_action (GpModuleManager  *self,
+                                                  GpActionFlags     action,
+                                                  uint32_t          time);
 
 G_END_DECLS
 

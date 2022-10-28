@@ -373,7 +373,7 @@ get_module_from_id (GpModuleManager *manager,
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
 
-  module = gp_module_manager_get_module (manager, module_id);
+  module = gp_module_manager_get_module (manager, module_id, NULL);
   g_free (module_id);
 
   return module;

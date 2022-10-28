@@ -118,7 +118,7 @@ gp_applet_manager_get_applet_info (GpAppletManager *self,
     return NULL;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = gp_module_manager_get_module (self->manager, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id, NULL);
   g_free (module_id);
 
   if (module == NULL)
@@ -148,7 +148,7 @@ gp_applet_manager_load_applet (GpAppletManager *self,
     return NULL;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = gp_module_manager_get_module (self->manager, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id, NULL);
   g_free (module_id);
 
   if (!module)
@@ -229,7 +229,7 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
     }
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = gp_module_manager_get_module (self->manager, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id, NULL);
   g_free (module_id);
 
   if (!module)
@@ -308,7 +308,7 @@ gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
     }
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = gp_module_manager_get_module (self->manager, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id, NULL);
   g_free (module_id);
 
   if (!module)
