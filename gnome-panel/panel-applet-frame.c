@@ -1113,6 +1113,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 {
 	GpApplication *application;
 	GpAppletManager *applet_manager;
+	GError *error;
 	PanelAppletFrameActivating *frame_act;
 	char *settings_path;
 	GVariant *initial_settings;
@@ -1146,10 +1147,17 @@ panel_applet_frame_load_helper (const gchar *iid,
 	settings_path = panel_applet_frame_activating_get_settings_path (frame_act);
 	initial_settings = get_initial_settings (frame_act);
 
+	error = NULL;
 	applet = gp_applet_manager_load_applet (applet_manager,
 	                                        iid,
 	                                        settings_path,
-	                                        initial_settings);
+	                                        initial_settings,
+	                                        &error);
+
+	if (error != NULL) {
+		g_warning ("%s", error->message);
+		g_error_free (error);
+	}
 
 	g_clear_pointer (&initial_settings, g_variant_unref);
 	g_free (settings_path);

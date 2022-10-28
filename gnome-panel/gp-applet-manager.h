@@ -38,7 +38,8 @@ GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager   
 GpApplet        *gp_applet_manager_load_applet               (GpAppletManager             *self,
                                                               const char                  *iid,
                                                               const char                  *settings_path,
-                                                              GVariant                    *initial_settings);
+                                                              GVariant                    *initial_settings,
+                                                              GError                     **error);
 
 char            *gp_applet_manager_get_new_iid               (GpAppletManager             *self,
                                                               const char                  *old_iid);
