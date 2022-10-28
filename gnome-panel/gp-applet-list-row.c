@@ -108,6 +108,12 @@ setup_view_more_button (GpAppletListRow *self,
   gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), menu);
   gtk_widget_set_halign (menu, GTK_ALIGN_END);
 
+  if (info == NULL)
+    {
+      gtk_widget_set_sensitive (button, FALSE);
+      return;
+    }
+
   if (info->help_uri && info->help_uri[0] != '\0')
     {
       sensitive = TRUE;
@@ -171,25 +177,41 @@ remove_clicked_cb (GtkButton       *button,
   GTK_LIST_BOX_ROW_GET_CLASS (row)->activate (row);
 }
 
+static GtkWidget *
+error_label_new (const char *error)
+{
+  GtkWidget *label;
+  GtkStyleContext *context;
+
+  label = gtk_label_new (error);
+
+  g_object_set (label, "margin", 6, NULL);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+
+  context = gtk_widget_get_style_context (label);
+  gtk_style_context_add_class (context, "error");
+
+  return label;
+}
+
 static void
 setup_row (GpAppletListRow *self)
 {
+  GError *error;
   GpAppletInfo *info;
   GtkWidget *hbox;
   GtkWidget *icon_image;
   GtkWidget *vbox;
   GtkWidget *remove_button;
   GtkWidget *menu_button;
-  GtkWidget *title_label;
-  GtkWidget *description_label;
   GtkStyleContext *remove_button_style_context;
   char *name;
   PanelWidget *panel;
   GpApplication *application;
   PanelLockdown *lockdown;
 
-  info = gp_module_get_applet_info (self->module, self->applet_id, NULL);
-  g_assert (info != NULL);
+  error = NULL;
+  info = gp_module_get_applet_info (self->module, self->applet_id, &error);
 
   self->iid = g_strdup_printf ("%s::%s",
                                gp_module_get_id (self->module),
@@ -208,7 +230,17 @@ setup_row (GpAppletListRow *self)
                 "margin-end", 6,
                 NULL);
 
-  icon_image = gtk_image_new_from_icon_name (info->icon_name, GTK_ICON_SIZE_DND);
+  if (error != NULL)
+    {
+      icon_image = gtk_image_new_from_icon_name ("dialog-error",
+                                                 GTK_ICON_SIZE_DND);
+    }
+  else
+    {
+      icon_image = gtk_image_new_from_icon_name (info->icon_name,
+                                                 GTK_ICON_SIZE_DND);
+    }
+
   gtk_image_set_pixel_size (GTK_IMAGE (icon_image), 32);
   gtk_box_pack_start (GTK_BOX (hbox), icon_image, FALSE, FALSE, 0);
   gtk_widget_show (icon_image);
@@ -216,6 +248,41 @@ setup_row (GpAppletListRow *self)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
+
+  if (error != NULL)
+    {
+      GtkWidget *label;
+
+      label = error_label_new (error->message);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      gtk_widget_set_valign (label, GTK_ALIGN_CENTER);
+      gtk_label_set_width_chars (GTK_LABEL (label), 30);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+    }
+  else
+    {
+      GtkWidget *title_label;
+      GtkWidget *description_label;
+
+      title_label = gtk_label_new (NULL);
+      name = g_strdup_printf ("<b>%s</b>", info->name);
+      gtk_label_set_markup (GTK_LABEL (title_label), name);
+      g_free (name);
+
+      gtk_box_pack_start (GTK_BOX (vbox), title_label, FALSE, FALSE, 0);
+      gtk_label_set_xalign (GTK_LABEL (title_label), 0);
+      gtk_widget_show (title_label);
+
+      description_label = gtk_label_new (info->description);
+      gtk_box_pack_start (GTK_BOX (vbox), description_label, FALSE, FALSE, 0);
+      gtk_label_set_max_width_chars (GTK_LABEL (description_label), 20);
+      gtk_label_set_line_wrap (GTK_LABEL (description_label), TRUE);
+      gtk_label_set_xalign (GTK_LABEL (description_label), 0);
+      gtk_widget_show (description_label);
+    }
 
   remove_button = gtk_button_new_with_label (_("Remove"));
   gtk_box_pack_start (GTK_BOX (hbox), remove_button, FALSE, FALSE, 0);
@@ -235,22 +302,6 @@ setup_row (GpAppletListRow *self)
   setup_view_more_button (self, menu_button, info);
   gtk_widget_show (menu_button);
 
-  title_label = gtk_label_new (NULL);
-  name = g_strdup_printf ("<b>%s</b>", info->name);
-  gtk_label_set_markup (GTK_LABEL (title_label), name);
-  g_free (name);
-
-  gtk_box_pack_start (GTK_BOX (vbox), title_label, FALSE, FALSE, 0);
-  gtk_label_set_xalign (GTK_LABEL (title_label), 0);
-  gtk_widget_show (title_label);
-
-  description_label = gtk_label_new (info->description);
-  gtk_box_pack_start (GTK_BOX (vbox), description_label, FALSE, FALSE, 0);
-  gtk_label_set_max_width_chars (GTK_LABEL (description_label), 20);
-  gtk_label_set_line_wrap (GTK_LABEL (description_label), TRUE);
-  gtk_label_set_xalign (GTK_LABEL (description_label), 0);
-  gtk_widget_show (description_label);
-
   panel = panel_applet_get_panel_widget (self->info);
   application = panel_toplevel_get_application (panel->toplevel);
   lockdown = gp_application_get_lockdown (application);
@@ -262,6 +313,8 @@ setup_row (GpAppletListRow *self)
                             self);
 
   lockdown_changed_cb (lockdown, self);
+
+  g_clear_error (&error);
 }
 
 static void
