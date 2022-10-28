@@ -236,6 +236,28 @@ row_activated_cb (GtkListBox        *box,
   panel_applet_frame_create (self->toplevel, pack_type, pack_index, iid, NULL);
 }
 
+static GtkWidget *
+error_row_new (const char *error)
+{
+  GtkWidget *row;
+  GtkWidget *label;
+  GtkStyleContext *context;
+
+  row = gtk_list_box_row_new ();
+
+  label = gtk_label_new (error);
+  gtk_container_add (GTK_CONTAINER (row), label);
+  gtk_widget_show (label);
+
+  g_object_set (label, "margin", 6, NULL);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+
+  context = gtk_widget_get_style_context (label);
+  gtk_style_context_add_class (context, "error");
+
+  return row;
+}
+
 static void
 add_module (GpAddAppletWindow *window,
             GpModule          *module)
@@ -298,11 +320,23 @@ add_module (GpAddAppletWindow *window,
       error = NULL;
       info = gp_module_get_applet_info (module, applets[i], &error);
 
+      if (g_error_matches (error,
+                           GP_MODULE_ERROR,
+                           GP_MODULE_ERROR_ABI_DOES_NOT_MATCH))
+        {
+          row = error_row_new ("Module ABI version does not match!");
+          gtk_list_box_prepend (GTK_LIST_BOX (list_box), row);
+          gtk_widget_show (row);
+          break;
+        }
+
       if (info == NULL)
         {
-          g_warning ("%s", error->message);
+          row = error_row_new (error->message);
           g_error_free (error);
 
+          gtk_list_box_prepend (GTK_LIST_BOX (list_box), row);
+          gtk_widget_show (row);
           continue;
         }
 
