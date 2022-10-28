@@ -1630,40 +1630,11 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 }
 
 static void
-panel_widget_open_dialog_destroyed (PanelWidget *panel_widget,
-				    GtkWidget   *dialog)
-{
-	g_return_if_fail (panel_widget->open_dialogs != NULL);
-
-	panel_widget->open_dialogs = g_slist_remove (panel_widget->open_dialogs, dialog);
-}
-
-static void
-panel_widget_destroy_open_dialogs (PanelWidget *panel_widget)
-{
-	GSList *l, *list;
-
-	list = panel_widget->open_dialogs;
-	panel_widget->open_dialogs = NULL;
-
-	for (l = list; l; l = l->next) {
-		g_signal_handlers_disconnect_by_func (G_OBJECT (l->data),
-				G_CALLBACK (panel_widget_open_dialog_destroyed),
-				panel_widget);
-		gtk_widget_destroy (l->data);
-	}
-	g_slist_free (list);
-
-}
-
-static void
 panel_widget_dispose (GObject *obj)
 {
 	PanelWidget *panel = PANEL_WIDGET (obj);
 
 	panels = g_slist_remove (panels, panel);
-
-	panel_widget_destroy_open_dialogs (panel);
 
 	if (panel->icon_resize_id != 0) {
 		g_source_remove (panel->icon_resize_id);
@@ -1687,7 +1658,6 @@ panel_widget_init (PanelWidget *panel)
 	panel->size          = 0;
 	panel->applet_list   = NULL;
 	panel->drop_widget   = widget;
-	panel->open_dialogs  = NULL;
 
 	panels = g_slist_append (panels, panel);
 }
@@ -2722,24 +2692,6 @@ gboolean
 panel_applet_is_in_drag (void)
 {
 	return panel_applet_in_drag;
-}
-
-void 
-panel_widget_register_open_dialog (PanelWidget *panel,
-				   GtkWidget   *dialog)
-{
-	/* the window is for a panel, so it should be shown in the taskbar. See
-	 * HIG: An alert should not appear in the panel window list unless it
-	 * is, or may be, the only window shown by an application. */
-	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
-
-	panel->open_dialogs = g_slist_append (panel->open_dialogs,
-					      dialog);
-	
-	g_signal_connect_object (dialog, "destroy",
-				 G_CALLBACK (panel_widget_open_dialog_destroyed),
-				 panel,
-				 G_CONNECT_SWAPPED);
 }
 
 GSList *panel_widget_get_panels (void)
