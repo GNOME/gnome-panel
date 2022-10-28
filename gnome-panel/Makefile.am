@@ -17,6 +17,8 @@ panel_sources =			\
 	gp-application.h \
 	gp-arrow-button.c \
 	gp-arrow-button.h \
+	gp-error-applet.c \
+	gp-error-applet.h \
 	gp-handle.c \
 	gp-handle.h \
 	gp-main.c \
