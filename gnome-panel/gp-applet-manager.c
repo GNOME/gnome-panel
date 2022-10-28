@@ -106,8 +106,9 @@ gp_applet_manager_new (GpApplication *application)
 }
 
 GpAppletInfo *
-gp_applet_manager_get_applet_info (GpAppletManager *self,
-                                   const char      *iid)
+gp_applet_manager_get_applet_info (GpAppletManager  *self,
+                                   const char       *iid,
+                                   GError          **error)
 {
   const char *applet_id;
   char *module_id;
@@ -115,10 +116,18 @@ gp_applet_manager_get_applet_info (GpAppletManager *self,
 
   applet_id = g_strrstr (iid, "::");
   if (!applet_id)
-    return NULL;
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   G_IO_ERROR_INVALID_ARGUMENT,
+                   "%s is not valid iid",
+                   iid);
+
+      return NULL;
+    }
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = gp_module_manager_get_module (self->manager, module_id, NULL);
+  module = gp_module_manager_get_module (self->manager, module_id, error);
   g_free (module_id);
 
   if (module == NULL)
@@ -126,7 +135,7 @@ gp_applet_manager_get_applet_info (GpAppletManager *self,
 
   applet_id += 2;
 
-  return gp_module_get_applet_info (module, applet_id, NULL);
+  return gp_module_get_applet_info (module, applet_id, error);
 }
 
 GpApplet *

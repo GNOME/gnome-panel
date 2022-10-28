@@ -1128,7 +1128,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 		return;
 	}
 
-	if (gp_applet_manager_get_applet_info (applet_manager, iid) == NULL) {
+	if (gp_applet_manager_get_applet_info (applet_manager, iid, NULL) == NULL) {
 		panel_applet_frame_loading_failed (iid, panel, id);
 		return;
 	}
@@ -1188,7 +1188,7 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 
 	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
 
-	if (!gp_applet_manager_get_applet_info (applet_manager, applet_iid)) {
+	if (!gp_applet_manager_get_applet_info (applet_manager, applet_iid, NULL)) {
 		gchar *new_iid;
 
 		new_iid = gp_applet_manager_get_new_iid (applet_manager, applet_iid);

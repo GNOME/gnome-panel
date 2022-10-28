@@ -32,7 +32,8 @@ G_DECLARE_FINAL_TYPE (GpAppletManager, gp_applet_manager,
 GpAppletManager *gp_applet_manager_new                       (GpApplication               *application);
 
 GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
-                                                              const char                  *iid);
+                                                              const char                  *iid,
+                                                              GError                     **error);
 
 GpApplet        *gp_applet_manager_load_applet               (GpAppletManager             *self,
                                                               const char                  *iid,
