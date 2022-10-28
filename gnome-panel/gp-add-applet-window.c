@@ -27,6 +27,7 @@
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-module-private.h"
 #include "libpanel-util/panel-glib.h"
+#include "panel-applet-frame.h"
 
 struct _GpAddAppletWindow
 {

@@ -18,9 +18,10 @@
 #ifndef GP_APPLET_MANAGER_H
 #define GP_APPLET_MANAGER_H
 
-#include "gp-module-manager.h"
+#include "gp-application.h"
+#include "libgnome-panel/gp-applet-info-private.h"
+#include "libgnome-panel/gp-applet-private.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
-#include "panel-applet-frame.h"
 
 G_BEGIN_DECLS
 
@@ -33,9 +34,10 @@ GpAppletManager *gp_applet_manager_new                       (GpApplication     
 GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
                                                               const char                  *iid);
 
-gboolean         gp_applet_manager_load_applet               (GpAppletManager             *self,
+GpApplet        *gp_applet_manager_load_applet               (GpAppletManager             *self,
                                                               const char                  *iid,
-                                                              PanelAppletFrameActivating  *frame_act);
+                                                              const char                  *settings_path,
+                                                              GVariant                    *initial_settings);
 
 char            *gp_applet_manager_get_new_iid               (GpAppletManager             *self,
                                                               const char                  *old_iid);

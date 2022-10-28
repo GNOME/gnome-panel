@@ -65,37 +65,6 @@ get_current_backend (void)
   return g_strdup ("unknown");
 }
 
-static GVariant *
-get_initial_settings (PanelAppletFrameActivating *frame_act)
-{
-  gchar *path;
-  GSettings *settings;
-  GVariant *initial_settings;
-
-  path = panel_applet_frame_activating_get_initial_settings_path (frame_act);
-  settings = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
-  g_free (path);
-
-  initial_settings = g_settings_get_user_value (settings, "settings");
-  g_object_unref (settings);
-
-  return initial_settings;
-}
-
-static void
-remove_initial_settings (PanelAppletFrameActivating *frame_act)
-{
-  gchar *path;
-  GSettings *settings;
-
-  path = panel_applet_frame_activating_get_initial_settings_path (frame_act);
-  settings = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
-  g_free (path);
-
-  g_settings_reset (settings, "settings");
-  g_object_unref (settings);
-}
-
 static void
 gp_applet_manager_finalize (GObject *object)
 {
@@ -160,95 +129,46 @@ gp_applet_manager_get_applet_info (GpAppletManager *self,
   return gp_module_get_applet_info (module, applet_id, NULL);
 }
 
-gboolean
-gp_applet_manager_load_applet (GpAppletManager            *self,
-                               const char                 *iid,
-                               PanelAppletFrameActivating *frame_act)
+GpApplet *
+gp_applet_manager_load_applet (GpAppletManager *self,
+                               const char      *iid,
+                               const char      *settings_path,
+                               GVariant        *initial_settings)
 {
   const gchar *applet_id;
   gchar *module_id;
   GpModule *module;
-  gchar *settings_path;
-  gboolean locked_down;
-  PanelOrientation panel_orientation;
-  GtkOrientation orientation;
-  GtkPositionType position;
-  GVariant *initial_settings;
   GError *error;
   GpApplet *applet;
-  PanelAppletFrame *frame;
 
   g_return_val_if_fail (iid != NULL, FALSE);
-  g_return_val_if_fail (frame_act != NULL, FALSE);
 
   applet_id = g_strrstr (iid, "::");
   if (!applet_id)
-    return FALSE;
+    return NULL;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
   module = gp_module_manager_get_module (self->manager, module_id);
   g_free (module_id);
 
   if (!module)
-    return FALSE;
+    return NULL;
 
   applet_id += 2;
-  settings_path = panel_applet_frame_activating_get_settings_path (frame_act);
-  locked_down = panel_applet_frame_activating_get_locked_down (frame_act);
-  panel_orientation = panel_applet_frame_activating_get_orientation (frame_act);
-
-  switch (panel_orientation)
-    {
-      case PANEL_ORIENTATION_BOTTOM:
-        orientation = GTK_ORIENTATION_HORIZONTAL;
-        position = GTK_POS_BOTTOM;
-        break;
-      case PANEL_ORIENTATION_LEFT:
-        orientation = GTK_ORIENTATION_VERTICAL;
-        position = GTK_POS_LEFT;
-        break;
-      case PANEL_ORIENTATION_RIGHT:
-        orientation = GTK_ORIENTATION_VERTICAL;
-        position = GTK_POS_RIGHT;
-        break;
-      case PANEL_ORIENTATION_TOP:
-      default:
-        orientation = GTK_ORIENTATION_HORIZONTAL;
-        position = GTK_POS_TOP;
-        break;
-    }
-
-  initial_settings = get_initial_settings (frame_act);
 
   error = NULL;
   applet = gp_module_applet_new (module, applet_id, settings_path,
                                  initial_settings, &error);
-
-  g_clear_pointer (&initial_settings, g_variant_unref);
-  g_free (settings_path);
 
   if (!applet)
     {
       g_warning ("%s", error->message);
       g_error_free (error);
 
-      return FALSE;
+      return NULL;
     }
 
-  remove_initial_settings (frame_act);
-
-  gp_applet_set_locked_down (applet, locked_down);
-  gp_applet_set_orientation (applet, orientation);
-  gp_applet_set_position (applet, position);
-
-  frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
-
-  _panel_applet_frame_set_applet (frame, applet);
-  _panel_applet_frame_set_iid (frame, iid);
-
-  _panel_applet_frame_activated (frame, frame_act, NULL);
-
-  return TRUE;
+  return applet;
 }
 
 char *

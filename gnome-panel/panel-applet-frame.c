@@ -47,6 +47,8 @@
 #define PANEL_RESPONSE_DONT_RELOAD 1
 #define PANEL_RESPONSE_RELOAD      2
 
+typedef struct _PanelAppletFrameActivating PanelAppletFrameActivating;
+
 static void panel_applet_frame_activating_free (PanelAppletFrameActivating *frame_act);
 
 static void panel_applet_frame_loading_failed  (const char  *iid,
@@ -746,7 +748,7 @@ flags_changed_cb (GpApplet         *applet,
   update_flags (self);
 }
 
-void
+static void
 _panel_applet_frame_set_applet (PanelAppletFrame *self,
                                 GpApplet         *applet)
 {
@@ -761,7 +763,7 @@ _panel_applet_frame_set_applet (PanelAppletFrame *self,
   gtk_widget_show (GTK_WIDGET (applet));
 }
 
-void
+static void
 _panel_applet_frame_set_iid (PanelAppletFrame *frame,
 			     const gchar      *iid)
 {
@@ -776,7 +778,7 @@ get_application (PanelWidget *panel)
   return panel_toplevel_get_application (panel->toplevel);
 }
 
-void
+static void
 _panel_applet_frame_activated (PanelAppletFrame           *frame,
 			       PanelAppletFrameActivating *frame_act,
 			       GError                     *error)
@@ -844,13 +846,13 @@ panel_applet_frame_activating_free (PanelAppletFrameActivating *frame_act)
 	g_free (frame_act);
 }
 
-PanelOrientation
+static PanelOrientation
 panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act)
 {
 	return panel_widget_get_applet_orientation (frame_act->panel);
 }
 
-gboolean
+static gboolean
 panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act)
 {
 	GpApplication *application;
@@ -862,7 +864,7 @@ panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame
 	return panel_lockdown_get_panels_locked_down (lockdown);
 }
 
-gchar *
+static char *
 panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act)
 {
         char *path;
@@ -876,7 +878,7 @@ panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *fra
 	return path_instance;
 }
 
-gchar *
+static char *
 panel_applet_frame_activating_get_initial_settings_path (PanelAppletFrameActivating *frame_act)
 {
         char *path;
@@ -1011,6 +1013,75 @@ panel_applet_frame_loading_failed (const char  *iid,
 	panel_object_loader_stop_loading (get_application (panel), id);
 }
 
+static GVariant *
+get_initial_settings (PanelAppletFrameActivating *frame_act)
+{
+  gchar *path;
+  GSettings *settings;
+  GVariant *initial_settings;
+
+  path = panel_applet_frame_activating_get_initial_settings_path (frame_act);
+  settings = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
+  g_free (path);
+
+  initial_settings = g_settings_get_user_value (settings, "settings");
+  g_object_unref (settings);
+
+  return initial_settings;
+}
+
+static void
+remove_initial_settings (PanelAppletFrameActivating *frame_act)
+{
+  gchar *path;
+  GSettings *settings;
+
+  path = panel_applet_frame_activating_get_initial_settings_path (frame_act);
+  settings = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
+  g_free (path);
+
+  g_settings_reset (settings, "settings");
+  g_object_unref (settings);
+}
+
+static void
+applet_setup (GpApplet                   *applet,
+              PanelAppletFrameActivating *frame_act)
+{
+  gboolean locked_down;
+  PanelOrientation panel_orientation;
+  GtkOrientation orientation;
+  GtkPositionType position;
+
+  locked_down = panel_applet_frame_activating_get_locked_down (frame_act);
+  panel_orientation = panel_applet_frame_activating_get_orientation (frame_act);
+
+  switch (panel_orientation)
+    {
+      case PANEL_ORIENTATION_BOTTOM:
+        orientation = GTK_ORIENTATION_HORIZONTAL;
+        position = GTK_POS_BOTTOM;
+        break;
+      case PANEL_ORIENTATION_LEFT:
+        orientation = GTK_ORIENTATION_VERTICAL;
+        position = GTK_POS_LEFT;
+        break;
+      case PANEL_ORIENTATION_RIGHT:
+        orientation = GTK_ORIENTATION_VERTICAL;
+        position = GTK_POS_RIGHT;
+        break;
+      case PANEL_ORIENTATION_TOP:
+      default:
+        orientation = GTK_ORIENTATION_HORIZONTAL;
+        position = GTK_POS_TOP;
+        break;
+    }
+
+  gp_applet_set_locked_down (applet, locked_down);
+  gp_applet_set_orientation (applet, orientation);
+  gp_applet_set_position (applet, position);
+}
+
 static void
 panel_applet_frame_load_helper (const gchar *iid,
 				PanelWidget *panel,
@@ -1020,6 +1091,10 @@ panel_applet_frame_load_helper (const gchar *iid,
 	GpApplication *application;
 	GpAppletManager *applet_manager;
 	PanelAppletFrameActivating *frame_act;
+	char *settings_path;
+	GVariant *initial_settings;
+	GpApplet *applet;
+	PanelAppletFrame *frame;
 
 	application = panel_toplevel_get_application (panel->toplevel);
 	applet_manager = gp_application_get_applet_manager (application);
@@ -1045,10 +1120,32 @@ panel_applet_frame_load_helper (const gchar *iid,
 	frame_act->id       = g_strdup (id);
 	frame_act->settings = g_object_ref (settings);
 
-	if (!gp_applet_manager_load_applet (applet_manager, iid, frame_act)) {
+	settings_path = panel_applet_frame_activating_get_settings_path (frame_act);
+	initial_settings = get_initial_settings (frame_act);
+
+	applet = gp_applet_manager_load_applet (applet_manager,
+	                                        iid,
+	                                        settings_path,
+	                                        initial_settings);
+
+	g_clear_pointer (&initial_settings, g_variant_unref);
+	g_free (settings_path);
+
+	if (applet == NULL) {
 		panel_applet_frame_loading_failed (iid, panel, id);
 		panel_applet_frame_activating_free (frame_act);
+		return;
 	}
+
+	remove_initial_settings (frame_act);
+	applet_setup (applet, frame_act);
+
+	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
+
+	_panel_applet_frame_set_applet (frame, applet);
+	_panel_applet_frame_set_iid (frame, iid);
+
+	_panel_applet_frame_activated (frame, frame_act, NULL);
 }
 
 void

@@ -76,26 +76,6 @@ void  panel_applet_frame_change_orientation (PanelAppletFrame    *frame,
 void  panel_applet_frame_set_panel          (PanelAppletFrame    *frame,
 					     PanelWidget         *panel);
 
-
-/* For module implementations only */
-
-typedef struct _PanelAppletFrameActivating        PanelAppletFrameActivating;
-
-PanelOrientation  panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act);
-gboolean          panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act);
-gchar            *panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act);
-gchar            *panel_applet_frame_activating_get_initial_settings_path (PanelAppletFrameActivating *frame_act);
-
-void  _panel_applet_frame_set_applet            (PanelAppletFrame           *self,
-                                                 GpApplet                   *applet);
-
-void  _panel_applet_frame_set_iid               (PanelAppletFrame           *frame,
-						 const gchar                *iid);
-
-void  _panel_applet_frame_activated             (PanelAppletFrame           *frame,
-						 PanelAppletFrameActivating *frame_act,
-						 GError                     *error);
-
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_FRAME_H__ */

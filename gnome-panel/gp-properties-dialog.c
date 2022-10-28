@@ -20,7 +20,7 @@
 #include <glib/gi18n.h>
 #include <libgnome-panel/gp-applet-info.h>
 
-#include "gp-applet-manager.h"
+#include "gp-module-manager.h"
 #include "gp-properties-dialog.h"
 #include "panel-schemas.h"
 #include "gp-applet-list-row.h"
