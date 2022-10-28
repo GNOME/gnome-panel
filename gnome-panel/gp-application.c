@@ -316,6 +316,12 @@ gp_application_new (GError **error)
                          NULL);
 }
 
+GSettings *
+gp_application_get_general_settings (GpApplication *self)
+{
+  return self->general_settings;
+}
+
 GpModuleManager *
 gp_application_get_module_manager (GpApplication *self)
 {

@@ -19,6 +19,7 @@
 #define GP_APPLICATION_H
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -31,26 +32,28 @@ typedef struct _PanelToplevel PanelToplevel;
 #define GP_TYPE_APPLICATION (gp_application_get_type ())
 G_DECLARE_FINAL_TYPE (GpApplication, gp_application, GP, APPLICATION, GObject)
 
-GpApplication   *gp_application_new                (GError        **error);
+GpApplication   *gp_application_new                  (GError        **error);
 
-GpModuleManager *gp_application_get_module_manager (GpApplication  *self);
+GSettings       *gp_application_get_general_settings (GpApplication  *self);
 
-GpAppletManager *gp_application_get_applet_manager (GpApplication  *self);
+GpModuleManager *gp_application_get_module_manager   (GpApplication  *self);
 
-PanelLockdown   *gp_application_get_lockdown       (GpApplication  *self);
+GpAppletManager *gp_application_get_applet_manager   (GpApplication  *self);
 
-PanelLayout     *gp_application_get_layout         (GpApplication  *self);
+PanelLockdown   *gp_application_get_lockdown         (GpApplication  *self);
 
-void             gp_application_add_toplevel       (GpApplication  *self,
-                                                    PanelToplevel  *toplevel);
+PanelLayout     *gp_application_get_layout           (GpApplication  *self);
 
-void             gp_application_remove_toplevel    (GpApplication  *self,
-                                                    PanelToplevel  *toplevel);
+void             gp_application_add_toplevel         (GpApplication  *self,
+                                                      PanelToplevel  *toplevel);
 
-GList           *gp_application_get_toplevels      (GpApplication  *self);
+void             gp_application_remove_toplevel      (GpApplication  *self,
+                                                      PanelToplevel  *toplevel);
 
-PanelToplevel   *gp_application_get_toplevel_by_id (GpApplication  *self,
-                                                    const char     *id);
+GList           *gp_application_get_toplevels        (GpApplication  *self);
+
+PanelToplevel   *gp_application_get_toplevel_by_id   (GpApplication  *self,
+                                                      const char     *id);
 
 G_END_DECLS
 
