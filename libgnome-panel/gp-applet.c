@@ -106,6 +106,8 @@ static GParamSpec *properties[LAST_PROP] = { NULL };
 enum
 {
   PLACEMENT_CHANGED,
+  ORIENTATION_CHANGED,
+  POSITION_CHANGED,
 
   FLAGS_CHANGED,
 
@@ -589,6 +591,36 @@ install_signals (void)
                   GTK_TYPE_ORIENTATION, GTK_TYPE_POSITION_TYPE);
 
   /**
+   * GpApplet::orientation-changed:
+   * @applet: the object on which the signal is emitted
+   *
+   * Signal is emitted when the orientation of applet has changed.
+   */
+  signals[ORIENTATION_CHANGED] =
+    g_signal_new ("orientation-changed",
+                  GP_TYPE_APPLET,
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GpAppletClass, orientation_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  0);
+
+  /**
+   * GpApplet::position-changed:
+   * @applet: the object on which the signal is emitted
+   *
+   * Signal is emitted when the position of applet has changed.
+   */
+  signals[POSITION_CHANGED] =
+    g_signal_new ("position-changed",
+                  GP_TYPE_APPLET,
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GpAppletClass, position_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  0);
+
+  /**
    * GpApplet::flags-changed:
    * @applet: the object on which the signal is emitted
    *
@@ -745,6 +777,7 @@ gp_applet_set_orientation (GpApplet       *applet,
   priv->orientation = orientation;
 
   g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_ORIENTATION]);
+  g_signal_emit (applet, signals[ORIENTATION_CHANGED], 0);
 }
 
 /**
@@ -783,6 +816,7 @@ gp_applet_set_position (GpApplet        *applet,
   priv->position = position;
 
   g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_POSITION]);
+  g_signal_emit (applet, signals[POSITION_CHANGED], 0);
 }
 
 /**

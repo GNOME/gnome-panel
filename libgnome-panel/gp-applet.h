@@ -72,21 +72,25 @@ struct _GpAppletClass
 {
   GtkEventBoxClass parent_class;
 
-  gboolean (* initial_setup)     (GpApplet         *self,
-                                  GVariant         *initial_settings,
-                                  GError          **error);
+  gboolean (* initial_setup)       (GpApplet         *self,
+                                    GVariant         *initial_settings,
+                                    GError          **error);
 
-  gboolean (* initable_init)     (GpApplet         *self,
-                                  GError          **error);
+  gboolean (* initable_init)       (GpApplet         *self,
+                                    GError          **error);
 
-  void     (* placement_changed) (GpApplet         *self,
-                                  GtkOrientation    orientation,
-                                  GtkPositionType   position);
+  void     (* placement_changed)   (GpApplet         *self,
+                                    GtkOrientation    orientation,
+                                    GtkPositionType   position);
 
-  void     (* remove_from_panel) (GpApplet         *self);
+  void     (* orientation_changed) (GpApplet         *self);
+
+  void     (* position_changed)    (GpApplet         *self);
+
+  void     (* remove_from_panel)   (GpApplet         *self);
 
   /*< private >*/
-  gpointer padding[9];
+  gpointer padding[10];
 };
 
 gboolean         gp_applet_get_locked_down           (GpApplet           *applet);
