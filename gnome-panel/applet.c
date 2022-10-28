@@ -160,6 +160,29 @@ panel_applet_list_applets (void)
 	return registered_applets;
 }
 
+void
+panel_applet_foreach (PanelWidget            *panel,
+                      PanelAppletForeachFunc  func,
+                      gpointer                user_data)
+{
+  GSList *applets;
+  GSList *l;
+
+  applets = panel_applet_list_applets ();
+
+  for (l = applets; l != NULL; l = l->next)
+    {
+      AppletInfo *info;
+
+      info = l->data;
+
+      if (panel != NULL && panel != panel_applet_get_panel_widget (info))
+        continue;
+
+      func (info, user_data);
+    }
+}
+
 gboolean
 panel_applet_activate_main_menu (guint32 activate_time)
 {
@@ -239,6 +262,12 @@ PanelWidget *
 panel_applet_get_panel_widget (AppletInfo *info)
 {
   return PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+}
+
+GpApplet *
+panel_applet_get_applet (AppletInfo *info)
+{
+  return GP_APPLET (gtk_bin_get_child (GTK_BIN (info->widget)));
 }
 
 gboolean

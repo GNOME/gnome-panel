@@ -67,16 +67,12 @@ typedef struct
 
   GpAppletFlags       flags;
 
-  GSettings          *general_settings;
-
   gboolean            enable_tooltips;
 
   gboolean            prefer_symbolic_icons;
 
   guint               panel_icon_size;
   guint               menu_icon_size;
-
-  guint               icon_resize_id;
 
   GtkWidget          *about_dialog;
 } GpAppletPrivate;
@@ -124,126 +120,6 @@ G_DEFINE_TYPE_WITH_CODE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX,
                          G_ADD_PRIVATE (GpApplet)
                          G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
                                                 initable_iface_init))
-
-static void
-update_enable_tooltips (GpApplet *applet)
-{
-  GpAppletPrivate *priv;
-  gboolean enable_tooltips;
-
-  priv = gp_applet_get_instance_private (applet);
-  enable_tooltips = g_settings_get_boolean (priv->general_settings,
-                                            "enable-tooltips");
-
-  gp_applet_set_enable_tooltips (applet, enable_tooltips);
-}
-
-static void
-update_prefer_symbolic_icons (GpApplet *applet)
-{
-  GpAppletPrivate *priv;
-  gboolean prefer_symbolic_icons;
-
-  priv = gp_applet_get_instance_private (applet);
-  prefer_symbolic_icons = g_settings_get_boolean (priv->general_settings,
-                                                  "prefer-symbolic-icons");
-
-  gp_applet_set_prefer_symbolic_icons (applet, prefer_symbolic_icons);
-}
-
-static void
-update_menu_icon_size (GpApplet *applet)
-{
-  GpAppletPrivate *priv;
-  guint menu_icon_size;
-
-  priv = gp_applet_get_instance_private (applet);
-  menu_icon_size = g_settings_get_enum (priv->general_settings,
-                                        "menu-icon-size");
-
-  gp_applet_set_menu_icon_size (applet, menu_icon_size);
-}
-
-static void
-update_panel_icon_size (GpApplet *applet)
-{
-  GpAppletPrivate *priv;
-  guint panel_max_icon_size;
-  GtkAllocation allocation;
-  guint panel_size;
-  guint spacing;
-  guint panel_icon_size;
-
-  priv = gp_applet_get_instance_private (applet);
-  panel_max_icon_size = g_settings_get_enum (priv->general_settings,
-                                             "panel-max-icon-size");
-
-  gtk_widget_get_allocation (GTK_WIDGET (applet), &allocation);
-
-  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-    panel_size = allocation.height;
-  else if (priv->orientation == GTK_ORIENTATION_VERTICAL)
-    panel_size = allocation.width;
-  else
-    g_assert_not_reached ();
-
-  spacing = 4;
-
-  if (panel_size <= panel_max_icon_size + spacing)
-    {
-      if (panel_size < 22 + spacing)
-        panel_icon_size = 16;
-      else if (panel_size < 24 + spacing)
-        panel_icon_size = 22;
-      else if (panel_size < 32 + spacing)
-        panel_icon_size = 24;
-      else if (panel_size < 48 + spacing)
-        panel_icon_size = 32;
-      else if (panel_size < 64 + spacing)
-        panel_icon_size = 48;
-      else
-        panel_icon_size = 64;
-    }
-  else
-    {
-      panel_icon_size = panel_max_icon_size;
-    }
-
-  gp_applet_set_panel_icon_size (applet, panel_icon_size);
-}
-
-static void
-general_settings_changed_cb (GSettings   *settings,
-                             const gchar *key,
-                             GpApplet    *applet)
-{
-  if (key == NULL || g_strcmp0 (key, "enable-tooltips") == 0)
-    update_enable_tooltips (applet);
-
-  if (key == NULL || g_strcmp0 (key, "prefer-symbolic-icons") == 0)
-    update_prefer_symbolic_icons (applet);
-
-  if (key == NULL || g_strcmp0 (key, "menu-icon-size") == 0)
-    update_menu_icon_size (applet);
-
-  if (key == NULL || g_strcmp0 (key, "panel-max-icon-size") == 0)
-    update_panel_icon_size (applet);
-}
-
-static gboolean
-icon_resize_cb (gpointer user_data)
-{
-  GpApplet *self;
-  GpAppletPrivate *priv;
-
-  self = GP_APPLET (user_data);
-  priv = gp_applet_get_instance_private (self);
-
-  update_panel_icon_size (self);
-  priv->icon_resize_id = 0;
-
-  return G_SOURCE_REMOVE;
-}
 
 static gboolean
 initable_init (GInitable     *initable,
@@ -298,14 +174,6 @@ gp_applet_dispose (GObject *object)
   g_clear_object (&priv->action_group);
 
   g_clear_object (&priv->module);
-
-  if (priv->icon_resize_id != 0)
-    {
-      g_source_remove (priv->icon_resize_id);
-      priv->icon_resize_id = 0;
-    }
-
-  g_clear_object (&priv->general_settings);
 
   g_clear_pointer (&priv->about_dialog, gtk_widget_destroy);
 
@@ -537,35 +405,6 @@ gp_applet_get_request_mode (GtkWidget *widget)
   return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
 }
 
-static void
-gp_applet_size_allocate (GtkWidget     *widget,
-                         GtkAllocation *allocation)
-{
-  GpApplet *self;
-  GpAppletPrivate *priv;
-  GtkAllocation old_allocation;
-
-  self = GP_APPLET (widget);
-  priv = gp_applet_get_instance_private (self);
-
-  gtk_widget_get_allocation (widget, &old_allocation);
-
-  GTK_WIDGET_CLASS (gp_applet_parent_class)->size_allocate (widget, allocation);
-
-  if ((priv->orientation == GTK_ORIENTATION_HORIZONTAL &&
-       old_allocation.height != allocation->height) ||
-      (priv->orientation == GTK_ORIENTATION_VERTICAL &&
-       old_allocation.width != allocation->width))
-    {
-      if (priv->icon_resize_id == 0)
-        {
-          priv->icon_resize_id = g_idle_add (icon_resize_cb, self);
-          g_source_set_name_by_id (priv->icon_resize_id,
-                                   "[libgnome-panel] icon_resize_cb");
-        }
-    }
-}
-
 static gboolean
 gp_applet_initial_setup (GpApplet  *self,
                          GVariant  *initial_settings,
@@ -778,7 +617,6 @@ gp_applet_class_init (GpAppletClass *applet_class)
   widget_class->draw = gp_applet_draw;
   widget_class->focus = gp_applet_focus;
   widget_class->get_request_mode = gp_applet_get_request_mode;
-  widget_class->size_allocate = gp_applet_size_allocate;
 
   applet_class->initial_setup = gp_applet_initial_setup;
   applet_class->initable_init = gp_applet_initable_init;
@@ -798,13 +636,6 @@ gp_applet_init (GpApplet *applet)
 
   priv->builder = gtk_builder_new ();
   priv->action_group = g_simple_action_group_new ();
-
-  priv->general_settings = g_settings_new ("org.gnome.gnome-panel.general");
-
-  g_signal_connect (priv->general_settings, "changed",
-                    G_CALLBACK (general_settings_changed_cb), applet);
-
-  general_settings_changed_cb (priv->general_settings, NULL, applet);
 }
 
 /**

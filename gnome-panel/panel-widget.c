@@ -1475,6 +1475,14 @@ get_preferred_size (PanelWidget    *self,
 }
 
 static void
+set_panel_icon_size (AppletInfo *applet,
+                     gpointer    user_data)
+{
+  gp_applet_set_panel_icon_size (panel_applet_get_applet (applet),
+                                 *(guint *) user_data);
+}
+
+static void
 panel_widget_size_allocate (GtkWidget     *widget,
                             GtkAllocation *allocation)
 {
@@ -1656,6 +1664,11 @@ panel_widget_dispose (GObject *obj)
 	panels = g_slist_remove (panels, panel);
 
 	panel_widget_destroy_open_dialogs (panel);
+
+	if (panel->icon_resize_id != 0) {
+		g_source_remove (panel->icon_resize_id);
+		panel->icon_resize_id = 0;
+	}
 
         G_OBJECT_CLASS (panel_widget_parent_class)->dispose (obj);
 }
@@ -2491,6 +2504,22 @@ panel_widget_set_orientation (PanelWidget    *panel_widget,
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
+static gboolean
+icon_resize_cb (gpointer user_data)
+{
+  PanelWidget *self;
+  guint icon_size;
+
+  self = PANEL_WIDGET (user_data);
+  self->icon_resize_id = 0;
+
+  icon_size = panel_widget_get_icon_size (self);
+
+  panel_applet_foreach (self, set_panel_icon_size, &icon_size);
+
+  return G_SOURCE_REMOVE;
+}
+
 void
 panel_widget_set_size (PanelWidget *panel_widget,
 		       int          size)
@@ -2501,6 +2530,12 @@ panel_widget_set_size (PanelWidget *panel_widget,
 		return;
 
 	panel_widget->sz = size;
+
+	if (panel_widget->icon_resize_id == 0) {
+		panel_widget->icon_resize_id = g_idle_add (icon_resize_cb, panel_widget);
+		g_source_set_name_by_id (panel_widget->icon_resize_id,
+		                         "[panel] icon_resize_cb");
+	}
 
 	queue_resize_on_all_applets (panel_widget);
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
@@ -2710,4 +2745,45 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 GSList *panel_widget_get_panels (void)
 {
   return panels;
+}
+
+guint
+panel_widget_get_icon_size (PanelWidget *self)
+{
+  GpApplication *application;
+  GSettings *general_settings;
+  guint panel_max_icon_size;
+  guint spacing;
+  guint panel_size;
+  guint panel_icon_size;
+
+  application = panel_toplevel_get_application (self->toplevel);
+  general_settings = gp_application_get_general_settings (application);
+  panel_max_icon_size = g_settings_get_enum (general_settings,
+                                             "panel-max-icon-size");
+
+  spacing = 4;
+  panel_size = self->sz;
+
+  if (panel_size <= panel_max_icon_size + spacing)
+    {
+      if (panel_size < 22 + spacing)
+        panel_icon_size = 16;
+      else if (panel_size < 24 + spacing)
+        panel_icon_size = 22;
+      else if (panel_size < 32 + spacing)
+        panel_icon_size = 24;
+      else if (panel_size < 48 + spacing)
+        panel_icon_size = 32;
+      else if (panel_size < 64 + spacing)
+        panel_icon_size = 48;
+      else
+        panel_icon_size = 64;
+    }
+  else
+    {
+      panel_icon_size = panel_max_icon_size;
+    }
+
+  return panel_icon_size;
 }

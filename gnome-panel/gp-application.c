@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "applet.h"
 #include "gp-applet-manager.h"
 #include "gp-module-manager.h"
 #include "panel-action-protocol.h"
@@ -28,6 +29,7 @@
 #include "panel-lockdown.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
+#include "panel-widget.h"
 
 typedef struct
 {
@@ -206,6 +208,98 @@ theme_variant_changed_cb (GSettings     *settings,
   update_theme (self);
 }
 
+static void
+set_enable_tooltip (AppletInfo *applet,
+                    gpointer    user_data)
+{
+  gp_applet_set_enable_tooltips (panel_applet_get_applet (applet),
+                                 *(gboolean *) user_data);
+}
+
+static void
+enable_tooltips_cb (GSettings     *settings,
+                    const char    *key,
+                    GpApplication *self)
+{
+  gboolean enable_tooltips;
+
+  enable_tooltips = g_settings_get_boolean (self->general_settings,
+                                            "enable-tooltips");
+
+  panel_applet_foreach (NULL, set_enable_tooltip, &enable_tooltips);
+}
+
+static void
+set_prefer_symbolic_icons (AppletInfo *applet,
+                           gpointer    user_data)
+{
+  gp_applet_set_prefer_symbolic_icons (panel_applet_get_applet (applet),
+                                       *(gboolean *) user_data);
+}
+
+static void
+prefer_symbolic_icons_cb (GSettings     *settings,
+                          const char    *key,
+                          GpApplication *self)
+{
+  gboolean prefer_symbolic_icons;
+
+  prefer_symbolic_icons = g_settings_get_boolean (self->general_settings,
+                                                  "prefer-symbolic-icons");
+
+  panel_applet_foreach (NULL, set_prefer_symbolic_icons, &prefer_symbolic_icons);
+}
+
+static void
+set_menu_icon_size (AppletInfo *applet,
+                    gpointer    user_data)
+{
+  gp_applet_set_menu_icon_size (panel_applet_get_applet (applet),
+                                *(guint *) user_data);
+}
+
+static void
+menu_icon_size_cb (GSettings     *settings,
+                   const char    *key,
+                   GpApplication *self)
+{
+  guint menu_icon_size;
+
+  menu_icon_size = g_settings_get_enum (self->general_settings,
+                                        "menu-icon-size");
+
+  panel_applet_foreach (NULL, set_menu_icon_size, &menu_icon_size);
+}
+
+static void
+set_panel_icon_size (AppletInfo *applet,
+                     gpointer    user_data)
+{
+  gp_applet_set_panel_icon_size (panel_applet_get_applet (applet),
+                                 *(guint *) user_data);
+}
+
+static void
+panel_max_icon_size_cb (GSettings     *settings,
+                        const char    *key,
+                        GpApplication *self)
+{
+  GHashTableIter iter;
+  gpointer value;
+
+  g_hash_table_iter_init (&iter, self->toplevels);
+  while (g_hash_table_iter_next (&iter, NULL, &value))
+    {
+      PanelWidget *panel;
+      guint panel_icon_size;
+
+      panel = panel_toplevel_get_panel_widget (PANEL_TOPLEVEL (value));
+      panel_icon_size = panel_widget_get_icon_size (panel);
+
+      panel_applet_foreach (panel, set_panel_icon_size, &panel_icon_size);
+    }
+}
+
 static gboolean
 initable_init (GInitable     *initable,
                GCancellable  *cancellable,
@@ -278,6 +372,26 @@ gp_application_init (GpApplication *self)
   g_signal_connect (self->general_settings,
                     "changed::theme-variant",
                     G_CALLBACK (theme_variant_changed_cb),
+                    self);
+
+  g_signal_connect (self->general_settings,
+                    "changed::enable-tooltips",
+                    G_CALLBACK (enable_tooltips_cb),
+                    self);
+
+  g_signal_connect (self->general_settings,
+                    "changed::prefer-symbolic-icons",
+                    G_CALLBACK (prefer_symbolic_icons_cb),
+                    self);
+
+  g_signal_connect (self->general_settings,
+                    "changed::menu-icon-size",
+                    G_CALLBACK (menu_icon_size_cb),
+                    self);
+
+  g_signal_connect (self->general_settings,
+                    "changed::panel-max-icon-size",
+                    G_CALLBACK (panel_max_icon_size_cb),
                     self);
 
   self->theme_name_id = g_signal_connect (gtk_settings_get_default (),

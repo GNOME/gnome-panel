@@ -1052,6 +1052,12 @@ applet_setup (GpApplet                   *applet,
   PanelOrientation panel_orientation;
   GtkOrientation orientation;
   GtkPositionType position;
+  GpApplication *application;
+  GSettings *general_settings;
+  gboolean enable_tooltips;
+  gboolean prefer_symbolic_icons;
+  guint menu_icon_size;
+  guint panel_icon_size;
 
   locked_down = panel_applet_frame_activating_get_locked_down (frame_act);
   panel_orientation = panel_applet_frame_activating_get_orientation (frame_act);
@@ -1080,6 +1086,23 @@ applet_setup (GpApplet                   *applet,
   gp_applet_set_locked_down (applet, locked_down);
   gp_applet_set_orientation (applet, orientation);
   gp_applet_set_position (applet, position);
+
+  application = panel_toplevel_get_application (frame_act->panel->toplevel);
+  general_settings = gp_application_get_general_settings (application);
+
+  enable_tooltips = g_settings_get_boolean (general_settings,
+                                            "enable-tooltips");
+  gp_applet_set_enable_tooltips (applet, enable_tooltips);
+
+  prefer_symbolic_icons = g_settings_get_boolean (general_settings,
+                                                  "prefer-symbolic-icons");
+  gp_applet_set_prefer_symbolic_icons (applet, prefer_symbolic_icons);
+
+  menu_icon_size = g_settings_get_enum (general_settings, "menu-icon-size");
+  gp_applet_set_menu_icon_size (applet, menu_icon_size);
+
+  panel_icon_size = panel_widget_get_icon_size (frame_act->panel);
+  gp_applet_set_panel_icon_size (applet, panel_icon_size);
 }
 
 static void
