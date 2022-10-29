@@ -60,13 +60,6 @@ struct _PanelAppletFrame {
 
 GType panel_applet_frame_get_type           (void) G_GNUC_CONST;
 
-void  panel_applet_frame_create             (PanelToplevel       *toplevel,
-					     PanelObjectPackType  pack_type,
-					     int                  pack_index,
-					     const char          *module_id,
-					     const char          *applet_id,
-					     GVariant            *initial_settings);
-
 void  panel_applet_frame_load               (PanelWidget         *panel_widget,
 					     const char          *id,
 					     GSettings           *settings);

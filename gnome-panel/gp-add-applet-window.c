@@ -28,6 +28,7 @@
 #include "libgnome-panel/gp-module-private.h"
 #include "libpanel-util/panel-glib.h"
 #include "panel-applet-frame.h"
+#include "panel-layout.h"
 
 struct _GpAddAppletWindow
 {
@@ -185,6 +186,7 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
                          gpointer              user_data)
 {
   InitialSetupData *data;
+  GpApplication *application;
   GVariant *initial_settings;
 
   if (canceled)
@@ -192,14 +194,16 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
 
   data = (InitialSetupData *) user_data;
 
+  application = panel_toplevel_get_application (data->toplevel);
   initial_settings = gp_initial_setup_dialog_get_settings (dialog);
 
-  panel_applet_frame_create (data->toplevel,
-                             data->pack_type,
-                             data->pack_index,
-                             data->module_id,
-                             data->applet_id,
-                             initial_settings);
+  panel_layout_object_create (gp_application_get_layout (application),
+                              data->module_id,
+                              data->applet_id,
+                              panel_toplevel_get_id (data->toplevel),
+                              data->pack_type,
+                              data->pack_index,
+                              initial_settings);
 
   g_variant_unref (initial_settings);
 }
@@ -245,12 +249,13 @@ row_activated_cb (GtkListBox        *box,
                                                    initial_setup_data_free))
     return;
 
-  panel_applet_frame_create (self->toplevel,
-                             pack_type,
-                             pack_index,
-                             module_id,
-                             applet_id,
-                             NULL);
+  panel_layout_object_create (gp_application_get_layout (application),
+                              module_id,
+                              applet_id,
+                              panel_toplevel_get_id (self->toplevel),
+                              pack_type,
+                              pack_index,
+                              NULL);
 }
 
 static GtkWidget *

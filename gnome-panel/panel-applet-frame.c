@@ -1187,26 +1187,3 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 	g_free (module_id);
 	g_free (applet_id);
 }
-
-void
-panel_applet_frame_create (PanelToplevel       *toplevel,
-			   PanelObjectPackType  pack_type,
-			   int                  pack_index,
-			   const char          *module_id,
-			   const char          *applet_id,
-			   GVariant            *initial_settings)
-{
-  GpApplication *application;
-  PanelLayout *layout;
-
-  application = panel_toplevel_get_application (toplevel);
-  layout = gp_application_get_layout (application);
-
-  panel_layout_object_create (layout,
-                              module_id,
-                              applet_id,
-                              panel_toplevel_get_id (toplevel),
-                              pack_type,
-                              pack_index,
-                              initial_settings);
-}

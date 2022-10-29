@@ -408,6 +408,7 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
                          gpointer              user_data)
 {
   InitialSetupData *data;
+  GpApplication *application;
   GVariant *initial_settings;
 
   data = (InitialSetupData *) user_data;
@@ -415,14 +416,16 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
   if (canceled)
     return;
 
+  application = panel_toplevel_get_application (data->panel->toplevel);
   initial_settings = gp_initial_setup_dialog_get_settings (dialog);
 
-  panel_applet_frame_create (data->panel->toplevel,
-                             data->pack_type,
-                             data->pack_index,
-                             data->module_id,
-                             data->applet_id,
-                             initial_settings);
+  panel_layout_object_create (gp_application_get_layout (application),
+                              data->module_id,
+                              data->applet_id,
+                              panel_toplevel_get_id (data->panel->toplevel),
+                              data->pack_type,
+                              data->pack_index,
+                              initial_settings);
 
   g_variant_unref (initial_settings);
 }
@@ -496,9 +499,12 @@ create_launcher_from_info (PanelToplevel       *toplevel,
                            const char          *comment,
                            const char          *icon)
 {
+  GpApplication *application;
   GVariantBuilder builder;
   GVariant *variant;
   GVariant *settings;
+
+  application = panel_toplevel_get_application (toplevel);
 
   g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 
@@ -528,12 +534,13 @@ create_launcher_from_info (PanelToplevel       *toplevel,
   settings = g_variant_builder_end (&builder);
   g_variant_ref_sink (settings);
 
-  panel_applet_frame_create (toplevel,
-                             pack_type,
-                             pack_index,
-                             "org.gnome.gnome-panel.launcher",
-                             "launcher",
-                             settings);
+  panel_layout_object_create (gp_application_get_layout (application),
+                              "org.gnome.gnome-panel.launcher",
+                              "launcher",
+                              panel_toplevel_get_id (toplevel),
+                              pack_type,
+                              pack_index,
+                              settings);
 
   g_variant_unref (settings);
 }
@@ -549,6 +556,7 @@ create_launcher_from_uri (PanelToplevel       *toplevel,
   GVariantBuilder builder;
   GVariant *variant;
   GVariant *settings;
+  GpApplication *application;
 
   g_return_if_fail (location != NULL);
 
@@ -577,12 +585,15 @@ create_launcher_from_uri (PanelToplevel       *toplevel,
   settings = g_variant_builder_end (&builder);
   g_variant_ref_sink (settings);
 
-  panel_applet_frame_create (toplevel,
-                             pack_type,
-                             pack_index,
-                             "org.gnome.gnome-panel.launcher",
-                             "launcher",
-                             settings);
+  application = panel_toplevel_get_application (toplevel);
+
+  panel_layout_object_create (gp_application_get_layout (application),
+                              "org.gnome.gnome-panel.launcher",
+                              "launcher",
+                              panel_toplevel_get_id (toplevel),
+                              pack_type,
+                              pack_index,
+                              settings);
 
   g_variant_unref (settings);
 }
@@ -724,12 +735,13 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 		                                       "org.gnome.gnome-applets",
 		                                       "trash",
 		                                       NULL) != NULL) {
-			panel_applet_frame_create (panel->toplevel,
-			                           pack_type,
-			                           pack_index,
-			                           "org.gnome.gnome-applets",
-			                           "trash",
-			                           NULL);
+			panel_layout_object_create (gp_application_get_layout (application),
+			                            "org.gnome.gnome-applets",
+			                            "trash",
+			                            panel_toplevel_get_id (panel->toplevel),
+			                            pack_type,
+			                            pack_index,
+			                            NULL);
 		}
 	} else if (strncmp (basename, "home", strlen ("home")) == 0) {
 		char  *name;
@@ -1111,11 +1123,13 @@ panel_receive_dnd_data (PanelWidget         *panel,
 {
 	GpApplication *application;
 	PanelLockdown *lockdown;
+	PanelLayout *layout;
 	const guchar *data;
 	gboolean      success = FALSE;
 
 	application = panel_toplevel_get_application (panel->toplevel);
 	lockdown = gp_application_get_lockdown (application);
+	layout = gp_application_get_layout (application);
 
 	if (panel_lockdown_get_panels_locked_down (lockdown)) {
 		gtk_drag_finish (context, FALSE, FALSE, time_);
@@ -1149,7 +1163,7 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			gtk_drag_finish (context, FALSE, FALSE, time_);
 			return;
 		}
-		if (panel_layout_is_writable (get_layout (panel->toplevel))) {
+		if (panel_layout_is_writable (layout)) {
 			const char *iid;
 			const char *applet_id;
 			char *module_id;
@@ -1177,12 +1191,13 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			                                                  initial_setup_dialog_cb,
 			                                                  initial_setup_data,
 			                                                  initial_setup_data_free)) {
-				panel_applet_frame_create (panel->toplevel,
-				                           pack_type,
-				                           pack_index,
-				                           module_id,
-				                           applet_id,
-				                           NULL);
+				panel_layout_object_create (layout,
+				                            module_id,
+				                            applet_id,
+				                            panel_toplevel_get_id (panel->toplevel),
+				                            pack_type,
+				                            pack_index,
+				                            NULL);
 			}
 
 			success = TRUE;
