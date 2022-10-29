@@ -351,17 +351,28 @@ panel_lockdown_new (void)
 
 gboolean
 panel_lockdown_is_applet_disabled (PanelLockdown *lockdown,
-                                   const char    *iid)
+                                   const char    *module_id,
+                                   const char    *applet_id)
 {
+        char *iid;
+        gboolean disabled;
         int i;
 
         g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
 
-        for (i = 0; lockdown->priv->disabled_applets[i] != NULL; i++)
-                if (g_strcmp0 (lockdown->priv->disabled_applets[i], iid) == 0)
-                        return TRUE;
+        iid = g_strdup_printf ("%s::%s", module_id, applet_id);
+        disabled = FALSE;
 
-        return FALSE;
+        for (i = 0; lockdown->priv->disabled_applets[i] != NULL; i++) {
+                if (g_strcmp0 (lockdown->priv->disabled_applets[i], iid) == 0) {
+                        disabled = TRUE;
+                        break;
+                }
+        }
+
+        g_free (iid);
+
+        return disabled;
 }
 
 gboolean
@@ -457,13 +468,16 @@ panel_lockdown_on_notify (PanelLockdown       *lockdown,
 
 GpLockdownFlags
 panel_lockdown_get_flags (PanelLockdown *lockdown,
-                          const char    *iid)
+                          const char    *module_id,
+                          const char    *applet_id)
 {
+        char *iid;
         GpLockdownFlags flags;
         int i;
 
         g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), GP_LOCKDOWN_FLAGS_NONE);
 
+        iid = g_strdup_printf ("%s::%s", module_id, applet_id);
         flags = GP_LOCKDOWN_FLAGS_NONE;
 
         for (i = 0; lockdown->priv->disabled_applets[i] != NULL; i++) {
@@ -472,6 +486,8 @@ panel_lockdown_get_flags (PanelLockdown *lockdown,
                         break;
                 }
         }
+
+        g_free (iid);
 
         if (lockdown->priv->disable_force_quit)
                 flags |= GP_LOCKDOWN_FLAGS_FORCE_QUIT;

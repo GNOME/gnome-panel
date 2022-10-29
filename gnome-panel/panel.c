@@ -365,14 +365,16 @@ typedef struct
 
   PanelObjectPackType  pack_type;
   int                  pack_index;
-  char                *iid;
+  char                *module_id;
+  char                *applet_id;
 } InitialSetupData;
 
 static InitialSetupData *
 initial_setup_data_new (PanelWidget         *panel,
                         PanelObjectPackType  pack_type,
                         int                  pack_index,
-                        const gchar         *iid)
+                        const gchar         *module_id,
+                        const gchar         *applet_id)
 {
   InitialSetupData *data;
 
@@ -382,7 +384,8 @@ initial_setup_data_new (PanelWidget         *panel,
 
   data->pack_type = pack_type;
   data->pack_index = pack_index;
-  data->iid = g_strdup (iid);
+  data->module_id = g_strdup (module_id);
+  data->applet_id = g_strdup (applet_id);
 
   return data;
 }
@@ -394,7 +397,8 @@ initial_setup_data_free (gpointer user_data)
 
   data = (InitialSetupData *) user_data;
 
-  g_free (data->iid);
+  g_free (data->module_id);
+  g_free (data->applet_id);
   g_free (data);
 }
 
@@ -416,7 +420,8 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
   panel_applet_frame_create (data->panel->toplevel,
                              data->pack_type,
                              data->pack_index,
-                             data->iid,
+                             data->module_id,
+                             data->applet_id,
                              initial_settings);
 
   g_variant_unref (initial_settings);
@@ -431,7 +436,8 @@ ask_about_custom_launcher (const char          *file,
   PanelLockdown *lockdown;
   GpAppletManager *applet_manager;
   int pack_index;
-  const char *iid;
+  const char *module_id;
+  const char *applet_id;
   InitialSetupData *initial_setup_data;
   GVariantBuilder builder;
   GVariant *variant;
@@ -445,9 +451,14 @@ ask_about_custom_launcher (const char          *file,
 
   applet_manager = gp_application_get_applet_manager (application);
 
-  iid = "org.gnome.gnome-panel.launcher::custom-launcher";
+  module_id = "org.gnome.gnome-panel.launcher";
+  applet_id = "custom-launcher";
   pack_index = panel_widget_get_new_pack_index (panel, pack_type);
-  initial_setup_data = initial_setup_data_new (panel, pack_type, pack_index, iid);
+  initial_setup_data = initial_setup_data_new (panel,
+                                               pack_type,
+                                               pack_index,
+                                               module_id,
+                                               applet_id);
 
   g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 
@@ -464,7 +475,8 @@ ask_about_custom_launcher (const char          *file,
   g_variant_ref_sink (settings);
 
   gp_applet_manager_open_initial_setup_dialog (applet_manager,
-                                               iid,
+                                               module_id,
+                                               applet_id,
                                                settings,
                                                NULL,
                                                initial_setup_dialog_cb,
@@ -519,7 +531,8 @@ create_launcher_from_info (PanelToplevel       *toplevel,
   panel_applet_frame_create (toplevel,
                              pack_type,
                              pack_index,
-                             "org.gnome.gnome-panel.launcher::launcher",
+                             "org.gnome.gnome-panel.launcher",
+                             "launcher",
                              settings);
 
   g_variant_unref (settings);
@@ -567,7 +580,8 @@ create_launcher_from_uri (PanelToplevel       *toplevel,
   panel_applet_frame_create (toplevel,
                              pack_type,
                              pack_index,
-                             "org.gnome.gnome-panel.launcher::launcher",
+                             "org.gnome.gnome-panel.launcher",
+                             "launcher",
                              settings);
 
   g_variant_unref (settings);
@@ -699,10 +713,25 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 	success = TRUE;
 	basename = uri + strlen ("x-nautilus-desktop:///");
 
-	if (strncmp (basename, "trash", strlen ("trash")) == 0)
-		panel_applet_frame_create (panel->toplevel, pack_type, pack_index,
-		                           "OAFIID:GNOME_Panel_TrashApplet", NULL);
-	else if (strncmp (basename, "home", strlen ("home")) == 0) {
+	if (strncmp (basename, "trash", strlen ("trash")) == 0) {
+		GpApplication *application;
+		GpAppletManager *applet_manager;
+
+		application = panel_toplevel_get_application (panel->toplevel);
+		applet_manager = gp_application_get_applet_manager (application);
+
+		if (gp_applet_manager_get_applet_info (applet_manager,
+		                                       "org.gnome.gnome-applets",
+		                                       "trash",
+		                                       NULL) != NULL) {
+			panel_applet_frame_create (panel->toplevel,
+			                           pack_type,
+			                           pack_index,
+			                           "org.gnome.gnome-applets",
+			                           "trash",
+			                           NULL);
+		}
+	} else if (strncmp (basename, "home", strlen ("home")) == 0) {
 		char  *name;
 		char  *uri_tmp;
 		GFile *file;
@@ -1121,25 +1150,39 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			return;
 		}
 		if (panel_layout_is_writable (get_layout (panel->toplevel))) {
+			const char *iid;
+			const char *applet_id;
+			char *module_id;
 			GpAppletManager *applet_manager;
 			InitialSetupData *initial_setup_data;
+
+			iid = (char *) data;
+			applet_id = g_strrstr (iid, "::");
+			module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
+			applet_id += 2;
 
 			applet_manager = gp_application_get_applet_manager (application);
 
 			initial_setup_data = initial_setup_data_new (panel,
-			                                             pack_type, pack_index,
-			                                             (char *) data);
+			                                             pack_type,
+			                                             pack_index,
+			                                             module_id,
+			                                             applet_id);
 
 			if (!gp_applet_manager_open_initial_setup_dialog (applet_manager,
-			                                                  (char *) data,
+			                                                  module_id,
+			                                                  applet_id,
 			                                                  NULL,
 			                                                  NULL,
 			                                                  initial_setup_dialog_cb,
 			                                                  initial_setup_data,
 			                                                  initial_setup_data_free)) {
 				panel_applet_frame_create (panel->toplevel,
-				                           pack_type, pack_index,
-				                           (char *) data, NULL);
+				                           pack_type,
+				                           pack_index,
+				                           module_id,
+				                           applet_id,
+				                           NULL);
 			}
 
 			success = TRUE;

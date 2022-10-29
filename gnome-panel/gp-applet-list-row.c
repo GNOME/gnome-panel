@@ -34,8 +34,6 @@ struct _GpAppletListRow
 
     AppletInfo    *info;
 
-    char          *iid;
-
     GtkWidget     *event_box;
 
     GtkWidget     *about_dialog;
@@ -157,7 +155,10 @@ lockdown_changed_cb (PanelLockdown *lockdown,
 
   if (!panel_layout_is_writable (layout) ||
       panel_lockdown_get_panels_locked_down (lockdown) ||
-      gp_applet_manager_is_applet_disabled (applet_manager, self->iid, NULL))
+      gp_applet_manager_is_applet_disabled (applet_manager,
+                                            gp_module_get_id (self->module),
+                                            self->applet_id,
+                                            NULL))
     {
       gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
       return;
@@ -212,10 +213,6 @@ setup_row (GpAppletListRow *self)
 
   error = NULL;
   info = gp_module_get_applet_info (self->module, self->applet_id, &error);
-
-  self->iid = g_strdup_printf ("%s::%s",
-                               gp_module_get_id (self->module),
-                               self->applet_id);
 
   self->event_box = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (self), self->event_box);

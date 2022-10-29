@@ -214,7 +214,10 @@ lockdown_changed_cb (PanelLockdown *lockdown,
 
   if (!panel_layout_is_writable (layout) ||
       panel_lockdown_get_panels_locked_down (lockdown) ||
-      gp_applet_manager_is_applet_disabled (applet_manager, self->iid, NULL))
+      gp_applet_manager_is_applet_disabled (applet_manager,
+                                            gp_module_get_id (self->module),
+                                            self->applet_id,
+                                            NULL))
     {
       gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
       gtk_drag_source_unset (self->event_box);
@@ -346,6 +349,7 @@ gp_applet_row_finalize (GObject *object)
   self = GP_APPLET_ROW (object);
 
   g_clear_pointer (&self->applet_id, g_free);
+  g_clear_pointer (&self->iid, g_free);
 
   G_OBJECT_CLASS (gp_applet_row_parent_class)->finalize (object);
 }
@@ -455,7 +459,13 @@ gp_applet_row_get_info (GpAppletRow *self)
 }
 
 const char *
-gp_applet_row_get_iid (GpAppletRow *self)
+gp_applet_row_get_module_id (GpAppletRow *self)
 {
-  return self->iid;
+  return gp_module_get_id (self->module);
+}
+
+const char *
+gp_applet_row_get_applet_id (GpAppletRow *self)
+{
+  return self->applet_id;
 }

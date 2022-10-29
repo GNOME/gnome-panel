@@ -334,18 +334,6 @@ setup_theme_bindings (GpPropertiesDialog *dialog)
   bg_image_changed_cb (dialog->theme, "bg-image", dialog);
 }
 
-static char *
-get_applet_iid (AppletInfo *info)
-{
-  return g_settings_get_string (info->settings, PANEL_OBJECT_IID_KEY);
-}
-
-static char *
-get_applet_id (AppletInfo *info)
-{
-  return g_strrstr (get_applet_iid(info), "::") + 2;
-}
-
 static PanelObjectPackType
 get_applet_pack_type (AppletInfo *info)
 {
@@ -356,27 +344,6 @@ static int
 get_applet_pack_index (AppletInfo *info)
 {
   return g_settings_get_int (info->settings, PANEL_OBJECT_PACK_INDEX_KEY);
-}
-
-static GpModule *
-get_module_from_id (GpModuleManager *manager,
-                    char            *iid)
-{
-  const gchar *applet_id;
-  gchar *module_id;
-  GpModule *module;
-
-  applet_id = g_strrstr (iid, "::");
-
-  if (!applet_id)
-    return FALSE;
-
-  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-
-  module = gp_module_manager_get_module (manager, module_id, NULL);
-  g_free (module_id);
-
-  return module;
 }
 
 static void
@@ -499,7 +466,8 @@ setup_applet_box_add_applets (GpPropertiesDialog *dialog,
       AppletInfo *info;
       GtkWidget *applet_entry;
       const char * applet_toplevel_id;
-      const char * applet_id;
+      char *module_id;
+      char *applet_id;
 
       info = iter->data;
 
@@ -508,12 +476,16 @@ setup_applet_box_add_applets (GpPropertiesDialog *dialog,
       if (g_strcmp0 (applet_toplevel_id, dialog->toplevel_id) != 0)
         continue;
 
-      module = get_module_from_id (manager, get_applet_iid (info));
-      applet_id = get_applet_id (info);
+      module_id = g_settings_get_string (info->settings, PANEL_OBJECT_MODULE_ID_KEY);
+      applet_id = g_settings_get_string (info->settings, PANEL_OBJECT_APPLET_ID_KEY);
 
+      module = gp_module_manager_get_module (manager, module_id, NULL);
       applet_entry = gp_applet_list_row_new (module, applet_id, info);
 
       insert_applet_entry (dialog, info, applet_entry);
+
+      g_free (module_id);
+      g_free (applet_id);
     }
 
   gtk_widget_show_all (dialog->applet_box);

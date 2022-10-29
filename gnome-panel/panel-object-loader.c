@@ -141,18 +141,6 @@ panel_object_loader_stop_loading (GpApplication *application,
 }
 
 static gboolean
-is_valid_iid (const char *iid)
-{
-        const char *instance_id;
-
-        instance_id = g_strrstr (iid, "::");
-        if (!instance_id)
-                return FALSE;
-
-        return TRUE;
-}
-
-static gboolean
 panel_object_loader_idle_handler (gpointer data)
 {
         GpApplication *application;
@@ -160,7 +148,6 @@ panel_object_loader_idle_handler (gpointer data)
         PanelToplevel     *toplevel = NULL;
         PanelWidget       *panel_widget;
         GSList            *l;
-        char              *iid = NULL;
 
         application = GP_APPLICATION (data);
 
@@ -199,18 +186,6 @@ panel_object_loader_idle_handler (gpointer data)
         panel_objects_loading = g_slist_append (panel_objects_loading, object);
 
         panel_widget = panel_toplevel_get_panel_widget (toplevel);
-
-        iid = g_settings_get_string (object->settings, PANEL_OBJECT_IID_KEY);
-
-        if (!is_valid_iid (iid)) {
-                g_printerr ("Object '%s' has an invalid iid ('%s')\n",
-                            object->id, iid);
-                panel_object_loader_stop_loading (application, object->id);
-                g_free (iid);
-                return TRUE;
-        }
-
-        g_free (iid);
 
         panel_applet_frame_load (panel_widget, object->id, object->settings);
 

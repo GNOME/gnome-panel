@@ -102,6 +102,8 @@ static PanelLayoutKeyDefinition panel_layout_toplevel_keys[] = {
 
 static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
         { PANEL_OBJECT_IID_KEY,         G_TYPE_STRING   },
+        { PANEL_OBJECT_MODULE_ID_KEY,   G_TYPE_STRING   },
+        { PANEL_OBJECT_APPLET_ID_KEY,   G_TYPE_STRING   },
         { PANEL_OBJECT_TOPLEVEL_ID_KEY, G_TYPE_STRING   },
         { PANEL_OBJECT_PACK_TYPE_KEY,   G_TYPE_STRING   },
         { PANEL_OBJECT_PACK_INDEX_KEY,  G_TYPE_INT      }
@@ -671,7 +673,8 @@ panel_layout_toplevel_create (PanelLayout *self,
 
 void
 panel_layout_object_create (PanelLayout         *self,
-                            const char          *iid,
+                            const char          *module_id,
+                            const char          *applet_id,
                             const char          *toplevel_id,
                             PanelObjectPackType  pack_type,
                             int                  pack_index,
@@ -679,8 +682,12 @@ panel_layout_object_create (PanelLayout         *self,
 {
         char *id;
 
-        id = panel_layout_object_create_start (self, iid,
-                                               toplevel_id, pack_type, pack_index,
+        id = panel_layout_object_create_start (self,
+                                               module_id,
+                                               applet_id,
+                                               toplevel_id,
+                                               pack_type,
+                                               pack_index,
                                                initial_settings);
 
         if (!id)
@@ -691,39 +698,12 @@ panel_layout_object_create (PanelLayout         *self,
         g_free (id);
 }
 
-static char *
-panel_layout_object_generate_id (const char *iid)
-{
-        GString    *generated_id;
-        const char *applet;
-        char        old;
 
-        applet = g_strrstr (iid, "::");
-
-        if (applet == NULL)
-                return NULL;
-
-        generated_id = g_string_new ("");
-        applet += 2;
-        old = applet[0];
-
-        while (applet[0] != '\0') {
-                if (g_ascii_isupper (applet[0]) && old != ':' && g_ascii_islower (applet[1]) && generated_id->len != 0) {
-                        g_string_append_printf (generated_id, "-%c", g_ascii_tolower (applet[0]));
-                } else {
-                        g_string_append_c (generated_id, applet[0] != ':' ? g_ascii_tolower (applet[0]) : '-');
-                }
-
-                old = applet[0];
-                applet += 1;
-        }
-
-        return g_string_free (generated_id, FALSE);
-}
 
 char *
 panel_layout_object_create_start (PanelLayout          *self,
-                                  const char           *iid,
+                                  const char           *module_id,
+                                  const char           *applet_id,
                                   const char           *toplevel_id,
                                   PanelObjectPackType   pack_type,
                                   int                   pack_index,
@@ -732,25 +712,26 @@ panel_layout_object_create_start (PanelLayout          *self,
         char      *unique_id;
         char      *path;
         GSettings *settings_object;
-        char      *try_id;
 
-        if (!iid)
+        if (module_id == NULL || applet_id == NULL)
                 return NULL;
 
-        try_id = panel_layout_object_generate_id (iid);
         unique_id = panel_layout_find_free_id (self,
                                                PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                                PANEL_OBJECT_SCHEMA,
                                                PANEL_LAYOUT_OBJECT_PATH,
-                                               try_id);
+                                               applet_id);
 
         path = g_strdup_printf ("%s%s/", PANEL_LAYOUT_OBJECT_PATH, unique_id);
         settings_object = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
         g_free (path);
 
         g_settings_set_string (settings_object,
-                               PANEL_OBJECT_IID_KEY,
-                               iid);
+                               PANEL_OBJECT_MODULE_ID_KEY,
+                               module_id);
+        g_settings_set_string (settings_object,
+                               PANEL_OBJECT_APPLET_ID_KEY,
+                               applet_id);
         g_settings_set_string (settings_object,
                                PANEL_OBJECT_TOPLEVEL_ID_KEY,
                                toplevel_id);
@@ -771,8 +752,6 @@ panel_layout_object_create_start (PanelLayout          *self,
                 g_settings_set_value (tmp, "settings", initial_settings);
                 g_object_unref (tmp);
         }
-
-        g_free (try_id);
 
         g_object_unref (settings_object);
 

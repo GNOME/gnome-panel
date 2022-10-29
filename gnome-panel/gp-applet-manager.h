@@ -32,11 +32,13 @@ G_DECLARE_FINAL_TYPE (GpAppletManager, gp_applet_manager,
 GpAppletManager *gp_applet_manager_new                       (GpApplication               *application);
 
 GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
-                                                              const char                  *iid,
+                                                              const char                  *module_id,
+                                                              const char                  *applet_id,
                                                               GError                     **error);
 
 GpApplet        *gp_applet_manager_load_applet               (GpAppletManager             *self,
-                                                              const char                  *iid,
+                                                              const char                  *module_id,
+                                                              const char                  *applet_id,
                                                               const char                  *settings_path,
                                                               GVariant                    *initial_settings,
                                                               GError                     **error);
@@ -45,7 +47,8 @@ char            *gp_applet_manager_get_new_iid               (GpAppletManager   
                                                               const char                  *old_iid);
 
 gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager             *self,
-                                                              const char                  *iid,
+                                                              const char                  *module_id,
+                                                              const char                  *applet_id,
                                                               GVariant                    *settings,
                                                               GtkWindow                   *parent,
                                                               GpInitialSetupCallback       callback,
@@ -53,7 +56,8 @@ gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager   
                                                               GDestroyNotify               free_func);
 
 gboolean         gp_applet_manager_is_applet_disabled        (GpAppletManager             *self,
-                                                              const char                  *iid,
+                                                              const char                  *module_id,
+                                                              const char                  *applet_id,
                                                               char                       **reason);
 
 G_END_DECLS

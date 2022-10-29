@@ -35,7 +35,8 @@ struct _GpErrorApplet
   GtkWidget     *button;
   GtkWidget     *image;
 
-  char          *iid;
+  char          *module_id;
+  char          *applet_id;
   GError        *error;
   GpApplication *application;
 
@@ -121,8 +122,10 @@ clicked_cb (GtkButton     *button,
 
   delete_text = _("Do you want to delete the applet from your configuration?");
   secondary_text = g_strdup_printf (_("The panel encountered a problem while "
-                                      "loading “<b>%s</b>”! %s"),
-                                   self->iid,
+                                      "loading “<b>%s</b>” applet from "
+                                      "“<b>%s</b>” module! %s"),
+                                   self->applet_id,
+                                   self->module_id,
                                    !locked_down ? delete_text : "");
 
   g_object_set (self->dialog,
@@ -227,7 +230,8 @@ gp_error_applet_finalize (GObject *object)
 
   g_clear_pointer (&self->dialog, gtk_widget_destroy);
   g_clear_pointer (&self->error, g_error_free);
-  g_clear_pointer (&self->iid, g_free);
+  g_clear_pointer (&self->module_id, g_free);
+  g_clear_pointer (&self->applet_id, g_free);
 
   G_OBJECT_CLASS (gp_error_applet_parent_class)->finalize (object);
 }
@@ -296,7 +300,8 @@ gp_error_applet_init (GpErrorApplet *self)
 }
 
 GpErrorApplet *
-gp_error_applet_new (const char    *iid,
+gp_error_applet_new (const char    *module_id,
+                     const char    *applet_id,
                      GError        *error,
                      GpApplication *application)
 {
@@ -307,7 +312,8 @@ gp_error_applet_new (const char    *iid,
                          "gettext-domain", GETTEXT_PACKAGE,
                          NULL);
 
-  self->iid = g_strdup (iid);
+  self->module_id = g_strdup (module_id);
+  self->applet_id = g_strdup (applet_id);
   self->error = g_error_copy (error);
   self->application = application;
 

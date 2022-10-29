@@ -42,6 +42,8 @@
 
 #define PANEL_OBJECT_SCHEMA             "org.gnome.gnome-panel.object"
 #define PANEL_OBJECT_IID_KEY            "object-iid"
+#define PANEL_OBJECT_MODULE_ID_KEY      "module-id"
+#define PANEL_OBJECT_APPLET_ID_KEY      "applet-id"
 #define PANEL_OBJECT_TOPLEVEL_ID_KEY    "toplevel-id"
 #define PANEL_OBJECT_PACK_TYPE_KEY      "pack-type"
 #define PANEL_OBJECT_PACK_INDEX_KEY     "pack-index"

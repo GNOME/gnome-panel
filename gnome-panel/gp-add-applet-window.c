@@ -143,14 +143,16 @@ typedef struct
   PanelToplevel       *toplevel;
   PanelObjectPackType  pack_type;
   int                  pack_index;
-  char                *iid;
+  char                *module_id;
+  char                *applet_id;
 } InitialSetupData;
 
 static InitialSetupData *
 initial_setup_data_new (PanelToplevel       *toplevel,
                         PanelObjectPackType  pack_type,
                         int                  pack_index,
-                        const char          *iid)
+                        const char          *module_id,
+                        const char          *applet_id)
 {
   InitialSetupData *data;
 
@@ -159,7 +161,8 @@ initial_setup_data_new (PanelToplevel       *toplevel,
   data->toplevel = toplevel;
   data->pack_type = pack_type;
   data->pack_index = pack_index;
-  data->iid = g_strdup (iid);
+  data->module_id = g_strdup (module_id);
+  data->applet_id = g_strdup (applet_id);
 
   return data;
 }
@@ -171,7 +174,8 @@ initial_setup_data_free (gpointer user_data)
 
   data = (InitialSetupData *) user_data;
 
-  g_free (data->iid);
+  g_free (data->module_id);
+  g_free (data->applet_id);
   g_free (data);
 }
 
@@ -193,7 +197,8 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
   panel_applet_frame_create (data->toplevel,
                              data->pack_type,
                              data->pack_index,
-                             data->iid,
+                             data->module_id,
+                             data->applet_id,
                              initial_settings);
 
   g_variant_unref (initial_settings);
@@ -206,7 +211,8 @@ row_activated_cb (GtkListBox        *box,
 {
   GpApplication *application;
   GpAppletManager *applet_manager;
-  const char *iid;
+  const char *module_id;
+  const char *applet_id;
   PanelWidget *panel;
   PanelObjectPackType pack_type;
   int pack_index;
@@ -215,17 +221,23 @@ row_activated_cb (GtkListBox        *box,
   application = panel_toplevel_get_application (self->toplevel);
   applet_manager = gp_application_get_applet_manager (application);
 
-  iid = gp_applet_row_get_iid (GP_APPLET_ROW (row));
+  module_id = gp_applet_row_get_module_id (GP_APPLET_ROW (row));
+  applet_id = gp_applet_row_get_applet_id (GP_APPLET_ROW (row));
 
   pack_type = PANEL_OBJECT_PACK_START;
 
   panel = panel_toplevel_get_panel_widget (self->toplevel);
   pack_index = panel_widget_get_new_pack_index (panel, pack_type);
 
-  data = initial_setup_data_new (self->toplevel, pack_type, pack_index, iid);
+  data = initial_setup_data_new (self->toplevel,
+                                 pack_type,
+                                 pack_index,
+                                 module_id,
+                                 applet_id);
 
   if (gp_applet_manager_open_initial_setup_dialog (applet_manager,
-                                                   iid,
+                                                   module_id,
+                                                   applet_id,
                                                    NULL,
                                                    GTK_WINDOW (self),
                                                    initial_setup_dialog_cb,
@@ -233,7 +245,12 @@ row_activated_cb (GtkListBox        *box,
                                                    initial_setup_data_free))
     return;
 
-  panel_applet_frame_create (self->toplevel, pack_type, pack_index, iid, NULL);
+  panel_applet_frame_create (self->toplevel,
+                             pack_type,
+                             pack_index,
+                             module_id,
+                             applet_id,
+                             NULL);
 }
 
 static GtkWidget *

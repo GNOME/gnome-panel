@@ -107,70 +107,34 @@ gp_applet_manager_new (GpApplication *application)
 
 GpAppletInfo *
 gp_applet_manager_get_applet_info (GpAppletManager  *self,
-                                   const char       *iid,
+                                   const char       *module_id,
+                                   const char       *applet_id,
                                    GError          **error)
 {
-  const char *applet_id;
-  char *module_id;
   GpModule *module;
 
-  applet_id = g_strrstr (iid, "::");
-  if (!applet_id)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   G_IO_ERROR_INVALID_ARGUMENT,
-                   "%s is not valid iid",
-                   iid);
-
-      return NULL;
-    }
-
-  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
   module = gp_module_manager_get_module (self->manager, module_id, error);
-  g_free (module_id);
 
   if (module == NULL)
     return NULL;
-
-  applet_id += 2;
 
   return gp_module_get_applet_info (module, applet_id, error);
 }
 
 GpApplet *
 gp_applet_manager_load_applet (GpAppletManager  *self,
-                               const char       *iid,
+                               const char       *module_id,
+                               const char       *applet_id,
                                const char       *settings_path,
                                GVariant         *initial_settings,
                                GError          **error)
 {
-  const gchar *applet_id;
-  gchar *module_id;
   GpModule *module;
 
-  g_return_val_if_fail (iid != NULL, FALSE);
-
-  applet_id = g_strrstr (iid, "::");
-  if (!applet_id)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   G_IO_ERROR_INVALID_ARGUMENT,
-                   "%s is not valid iid",
-                   iid);
-
-      return NULL;
-    }
-
-  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
   module = gp_module_manager_get_module (self->manager, module_id, error);
-  g_free (module_id);
 
   if (!module)
     return NULL;
-
-  applet_id += 2;
 
   return gp_module_applet_new (module,
                                applet_id,
@@ -212,33 +176,19 @@ gp_applet_manager_get_new_iid (GpAppletManager *self,
 
 gboolean
 gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
-                                             const char             *iid,
+                                             const char             *module_id,
+                                             const char             *applet_id,
                                              GVariant               *settings,
                                              GtkWindow              *parent,
                                              GpInitialSetupCallback  callback,
                                              gpointer                user_data,
                                              GDestroyNotify          free_func)
 {
-  const gchar *applet_id;
-  gchar *module_id;
   GpModule *module;
   GpAppletInfo *info;
   GpInitialSetupDialog *dialog;
 
-  g_return_val_if_fail (iid != NULL, FALSE);
-
-  applet_id = g_strrstr (iid, "::");
-  if (!applet_id)
-    {
-      if (free_func != NULL)
-        free_func (user_data);
-
-      return FALSE;
-    }
-
-  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
   module = gp_module_manager_get_module (self->manager, module_id, NULL);
-  g_free (module_id);
 
   if (!module)
     {
@@ -248,7 +198,6 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
       return FALSE;
     }
 
-  applet_id += 2;
   info = gp_module_get_applet_info (module, applet_id, NULL);
 
   if (!info || !info->initial_setup_dialog_func)
@@ -284,21 +233,19 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
 
 gboolean
 gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
-                                      const char       *iid,
+                                      const char       *module_id,
+                                      const char       *applet_id,
                                       char            **reason)
 {
   PanelLockdown *lockdown;
-  const char *applet_id;
-  char *module_id;
   GpModule *module;
   GpLockdownFlags lockdowns;
 
-  g_return_val_if_fail (iid != NULL, FALSE);
   g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
 
   lockdown = gp_application_get_lockdown (self->application);
 
-  if (panel_lockdown_is_applet_disabled (lockdown, iid))
+  if (panel_lockdown_is_applet_disabled (lockdown, module_id, applet_id))
     {
       if (reason != NULL)
         *reason = g_strdup (_("Disabled because this applet is listed in "
@@ -308,22 +255,12 @@ gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
       return TRUE;
     }
 
-  applet_id = g_strrstr (iid, "::");
-  if (!applet_id)
-    {
-      g_assert_not_reached ();
-      return TRUE;
-    }
-
-  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
   module = gp_module_manager_get_module (self->manager, module_id, NULL);
-  g_free (module_id);
 
   if (!module)
     return FALSE;
 
-  applet_id += 2;
-  lockdowns = panel_lockdown_get_flags (lockdown, iid);
+  lockdowns = panel_lockdown_get_flags (lockdown, module_id, applet_id);
 
   return gp_module_is_applet_disabled (module,
                                        applet_id,

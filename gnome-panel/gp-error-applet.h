@@ -26,7 +26,8 @@ G_BEGIN_DECLS
 #define GP_TYPE_ERROR_APPLET (gp_error_applet_get_type ())
 G_DECLARE_FINAL_TYPE (GpErrorApplet, gp_error_applet, GP, ERROR_APPLET, GpApplet)
 
-GpErrorApplet *gp_error_applet_new (const char    *iid,
+GpErrorApplet *gp_error_applet_new (const char    *module_id,
+                                    const char    *applet_id,
                                     GError        *error,
                                     GpApplication *application);
 

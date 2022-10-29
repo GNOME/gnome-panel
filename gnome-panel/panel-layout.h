@@ -45,14 +45,16 @@ void         panel_layout_toplevel_create     (PanelLayout          *self,
                                                GdkScreen            *screen);
 
 void         panel_layout_object_create       (PanelLayout          *self,
-                                               const char           *iid,
+                                               const char           *module_id,
+                                               const char           *applet_id,
                                                const char           *toplevel_id,
                                                PanelObjectPackType   pack_type,
                                                int                   pack_index,
                                                GVariant             *initial_settings);
 
 char        *panel_layout_object_create_start (PanelLayout          *self,
-                                               const char           *iid,
+                                               const char           *module_id,
+                                               const char           *applet_id,
                                                const char           *toplevel_id,
                                                PanelObjectPackType   pack_type,
                                                int                   pack_index,
