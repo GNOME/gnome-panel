@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-10-28 22:51+0000\n"
-"PO-Revision-Date: 2022-10-29 13:35+0300\n"
+"POT-Creation-Date: 2022-10-29 14:07+0000\n"
+"PO-Revision-Date: 2022-10-29 18:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -419,18 +419,27 @@ msgid ""
 msgstr "ID реалізація об'єкта — наприклад, «ClockAppletFactory::ClockApplet»."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
+msgid "Module ID"
+msgstr "Ідентифікатор модуля"
+
+#: data/org.gnome.gnome-panel.object.gschema.xml:14
+#| msgid "Applets"
+msgid "Applet ID"
+msgstr "Ідентифікатор аплету"
+
+#: data/org.gnome.gnome-panel.object.gschema.xml:18
 msgid "Toplevel panel containing object"
 msgstr "Панель верхнього рівня, що містить об'єкт"
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:11
+#: data/org.gnome.gnome-panel.object.gschema.xml:19
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "Ідентифікатор панелі верхнього рівня, що містить цей об'єкт."
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:15
+#: data/org.gnome.gnome-panel.object.gschema.xml:23
 msgid "Interpret position relative to bottom/right edge"
 msgstr "Інтерпретувати позицію відносно нижнього (правого) краю панелі."
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:16
+#: data/org.gnome.gnome-panel.object.gschema.xml:24
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
@@ -438,11 +447,11 @@ msgstr ""
 "Якщо вказано «end», позиція об'єкта інтерпретується відносно до правого (або "
 "нижнього, якщо вертикально) краю панелі."
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:20
+#: data/org.gnome.gnome-panel.object.gschema.xml:28
 msgid "Object's position on the panel"
 msgstr "Положення об'єкта на панелі"
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:21
+#: data/org.gnome.gnome-panel.object.gschema.xml:29
 msgid ""
 "The index of this panel object within the other objects with the same pack-"
 "type, from the left (or top if vertical) panel edge."
@@ -716,36 +725,36 @@ msgstr ""
 "Запуск інших програм та різні засобів для керування вікнами, показу часу "
 "тощо."
 
-#: gnome-panel/gp-add-applet-window.c:409
+#: gnome-panel/gp-add-applet-window.c:426
 msgid "Add to Panel"
 msgstr "Додати до панелі"
 
-#: gnome-panel/gp-add-applet-window.c:582
+#: gnome-panel/gp-add-applet-window.c:599
 msgid "No applets found"
 msgstr "Аплетів не знайдено"
 
-#: gnome-panel/gp-add-applet-window.c:597
+#: gnome-panel/gp-add-applet-window.c:614
 #, c-format
 msgid "Find an item to add to “%s”"
 msgstr "Знайти запис для додавання до «%s»"
 
-#: gnome-panel/gp-add-applet-window.c:599
+#: gnome-panel/gp-add-applet-window.c:616
 msgid "Find an item to add to the panel"
 msgstr "Знати об'єкт для додавання до панелі"
 
-#: gnome-panel/gp-applet-list-row.c:120 gnome-panel/gp-applet-row.c:112
+#: gnome-panel/gp-applet-list-row.c:118 gnome-panel/gp-applet-row.c:112
 msgid "Help"
 msgstr "Довідка"
 
-#: gnome-panel/gp-applet-list-row.c:130 gnome-panel/gp-applet-row.c:122
+#: gnome-panel/gp-applet-list-row.c:128 gnome-panel/gp-applet-row.c:122
 msgid "About"
 msgstr "Відомості"
 
-#: gnome-panel/gp-applet-list-row.c:287
+#: gnome-panel/gp-applet-list-row.c:284
 msgid "Remove"
 msgstr "Вилучити"
 
-#: gnome-panel/gp-applet-manager.c:304
+#: gnome-panel/gp-applet-manager.c:251
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
@@ -753,7 +762,7 @@ msgstr ""
 "Вимкнено, оскільки цей аплет є у списку параметра «disabled-applets» у схемі "
 "«org.gnome.gnome-panel.lockdown» GSettings."
 
-#: gnome-panel/gp-applet-row.c:282
+#: gnome-panel/gp-applet-row.c:285
 msgid "Add"
 msgstr "Додати"
 
@@ -761,30 +770,33 @@ msgstr "Додати"
 msgid "Hide Panel"
 msgstr "Сховати панель"
 
-#: gnome-panel/gp-error-applet.c:120
-#| msgid "Failed to load %s: %s\n"
+#: gnome-panel/gp-error-applet.c:121
 msgid "Failed to Load Applet"
 msgstr "Не вдалося завантажити аплет"
 
-#: gnome-panel/gp-error-applet.c:122
+#: gnome-panel/gp-error-applet.c:123
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Вилучити аплет з поточними налаштуваннями?"
 
-#: gnome-panel/gp-error-applet.c:123
+#: gnome-panel/gp-error-applet.c:124
 #, c-format
-#| msgid "The panel encountered a problem while loading \"%s\"."
-msgid "The panel encountered a problem while loading “<b>%s</b>”! %s"
-msgstr "Виявлено проблему при завантаженні «<b>%s</b>»! %s"
+#| msgid "The panel encountered a problem while loading “<b>%s</b>”! %s"
+msgid ""
+"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
+"%s</b>” module! %s"
+msgstr ""
+"Виявлено проблему при завантаженні аплету «<b>%s</b>» з модуля «<b>%s</b>»! "
+"%s"
 
-#: gnome-panel/gp-error-applet.c:140
+#: gnome-panel/gp-error-applet.c:143
 msgid "OK"
 msgstr "Гаразд"
 
-#: gnome-panel/gp-error-applet.c:149 gnome-panel/panel.c:1292
+#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1335
 msgid "_Delete"
 msgstr "В_илучити"
 
-#: gnome-panel/gp-error-applet.c:156
+#: gnome-panel/gp-error-applet.c:159
 msgid "D_on't Delete"
 msgstr "_Не вилучати"
 
@@ -792,11 +804,11 @@ msgstr "_Не вилучати"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: gnome-panel/gp-error-applet.c:170 libpanel-util/panel-error.c:78
+#: gnome-panel/gp-error-applet.c:173 libpanel-util/panel-error.c:78
 msgid "Error"
 msgstr "Помилка"
 
-#: gnome-panel/gp-error-applet.c:182
+#: gnome-panel/gp-error-applet.c:185
 msgid "Failed to load applet! Click for more info..."
 msgstr "Не вдалося завантажити аплет. Натисніть, щоб дізнатися більше…"
 
@@ -941,21 +953,21 @@ msgstr "Праворуч"
 msgid "Applets"
 msgstr "Аплети"
 
-#: gnome-panel/panel-applet-frame.c:401
+#: gnome-panel/panel-applet-frame.c:402
 msgid "_Move"
 msgstr "Пере_містити"
 
-#: gnome-panel/panel-applet-frame.c:408
+#: gnome-panel/panel-applet-frame.c:409
 msgid "_Remove From Panel"
 msgstr "В_илучити з панелі"
 
-#: gnome-panel/panel.c:612
+#: gnome-panel/panel.c:626
 #, c-format
 msgid "Open URL: %s"
 msgstr "Відкрити URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:667 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:681 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -964,18 +976,18 @@ msgstr "Відкрити «%s»"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:722 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:751 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Відкрити особисту теку"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:732 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:761 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Комп'ютер"
 
 #. name
-#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:762 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -983,20 +995,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:741 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:770 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Мережа"
 
 #. name
-#: gnome-panel/panel.c:742 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:771 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Оглянути закладені й локальні мережеві адреси"
 
-#: gnome-panel/panel.c:1283
+#: gnome-panel/panel.c:1326
 msgid "Delete this panel?"
 msgstr "Вилучити цю панель?"
 
-#: gnome-panel/panel.c:1287
+#: gnome-panel/panel.c:1330
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1004,7 +1016,7 @@ msgstr ""
 "З вилученням панелі буде втрачено усі параметри\n"
 "цієї панелі."
 
-#: gnome-panel/panel.c:1291 modules/action-button/panel-force-quit.c:214
+#: gnome-panel/panel.c:1334 modules/action-button/panel-force-quit.c:214
 #: modules/action-button/panel-run-dialog.c:1337
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1039,8 +1051,7 @@ msgstr "В_илучити цю панель"
 msgid "_New Panel"
 msgstr "_Створити панель"
 
-#: gnome-panel/panel-layout.c:1164 gnome-panel/panel-layout.c:1189
-#| msgid "Cannot create initial panel layout.\n"
+#: gnome-panel/panel-layout.c:1241 gnome-panel/panel-layout.c:1266
 msgid "Cannot create initial panel layout"
 msgstr "Неможливо створити початкове компонування панелі"
 
