@@ -350,7 +350,6 @@ panel_layout_append_group_helper (PanelLayout               *self,
 {
         gboolean    retval = FALSE;
         gboolean    appending_object;
-        const char *id;
         char       *unique_id = NULL;
         char       *path = NULL;
         GSettings  *settings = NULL;
@@ -364,23 +363,12 @@ panel_layout_append_group_helper (PanelLayout               *self,
 
         appending_object = (g_strcmp0 (schema, PANEL_OBJECT_SCHEMA) == 0);
 
-        /* Try to extract an id from the group, by stripping the prefix,
-         * and create a unique id out of that */
-        id = group + strlen (group_prefix);
-        while (g_ascii_isspace (*id))
-                id++;
+        unique_id = g_key_file_get_string (keyfile, group, "unique-id", NULL);
 
-        if (!*id)
-                id = NULL;
-
-        if (id && !panel_gsettings_is_valid_keyname (id, error))
+        if (!panel_gsettings_is_valid_keyname (unique_id, error)) {
+                g_free (unique_id);
                 return FALSE;
-
-        unique_id = panel_layout_find_free_id (self,
-                                               id_list_key,
-                                               schema,
-                                               path_prefix,
-                                               id);
+        }
 
         path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
         settings = g_settings_new_with_path (schema, path);
@@ -401,6 +389,9 @@ panel_layout_append_group_helper (PanelLayout               *self,
         /* Now do the real work: we validate/add keys from the keyfile */
         for (i = 0; keyfile_keys[i] != NULL; i++) {
                 gboolean found = FALSE;
+
+                if (g_strcmp0 (keyfile_keys[i], "unique-id") == 0)
+                        continue;
 
                 /* special case keys of the instance config of an object */
                 if (appending_object) {
@@ -549,6 +540,111 @@ panel_layout_append_group (PanelLayout  *self,
         return FALSE;
 }
 
+static const char *
+get_id_from_group (const char *group,
+                   const char *prefix)
+{
+  const char *id;
+
+  /* Try to extract an id from the group, by stripping the prefix,
+   * and create a unique id out of that
+   */
+
+  id = group + strlen (prefix);
+
+  while (g_ascii_isspace (*id))
+    id++;
+
+  if (*id == '\0')
+    return NULL;
+
+  return id;
+}
+
+static void
+update_object_toplevel_ids (GKeyFile   *keyfile,
+                            const char *old_id,
+                            const char *new_id)
+{
+  char **groups;
+  int i;
+
+  if (old_id == NULL)
+    old_id = "toplevel";
+
+  groups = g_key_file_get_groups (keyfile, NULL);
+
+  for (i = 0; groups[i] != NULL; i++)
+    {
+      char *str;
+
+      if (g_strcmp0 (groups[i], "Object") != 0 &&
+          !g_str_has_prefix (groups[i], "Object "))
+        continue;
+
+      str = g_key_file_get_string (keyfile, groups[i], "toplevel-id", NULL);
+
+      if (g_strcmp0 (str, old_id) == 0)
+        g_key_file_set_string (keyfile, groups[i], "toplevel-id", new_id);
+
+      g_free (str);
+    }
+
+  g_strfreev (groups);
+}
+
+static void
+ensure_unique_ids (PanelLayout *self,
+                   GKeyFile    *keyfile)
+{
+  char **groups;
+  int i;
+
+  groups = g_key_file_get_groups (keyfile, NULL);
+
+  for (i = 0; groups[i] != NULL; i++)
+    {
+      const char *group;
+      char *unique_id;
+      const char *id;
+
+      group = groups[i];
+      unique_id = NULL;
+      id = NULL;
+
+      if (g_strcmp0 (group, "Toplevel") == 0 ||
+          g_str_has_prefix (group, "Toplevel "))
+        {
+          id = get_id_from_group (group, "Toplevel");
+          unique_id = panel_layout_find_free_id (self,
+                                                 PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
+                                                 PANEL_TOPLEVEL_SCHEMA,
+                                                 PANEL_LAYOUT_TOPLEVEL_PATH,
+                                                 id);
+
+          update_object_toplevel_ids (keyfile, id, unique_id);
+        }
+      else if (g_strcmp0 (group, "Object") == 0 ||
+               g_str_has_prefix (group, "Object "))
+        {
+          id = get_id_from_group (group, "Object");
+          unique_id = panel_layout_find_free_id (self,
+                                                 PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
+                                                 PANEL_OBJECT_SCHEMA,
+                                                 PANEL_LAYOUT_OBJECT_PATH,
+                                                 id);
+        }
+
+      if (unique_id != NULL)
+        {
+          g_key_file_set_string (keyfile, group, "unique-id", unique_id);
+          g_free (unique_id);
+        }
+    }
+
+  g_strfreev (groups);
+}
+
 static gboolean
 panel_layout_append_from_file (PanelLayout  *self,
                                const char   *layout_file,
@@ -569,6 +665,8 @@ panel_layout_append_from_file (PanelLayout  *self,
         if (!g_key_file_load_from_file (keyfile, layout_file,
                                         G_KEY_FILE_NONE, &local_error))
                 goto out;
+
+        ensure_unique_ids (self, keyfile);
 
         groups = g_key_file_get_groups (keyfile, NULL);
 
