@@ -35,6 +35,7 @@ libgnome_panel_la_CPPFLAGS = \
 	$(NULL)
 
 libgnome_panel_la_CFLAGS = \
+	-fvisibility=hidden \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
@@ -59,6 +60,7 @@ libgnome_panel_include_HEADERS = \
 	gp-image-menu-item.h \
 	gp-initial-setup-dialog.h \
 	gp-lockdown.h \
+	gp-macros.h \
 	gp-module.h \
 	gp-utils.h \
 	$(NULL)

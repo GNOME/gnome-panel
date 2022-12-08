@@ -27,33 +27,44 @@
 
 G_BEGIN_DECLS
 
+GP_EXPORT
 void           gp_applet_set_locked_down           (GpApplet        *applet,
                                                     gboolean         locked_down);
 
+GP_EXPORT
 void           gp_applet_set_lockdowns             (GpApplet        *applet,
                                                     GpLockdownFlags  lockdowns);
 
+GP_EXPORT
 void           gp_applet_set_orientation           (GpApplet        *applet,
                                                     GtkOrientation   orientation);
 
+GP_EXPORT
 void           gp_applet_set_position              (GpApplet        *applet,
                                                     GtkPositionType  position);
 
+GP_EXPORT
 GpAppletFlags  gp_applet_get_flags                 (GpApplet        *applet);
 
+GP_EXPORT
 GtkWidget     *gp_applet_get_menu                  (GpApplet        *applet);
 
+GP_EXPORT
 void           gp_applet_remove_from_panel         (GpApplet        *self);
 
+GP_EXPORT
 void           gp_applet_set_prefer_symbolic_icons (GpApplet        *self,
                                                     gboolean         prefer_symbolic_icons);
 
+GP_EXPORT
 void           gp_applet_set_panel_icon_size       (GpApplet        *self,
                                                     guint            panel_icon_size);
 
+GP_EXPORT
 void           gp_applet_set_menu_icon_size        (GpApplet        *self,
                                                     guint            menu_icon_size);
 
+GP_EXPORT
 void           gp_applet_set_enable_tooltips       (GpApplet        *self,
                                                     gboolean         enable_tooltips);
 

@@ -19,6 +19,7 @@
 #define GP_IMAGE_MENU_ITEM_H
 
 #include <gtk/gtk.h>
+#include <libgnome-panel/gp-macros.h>
 
 G_BEGIN_DECLS
 
@@ -27,6 +28,7 @@ G_BEGIN_DECLS
  *
  * The type for GpImageMenuItem.
  */
+GP_EXPORT
 #define GP_TYPE_IMAGE_MENU_ITEM (gp_image_menu_item_get_type ())
 G_DECLARE_DERIVABLE_TYPE (GpImageMenuItem, gp_image_menu_item,
                           GP, IMAGE_MENU_ITEM, GtkMenuItem)
@@ -45,12 +47,16 @@ struct _GpImageMenuItemClass
   gpointer         padding[10];
 };
 
+GP_EXPORT
 GtkWidget *gp_image_menu_item_new               (void);
 
+GP_EXPORT
 GtkWidget *gp_image_menu_item_new_with_label    (const gchar     *label);
 
+GP_EXPORT
 GtkWidget *gp_image_menu_item_new_with_mnemonic (const gchar     *label);
 
+GP_EXPORT
 void       gp_image_menu_item_set_image         (GpImageMenuItem *self,
                                                  GtkWidget       *image);
 

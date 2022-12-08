@@ -19,6 +19,7 @@
 #define GP_ACTION_H
 
 #include <glib-object.h>
+#include <libgnome-panel/gp-macros.h>
 #include <stdint.h>
 
 G_BEGIN_DECLS
@@ -30,6 +31,7 @@ typedef enum
   GP_ACTION_RUN_DIALOG = (1 << 1)
 } GpActionFlags;
 
+GP_EXPORT
 #define GP_TYPE_ACTION (gp_action_get_type ())
 G_DECLARE_INTERFACE (GpAction, gp_action, GP, ACTION, GObject)
 

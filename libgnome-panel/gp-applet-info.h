@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <libgnome-panel/gp-lockdown.h>
+#include <libgnome-panel/gp-macros.h>
 
 G_BEGIN_DECLS
 
@@ -82,23 +83,29 @@ typedef gboolean (* GpIsDisabledFunc) (GpLockdownFlags   flags,
                                        char            **reason);
 
 
+GP_EXPORT
 GpAppletInfo *gp_applet_info_new                      (GpGetAppletTypeFunc       func,
                                                        const gchar              *name,
                                                        const gchar              *description,
                                                        const gchar              *icon_name);
 
+GP_EXPORT
 void          gp_applet_info_set_initial_setup_dialog (GpAppletInfo             *info,
                                                        GpInitialSetupDialogFunc  func);
 
+GP_EXPORT
 void          gp_applet_info_set_help_uri             (GpAppletInfo             *info,
                                                        const gchar              *help_uri);
 
+GP_EXPORT
 void          gp_applet_info_set_about_dialog         (GpAppletInfo             *info,
                                                        GpAboutDialogFunc         func);
 
+GP_EXPORT
 void          gp_applet_info_set_backends             (GpAppletInfo             *info,
                                                        const gchar              *backends);
 
+GP_EXPORT
 void          gp_applet_info_set_is_disabled          (GpAppletInfo             *info,
                                                        GpIsDisabledFunc          func);
 

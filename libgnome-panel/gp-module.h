@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <libgnome-panel/gp-action.h>
 #include <libgnome-panel/gp-applet-info.h>
+#include <libgnome-panel/gp-macros.h>
 
 G_BEGIN_DECLS
 
@@ -62,30 +63,39 @@ typedef gboolean (* GpActionFunc) (GpModule      *self,
  *
  * The type for GpModule.
  */
+GP_EXPORT
 #define GP_TYPE_MODULE (gp_module_get_type ())
 G_DECLARE_FINAL_TYPE (GpModule, gp_module, GP, MODULE, GObject)
 
+GP_EXPORT
 void          gp_module_set_abi_version     (GpModule               *module,
                                              guint32                 abi_version);
 
+GP_EXPORT
 void          gp_module_set_gettext_domain  (GpModule               *module,
                                              const gchar            *gettext_domain);
 
+GP_EXPORT
 void          gp_module_set_id              (GpModule               *module,
                                              const gchar            *id);
 
+GP_EXPORT
 void          gp_module_set_version         (GpModule               *module,
                                              const gchar            *version);
 
+GP_EXPORT
 void          gp_module_set_applet_ids      (GpModule               *module,
                                              ...);
 
+GP_EXPORT
 void          gp_module_set_get_applet_info (GpModule               *module,
                                              GpGetAppletInfoFunc     func);
 
+GP_EXPORT
 void          gp_module_set_compatibility   (GpModule               *module,
                                              GetAppletIdFromIidFunc  func);
 
+GP_EXPORT
 void          gp_module_set_actions         (GpModule               *self,
                                              GpActionFlags           actions,
                                              GpActionFunc            func);
@@ -100,6 +110,7 @@ void          gp_module_set_actions         (GpModule               *self,
  * used to setup all required module info. As minimum gp_module_set_id() and
  * gp_module_set_abi_version() should be called.
  */
+GP_EXPORT
 void          gp_module_load                (GpModule               *module);
 
 G_END_DECLS
