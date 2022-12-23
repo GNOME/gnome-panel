@@ -19,9 +19,11 @@
 #define GP_UTILS_H
 
 #include <gtk/gtk.h>
+#include <libgnome-panel/gp-macros.h>
 
 G_BEGIN_DECLS
 
+GP_EXPORT
 void gp_add_text_color_class (GtkWidget *widget);
 
 G_END_DECLS
