@@ -4,7 +4,7 @@ dnl **************************************************************************
 
 m4_define([gp_major_version], [3])
 m4_define([gp_minor_version], [47])
-m4_define([gp_micro_version], [0])
+m4_define([gp_micro_version], [1])
 m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
 
 dnl **************************************************************************
@@ -107,9 +107,9 @@ dnl    increment lt_age.
 dnl 4. If any interfaces have been removed or changed since the last public
 dnl    release, then set lt_age to 0.
 
-m4_define([lt_current], [2])
+m4_define([lt_current], [3])
 m4_define([lt_revision], [0])
-m4_define([lt_age], [2])
+m4_define([lt_age], [0])
 m4_define([lt_version_info], [lt_current:lt_revision:lt_age])
 
 AC_SUBST([LT_VERSION_INFO], [lt_version_info])
