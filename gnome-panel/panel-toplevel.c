@@ -171,7 +171,6 @@ enum {
 	TOGGLE_EXPAND_SIGNAL,
 	EXPAND_SIGNAL,
 	UNEXPAND_SIGNAL,
-	TOGGLE_HIDDEN_SIGNAL,
 	BEGIN_MOVE_SIGNAL,
 	BEGIN_RESIZE_SIGNAL,
 	LAST_SIGNAL
@@ -1926,22 +1925,6 @@ panel_toplevel_unexpand (PanelToplevel *toplevel)
 }
 
 static gboolean
-panel_toplevel_toggle_hidden (PanelToplevel *toplevel)
-{
-	GtkDirectionType dir;
-
-	dir = toplevel->priv->orientation & PANEL_VERTICAL_MASK ?
-	      GTK_DIR_UP : GTK_DIR_LEFT;
-
-	if (toplevel->priv->state == PANEL_STATE_NORMAL)
-		panel_toplevel_hide (toplevel, toplevel->priv->auto_hide, dir);
-	else
-		panel_toplevel_unhide (toplevel);
-
-	return FALSE;
-}
-
-static gboolean
 panel_toplevel_begin_move (PanelToplevel *toplevel)
 {
 	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
@@ -2952,7 +2935,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->toggle_expand    = panel_toplevel_toggle_expand;
 	klass->expand           = panel_toplevel_expand;
 	klass->unexpand         = panel_toplevel_unexpand;
-	klass->toggle_hidden    = panel_toplevel_toggle_hidden;
 	klass->begin_move       = panel_toplevel_begin_move;
 	klass->begin_resize     = panel_toplevel_begin_resize;
 
@@ -3167,17 +3149,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_TYPE_FROM_CLASS (gobject_class),
 			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
 			      G_STRUCT_OFFSET (PanelToplevelClass, unexpand),
-			      NULL,
-			      NULL,
-			      NULL,
-			      G_TYPE_BOOLEAN,
-			      0);
-
-	toplevel_signals [TOGGLE_HIDDEN_SIGNAL] =
-		g_signal_new ("toggle-hidden",
-			      G_TYPE_FROM_CLASS (gobject_class),
-			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-			      G_STRUCT_OFFSET (PanelToplevelClass, toggle_hidden),
 			      NULL,
 			      NULL,
 			      NULL,

@@ -62,7 +62,6 @@ struct _PanelToplevelClass {
 	gboolean  (*toggle_expand)    (PanelToplevel *toplevel);
 	gboolean  (*expand)           (PanelToplevel *toplevel);
 	gboolean  (*unexpand)         (PanelToplevel *toplevel);
-	gboolean  (*toggle_hidden)    (PanelToplevel *toplevel);
 	gboolean  (*begin_move)       (PanelToplevel *toplevel);
 	gboolean  (*begin_resize)     (PanelToplevel *toplevel);
 };

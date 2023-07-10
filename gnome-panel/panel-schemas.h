@@ -58,7 +58,6 @@
 #define GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_MAXIMIZED_KEY      "toggle-maximized"
 #define GNOME_DESKTOP_WM_KEYBINDINGS_MAXIMIZE_KEY              "maximize"
 #define GNOME_DESKTOP_WM_KEYBINDINGS_UNMAXIMIZE_KEY            "unmaximize"
-#define GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_SHADED_KEY         "toggle-shaded"
 #define GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_MOVE_KEY            "begin-move"
 #define GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_RESIZE_KEY          "begin-resize"
 
