@@ -44,6 +44,7 @@ org_gnome_gnome_panel_action_button_la_SOURCES = \
 
 org_gnome_gnome_panel_action_button_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
+	$(top_builddir)/libpanel-util/libpanel-util.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(ACTION_BUTTON_LIBS) \
 	$(NULL)
