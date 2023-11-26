@@ -19,11 +19,11 @@ the `libpanel-applet` library and several applets.
 
 # Releases
 
-You may download gnome-panel releases and updates from the [release server](http://download.gnome.org/sources/gnome-panel/)
+You may download gnome-panel releases and updates from the [release server](https://download.gnome.org/sources/gnome-panel/)
 
 # Discussions
 
-To discuss gnome-panel, you may use the [gnome-flashback-list](http://mail.gnome.org/mailman/listinfo/gnome-flashback-list) mailing list.
+To discuss gnome-panel, you may use the [discussion forum](https://discourse.gnome.org/).
 
 # Installation
 
