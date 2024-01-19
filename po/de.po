@@ -18,21 +18,22 @@
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009-2011.
 # Wolfgang Stöggl <c72578@yahoo.de>, 2016.
 # Tim Sabsch <tim@sabsch.com>, 2021.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-01-27 15:47+0000\n"
-"PO-Revision-Date: 2021-02-14 14:00+0100\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2023-04-03 07:17+0000\n"
+"PO-Revision-Date: 2024-01-16 19:12+0100\n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -467,8 +468,8 @@ msgstr "Objekt-IID"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
 "Die Implementationskennung des Objekts - z.B. »ClockAppletFactory::"
 "ClockApplet«."
@@ -556,12 +557,12 @@ msgstr "Panel-Ausrichtung"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
@@ -576,10 +577,22 @@ msgstr ""
 "Panels angezeigt."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
+msgid "Panel alignment"
+msgstr "Panel-Ausrichtung"
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+msgid ""
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
+msgstr ""
+"Die Ausrichtung des Panels. Mögliche Werte sind »start« (Anfang), "
+"»center« (Mitte) und »end« (Ende)."
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
 msgstr "Panel-Größe"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -591,117 +604,11 @@ msgstr ""
 "fest. Die maximale Größe ist auf ein Viertel der Bildschirmhöhe (bzw. -"
 "breite) begrenzt."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
-msgid "X co-ordinate of panel"
-msgstr "X-Koordinate des Panels"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Die Position des Panels auf der X-Achse. Dieser Schlüssel kommt "
-"ausschließlich im nicht ausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
-"wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
-"»orientation« angegebenen Bildschirmkante platziert."
-
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:35
-msgid "Y co-ordinate of panel"
-msgstr "Y-Koordinate des Panels"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Die Position des Panels auf der Y-Achse. Dieser Schlüssel kommt "
-"ausschließlich im nicht ausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
-"wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
-"»orientation« angegebenen Bildschirmkante platziert."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "X-Koordinate des Panels, ausgehend von rechts"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Die Position des Panels auf der X-Achse, beginnend rechts vom Bildschirm. "
-"Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels »x« "
-"verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des Schlüssels "
-"»x« ignoriert. Dieser Schlüssel kommt ausschließlich im nicht ausgedehnten "
-"Modus zum Tragen. Im ausgedehnten Modus wird dieser Schlüssel ignoriert und "
-"das Panel an der vom Schlüssel »orientation« angegebenen Bildschirmkante "
-"platziert."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "Y-Koordinate des Panels, ausgehend von unten"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Die Position des Panels auf der Y-Achse, beginnend unten vom Bildschirm. "
-"Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels »y« "
-"verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des Schlüssels "
-"»y« ignoriert. Dieser Schlüssel kommt ausschließlich im nicht ausgedehnten "
-"Modus zum Tragen. Im ausgedehnten Modus wird dieser Schlüssel ignoriert und "
-"das Panel an der vom Schlüssel »orientation« angegebenen Bildschirmkante "
-"platziert."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:50
-msgid "Center panel on x-axis"
-msgstr "Panel auf X-Achse zentrieren"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"Falls dieser Schlüssel WAHR ist, werden die Schlüssel »x« und »x_right« "
-"ignoriert und das Panel im Zentrum der X-Achse auf dem Bildschirm platziert. "
-"Falls die Größe des Panels verändert wird, verharrt es auf dieser Position - "
-"das Panel wächst also auf beiden Seiten. Falls dieser Schlüssel FALSCH ist, "
-"geben die Schlüssel »x« und »x_right« den Anzeigeort des Panels an."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
-msgid "Center panel on y-axis"
-msgstr "Panel auf Y-Achse zentrieren"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"Falls dieser Schlüssel WAHR ist, werden die Schlüssel »y« und »y_bottom« "
-"ignoriert und das Panel im Zentrum der Y-Achse auf dem Bildschirm platziert. "
-"Falls die Größe des Panels verändert wird, verharrt es auf dieser Position - "
-"das Panel wächst also auf beiden Seiten. Falls dieser Schlüssel FALSCH ist, "
-"geben die Schlüssel »y« und »y_bottom« den Anzeigeort des Panels an."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
 msgstr "Panel automatisch in der Ecke verbergen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:61
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -712,11 +619,11 @@ msgstr ""
 "Erneutes Bewegen in diese Ecke sorgt dafür, dass das Panel wieder angezeigt "
 "wird."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
 msgid "Enable hide buttons"
 msgstr "Verbergen-Knöpfe aktivieren"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:66
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -726,11 +633,11 @@ msgstr ""
 "Bildschirms zu verschieben, wobei in diesem Zustand nur ein Knopf angezeigt "
 "wird."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
 msgid "Enable arrows on hide buttons"
 msgstr "Pfeile auf Verbergen-Knöpfen anzeigen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:71
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -739,11 +646,11 @@ msgstr ""
 "angezeigt. Dieser Schlüssel kommt ausschließlich zum Tragen, falls der "
 "Schlüssel »enable_buttons« WAHR ist."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
 msgid "Panel autohide delay"
 msgstr "Verzögerung beim Auto-Verbergen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:77
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:52
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -754,11 +661,11 @@ msgstr ""
 "Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
 "»auto_hide« WAHR ist."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:82
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:57
 msgid "Panel autounhide delay"
 msgstr "Verzögerung beim Auto-Wiederanzeigen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:58
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -769,11 +676,11 @@ msgstr ""
 "Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
 "»auto_hide« WAHR ist."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:63
 msgid "Visible pixels when hidden"
 msgstr "Sichtbare Pixel wenn verborgen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:89
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:64
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -782,14 +689,14 @@ msgstr ""
 "Ecke verbogen wurde. Dieser Schlüssel kommt ausschließlich zum Tragen, wenn "
 "der Schlüssel »auto_hide« WAHR ist."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:68
 msgid "Animation speed"
 msgstr "Animationsgeschwindigkeit"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
 "Die Geschwindigkeit, in der Animationen wiedergegeben werden sollen. "
@@ -797,23 +704,23 @@ msgstr ""
 "Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
 "»enable_animations« WAHR ist."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
 msgid "Use custom background color"
 msgstr "Benutzerdefinierte Hintergrundfarbe verwenden"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
 msgid "Use custom background image"
 msgstr "Benutzerdefiniertes Hintergrundbild verwenden"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
 msgid "Background image"
 msgstr "Hintergrundbild"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:119
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -823,11 +730,11 @@ msgstr ""
 "einen Alphakanal enthält, wird es mit dem Hintergrundbild der Arbeitsfläche "
 "gemischt."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:124
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:99
 msgid "Image options"
 msgstr "Bildoptionen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:125
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:100
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -842,11 +749,11 @@ msgstr ""
 "Bild auf die Höhe des Panels (falls horizontal) unter Beibehaltung des "
 "Seitenverhältnisses."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:130
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:105
 msgid "Rotate image on vertical panels"
 msgstr "Bild auf vertikalen Panels drehen"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:131
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:106
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -854,15 +761,15 @@ msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird das Hintergrundbild gedreht angezeigt, "
 "falls das Panel vertikal ausgerichtet ist."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:111
 msgid "Use custom text color"
 msgstr "Benutzerdefinierte Textfarbe verwenden"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:141
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:116
 msgid "Text Color"
 msgstr "Textfarbe"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:140
 msgid "Panel"
 msgstr "Panel"
 
@@ -891,21 +798,25 @@ msgstr "Wählen Sie ein Objekt, das zu »%s« hinzugefügt werden soll"
 msgid "Find an item to add to the panel"
 msgstr "Wählen Sie ein Objekt, das zum Panel hinzugefügt werden soll"
 
-#: gnome-panel/gp-applet-manager.c:426
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Hilfe"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Info"
+
+#: gnome-panel/gp-applet-list-row.c:207
+msgid "Remove"
+msgstr "Entfernen"
+
+#: gnome-panel/gp-applet-manager.c:420
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
 "Ist deaktiviert, weil dieses Applet unter »disabled-applets« im GSettings-"
 "Schema »org.gnome.gnome-panel.lockdown« aufgelistet ist."
-
-#: gnome-panel/gp-applet-row.c:110
-msgid "Help"
-msgstr "Hilfe"
-
-#: gnome-panel/gp-applet-row.c:120
-msgid "About"
-msgstr "Info"
 
 #: gnome-panel/gp-applet-row.c:270
 msgid "Add"
@@ -915,40 +826,55 @@ msgstr "Hinzufügen"
 msgid "Hide Panel"
 msgstr "Panel verbergen"
 
-#: gnome-panel/gp-main.c:50
+#: gnome-panel/gp-main.c:49
 msgid "Replace a currently running panel"
 msgstr "Momentan laufendes Panel ersetzen"
 
-#: gnome-panel/gp-main.c:56
+#: gnome-panel/gp-main.c:55
 msgid "Print version"
 msgstr "Version ausgeben"
 
-#: gnome-panel/gp-properties-dialog.c:213
+#: gnome-panel/gp-properties-dialog.c:224
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Oben"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:225
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Unten"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Links"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Rechts"
+
+#: gnome-panel/gp-properties-dialog.c:231
+msgctxt "Alignment"
+msgid "Start"
+msgstr "Anfang"
+
+#: gnome-panel/gp-properties-dialog.c:232
+msgctxt "Alignment"
+msgid "Center"
+msgstr "Mitte"
+
+#: gnome-panel/gp-properties-dialog.c:233
+msgctxt "Alignment"
+msgid "End"
+msgstr "Ende"
 
 #: gnome-panel/gp-properties-dialog.ui:15
 msgid "Panel Properties"
 msgstr "Panel-Eigenschaften"
 
 #: gnome-panel/gp-properties-dialog.ui:53
-#: gnome-panel/gp-properties-dialog.ui:323
+#: gnome-panel/gp-properties-dialog.ui:366
 msgid "Some of these properties are locked down"
 msgstr "Einige dieser Eigenschaften sind gesperrt"
 
@@ -957,69 +883,89 @@ msgid "_Orientation:"
 msgstr "_Ausrichtung:"
 
 #: gnome-panel/gp-properties-dialog.ui:122
+msgid "_Alignment:"
+msgstr "_Ausrichtung:"
+
+#: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: gnome-panel/gp-properties-dialog.ui:158
+#: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
 msgstr "Pixel"
 
-#: gnome-panel/gp-properties-dialog.ui:191
+#: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
 msgstr "Sonstiges:"
 
-#: gnome-panel/gp-properties-dialog.ui:210
+#: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
 msgstr "Aus_dehnen"
 
-#: gnome-panel/gp-properties-dialog.ui:225
+#: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
 msgstr "Auto-_Verbergen"
 
-#: gnome-panel/gp-properties-dialog.ui:240
+#: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
 msgstr "Verbergen-_Knöpfe anzeigen"
 
-#: gnome-panel/gp-properties-dialog.ui:255
+#: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
 msgstr "_Pfeile auf Verbergen-Knöpfen anzeigen"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Allgemein"
 
-#: gnome-panel/gp-properties-dialog.ui:355
+#: gnome-panel/gp-properties-dialog.ui:398
 msgid "Background color:"
 msgstr "Hintergrundfarbe:"
 
-#: gnome-panel/gp-properties-dialog.ui:418
+#: gnome-panel/gp-properties-dialog.ui:461
 msgid "Background image:"
 msgstr "Hintergrundbild:"
 
-#: gnome-panel/gp-properties-dialog.ui:457
+#: gnome-panel/gp-properties-dialog.ui:500
 msgid "Tile"
 msgstr "Kacheln"
 
-#: gnome-panel/gp-properties-dialog.ui:472
+#: gnome-panel/gp-properties-dialog.ui:515
 msgid "Stretch"
 msgstr "Strecken"
 
-#: gnome-panel/gp-properties-dialog.ui:487
+#: gnome-panel/gp-properties-dialog.ui:530
 msgid "Fit"
 msgstr "Einpassen"
 
-#: gnome-panel/gp-properties-dialog.ui:509
+#: gnome-panel/gp-properties-dialog.ui:552
 msgid "Rotate image on vertical panel"
 msgstr "Bild auf vertikalem Panel drehen"
 
-#: gnome-panel/gp-properties-dialog.ui:552
+#: gnome-panel/gp-properties-dialog.ui:595
 msgid "Text color:"
 msgstr "Textfarbe:"
 
-#: gnome-panel/gp-properties-dialog.ui:607
+#: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
 msgstr "Thema"
+
+#: gnome-panel/gp-properties-dialog.ui:676
+msgid "Left"
+msgstr "Links"
+
+#: gnome-panel/gp-properties-dialog.ui:699
+msgid "Center"
+msgstr "Mitte"
+
+#: gnome-panel/gp-properties-dialog.ui:722
+msgid "Right"
+msgstr "Rechts"
+
+#: gnome-panel/gp-properties-dialog.ui:754
+msgid "Applets"
+msgstr "Applets"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1027,51 +973,51 @@ msgstr "Thema"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:941
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Fehler"
 
-#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:373
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Speicherort »%s« konnte nicht angezeigt werden"
 
-#: gnome-panel/panel-applet-frame.c:396
+#: gnome-panel/panel-applet-frame.c:395
 msgid "_Move"
 msgstr "_Verschieben"
 
-#: gnome-panel/panel-applet-frame.c:403
+#: gnome-panel/panel-applet-frame.c:402
 msgid "_Remove From Panel"
 msgstr "Aus dem Panel _entfernen"
 
-#: gnome-panel/panel-applet-frame.c:904
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Das Panel ist beim Laden von »%s« auf ein Problem gestoßen."
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:920
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Wollen Sie das Applet aus Ihrer Konfiguration löschen?"
 
-#: gnome-panel/panel-applet-frame.c:923
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "_Nicht löschen"
 
-#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "Lö_schen"
 
-#: gnome-panel/panel.c:604
+#: gnome-panel/panel.c:587
 #, c-format
 msgid "Open URL: %s"
 msgstr "Adresse öffnen: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:642 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -1080,18 +1026,18 @@ msgstr "»%s« öffnen"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:697 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Den persönlichen Ordner öffnen"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:707 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Rechner"
 
 #. name
-#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:708 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1100,20 +1046,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:716 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Netzwerk"
 
 #. name
-#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:717 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Lokale und als Lesezeichen gespeicherte Orte durchsuchen"
 
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1240
 msgid "Delete this panel?"
 msgstr "Dieses Panel löschen?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1121,7 +1067,7 @@ msgstr ""
 "Beim Löschen eines Panels gehen seine\n"
 "gesamten Einstellungen verloren."
 
-#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
 #: gnome-panel/panel-run-dialog.ui:236
 #: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1156,7 +1102,7 @@ msgstr "Dieses Panel _löschen"
 msgid "_New Panel"
 msgstr "Panel a_nlegen"
 
-#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
+#: gnome-panel/panel-layout.c:1097 gnome-panel/panel-layout.c:1112
 msgid "Cannot create initial panel layout.\n"
 msgstr "Initiale Panel-Anordnung konnte nicht erstellt werden.\n"
 
@@ -1184,16 +1130,16 @@ msgstr "Wählen Sie eine an den Befehl anzuhängende Datei …"
 msgid "_OK"
 msgstr "_OK"
 
-#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1691 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Wählen Sie eine Anwendung, um ihre Beschreibung anzuzeigen."
 
-#: gnome-panel/panel-run-dialog.c:1727
+#: gnome-panel/panel-run-dialog.c:1729
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Den Befehl »%s« ausführen"
 
-#: gnome-panel/panel-run-dialog.c:1760
+#: gnome-panel/panel-run-dialog.c:1762
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1257,82 +1203,82 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1560
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Top Expanded Edge Panel"
 msgstr "Oberes Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1561
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Top Centered Panel"
 msgstr "Oberes Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1562
-msgid "Top Floating Panel"
-msgstr "Oberes Panel, freischwebend"
+#: gnome-panel/panel-toplevel.c:1496
+msgid "Top Start Panel"
+msgstr "Oberes Panel, Anfang"
 
-#: gnome-panel/panel-toplevel.c:1563
-msgid "Top Edge Panel"
-msgstr "Oberes Kanten-Panel"
+#: gnome-panel/panel-toplevel.c:1497
+msgid "Top End Panel"
+msgstr "Oberes Panel, Ende"
 
-#: gnome-panel/panel-toplevel.c:1567
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Bottom Expanded Edge Panel"
 msgstr "Unteres Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Centered Panel"
 msgstr "Unteres Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1569
-msgid "Bottom Floating Panel"
-msgstr "Unteres Panel, freischwebend"
+#: gnome-panel/panel-toplevel.c:1503
+msgid "Bottom Start Panel"
+msgstr "Unteres Panel, Anfang"
 
-#: gnome-panel/panel-toplevel.c:1570
-msgid "Bottom Edge Panel"
-msgstr "Unteres Kanten-Panel"
+#: gnome-panel/panel-toplevel.c:1504
+msgid "Bottom End Panel"
+msgstr "Unteres Panel, Ende"
 
-#: gnome-panel/panel-toplevel.c:1574
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Left Expanded Edge Panel"
 msgstr "Linkes Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Left Centered Panel"
 msgstr "Linkes Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1576
-msgid "Left Floating Panel"
-msgstr "Linkes Panel, freischwebend"
+#: gnome-panel/panel-toplevel.c:1510
+msgid "Left Start Panel"
+msgstr "Linkes Panel, Anfang"
 
-#: gnome-panel/panel-toplevel.c:1577
-msgid "Left Edge Panel"
-msgstr "Linkes Kanten-Panel"
+#: gnome-panel/panel-toplevel.c:1511
+msgid "Left End Panel"
+msgstr "Linkes Panel, Ende"
 
-#: gnome-panel/panel-toplevel.c:1581
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Right Expanded Edge Panel"
 msgstr "Rechtes Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1582
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Right Centered Panel"
 msgstr "Rechtes Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1583
-msgid "Right Floating Panel"
-msgstr "Rechtes Panel, freischwebend"
+#: gnome-panel/panel-toplevel.c:1517
+msgid "Right Start Panel"
+msgstr "Rechtes Panel, Anfang"
 
-#: gnome-panel/panel-toplevel.c:1584
-msgid "Right Edge Panel"
-msgstr "Rechtes Kanten-Panel"
+#: gnome-panel/panel-toplevel.c:1518
+msgid "Right End Panel"
+msgstr "Rechtes Panel, Ende"
 
 #: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "Datei"
 
-#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:212
 msgid "Home"
 msgstr "Persönlicher Ordner"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:229
 msgid "File System"
 msgstr "Dateisystem"
 
@@ -1345,7 +1291,7 @@ msgstr "Dateisystem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:127
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1580,84 +1526,84 @@ msgstr "Kalender"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:174
 msgid "%A %B %d (%Z)"
 msgstr "%A, %d. %B (%Z)"
 
-#: modules/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:183
 msgid "Click to hide your appointments and tasks"
 msgstr "Klicken, um Ihre Termine und Aufgaben zu verbergen"
 
-#: modules/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:186
 msgid "Click to view your appointments and tasks"
 msgstr "Klicken, um Ihre Termine und Aufgaben anzuzeigen"
 
-#: modules/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:190
 msgid "Click to hide month calendar"
 msgstr "Klicken, um den Monatskalender zu verbergen"
 
-#: modules/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:193
 msgid "Click to view month calendar"
 msgstr "Klicken, um den Monatskalender anzuzeigen"
 
 #. Done!
-#: modules/clock/clock-applet.c:848
+#: modules/clock/clock-applet.c:725
 msgid "Computer Clock"
 msgstr "Rechner-Uhr"
 
-#: modules/clock/clock-applet.c:981
+#: modules/clock/clock-applet.c:811
 msgid "Failed to open the time settings"
 msgstr "Zeiteinstellungen konnten nicht geöffnet werden"
 
-#: modules/clock/clock-applet.c:1570
+#: modules/clock/clock-applet.c:1430
 msgid "Choose Location"
 msgstr "Ort wählen"
 
-#: modules/clock/clock-applet.c:1649
+#: modules/clock/clock-applet.c:1509
 msgid "Edit Location"
 msgstr "Ort bearbeiten"
 
-#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
+#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
 msgid "Default"
 msgstr "Vorgabe"
 
-#: modules/clock/clock-applet.c:1686
+#: modules/clock/clock-applet.c:1546
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1687
+#: modules/clock/clock-applet.c:1547
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1688
+#: modules/clock/clock-applet.c:1548
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1694
+#: modules/clock/clock-applet.c:1554
 msgid "Meters per second (m/s)"
 msgstr "Meter pro Sekunde (m/s)"
 
-#: modules/clock/clock-applet.c:1695
+#: modules/clock/clock-applet.c:1555
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer pro Stunde (km/h)"
 
-#: modules/clock/clock-applet.c:1696
+#: modules/clock/clock-applet.c:1556
 msgid "Miles per hour (mph)"
 msgstr "Meilen pro Stunde (mph)"
 
-#: modules/clock/clock-applet.c:1697
+#: modules/clock/clock-applet.c:1557
 msgid "Knots"
 msgstr "Knoten"
 
-#: modules/clock/clock-applet.c:1698
+#: modules/clock/clock-applet.c:1558
 msgid "Beaufort scale"
 msgstr "Beaufort-Skala"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1611
 msgid "City Name"
 msgstr "Stadtname"
 
-#: modules/clock/clock-applet.c:1755
+#: modules/clock/clock-applet.c:1615
 msgid "City Time Zone"
 msgstr "Stadt-Zeitzone"
 
@@ -1706,18 +1652,18 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:607
+#: modules/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:620
+#: modules/clock/clock-location-tile.c:627
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, gefühlt wie %s"
 
-#: modules/clock/clock-location-tile.c:641
+#: modules/clock/clock-location-tile.c:648
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sonnenaufgang: %s / Sonnenuntergang: %s"
@@ -1799,7 +1745,7 @@ msgstr "_Hilfe"
 msgid "Time _Settings"
 msgstr "Zeit_einstellungen"
 
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:566
 #: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
 #: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
@@ -1918,17 +1864,17 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: modules/fish/fish-applet.c:564
+#: modules/fish/fish-applet.c:565
 msgid "_Speak again"
 msgstr "Erneut _sprechen"
 
-#: modules/fish/fish-applet.c:636
+#: modules/fish/fish-applet.c:637
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Der Konfigurationsbefehl funktioniert nicht mehr und wurde ersetzt durch: %s"
 
-#: modules/fish/fish-applet.c:665
+#: modules/fish/fish-applet.c:666
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -1939,7 +1885,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: modules/fish/fish-applet.c:681
+#: modules/fish/fish-applet.c:682
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -1950,15 +1896,15 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: modules/fish/fish-applet.c:1064
+#: modules/fish/fish-applet.c:1065
 msgid "The water needs changing"
 msgstr "Das Wasser muss gewechselt werden"
 
-#: modules/fish/fish-applet.c:1066
+#: modules/fish/fish-applet.c:1067
 msgid "Look at today's date!"
 msgstr "Man beachte das heutige Datum!"
 
-#: modules/fish/fish-applet.c:1160
+#: modules/fish/fish-applet.c:1161
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s, der wahrsagende Fisch"
@@ -2117,7 +2063,7 @@ msgstr "Die Befehlszeile »%s« kann nicht ausgeführt werden."
 msgid "Could not open location"
 msgstr "Der Ort kann nicht geöffnet werden"
 
-#: modules/launcher/gp-launcher-applet.c:1010
+#: modules/launcher/gp-launcher-applet.c:1008
 #, c-format
 msgid "Failed to load key file “%s”: %s"
 msgstr "Die Schlüsseldatei »%s« konnte nicht geladen werden: %s"
@@ -2280,7 +2226,7 @@ msgstr "Benutzermenü"
 msgid "Menu to change your settings and log out"
 msgstr "Menü zum Ändern Ihrer Einstellungen und zum Abmelden"
 
-#: modules/menu/gp-menu-utils.c:436
+#: modules/menu/gp-menu-utils.c:441
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "»%s« konnte nicht gestartet werden"
@@ -2399,7 +2345,7 @@ msgstr "Für Menü anzuzeigende Minihilfe"
 msgid "The text to display in a tooltip for this menu."
 msgstr "Der für dieses Menü in einer Minihilfe anzuzeigende Text."
 
-#: modules/notification-area/na-applet.c:155
+#: modules/notification-area/na-applet.c:173
 msgid "Panel Notification Area"
 msgstr "Panel-Benachrichtigungsfeld"
 
@@ -2428,26 +2374,26 @@ msgstr "Statusbenachrichtigungs-Rechner"
 msgid "Display all Status Notifier Items"
 msgstr "Alle Statusbenachrichtigungseinträge anzeigen"
 
-#: modules/wncklet/showdesktop.c:100
+#: modules/wncklet/showdesktop.c:71
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s konnte nicht geladen werden: %s\n"
 
-#: modules/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:72
 msgid "Icon not found"
 msgstr "Symbol nicht gefunden"
 
-#: modules/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:103
 msgid "Click here to restore hidden windows."
 msgstr "Klicken Sie hier, um die verborgenen Fenster wieder hervorzuholen."
 
-#: modules/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Klicken Sie hier, um alle Fenster zu verbergen und die Arbeitsfläche "
 "anzuzeigen."
 
-#: modules/wncklet/showdesktop.c:214
+#: modules/wncklet/showdesktop.c:136
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2455,7 +2401,7 @@ msgstr ""
 "Ihr Fenstermanager unterstützt den »Arbeitsfläche anzeigen«-Knopf nicht oder "
 "Sie verwenden momentan keinen Fenstermanager."
 
-#: modules/wncklet/showdesktop.c:411
+#: modules/wncklet/showdesktop.c:333
 msgid "Show Desktop Button"
 msgstr "Arbeitsflächen-Knopf anzeigen"
 
@@ -2589,6 +2535,114 @@ msgstr "_Namen der Arbeitsflächen im Umschalter anzeigen"
 msgid "Workspaces"
 msgstr "Arbeitsflächen"
 
+#~ msgid "X co-ordinate of panel"
+#~ msgstr "X-Koordinate des Panels"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Die Position des Panels auf der X-Achse. Dieser Schlüssel kommt "
+#~ "ausschließlich im nicht ausgedehnten Modus zum Tragen. Im ausgedehnten "
+#~ "Modus wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
+#~ "»orientation« angegebenen Bildschirmkante platziert."
+
+#~ msgid "Y co-ordinate of panel"
+#~ msgstr "Y-Koordinate des Panels"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Die Position des Panels auf der Y-Achse. Dieser Schlüssel kommt "
+#~ "ausschließlich im nicht ausgedehnten Modus zum Tragen. Im ausgedehnten "
+#~ "Modus wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
+#~ "»orientation« angegebenen Bildschirmkante platziert."
+
+#~ msgid "X co-ordinate of panel, starting from the right of the screen"
+#~ msgstr "X-Koordinate des Panels, ausgehend von rechts"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis, starting from the right of "
+#~ "the screen. If set to -1, the value is ignored and the value of the x key "
+#~ "is used. If the value is greater than 0, then the value of the x key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Die Position des Panels auf der X-Achse, beginnend rechts vom Bildschirm. "
+#~ "Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels "
+#~ "»x« verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des "
+#~ "Schlüssels »x« ignoriert. Dieser Schlüssel kommt ausschließlich im nicht "
+#~ "ausgedehnten Modus zum Tragen. Im ausgedehnten Modus wird dieser "
+#~ "Schlüssel ignoriert und das Panel an der vom Schlüssel »orientation« "
+#~ "angegebenen Bildschirmkante platziert."
+
+#~ msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+#~ msgstr "Y-Koordinate des Panels, ausgehend von unten"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis, starting from the bottom of "
+#~ "the screen. If set to -1, the value is ignored and the value of the y key "
+#~ "is used. If the value is greater than 0, then the value of the y key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Die Position des Panels auf der Y-Achse, beginnend unten vom Bildschirm. "
+#~ "Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels "
+#~ "»y« verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des "
+#~ "Schlüssels »y« ignoriert. Dieser Schlüssel kommt ausschließlich im nicht "
+#~ "ausgedehnten Modus zum Tragen. Im ausgedehnten Modus wird dieser "
+#~ "Schlüssel ignoriert und das Panel an der vom Schlüssel »orientation« "
+#~ "angegebenen Bildschirmkante platziert."
+
+#~ msgid "Center panel on x-axis"
+#~ msgstr "Panel auf X-Achse zentrieren"
+
+#~ msgid ""
+#~ "If true, the x and x_right keys are ignored and the panel is placed at "
+#~ "the center of the x-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the x and x_right keys specify the location of the panel."
+#~ msgstr ""
+#~ "Falls dieser Schlüssel WAHR ist, werden die Schlüssel »x« und »x_right« "
+#~ "ignoriert und das Panel im Zentrum der X-Achse auf dem Bildschirm "
+#~ "platziert. Falls die Größe des Panels verändert wird, verharrt es auf "
+#~ "dieser Position - das Panel wächst also auf beiden Seiten. Falls dieser "
+#~ "Schlüssel FALSCH ist, geben die Schlüssel »x« und »x_right« den "
+#~ "Anzeigeort des Panels an."
+
+#~ msgid "Center panel on y-axis"
+#~ msgstr "Panel auf Y-Achse zentrieren"
+
+#~ msgid ""
+#~ "If true, the y and y_bottom keys are ignored and the panel is placed at "
+#~ "the center of the y-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the y and y_bottom keys specify the location of the panel."
+#~ msgstr ""
+#~ "Falls dieser Schlüssel WAHR ist, werden die Schlüssel »y« und »y_bottom« "
+#~ "ignoriert und das Panel im Zentrum der Y-Achse auf dem Bildschirm "
+#~ "platziert. Falls die Größe des Panels verändert wird, verharrt es auf "
+#~ "dieser Position - das Panel wächst also auf beiden Seiten. Falls dieser "
+#~ "Schlüssel FALSCH ist, geben die Schlüssel »y« und »y_bottom« den "
+#~ "Anzeigeort des Panels an."
+
+#~ msgid "Top Floating Panel"
+#~ msgstr "Oberes Panel, freischwebend"
+
+#~ msgid "Bottom Floating Panel"
+#~ msgstr "Unteres Panel, freischwebend"
+
+#~ msgid "Left Floating Panel"
+#~ msgstr "Linkes Panel, freischwebend"
+
+#~ msgid "Right Floating Panel"
+#~ msgstr "Rechtes Panel, freischwebend"
+
 #~ msgid "???"
 #~ msgstr "???"
 
@@ -2606,8 +2660,8 @@ msgstr "Arbeitsflächen"
 
 #~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 #~ msgstr ""
-#~ "Arbeitsflächen-Datei %s konnte nicht für Panel-Starter %s geöffnet werden"
-#~ "%s\n"
+#~ "Arbeitsflächen-Datei %s konnte nicht für Panel-Starter %s geöffnet "
+#~ "werden%s\n"
 
 #~ msgid "Launcher location is not set, cannot load launcher\n"
 #~ msgstr ""
