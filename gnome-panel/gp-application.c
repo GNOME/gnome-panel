@@ -28,6 +28,7 @@
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-multiscreen.h"
+#include "panel-schemas.h"
 #include "panel-toplevel.h"
 #include "panel-widget.h"
 
@@ -44,6 +45,7 @@ struct _GpApplication
   GObject           parent;
 
   GSettings        *general_settings;
+  GSettings        *interface_settings;
 
   gulong            theme_name_id;
   gulong            prefer_dark_id;
@@ -189,13 +191,28 @@ theme_variant_changed_cb (GSettings     *settings,
                           GpApplication *self)
 {
   PanelThemeVariant variant;
+  char *color_scheme;
 
-  variant = g_settings_get_enum (settings, key);
+  variant = g_settings_get_enum (self->general_settings, PANEL_GENERAL_THEME_VARIANT_KEY);
 
   if (variant == PANEL_THEME_VARIANT_SYSTEM)
     {
-      gtk_settings_reset_property (gtk_settings_get_default (),
-                                   "gtk-application-prefer-dark-theme");
+      color_scheme = g_settings_get_string (self->interface_settings, "color-scheme");
+
+      if (g_strcmp0 (color_scheme, "prefer-dark") == 0)
+        {
+          g_object_set (gtk_settings_get_default (),
+                        "gtk-application-prefer-dark-theme",
+                        TRUE,
+                        NULL);
+        }
+      else
+        {
+          gtk_settings_reset_property (gtk_settings_get_default (),
+                                       "gtk-application-prefer-dark-theme");
+        }
+
+      g_free (color_scheme);
     }
   else
     {
@@ -344,6 +361,7 @@ gp_application_dispose (GObject *object)
   g_clear_pointer (&self->toplevels, g_hash_table_destroy);
 
   g_clear_object (&self->general_settings);
+  g_clear_object (&self->interface_settings);
   g_clear_object (&self->provider);
   g_clear_object (&self->module_manager);
   g_clear_object (&self->applet_manager);
@@ -368,6 +386,7 @@ static void
 gp_application_init (GpApplication *self)
 {
   self->general_settings = g_settings_new ("org.gnome.gnome-panel.general");
+  self->interface_settings = g_settings_new ("org.gnome.desktop.interface");
 
   g_signal_connect (self->general_settings,
                     "changed::theme-variant",
@@ -392,6 +411,11 @@ gp_application_init (GpApplication *self)
   g_signal_connect (self->general_settings,
                     "changed::panel-max-icon-size",
                     G_CALLBACK (panel_max_icon_size_cb),
+                    self);
+
+  g_signal_connect (self->interface_settings,
+                    "changed::color-scheme",
+                    G_CALLBACK (theme_variant_changed_cb),
                     self);
 
   self->theme_name_id = g_signal_connect (gtk_settings_get_default (),
