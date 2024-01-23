@@ -418,7 +418,7 @@ settings_changed_cb (GSettings          *settings,
       gboolean show_arrow;
 
       show_arrow = g_settings_get_boolean (priv->settings, "show-arrow");
-      gtk_widget_set_visible (priv->image, show_arrow);
+      gtk_widget_set_visible (priv->arrow, show_arrow);
     }
   else if (g_strcmp0 (key, "tooltip") == 0)
     {
