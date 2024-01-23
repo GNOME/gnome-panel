@@ -221,14 +221,24 @@ append_places_item (GpMenuButtonApplet *menu_button,
 }
 
 static void
+append_lock_logout (GtkMenu                   *menu,
+                    GpMenuButtonAppletPrivate *priv)
+{
+  gp_lock_logout_append_to_menu (priv->lock_logout, menu);
+}
+
+static void
 append_user_item (GpMenuButtonApplet *menu_button,
                   GtkMenu            *menu)
 {
+  GpMenuButtonAppletPrivate *priv;
   guint icon_size;
   GtkWidget *icon;
   gchar *user_name;
   GtkWidget *item;
   GtkWidget *user_menu;
+
+  priv = gp_menu_button_applet_get_instance_private (menu_button);
 
   icon_size = gp_applet_get_menu_icon_size (GP_APPLET (menu_button));
   icon = gtk_image_new_from_icon_name ("computer", GTK_ICON_SIZE_MENU);
@@ -266,21 +276,39 @@ append_user_item (GpMenuButtonApplet *menu_button,
   g_object_bind_property (user_menu, "empty", item, "visible",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
+
+  priv->lock_logout = gp_lock_logout_new ();
+
+  g_object_bind_property (menu_button, "enable-tooltips",
+                          priv->lock_logout, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "locked-down",
+                          priv->lock_logout, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "menu-icon-size",
+                          priv->lock_logout, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_signal_connect_swapped (priv->lock_logout, "changed",
+                            G_CALLBACK (gp_user_menu_reload), user_menu);
+
+  gp_user_menu_set_append_func (GP_USER_MENU (user_menu),
+                                (GpAppendMenuItemsFunc) append_lock_logout,
+                                priv);
 }
 
 static void
 append_menu_items_cb (GtkMenu            *menu,
                       GpMenuButtonApplet *menu_button)
 {
-  GpMenuButtonAppletPrivate *priv;
-
-  priv = gp_menu_button_applet_get_instance_private (menu_button);
-
   append_separator_if_needed (menu);
   append_places_item (menu_button, menu);
   append_user_item (menu_button, menu);
-
-  gp_lock_logout_append_to_menu (priv->lock_logout, menu);
 }
 
 static gboolean

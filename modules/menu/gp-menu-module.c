@@ -477,6 +477,13 @@ append_places_item (StandaloneMenuData *data,
 }
 
 static void
+append_lock_logout (GtkMenu            *menu,
+                    StandaloneMenuData *data)
+{
+  gp_lock_logout_append_to_menu (data->lock_logout, menu);
+}
+
+static void
 append_user_item (StandaloneMenuData *data,
                   GtkMenu            *menu)
 {
@@ -509,6 +516,18 @@ append_user_item (StandaloneMenuData *data,
   g_object_bind_property (user_menu, "empty", item, "visible",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
+
+  data->lock_logout = gp_lock_logout_new ();
+
+  g_object_set (data->lock_logout,
+                "enable-tooltips", data->enable_tooltips,
+                "locked-down", data->locked_down,
+                "menu-icon-size", data->menu_icon_size,
+                NULL);
+
+  gp_user_menu_set_append_func (GP_USER_MENU (user_menu),
+                                (GpAppendMenuItemsFunc) append_lock_logout,
+                                data);
 }
 
 static void
@@ -518,8 +537,6 @@ append_menu_items_cb (GtkMenu            *menu,
   append_separator_if_needed (GTK_MENU (menu));
   append_places_item (data, menu);
   append_user_item (data, menu);
-
-  gp_lock_logout_append_to_menu (data->lock_logout, GTK_MENU (menu));
 }
 
 static GtkWidget *
