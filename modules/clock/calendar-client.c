@@ -316,9 +316,9 @@ calendar_client_init (CalendarClient *client)
                                                     G_CALLBACK (calendar_client_timezone_changed_cb),
                                                     client);
 
-  client->priv->day = 0;
-  client->priv->month = 0;
-  client->priv->year = 0;
+  client->priv->day = G_MAXUINT;
+  client->priv->month = G_MAXUINT;
+  client->priv->year = G_MAXUINT;
 }
 
 static void
@@ -1563,7 +1563,7 @@ calendar_client_update_appointments (CalendarClient *client)
   char   *month_begin;
   char   *month_end;
 
-  if (client->priv->month == 0 || client->priv->year == 0)
+  if (client->priv->month == G_MAXUINT || client->priv->year == G_MAXUINT)
     return;
 
   month_begin = make_isodate_for_day_begin (1,
@@ -1609,9 +1609,9 @@ calendar_client_update_tasks (CalendarClient *client)
   char   *day_begin;
   char   *day_end;
 
-  if (client->priv->day == 0 ||
-      client->priv->month == 0 ||
-      client->priv->year == 0)
+  if (client->priv->day == G_MAXUINT ||
+      client->priv->month == G_MAXUINT ||
+      client->priv->year == G_MAXUINT)
     return;
 
   day_begin = make_isodate_for_day_begin (client->priv->day,
@@ -1971,9 +1971,9 @@ calendar_client_get_events (CalendarClient    *client,
   time_t  day_end;
 
   g_return_val_if_fail (CALENDAR_IS_CLIENT (client), NULL);
-  g_return_val_if_fail (client->priv->day != 0, NULL);
-  g_return_val_if_fail (client->priv->month != 0, NULL);
-  g_return_val_if_fail (client->priv->year != 0, NULL);
+  g_return_val_if_fail (client->priv->day != G_MAXUINT, NULL);
+  g_return_val_if_fail (client->priv->month != G_MAXUINT, NULL);
+  g_return_val_if_fail (client->priv->year != G_MAXUINT, NULL);
 
   day_begin = make_time_for_day_begin (client->priv->day,
 				       client->priv->month,
@@ -2028,8 +2028,8 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
 
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
   g_return_if_fail (iter_func != NULL);
-  g_return_if_fail (client->priv->month != 0);
-  g_return_if_fail (client->priv->year != 0);
+  g_return_if_fail (client->priv->month != G_MAXUINT);
+  g_return_if_fail (client->priv->year != G_MAXUINT);
 
   month_begin = make_time_for_day_begin (1,
 					 client->priv->month,
