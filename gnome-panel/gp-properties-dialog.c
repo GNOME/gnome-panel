@@ -223,16 +223,16 @@ setup_toplevel_bindings (GpPropertiesDialog *dialog)
 
   text = GTK_COMBO_BOX_TEXT (dialog->orientation);
 
-  gtk_combo_box_text_append (text, "top", NC_("Orientation", "Top"));
-  gtk_combo_box_text_append (text, "bottom", NC_("Orientation", "Bottom"));
-  gtk_combo_box_text_append (text, "left", NC_("Orientation", "Left"));
-  gtk_combo_box_text_append (text, "right", NC_("Orientation", "Right"));
+  gtk_combo_box_text_append (text, "top", C_("Orientation", "Top"));
+  gtk_combo_box_text_append (text, "bottom", C_("Orientation", "Bottom"));
+  gtk_combo_box_text_append (text, "left", C_("Orientation", "Left"));
+  gtk_combo_box_text_append (text, "right", C_("Orientation", "Right"));
 
   text = GTK_COMBO_BOX_TEXT (dialog->alignment);
 
-  gtk_combo_box_text_append (text, "start", NC_("Alignment", "Start"));
-  gtk_combo_box_text_append (text, "center", NC_("Alignment", "Center"));
-  gtk_combo_box_text_append (text, "end", NC_("Alignment", "End"));
+  gtk_combo_box_text_append (text, "start", C_("Alignment", "Start"));
+  gtk_combo_box_text_append (text, "center", C_("Alignment", "Center"));
+  gtk_combo_box_text_append (text, "end", C_("Alignment", "End"));
 
   g_object_bind_property (dialog->expand,
                           "active",
