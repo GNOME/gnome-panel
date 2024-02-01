@@ -838,6 +838,16 @@ static const GActionEntry clock_menu_actions [] = {
 };
 
 static void
+expand_locations_changed (GSettings   *settings,
+                          const gchar *key,
+                          ClockApplet *clock)
+{
+        if (clock->calendar_popup != NULL) {
+                position_calendar_popup (clock);
+        }
+}
+
+static void
 format_changed (GSettings   *settings,
                 const gchar *key,
                 ClockApplet *clock)
@@ -945,6 +955,9 @@ locations_changed (GSettings   *settings,
 
         if (cd->clock_vbox)
                 create_cities_section (cd);
+
+        if (cd->calendar_popup)
+                position_calendar_popup (cd);
 }
 
 static void
@@ -1839,6 +1852,11 @@ clock_applet_constructed (GObject *object)
         g_signal_connect (self->clock_settings,
                           "changed::clock-show-weeks",
                           G_CALLBACK (show_week_changed),
+                          self);
+
+        g_signal_connect (self->applet_settings,
+                          "changed::expand-locations",
+                          G_CALLBACK (expand_locations_changed),
                           self);
 
         g_signal_connect (self->applet_settings,
