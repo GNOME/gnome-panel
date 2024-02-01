@@ -2713,8 +2713,8 @@ panel_widget_get_icon_size (PanelWidget *self)
   general_settings = gp_application_get_general_settings (application);
   panel_max_icon_size = g_settings_get_enum (general_settings,
                                              "panel-max-icon-size");
-
-  spacing = 4;
+  spacing = g_settings_get_uint (general_settings, "panel-icon-spacing");
+  spacing *= 2;
   panel_size = self->sz;
 
   if (panel_size <= panel_max_icon_size + spacing)

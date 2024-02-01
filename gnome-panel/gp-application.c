@@ -297,9 +297,7 @@ set_panel_icon_size (AppletInfo *applet,
 }
 
 static void
-panel_max_icon_size_cb (GSettings     *settings,
-                        const char    *key,
-                        GpApplication *self)
+update_icon_size (GpApplication *self)
 {
   GHashTableIter iter;
   gpointer value;
@@ -315,6 +313,22 @@ panel_max_icon_size_cb (GSettings     *settings,
 
       panel_applet_foreach (panel, set_panel_icon_size, &panel_icon_size);
     }
+}
+
+static void
+panel_max_icon_size_cb (GSettings     *settings,
+                        const char    *key,
+                        GpApplication *self)
+{
+  update_icon_size (self);
+}
+
+static void
+panel_icon_spacing_cb (GSettings     *settings,
+                       const char    *key,
+                       GpApplication *self)
+{
+  update_icon_size (self);
 }
 
 static gboolean
@@ -411,6 +425,11 @@ gp_application_init (GpApplication *self)
   g_signal_connect (self->general_settings,
                     "changed::panel-max-icon-size",
                     G_CALLBACK (panel_max_icon_size_cb),
+                    self);
+
+  g_signal_connect (self->general_settings,
+                    "changed::panel-icon-spacing",
+                    G_CALLBACK (panel_icon_spacing_cb),
                     self);
 
   g_signal_connect (self->interface_settings,
