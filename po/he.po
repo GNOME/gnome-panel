@@ -4,22 +4,22 @@
 # Copyright (C) 2005 THE PACKAGE'S COPYRIGHT HOLDER.
 # Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2002-2004.
 # Yuval Tanny <tanai@int.gov.il>, 2005.
-# Yosef Or Boczko <yoseforb@gnome.org>, 2014.
+# Yosef Or Boczko <yoseforb@gmail.com>, 2014-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-07-20 14:54+0000\n"
-"PO-Revision-Date: 2021-11-08 09:48+0200\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: עברית <>\n"
+"POT-Creation-Date: 2024-01-19 20:37+0000\n"
+"PO-Revision-Date: 2024-02-09 09:11+0200\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural= (n!=1);\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 45.3\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -95,10 +95,12 @@ msgid "If true, expand the list of locations in the calendar window."
 msgstr "If true, expand the list of locations in the calendar window."
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:50
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:58
 msgid "List of locations"
 msgstr "List of locations"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:51
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:59
 msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
@@ -414,25 +416,33 @@ msgstr "Object IID"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
+msgid "Module ID"
+msgstr "Module ID"
+
+#: data/org.gnome.gnome-panel.object.gschema.xml:14
+msgid "Applet ID"
+msgstr "Applet ID"
+
+#: data/org.gnome.gnome-panel.object.gschema.xml:18
 msgid "Toplevel panel containing object"
 msgstr "Toplevel panel containing object"
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:11
+#: data/org.gnome.gnome-panel.object.gschema.xml:19
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "The identifier of the toplevel panel which contains this object."
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:15
+#: data/org.gnome.gnome-panel.object.gschema.xml:23
 msgid "Interpret position relative to bottom/right edge"
 msgstr "Interpret position relative to bottom/right edge"
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:16
+#: data/org.gnome.gnome-panel.object.gschema.xml:24
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
@@ -440,11 +450,11 @@ msgstr ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:20
+#: data/org.gnome.gnome-panel.object.gschema.xml:28
 msgid "Object's position on the panel"
 msgstr "Object's position on the panel"
 
-#: data/org.gnome.gnome-panel.object.gschema.xml:21
+#: data/org.gnome.gnome-panel.object.gschema.xml:29
 msgid ""
 "The index of this panel object within the other objects with the same pack-"
 "type, from the left (or top if vertical) panel edge."
@@ -500,21 +510,21 @@ msgstr "Panel orientation"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 
@@ -524,8 +534,8 @@ msgstr "יישור לוח"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr ""
 "יישור הלוח. הערכים האפשריים הם „start”,‏ „center” ו־„end” (התחלה, מרכז וסוף "
 "בהתאמה)."
@@ -630,12 +640,12 @@ msgstr "Animation speed"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
@@ -702,7 +712,7 @@ msgstr "להשתמש בצבע כתב משלך"
 msgid "Text Color"
 msgstr "צבע כתב"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:140
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:135
 msgid "Panel"
 msgstr "לוח"
 
@@ -712,44 +722,44 @@ msgid ""
 "show the time, etc."
 msgstr "שיגור יישומים אחרים ואספקת שירותים לניהול חלונות, הצגת השעה וכו׳."
 
-#: gnome-panel/gp-add-applet-window.c:368
+#: gnome-panel/gp-add-applet-window.c:431
 msgid "Add to Panel"
 msgstr "הוספה ללוח"
 
-#: gnome-panel/gp-add-applet-window.c:541
+#: gnome-panel/gp-add-applet-window.c:604
 msgid "No applets found"
 msgstr "לא נמצאו יישומונים"
 
-#: gnome-panel/gp-add-applet-window.c:556
+#: gnome-panel/gp-add-applet-window.c:619
 #, c-format
 msgid "Find an item to add to “%s”"
 msgstr "איתור פריט להוספה אל „%s”"
 
-#: gnome-panel/gp-add-applet-window.c:558
+#: gnome-panel/gp-add-applet-window.c:621
 msgid "Find an item to add to the panel"
 msgstr "איתור פריט להוספה ללוח"
 
-#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+#: gnome-panel/gp-applet-list-row.c:118 gnome-panel/gp-applet-row.c:112
 msgid "Help"
 msgstr "עזרה"
 
-#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+#: gnome-panel/gp-applet-list-row.c:128 gnome-panel/gp-applet-row.c:122
 msgid "About"
 msgstr "על אודות"
 
-#: gnome-panel/gp-applet-list-row.c:207
+#: gnome-panel/gp-applet-list-row.c:284
 msgid "Remove"
 msgstr "הסרה"
 
-#: gnome-panel/gp-applet-manager.c:420
+#: gnome-panel/gp-applet-manager.c:251
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
-"מושבת כיוון שהיישומון הזה מופיע בהגדרה „disabled-applets” תחת סכמת ה־"
-"GSettings בשם „org.gnome.gnome-panel.lockdown”."
+"מושבת כיוון שהיישומון הזה מופיע בהגדרה „disabled-applets” תחת סכמת "
+"ה־GSettings בשם „org.gnome.gnome-panel.lockdown”."
 
-#: gnome-panel/gp-applet-row.c:270
+#: gnome-panel/gp-applet-row.c:285
 msgid "Add"
 msgstr "הוספה"
 
@@ -757,45 +767,84 @@ msgstr "הוספה"
 msgid "Hide Panel"
 msgstr "הסתרת לוח"
 
-#: gnome-panel/gp-main.c:49
+#: gnome-panel/gp-error-applet.c:121
+msgid "Failed to Load Applet"
+msgstr "אירע כשל בטעינת היישומון"
+
+#: gnome-panel/gp-error-applet.c:123
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "למחוק יישומון זה מהתצורה שלך?"
+
+#: gnome-panel/gp-error-applet.c:124
+#, c-format
+msgid ""
+"The panel encountered a problem while loading “<b>%s</b>” applet from "
+"“<b>%s</b>” module! %s"
+msgstr "הלוח נתקל בתקלה בזמן טעינת יישומון „<b>%s</b>” מהמודל „<b>%s</b>”! ‏%s"
+
+#: gnome-panel/gp-error-applet.c:143
+msgid "OK"
+msgstr "_אישור"
+
+#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1350
+msgid "_Delete"
+msgstr "_מחיקה"
+
+#: gnome-panel/gp-error-applet.c:159
+msgid "D_on't Delete"
+msgstr "_לא למחוק"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: gnome-panel/gp-error-applet.c:173 libpanel-util/panel-error.c:78
+msgid "Error"
+msgstr "שגיאה"
+
+#: gnome-panel/gp-error-applet.c:185
+msgid "Failed to load applet! Click for more info..."
+msgstr "אירע כשל בטעינת היישומון! יש ללחוץ למידע נוסף…"
+
+#: gnome-panel/gp-main.c:44
 msgid "Replace a currently running panel"
 msgstr "החלפת הלוח הפעיל כעת"
 
-#: gnome-panel/gp-main.c:55
+#: gnome-panel/gp-main.c:50
 msgid "Print version"
 msgstr "הצגת גרסה"
 
-#: gnome-panel/gp-properties-dialog.c:224
+#: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Top"
 msgstr "מעלה"
 
-#: gnome-panel/gp-properties-dialog.c:225
+#: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "מטה"
 
-#: gnome-panel/gp-properties-dialog.c:226
+#: gnome-panel/gp-properties-dialog.c:228
 msgctxt "Orientation"
 msgid "Left"
 msgstr "שמאלה"
 
-#: gnome-panel/gp-properties-dialog.c:227
+#: gnome-panel/gp-properties-dialog.c:229
 msgctxt "Orientation"
 msgid "Right"
 msgstr "ימינה"
 
-#: gnome-panel/gp-properties-dialog.c:231
+#: gnome-panel/gp-properties-dialog.c:233
 msgctxt "Alignment"
 msgid "Start"
 msgstr "התחלה"
 
-#: gnome-panel/gp-properties-dialog.c:232
+#: gnome-panel/gp-properties-dialog.c:234
 msgctxt "Alignment"
 msgid "Center"
 msgstr "מרכז"
 
-#: gnome-panel/gp-properties-dialog.c:233
+#: gnome-panel/gp-properties-dialog.c:235
 msgctxt "Alignment"
 msgid "End"
 msgstr "סוף"
@@ -804,151 +853,115 @@ msgstr "סוף"
 msgid "Panel Properties"
 msgstr "מאפייני לוח"
 
-#: gnome-panel/gp-properties-dialog.ui:56
-#: gnome-panel/gp-properties-dialog.ui:369
+#: gnome-panel/gp-properties-dialog.ui:53
+#: gnome-panel/gp-properties-dialog.ui:366
 msgid "Some of these properties are locked down"
 msgstr "חלק ממאפיינים אלו נעולים"
 
-#: gnome-panel/gp-properties-dialog.ui:82
+#: gnome-panel/gp-properties-dialog.ui:79
 msgid "_Orientation:"
 msgstr "_כיוון:"
 
-#: gnome-panel/gp-properties-dialog.ui:125
+#: gnome-panel/gp-properties-dialog.ui:122
 msgid "_Alignment:"
 msgstr "יי_שור:"
 
-#: gnome-panel/gp-properties-dialog.ui:168
+#: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
 msgstr "_גודל:"
 
-#: gnome-panel/gp-properties-dialog.ui:204
+#: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
 msgstr "פיקסלים"
 
-#: gnome-panel/gp-properties-dialog.ui:237
+#: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
 msgstr "שונות:"
 
-#: gnome-panel/gp-properties-dialog.ui:256
+#: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
 msgstr "ה_רחבה"
 
-#: gnome-panel/gp-properties-dialog.ui:271
+#: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
 msgstr "_הסתרה אוטומטית"
 
-#: gnome-panel/gp-properties-dialog.ui:286
+#: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
 msgstr "הצגת _כפתורי הסתרה"
 
-#: gnome-panel/gp-properties-dialog.ui:301
+#: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
 msgstr "_חצים על כפתורי ההסתרה"
 
-#: gnome-panel/gp-properties-dialog.ui:334 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:600
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "כללי"
 
-#: gnome-panel/gp-properties-dialog.ui:401
+#: gnome-panel/gp-properties-dialog.ui:398
 msgid "Background color:"
 msgstr "צבע רקע:"
 
-#: gnome-panel/gp-properties-dialog.ui:464
+#: gnome-panel/gp-properties-dialog.ui:461
 msgid "Background image:"
 msgstr "תמונת רקע:"
 
-#: gnome-panel/gp-properties-dialog.ui:503
+#: gnome-panel/gp-properties-dialog.ui:500
 msgid "Tile"
 msgstr "ריצוף"
 
-#: gnome-panel/gp-properties-dialog.ui:518
+#: gnome-panel/gp-properties-dialog.ui:515
 msgid "Stretch"
 msgstr "מתיחה"
 
-#: gnome-panel/gp-properties-dialog.ui:533
+#: gnome-panel/gp-properties-dialog.ui:530
 msgid "Fit"
 msgstr "התאמה"
 
-#: gnome-panel/gp-properties-dialog.ui:555
+#: gnome-panel/gp-properties-dialog.ui:552
 msgid "Rotate image on vertical panel"
 msgstr "היפוך התמונה בלוח אנכי"
 
-#: gnome-panel/gp-properties-dialog.ui:598
+#: gnome-panel/gp-properties-dialog.ui:595
 msgid "Text color:"
 msgstr "צבע הכתב:"
 
-#: gnome-panel/gp-properties-dialog.ui:653
+#: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
 msgstr "ערכת עיצוב"
 
-#: gnome-panel/gp-properties-dialog.ui:669
+#: gnome-panel/gp-properties-dialog.ui:676
 msgid "Left"
 msgstr "שמאלה"
 
-#: gnome-panel/gp-properties-dialog.ui:692
+#: gnome-panel/gp-properties-dialog.ui:699
 msgid "Center"
 msgstr "מרכז"
 
-#: gnome-panel/gp-properties-dialog.ui:715
+#: gnome-panel/gp-properties-dialog.ui:722
 msgid "Right"
 msgstr "ימינה"
 
-#: gnome-panel/gp-properties-dialog.ui:743
+#: gnome-panel/gp-properties-dialog.ui:754
 msgid "Applets"
 msgstr "יישומונים"
 
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:944
-msgid "Error"
-msgstr "שגיאה"
-
-#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "לא ניתן לפתוח את המיקום ‚%s’"
-
-#: gnome-panel/panel-applet-frame.c:395
+#: gnome-panel/panel-applet-frame.c:402
 msgid "_Move"
 msgstr "ה_זזה"
 
-#: gnome-panel/panel-applet-frame.c:402
+#: gnome-panel/panel-applet-frame.c:409
 msgid "_Remove From Panel"
 msgstr "_הסרה מהלוח"
 
-#: gnome-panel/panel-applet-frame.c:907
-#, c-format
-msgid "The panel encountered a problem while loading \"%s\"."
-msgstr "הלוח נתקל בתקלה בזמן טעינת „%s”."
-
-#: gnome-panel/panel-applet-frame.c:919
-msgid "OK"
-msgstr "_אישור"
-
-#: gnome-panel/panel-applet-frame.c:923
-msgid "Do you want to delete the applet from your configuration?"
-msgstr "למחוק יישומון זה מהתצורה שלך?"
-
-#: gnome-panel/panel-applet-frame.c:926
-msgid "D_on't Delete"
-msgstr "_לא למחוק"
-
-#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
-msgid "_Delete"
-msgstr "_מחיקה"
-
-#: gnome-panel/panel.c:587
+#: gnome-panel/panel.c:637
 #, c-format
 msgid "Open URL: %s"
 msgstr "פתיחת כתובת: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:642 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:692 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -957,247 +970,156 @@ msgstr "פתיחת ‚%s’"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:697 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:763 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "פתיחת התיקייה האישית שלך"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:707 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:773 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "מחשב"
 
 #. name
-#: gnome-panel/panel.c:708 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:774 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "עיון בכל הכוננים והתיקיות המקומיים והמרוחקים הזמינים ממחשה זה"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:716 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:782 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "רשת"
 
 #. name
-#: gnome-panel/panel.c:717 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:783 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "עיון במיקומי רשת מקומיים ומסומנים"
 
-#: gnome-panel/panel.c:1240
+#: gnome-panel/panel.c:1341
 msgid "Delete this panel?"
 msgstr "למחוק לוח זה?"
 
-#: gnome-panel/panel.c:1244
+#: gnome-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "כאשר לוח נמחק, הוא והגדרותיו הולכים לאיבוד."
 
-#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
-#: gnome-panel/panel-run-dialog.ui:236
-#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
+#: modules/action-button/panel-run-dialog.c:1337
+#: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
 msgstr "_ביטול"
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:83
 msgid "Cannot delete this panel"
 msgstr "לא ניתן למחוק לוח זה"
 
-#: gnome-panel/panel-context-menu.c:61
+#: gnome-panel/panel-context-menu.c:84
 msgid "You must always have at least one panel."
 msgstr "חייב להיות לכל הפחות לוח אחד."
 
-#: gnome-panel/panel-context-menu.c:177
+#: gnome-panel/panel-context-menu.c:218
 msgid "_Add to Panel..."
 msgstr "_הוספה ללוח..."
 
-#: gnome-panel/panel-context-menu.c:188
+#: gnome-panel/panel-context-menu.c:229
 #: modules/action-button/gp-lock-screen-menu.ui:13
 #: modules/launcher/custom-launcher-menu.ui:9
 #: modules/launcher/launcher-menu.ui:9
 msgid "_Properties"
 msgstr "_מאפיינים"
 
-#: gnome-panel/panel-context-menu.c:195
+#: gnome-panel/panel-context-menu.c:236
 msgid "_Delete This Panel"
 msgstr "_מחיקת לוח זה"
 
-#: gnome-panel/panel-context-menu.c:207
+#: gnome-panel/panel-context-menu.c:248
 msgid "_New Panel"
 msgstr "לוח _חדש"
 
-#: gnome-panel/panel-layout.c:1097 gnome-panel/panel-layout.c:1112
-msgid "Cannot create initial panel layout.\n"
-msgstr "לא ניתן ליצור פריסת לוח ראשונית.\n"
-
-#: gnome-panel/panel-run-dialog.c:430
-msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "Cannot find a terminal, using xterm, even if it may not work"
-
-#: gnome-panel/panel-run-dialog.c:488
-#, c-format
-msgid "Could not run command '%s'"
-msgstr "לא ניתן להפעיל את הפקודה '%s'"
-
-#: gnome-panel/panel-run-dialog.c:528
-#, c-format
-msgid "Could not convert '%s' from UTF-8"
-msgstr "לא ניתן להמיר את '%s' מ־UTF-8"
-
-#: gnome-panel/panel-run-dialog.c:1298
-msgid "Choose a file to append to the command..."
-msgstr "בחירת קובץ לצירוף לפקודה..."
-
-#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "_אישור"
-
-#: gnome-panel/panel-run-dialog.c:1691 gnome-panel/panel-run-dialog.ui:194
-msgid "Select an application to view its description."
-msgstr "בחירת יישום תציג את תיאורו."
-
-#: gnome-panel/panel-run-dialog.c:1729
-#, c-format
-msgid "Will run command: '%s'"
-msgstr "יפעיל את הפקודה: '%s'"
-
-#: gnome-panel/panel-run-dialog.c:1762
-#, c-format
-msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
-"לכתובת שנגררה אל תיבת הדו־שיח הייתה תבנית שגויה (%d) או אורך שגוי (%d)\n"
-"‬\n"
-
-#: gnome-panel/panel-run-dialog.ui:8
-msgid "Run Application"
-msgstr "הרצת יישום"
-
-#: gnome-panel/panel-run-dialog.ui:45
-msgid "Command icon"
-msgstr "סמל פקודה"
-
-#: gnome-panel/panel-run-dialog.ui:46
-msgid "The icon of the command to be run."
-msgstr "סמל הפקודה להרצה."
-
-#: gnome-panel/panel-run-dialog.ui:89
-msgid "Run in _terminal"
-msgstr "הפעלה _במסוף"
-
-#: gnome-panel/panel-run-dialog.ui:98
-msgid "Select this box to run the command in a terminal window."
-msgstr "בחירה בתיבה זו תפעיל את הפקודה בחלון מסוף."
-
-#: gnome-panel/panel-run-dialog.ui:110
-msgid "Run with _file..."
-msgstr "הפעלה עם _קובץ…"
-
-#: gnome-panel/panel-run-dialog.ui:117
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr ""
-"לחיצה על כפתור זה תאפשר לך לעיין לאיתור קובץ שיתווסף לסוף מחרוזת הפקודה."
-
-#: gnome-panel/panel-run-dialog.ui:176
-msgid "List of known applications"
-msgstr "רשימה של יישומים ידועים"
-
-#: gnome-panel/panel-run-dialog.ui:212
-msgid "Show list of known _applications"
-msgstr "הצגת רשימה של _יישומים ידועים"
-
-#: gnome-panel/panel-run-dialog.ui:251
-msgid "_Run"
-msgstr "ה_רצה"
-
-#: gnome-panel/panel-run-dialog.ui:260
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr "לחיצה על כפתור זה תפעיל את היישום הנבחר או את הפקודה שבשדה ערך הפקודה."
+#: gnome-panel/panel-layout.c:1241 gnome-panel/panel-layout.c:1266
+msgid "Cannot create initial panel layout"
+msgstr "לא ניתן ליצור פריסת לוח ראשונית"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr "לוח קצה מורחב עליון"
 
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr "לוח ממורכז עליון"
 
-#: gnome-panel/panel-toplevel.c:1496
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr "לוח שמתחיל למעלה"
 
-#: gnome-panel/panel-toplevel.c:1497
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr "לוח שמסתיים למעלה"
 
-#: gnome-panel/panel-toplevel.c:1501
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr "לוח קצה מורחב תחתון"
 
-#: gnome-panel/panel-toplevel.c:1502
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr "לוח ממורכז תחתון"
 
-#: gnome-panel/panel-toplevel.c:1503
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr "לוח שמתחיל למטה"
 
-#: gnome-panel/panel-toplevel.c:1504
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr "לוח שמסתיים למטה"
 
-#: gnome-panel/panel-toplevel.c:1508
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr "לוח קצה מורחב שמאלי"
 
-#: gnome-panel/panel-toplevel.c:1509
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr "לוח ממורכז שמאלי"
 
-#: gnome-panel/panel-toplevel.c:1510
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr "לוח שמתחיל משמאל"
 
-#: gnome-panel/panel-toplevel.c:1511
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr "לוח שמסתיים משמאל"
 
-#: gnome-panel/panel-toplevel.c:1515
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr "לוח קצה מורחב ימני"
 
-#: gnome-panel/panel-toplevel.c:1516
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr "לוח ממורכז ימני"
 
-#: gnome-panel/panel-toplevel.c:1517
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr "לוח שמתחיל מימין"
 
-#: gnome-panel/panel-toplevel.c:1518
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr "לוח שמסתיים בימין"
 
-#: gnome-panel/panel-util.c:358
-msgid "file"
-msgstr "קובץ"
-
-#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:212
+#: gnome-panel/panel-util.c:280 modules/menu/gp-menu-utils.c:212
 msgid "Home"
 msgstr "בית"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:229
+#: gnome-panel/panel-util.c:289 modules/menu/gp-menu-utils.c:229
 msgid "File System"
 msgstr "מערכת קבצים"
 
@@ -1210,7 +1132,7 @@ msgstr "מערכת קבצים"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:127
+#: gnome-panel/panel-util.c:503 modules/menu/gp-menu-utils.c:127
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1228,67 +1150,72 @@ msgstr "ביטול"
 msgid "Done"
 msgstr "בוצע"
 
-#: libgnome-panel/gp-module.c:640
+#: libgnome-panel/gp-module.c:691
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "לא ניתן להציג את מסמך העזרה '%s'"
 
-#: libgnome-panel/gp-module.c:657
+#: libgnome-panel/gp-module.c:708
 msgid "Error displaying help document"
 msgstr "שגיאה בהצגת מסמך העזרה"
 
-#: libgnome-panel/gp-module.c:697
+#: libgnome-panel/gp-module.c:751
 #, c-format
 msgid "Backend “%s” is not supported."
 msgstr "המנגנון „%s” לא נתמך."
 
-#: modules/action-button/gp-action-button-module.c:44
+#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "לא ניתן לפתוח את המיקום ‚%s’"
+
+#: modules/action-button/gp-action-button-module.c:45
 #: modules/action-button/panel-force-quit.c:223
 msgid "Force Quit"
 msgstr "אילוץ יציאה"
 
-#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-action-button-module.c:46
 #: modules/action-button/gp-force-quit-applet.c:66
 msgid "Force a misbehaving application to quit"
 msgstr "אילוץ יציאת יישום מתפרע"
 
-#: modules/action-button/gp-action-button-module.c:53
+#: modules/action-button/gp-action-button-module.c:54
 #: modules/menu/gp-lock-logout.c:1003
 msgid "Lock Screen"
 msgstr "נעילת מסך"
 
-#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-action-button-module.c:55
 #: modules/action-button/gp-lock-screen-applet.c:320
 #: modules/menu/gp-lock-logout.c:1004
 msgid "Protect your computer from unauthorized use"
 msgstr "הגנה על מחשבך משימוש לא מאושר"
 
-#: modules/action-button/gp-action-button-module.c:62
+#: modules/action-button/gp-action-button-module.c:63
 #: modules/menu/gp-lock-logout.c:982
 msgid "Log Out"
 msgstr "יציאה"
 
-#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-action-button-module.c:64
 #: modules/action-button/gp-logout-applet.c:68
 #: modules/menu/gp-lock-logout.c:983
 msgid "Log out of this session to log in as a different user"
 msgstr "יציאה מהפעלה זו כדי להתחבר כמשתמש אחר"
 
-#: modules/action-button/gp-action-button-module.c:71
+#: modules/action-button/gp-action-button-module.c:72
 msgid "Run Application..."
 msgstr "הרצת יישום…"
 
-#: modules/action-button/gp-action-button-module.c:72
-#: modules/action-button/gp-run-applet.c:64
+#: modules/action-button/gp-action-button-module.c:73
+#: modules/action-button/gp-run-applet.c:66
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "הפעלת יישום על ידי כתיבת פקודה או בחירתו מרשימה"
 
-#: modules/action-button/gp-action-button-module.c:80
+#: modules/action-button/gp-action-button-module.c:81
 #: modules/menu/gp-lock-logout.c:1115
 msgid "Power Off"
 msgstr "כיבוי"
 
-#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-action-button-module.c:82
 #: modules/action-button/gp-shutdown-applet.c:71
 #: modules/menu/gp-lock-logout.c:1116
 msgid "Power off the computer"
@@ -1333,7 +1260,7 @@ msgstr ""
 "מושבת כיוון שההגדרה „disable-log-out” בסכמת ה־GSettings בשם „org.gnome."
 "desktop.lockdown” מוגדרת ל־true."
 
-#: modules/action-button/gp-run-applet.c:135
+#: modules/action-button/gp-run-applet.c:134
 #: modules/launcher/gp-launcher-module.c:33
 msgid ""
 "Disabled because “disable-command-line” setting in “org.gnome.desktop."
@@ -1361,6 +1288,98 @@ msgstr "אילוץ סגירת יישום עלולה להוביל לאובדן ה
 msgid "_Force quit"
 msgstr "_אילוץ סגירה"
 
+#: modules/action-button/panel-run-dialog.c:437
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "Cannot find a terminal, using xterm, even if it may not work"
+
+#: modules/action-button/panel-run-dialog.c:495
+#, c-format
+msgid "Could not run command '%s'"
+msgstr "לא ניתן להפעיל את הפקודה '%s'"
+
+#: modules/action-button/panel-run-dialog.c:562
+#, c-format
+msgid "Could not convert '%s' from UTF-8"
+msgstr "לא ניתן להמיר את '%s' מ־UTF-8"
+
+#: modules/action-button/panel-run-dialog.c:1334
+msgid "Choose a file to append to the command..."
+msgstr "בחירת קובץ לצירוף לפקודה..."
+
+#: modules/action-button/panel-run-dialog.c:1338 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_אישור"
+
+#: modules/action-button/panel-run-dialog.c:1727
+#: modules/action-button/panel-run-dialog.ui:194
+msgid "Select an application to view its description."
+msgstr "בחירת יישום תציג את תיאורו."
+
+#: modules/action-button/panel-run-dialog.c:1765
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "יפעיל את הפקודה: '%s'"
+
+#: modules/action-button/panel-run-dialog.c:1798
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr ""
+"לכתובת שנגררה אל תיבת הדו־שיח הייתה תבנית שגויה (%d) או אורך שגוי (%d)\n"
+"‬\n"
+
+#: modules/action-button/panel-run-dialog.c:1970
+msgid "file"
+msgstr "קובץ"
+
+#: modules/action-button/panel-run-dialog.ui:8
+msgid "Run Application"
+msgstr "הרצת יישום"
+
+#: modules/action-button/panel-run-dialog.ui:45
+msgid "Command icon"
+msgstr "סמל פקודה"
+
+#: modules/action-button/panel-run-dialog.ui:46
+msgid "The icon of the command to be run."
+msgstr "סמל הפקודה להרצה."
+
+#: modules/action-button/panel-run-dialog.ui:89
+msgid "Run in _terminal"
+msgstr "הפעלה _במסוף"
+
+#: modules/action-button/panel-run-dialog.ui:98
+msgid "Select this box to run the command in a terminal window."
+msgstr "בחירה בתיבה זו תפעיל את הפקודה בחלון מסוף."
+
+#: modules/action-button/panel-run-dialog.ui:110
+msgid "Run with _file..."
+msgstr "הפעלה עם _קובץ…"
+
+#: modules/action-button/panel-run-dialog.ui:117
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"לחיצה על כפתור זה תאפשר לך לעיין לאיתור קובץ שיתווסף לסוף מחרוזת הפקודה."
+
+#: modules/action-button/panel-run-dialog.ui:176
+msgid "List of known applications"
+msgstr "רשימה של יישומים ידועים"
+
+#: modules/action-button/panel-run-dialog.ui:212
+msgid "Show list of known _applications"
+msgstr "הצגת רשימה של _יישומים ידועים"
+
+#: modules/action-button/panel-run-dialog.ui:251
+msgid "_Run"
+msgstr "ה_רצה"
+
+#: modules/action-button/panel-run-dialog.ui:260
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr "לחיצה על כפתור זה תפעיל את היישום הנבחר או את הפקודה שבשדה ערך הפקודה."
+
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
@@ -1370,7 +1389,7 @@ msgstr "_אילוץ סגירה"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
+#: modules/clock/calendar-window.c:408 modules/clock/clock-location-tile.c:595
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -1385,8 +1404,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
-#: modules/clock/clock-location-tile.c:505
+#: modules/clock/calendar-window.c:414 modules/clock/clock-location-tile.c:557
+#: modules/clock/clock-location-tile.c:602
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1394,143 +1413,183 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:282
+#: modules/clock/calendar-window.c:421
 msgid "%b %d"
 msgstr "%b %d"
 
-#: modules/clock/calendar-window.c:787
-msgid "Tasks"
-msgstr "משימות"
-
-#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
-#: modules/clock/calendar-window.c:1568
+#: modules/clock/calendar-window.c:927 modules/clock/calendar-window.c:1116
+#: modules/clock/calendar-window.c:1619
 msgid "Edit"
 msgstr "עריכה"
 
-#: modules/clock/calendar-window.c:910
+#: modules/clock/calendar-window.c:932
+msgid "Tasks"
+msgstr "משימות"
+
+#: modules/clock/calendar-window.c:1055
 msgid "All Day"
 msgstr "כל היום"
 
-#: modules/clock/calendar-window.c:1054
+#: modules/clock/calendar-window.c:1204
 msgid "Appointments"
 msgstr "פגישות"
 
-#: modules/clock/calendar-window.c:1079
+#: modules/clock/calendar-window.c:1229
 msgid "Birthdays and Anniversaries"
 msgstr "ימי הולדת וימי שנה"
 
-#: modules/clock/calendar-window.c:1104
+#: modules/clock/calendar-window.c:1254
 msgid "Weather Information"
 msgstr "פרטי מזג האוויר"
 
-#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1614
+msgid "Click to prevent further changes to timezone"
+msgstr "יש ללחוץ כדי למנוע שינויים נוספים לאזור הזמן"
+
+#: modules/clock/calendar-window.c:1615
+msgid "Click to make changes to timezone"
+msgstr "יש ללחוץ כדי לבצע שינויים באזור הזמן"
+
+#: modules/clock/calendar-window.c:1624 modules/clock/clock.ui:719
 msgid "Locations"
 msgstr "מקומות"
 
-#: modules/clock/calendar-window.c:1827
+#: modules/clock/calendar-window.c:1939
 msgid "Calendar"
 msgstr "לוח שנה"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:174
-#| msgid "%A %B %d (%%s)"
+#: modules/clock/clock-applet.c:175
 msgid "%A %B %d (%Z)"
 msgstr "‫%A, %d ב%B (%Z)"
 
-#: modules/clock/clock-applet.c:183
+#: modules/clock/clock-applet.c:184
 msgid "Click to hide your appointments and tasks"
 msgstr "לחיצה תסתיר את הפגישות והמשימות שלך"
 
-#: modules/clock/clock-applet.c:186
+#: modules/clock/clock-applet.c:187
 msgid "Click to view your appointments and tasks"
 msgstr "לחיצה תציג את הפגישות והמשימות שלך"
 
-#: modules/clock/clock-applet.c:190
+#: modules/clock/clock-applet.c:191
 msgid "Click to hide month calendar"
 msgstr "לחיצה תסתיר את לוח השנה החודשי"
 
-#: modules/clock/clock-applet.c:193
+#: modules/clock/clock-applet.c:194
 msgid "Click to view month calendar"
 msgstr "לחיצה תציג את לוח השנה החודשי"
 
 #. Done!
-#: modules/clock/clock-applet.c:725
+#: modules/clock/clock-applet.c:735
 msgid "Computer Clock"
 msgstr "שעון מחשב"
 
-#: modules/clock/clock-applet.c:811
+#: modules/clock/clock-applet.c:821
 msgid "Failed to open the time settings"
 msgstr "פתיחת הגדרות השעון נכשלה"
 
-#: modules/clock/clock-applet.c:1430
+#: modules/clock/clock-applet.c:1477
 msgid "Choose Location"
 msgstr "בחירת מיקום"
 
-#: modules/clock/clock-applet.c:1509
+#: modules/clock/clock-applet.c:1554
 msgid "Edit Location"
 msgstr "עריכת מיקום"
 
-#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
+#: modules/clock/clock-applet.c:1590 modules/clock/clock-applet.c:1598
 msgid "Default"
 msgstr "ברירת מחדל"
 
-#: modules/clock/clock-applet.c:1546
+#: modules/clock/clock-applet.c:1591
 msgid "Kelvin"
 msgstr "קלווין"
 
-#: modules/clock/clock-applet.c:1547
+#: modules/clock/clock-applet.c:1592
 msgid "Celsius"
 msgstr "צלזיוס"
 
-#: modules/clock/clock-applet.c:1548
+#: modules/clock/clock-applet.c:1593
 msgid "Fahrenheit"
 msgstr "פרנהייט"
 
-#: modules/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1599
 msgid "Meters per second (m/s)"
 msgstr "מטרים לשנייה (מ/ש׳)"
 
-#: modules/clock/clock-applet.c:1555
+#: modules/clock/clock-applet.c:1600
 msgid "Kilometers per hour (kph)"
 msgstr "קילומטרים לשעה (קמ״ש)"
 
-#: modules/clock/clock-applet.c:1556
+#: modules/clock/clock-applet.c:1601
 msgid "Miles per hour (mph)"
 msgstr "מייל לשעה (mph)"
 
-#: modules/clock/clock-applet.c:1557
+#: modules/clock/clock-applet.c:1602
 msgid "Knots"
 msgstr "קשרים"
 
-#: modules/clock/clock-applet.c:1558
+#: modules/clock/clock-applet.c:1603
 msgid "Beaufort scale"
 msgstr "סולם בופורט"
 
-#: modules/clock/clock-applet.c:1611
+#: modules/clock/clock-applet.c:1656
 msgid "City Name"
 msgstr "שם עיר"
 
-#: modules/clock/clock-applet.c:1615
+#: modules/clock/clock-applet.c:1660
 msgid "City Time Zone"
 msgstr "אזור זמן העיר"
 
-#: modules/clock/clock-location-tile.c:177
+#. Recurse, adding the ADM1 name to the country name
+#. Translators: this is the name of a location followed by a region, for example:
+#. * 'London, United Kingdom'
+#. * You shouldn't need to translate this string unless the language has a different comma.
+#.
+#. <location> with no parent <city>
+#. Translators: this is the name of a location followed by a region, for example:
+#. * 'London, United Kingdom'
+#. * You shouldn't need to translate this string unless the language has a different comma.
+#.
+#: modules/clock/clock-location-entry.c:553
+#: modules/clock/clock-location-entry.c:582
+#: modules/clock/clock-location-tile.c:698
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#: modules/clock/clock-location-entry.c:860
+msgid "Loading…"
+msgstr "בטעינה…"
+
+#: modules/clock/clock-location-tile.c:255
 msgid "Failed to set the system timezone"
 msgstr "הגדרת אזור הזמן במערכת נכשלה"
 
-#: modules/clock/clock-location-tile.c:225
-msgid "<small>Set...</small>"
-msgstr "‫<small>הגדרה…</small>"
-
-#: modules/clock/clock-location-tile.c:226
-msgid "<small>Set</small>"
-msgstr "<small>הגדרה</small>"
-
-#: modules/clock/clock-location-tile.c:302
+#: modules/clock/clock-location-tile.c:342
 msgid "Set location as current location and use its timezone for this computer"
 msgstr "הגדרת מיקום זה כאזור הזמן הנוכחי עבור מחשב זה"
+
+#: modules/clock/clock-location-tile.c:344
+#, fuzzy
+#| msgid ""
+#| "Set location as current location and use its timezone for this computer"
+msgid "Set location as current location"
+msgstr "הגדרת מיקום זה כאזור הזמן הנוכחי עבור מחשב זה"
+
+#: modules/clock/clock-location-tile.c:346
+#, fuzzy
+#| msgid ""
+#| "Set location as current location and use its timezone for this computer"
+msgid ""
+"Click “Unlock” to set location as current location and use its timezone for "
+"this computer"
+msgstr "הגדרת מיקום זה כאזור הזמן הנוכחי עבור מחשב זה"
+
+#: modules/clock/clock-location-tile.c:424
+msgid "Set"
+msgstr "הגדרה"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1538,7 +1597,7 @@ msgstr "הגדרת מיקום זה כאזור הזמן הנוכחי עבור מ�
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:534
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -1547,7 +1606,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/clock/clock-location-tile.c:446
+#: modules/clock/clock-location-tile.c:542
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1555,22 +1614,17 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:455
+#: modules/clock/clock-location-tile.c:551
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:614
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:627
+#: modules/clock/clock-location-tile.c:711
 #, c-format
 msgid "%s, feels like %s"
 msgstr "‏%s, מרגיש %s"
 
-#: modules/clock/clock-location-tile.c:648
+#: modules/clock/clock-location-tile.c:732
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "זריחה: %s \\ שקיעה: %s"
@@ -1612,115 +1666,111 @@ msgstr "צפון"
 msgid "South"
 msgstr "דרום"
 
-#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
-msgid "(optional)"
-msgstr "(רשות)"
-
-#: modules/clock/clock.ui:265
+#: modules/clock/clock.ui:162
 msgid "_Location Name:"
 msgstr "שם ה_מיקום:"
 
-#: modules/clock/clock.ui:278
-msgid "L_atitude:"
-msgstr "קו _רוחב:"
-
-#: modules/clock/clock.ui:292
-msgid "L_ongitude:"
-msgstr "קו _אורך:"
-
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: modules/clock/clock.ui:308
+#: modules/clock/clock.ui:177
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr "נא להקליד שם של עיר, אזור או מדינה ולאחר מכן לבחור בהתאמה מהחלונית."
 
-#: modules/clock/clock.ui:325
-msgid "_Timezone:"
-msgstr "אזור _זמן:"
+#: modules/clock/clock.ui:194
+msgid "L_atitude:"
+msgstr "קו _רוחב:"
 
-#: modules/clock/clock.ui:360
+#: modules/clock/clock.ui:207
+msgid "L_ongitude:"
+msgstr "קו _אורך:"
+
+#: modules/clock/clock.ui:249 modules/clock/clock.ui:293
+msgid "(optional)"
+msgstr "(רשות)"
+
+#: modules/clock/clock.ui:331
 msgid "Clock Preferences"
 msgstr "העדפות שעון"
 
-#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
+#: modules/clock/clock.ui:347 modules/fish/fish.ui:36
 msgid "_Help"
 msgstr "_עזרה"
 
-#: modules/clock/clock.ui:391
+#: modules/clock/clock.ui:362
 msgid "Time _Settings"
 msgstr "_הגדרות שעה"
 
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:566
-#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/clock/clock.ui:377 modules/fish/fish-applet.c:567
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:688
 #: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "_סגירה"
 
-#: modules/clock/clock.ui:451
+#: modules/clock/clock.ui:421
 msgid "Clock Format"
 msgstr "מבנה השעון"
 
-#: modules/clock/clock.ui:470
+#: modules/clock/clock.ui:441
 msgid "_12 hour format"
 msgstr "תצורת 12 _שעות"
 
-#: modules/clock/clock.ui:487
+#: modules/clock/clock.ui:458
 msgid "_24 hour format"
 msgstr "תצורת 24 ש_עות"
 
-#: modules/clock/clock.ui:527
+#: modules/clock/clock.ui:497
 msgid "Panel Display"
 msgstr "תצוגת לוח"
 
-#: modules/clock/clock.ui:547
+#: modules/clock/clock.ui:518
 msgid "Show the _date"
 msgstr "הצגת _תאריך"
 
-#: modules/clock/clock.ui:563
+#: modules/clock/clock.ui:534
 msgid "Show seco_nds"
 msgstr "הצגת שנ_יות"
 
-#: modules/clock/clock.ui:579
+#: modules/clock/clock.ui:550
 msgid "Show _weather"
 msgstr "הצגת _מזג אוויר"
 
-#: modules/clock/clock.ui:595
+#: modules/clock/clock.ui:566
 msgid "Show _temperature"
 msgstr "הצגת _טמפרטורה"
 
-#: modules/clock/clock.ui:682
+#: modules/clock/clock.ui:653
 msgid "_Add"
 msgstr "_הוספה"
 
-#: modules/clock/clock.ui:697
+#: modules/clock/clock.ui:668
 msgid "_Edit"
 msgstr "_עריכה"
 
-#: modules/clock/clock.ui:712
+#: modules/clock/clock.ui:683
 msgid "_Remove"
 msgstr "ה_סרה"
 
-#: modules/clock/clock.ui:773
+#: modules/clock/clock.ui:743
 msgid "Display"
 msgstr "תצוגה"
 
-#: modules/clock/clock.ui:805
+#: modules/clock/clock.ui:776
 msgid "_Visibility unit:"
 msgstr "יחידת _ראות:"
 
-#: modules/clock/clock.ui:828
+#: modules/clock/clock.ui:799
 msgid "_Pressure unit:"
 msgstr "יחידת _לחץ אויר:"
 
-#: modules/clock/clock.ui:864
+#: modules/clock/clock.ui:835
 msgid "_Temperature unit:"
 msgstr "יחידת _טמפרטורה:"
 
-#: modules/clock/clock.ui:878
+#: modules/clock/clock.ui:849
 msgid "_Wind speed unit:"
 msgstr "יחידת מהירות ה_רוח:"
 
-#: modules/clock/clock.ui:910
+#: modules/clock/clock.ui:894
 msgid "Weather"
 msgstr "מזג אויר"
 
@@ -1770,16 +1820,16 @@ msgstr ""
 "\n"
 "פרטים: %s"
 
-#: modules/fish/fish-applet.c:565
+#: modules/fish/fish-applet.c:566
 msgid "_Speak again"
 msgstr "לה_גיד שוב"
 
-#: modules/fish/fish-applet.c:637
+#: modules/fish/fish-applet.c:638
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "הפקודה המוגדרת לא עובדת, והוחלפה ב־: %s"
 
-#: modules/fish/fish-applet.c:666
+#: modules/fish/fish-applet.c:667
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -1792,7 +1842,7 @@ msgstr ""
 "‬\n"
 "‫פרטים: %s"
 
-#: modules/fish/fish-applet.c:682
+#: modules/fish/fish-applet.c:683
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -1805,15 +1855,15 @@ msgstr ""
 "‬\n"
 "‫פרטים: %s"
 
-#: modules/fish/fish-applet.c:1065
+#: modules/fish/fish-applet.c:1066
 msgid "The water needs changing"
 msgstr "צריך להחליף את המים"
 
-#: modules/fish/fish-applet.c:1067
+#: modules/fish/fish-applet.c:1068
 msgid "Look at today's date!"
 msgstr "ואו, כמה זמן עבר!"
 
-#: modules/fish/fish-applet.c:1161
+#: modules/fish/fish-applet.c:1162
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s הדג, מגלה העתידות"
@@ -1971,7 +2021,7 @@ msgstr "לא ניתן להפעיל את שורת הפקודה „%s”."
 msgid "Could not open location"
 msgstr "לא ניתן לפתוח מיקום"
 
-#: modules/launcher/gp-launcher-applet.c:1008
+#: modules/launcher/gp-launcher-applet.c:1012
 #, c-format
 msgid "Failed to load key file “%s”: %s"
 msgstr "טעינת קובץ המפתח „%s” נכשלה: %s"
@@ -1996,46 +2046,46 @@ msgstr "העתקת משגר מתפריט היישומים"
 msgid "Could not save launcher"
 msgstr "לא ניתן לשמור משגר"
 
-#: modules/launcher/gp-launcher-properties.c:672
+#: modules/launcher/gp-launcher-properties.c:680
 msgid "_Revert"
 msgstr "_ביטול"
 
-#: modules/launcher/gp-launcher-properties.c:692
+#: modules/launcher/gp-launcher-properties.c:700
 msgid "Launcher Properties"
 msgstr "מאפייני משגר"
 
-#: modules/launcher/gp-launcher-utils.c:56
+#: modules/launcher/gp-launcher-utils.c:58
 #, c-format
 msgid "Launcher does not start with required “%s” group."
 msgstr "המשגר לא מופעל עם הקבוצה הנחוצה „%s”."
 
-#: modules/launcher/gp-launcher-utils.c:74
+#: modules/launcher/gp-launcher-utils.c:78
 #, c-format
 msgid "Launcher has invalid Type key value “%s”."
 msgstr "למשגר יש ערך מפתח סוג שגוי „%s”."
 
-#: modules/launcher/gp-launcher-utils.c:156
+#: modules/launcher/gp-launcher-utils.c:162
 msgid "The icon of the launcher is not set."
 msgstr "סמל המשגר לא הוגדר."
 
-#: modules/launcher/gp-launcher-utils.c:164
+#: modules/launcher/gp-launcher-utils.c:172
 msgid "The type of the launcher is not set."
 msgstr "סוג המשגר לא הוגדר."
 
-#: modules/launcher/gp-launcher-utils.c:173
+#: modules/launcher/gp-launcher-utils.c:183
 #, c-format
 msgid "The type of the launcher must be “%s” or “%s”."
 msgstr "סוג המשגר חייב להיות „%s” או „%s”."
 
-#: modules/launcher/gp-launcher-utils.c:183
+#: modules/launcher/gp-launcher-utils.c:195
 msgid "The name of the launcher is not set."
 msgstr "שם המשגר לא נקבע."
 
-#: modules/launcher/gp-launcher-utils.c:193
+#: modules/launcher/gp-launcher-utils.c:207
 msgid "The command of the launcher is not set."
 msgstr "הפקודה של המשגר לא נקבעה."
 
-#: modules/launcher/gp-launcher-utils.c:198
+#: modules/launcher/gp-launcher-utils.c:214
 msgid "The location of the launcher is not set."
 msgstr "המיקום של המשגר לא נקבע."
 
@@ -2071,66 +2121,66 @@ msgstr "הפעלה מחדש"
 msgid "Restart the computer"
 msgstr "הפעלה מחדש של המחשב"
 
-#: modules/menu/gp-menu-bar-applet.c:145
+#: modules/menu/gp-menu-bar-applet.c:152
 msgid "Applications"
 msgstr "יישומים"
 
-#: modules/menu/gp-menu-bar-applet.c:150
+#: modules/menu/gp-menu-bar-applet.c:157
 msgid "Browse and run installed applications"
 msgstr "דפדוף והרצת יישומים מותקנים"
 
-#: modules/menu/gp-menu-bar-applet.c:185
-#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
+#: modules/menu/gp-menu-bar-applet.c:192
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:464
 msgid "Places"
 msgstr "מקומות"
 
-#: modules/menu/gp-menu-bar-applet.c:189
+#: modules/menu/gp-menu-bar-applet.c:196
 msgid "Access documents, folders and network places"
 msgstr "גישה למסמכים, תיקיות ומקומות רשת"
 
-#: modules/menu/gp-menu-bar-applet.c:225
+#: modules/menu/gp-menu-bar-applet.c:232
 msgid "System"
 msgstr "מערכת"
 
-#: modules/menu/gp-menu-bar-applet.c:229
+#: modules/menu/gp-menu-bar-applet.c:236
 msgid "Change system appearance and behavior, or get help"
 msgstr "החלפת מראה והתנהגות המערכת או קבלת עזרה"
 
-#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-bar-applet.c:286
 #: modules/menu/gp-menu-button-applet.c:486
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "נא להתקין את היישום ‚%s’."
 
-#: modules/menu/gp-menu-module.c:375
+#: modules/menu/gp-menu-module.c:377
 msgid "Main Menu"
 msgstr "תפריט ראשי"
 
-#: modules/menu/gp-menu-module.c:376
+#: modules/menu/gp-menu-module.c:378
 msgid "The main GNOME menu"
 msgstr "התפריט הראשי של GNOME"
 
-#: modules/menu/gp-menu-module.c:382
+#: modules/menu/gp-menu-module.c:384
 msgid "Menu Button"
 msgstr "כפתור תפריט"
 
-#: modules/menu/gp-menu-module.c:383
+#: modules/menu/gp-menu-module.c:385
 msgid "A custom menu button"
 msgstr "כפתור משלך בתפריט"
 
-#: modules/menu/gp-menu-module.c:391
+#: modules/menu/gp-menu-module.c:393
 msgid "Menu Bar"
 msgstr "סרגל תפריט"
 
-#: modules/menu/gp-menu-module.c:392
+#: modules/menu/gp-menu-module.c:394
 msgid "A custom menu bar"
 msgstr "סרגל תפריט מותאם אישית"
 
-#: modules/menu/gp-menu-module.c:398
+#: modules/menu/gp-menu-module.c:400
 msgid "User menu"
 msgstr "תפריט משתמש"
 
-#: modules/menu/gp-menu-module.c:399
+#: modules/menu/gp-menu-module.c:401
 msgid "Menu to change your settings and log out"
 msgstr "תפריט לשינוי ההגדרות שלך ולהתנתקות"
 
@@ -2281,31 +2331,31 @@ msgstr "מארח מדווח מצב"
 msgid "Display all Status Notifier Items"
 msgstr "הצגת כל פריטים מדווח המצב"
 
-#: modules/wncklet/showdesktop.c:71
+#: modules/wncklet/showdesktop.c:73
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "שגיאה בטעינת %s: %s\n"
 
-#: modules/wncklet/showdesktop.c:72
+#: modules/wncklet/showdesktop.c:74
 msgid "Icon not found"
 msgstr "סמל לא נמצא"
 
-#: modules/wncklet/showdesktop.c:103
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to restore hidden windows."
 msgstr "לחיצה כאן תחזיר חלונות מוסתרים."
 
-#: modules/wncklet/showdesktop.c:105
+#: modules/wncklet/showdesktop.c:107
 msgid "Click here to hide all windows and show the desktop."
 msgstr "לחיצה כאן תסתיר את כל החלונות ותציג את שולחן העבודה."
 
-#: modules/wncklet/showdesktop.c:136
+#: modules/wncklet/showdesktop.c:138
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 "מנהל החלונות שלך לא תומך בכפתור הצגת שולחן העבודה או שאין לך מנהל חלונות."
 
-#: modules/wncklet/showdesktop.c:333
+#: modules/wncklet/showdesktop.c:313
 msgid "Show Desktop Button"
 msgstr "כפתור הצגת שולחן עבודה"
 
@@ -2353,7 +2403,7 @@ msgstr "החזרה ל_סביבת העבודה הנוכחית"
 msgid "Restore to na_tive workspace"
 msgstr "החזרה לסביבת העבודה ה_מקורית"
 
-#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
+#: modules/wncklet/window-menu.c:171 modules/wncklet/wncklet-module.c:55
 msgid "Window Selector"
 msgstr "בוחר חלונות"
 
@@ -2385,14 +2435,14 @@ msgstr "מחליף סביבות עבודה"
 msgid "Switch between workspaces"
 msgstr "החלפה בין סביבות עבודה"
 
-#: modules/wncklet/workspace-switcher.c:578
-#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:579
+#: modules/wncklet/workspace-switcher.c:768
 #: modules/wncklet/workspace-switcher.ui:145
 msgid "rows"
 msgstr "שורות"
 
-#: modules/wncklet/workspace-switcher.c:578
-#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:579
+#: modules/wncklet/workspace-switcher.c:768
 msgid "columns"
 msgstr "עמודות"
 
@@ -2436,6 +2486,15 @@ msgstr "הצגת _שמות סביבות העבודה במחליף"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "סביבות עבודה"
+
+#~ msgid "<small>Set...</small>"
+#~ msgstr "‫<small>הגדרה…</small>"
+
+#~ msgid "<small>Set</small>"
+#~ msgstr "<small>הגדרה</small>"
+
+#~ msgid "_Timezone:"
+#~ msgstr "אזור _זמן:"
 
 #~ msgid "Clock Applet Factory"
 #~ msgstr "יצרן יישומוני שעון"
@@ -2730,9 +2789,6 @@ msgstr "סביבות עבודה"
 #~ "Specify the initial orientation of the applet (top, bottom, left or right)"
 #~ msgstr "ציון את היישור ההתחלתי של היישומון (מעלה, מטה, שמאלה או ימינה)"
 
-#~ msgid "Failed to load applet %s"
-#~ msgstr "אירע כשל בטעינת היישומון %s"
-
 #~ msgid "Test applet utility"
 #~ msgstr "תכנית בדיקת יישומונים"
 
@@ -2996,20 +3052,20 @@ msgstr "סביבות עבודה"
 
 #~ msgid ""
 #~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
-#~ "\". If set to \"internet\", the clock will display Internet time. The "
-#~ "Internet time system divides the day into 1000 \".beats\". There are no "
-#~ "time zones in this system, so time is the same all over the world. If set "
-#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and "
+#~ "\"custom\". If set to \"internet\", the clock will display Internet time. "
+#~ "The Internet time system divides the day into 1000 \".beats\". There are "
+#~ "no time zones in this system, so time is the same all over the world. If "
+#~ "set to \"unix\", the clock will display time in seconds since Epoch, i.e. "
 #~ "1970-01-01. If set to \"custom\", the clock will display time according "
 #~ "to the format specified in the custom_format key."
 #~ msgstr ""
 #~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
-#~ "\". If set to \"internet\", the clock will display Internet time. The "
-#~ "Internet time system divides the day into 1000 \".beats\". There are no "
-#~ "time zones in this system, so time is the same all over the world. If set "
-#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and "
+#~ "\"custom\". If set to \"internet\", the clock will display Internet time. "
+#~ "The Internet time system divides the day into 1000 \".beats\". There are "
+#~ "no time zones in this system, so time is the same all over the world. If "
+#~ "set to \"unix\", the clock will display time in seconds since Epoch, i.e. "
 #~ "1970-01-01. If set to \"custom\", the clock will display time according "
 #~ "to the format specified in the custom_format key."
 
@@ -3337,12 +3393,12 @@ msgstr "סביבות עבודה"
 
 #~ msgid ""
 #~ "The type of this panel object. Possible values are \"drawer-object\", "
-#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet"
-#~ "\", \"menu-bar\" and \"separator\"."
+#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-"
+#~ "applet\", \"menu-bar\" and \"separator\"."
 #~ msgstr ""
 #~ "The type of this panel object. Possible values are \"drawer-object\", "
-#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet"
-#~ "\", \"menu-bar\" and \"separator\"."
+#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-"
+#~ "applet\", \"menu-bar\" and \"separator\"."
 
 #~ msgid ""
 #~ "This key is deprecated, following the migration to a new library for "
@@ -3482,9 +3538,6 @@ msgstr "סביבות עבודה"
 
 #~ msgid "Change system time"
 #~ msgstr "שנה את שעת המערכת"
-
-#~ msgid "Change system time zone"
-#~ msgstr "שנה את אזור הזמן במערכת"
 
 #~ msgid "Configure hardware clock"
 #~ msgstr "הגדרות שעון חומרה"
