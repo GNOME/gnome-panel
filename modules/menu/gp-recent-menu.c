@@ -230,7 +230,7 @@ append_clear (GpRecentMenu *menu)
   gtk_widget_set_sensitive (item, FALSE);
   gtk_widget_show (item);
 
-  icon = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
+  icon = gtk_image_new_from_icon_name ("edit-clear-all", GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (icon), menu->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (_("Clear Recent Documents..."));
