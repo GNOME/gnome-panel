@@ -517,14 +517,6 @@ append_user_item (StandaloneMenuData *data,
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  data->lock_logout = gp_lock_logout_new ();
-
-  g_object_set (data->lock_logout,
-                "enable-tooltips", data->enable_tooltips,
-                "locked-down", data->locked_down,
-                "menu-icon-size", data->menu_icon_size,
-                NULL);
-
   gp_user_menu_set_append_func (GP_USER_MENU (user_menu),
                                 (GpAppendMenuItemsFunc) append_lock_logout,
                                 data);

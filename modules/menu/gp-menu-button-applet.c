@@ -277,26 +277,6 @@ append_user_item (GpMenuButtonApplet *menu_button,
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  priv->lock_logout = gp_lock_logout_new ();
-
-  g_object_bind_property (menu_button, "enable-tooltips",
-                          priv->lock_logout, "enable-tooltips",
-                          G_BINDING_DEFAULT |
-                          G_BINDING_SYNC_CREATE);
-
-  g_object_bind_property (menu_button, "locked-down",
-                          priv->lock_logout, "locked-down",
-                          G_BINDING_DEFAULT |
-                          G_BINDING_SYNC_CREATE);
-
-  g_object_bind_property (menu_button, "menu-icon-size",
-                          priv->lock_logout, "menu-icon-size",
-                          G_BINDING_DEFAULT |
-                          G_BINDING_SYNC_CREATE);
-
-  g_signal_connect_swapped (priv->lock_logout, "changed",
-                            G_CALLBACK (gp_user_menu_reload), user_menu);
-
   gp_user_menu_set_append_func (GP_USER_MENU (user_menu),
                                 (GpAppendMenuItemsFunc) append_lock_logout,
                                 priv);
