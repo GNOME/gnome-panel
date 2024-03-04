@@ -562,7 +562,7 @@ install_properties (GObjectClass *object_class)
    */
   properties[PROP_MENU_ICON_SIZE] =
     g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",
-                       16, 24, 16,
+                       16, 48, 16,
                        G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
                        G_PARAM_STATIC_STRINGS);
 
