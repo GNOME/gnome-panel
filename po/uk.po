@@ -4,13 +4,13 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2002-2008.
 # wanderlust <wanderlust@ukr.net>, 2009.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-10-29 14:07+0000\n"
-"PO-Revision-Date: 2022-10-29 18:42+0300\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-03-17 08:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -236,20 +236,20 @@ msgstr ""
 "стовпчиків (при вертикальному), показує перемикач робочих просторів. Цей "
 "параметр має сенс лише коли встановлено параметр display_all_workspaces."
 
-#: data/org.gnome.gnome-panel.gschema.xml:28
+#: data/org.gnome.gnome-panel.gschema.xml:30
 msgid "Default panel layout"
 msgstr "Типове компонування панелі"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:31
 msgid "The default panel layout to use when panels are created."
 msgstr ""
 "Типове компонування панелі, яким слід користуватися при створенні панелей."
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid "Enable tooltips"
 msgstr "Увімкнути підказки"
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:37
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -257,45 +257,59 @@ msgstr ""
 "Якщо позначено, підказки показуватимуться для об'єктів у панелях. Підказки "
 "можна вимкнути для всієї стільниці з ключем gtk-enable-tooltips у GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:42
 msgid "Prefer symbolic icons in panels"
 msgstr "Перевага символічних піктограм на панелях"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:47
 msgid "Confirm panel removal"
 msgstr "Запитувати підтвердження на вилучення панелі"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:48
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "Чи запитувати підтвердження для вилучення панелі."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "Icon size in menus"
 msgstr "Розмір піктограм у меню"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:54
 msgid "The size of icons in menus."
 msgstr "Розмір піктограм у меню."
 
-#: data/org.gnome.gnome-panel.gschema.xml:57
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid "Maximum icon size in panels"
 msgstr "Максимальний розмір піктограм на панелях"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:60
 msgid "The maximum size of icons in panels."
 msgstr "Максимальний розмір піктограм на панелях."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:66
+#| msgid "Maximum icon size in panels"
+msgid "Icon spacing in panels"
+msgstr "Фаска для піктограм на панелях"
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
+msgstr ""
+"При горизонтальній панелі мінімальний проміжок між верхнім і нижнім краєм та"
+" піктограмою. Для вертикальних панелей мінімальний проміжок від лівого і"
+" правого країв."
+
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid "Which theme variant to use"
 msgstr "Який варіант теми використовувати"
 
-#: data/org.gnome.gnome-panel.gschema.xml:70
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr "Список ідентифікаторів панелей"
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -304,11 +318,11 @@ msgstr ""
 "верхнього рівня. Параметри для кожної панелі зберігаються в /apps/panel/"
 "toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:75
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr "Список ідентифікаторів об'єктів панелі"
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -318,11 +332,11 @@ msgstr ""
 "об'єкт панелі (наприклад, пускача, кнопку команди чи меню). Налаштування для "
 "кожного з цих об'єктів зберігаються в /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:83
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr "Повне блокування панелі"
 
-#: data/org.gnome.gnome-panel.gschema.xml:84
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -332,11 +346,11 @@ msgstr ""
 "Проте індивідуальні аплети можуть потребувати окремого блокування. Щоб зміни "
 "набрали у силу потрібно перезапустити панель."
 
-#: data/org.gnome.gnome-panel.gschema.xml:88
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr "Ідентифікатори (IID) аплетів, для вимкнення їхнього завантаження"
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -349,11 +363,11 @@ msgstr ""
 "GNOME_MiniCommanderApplet' у цей список. Для набирання чинності потрібно "
 "перезавантажити аплет."
 
-#: data/org.gnome.gnome-panel.gschema.xml:93
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr "Вимкнути примусове завершення"
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -361,21 +375,21 @@ msgstr ""
 "Якщо встановлено, панель не буде дозволяти користувачу примусово завершувати "
 "програму, шляхом блокування доступу до кнопки примусового завершення."
 
-#: data/org.gnome.gnome-panel.gschema.xml:101
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr "Історія вікна «Запустити програму»"
 
-#: data/org.gnome.gnome-panel.gschema.xml:102
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Список команд, які використовувались у минулому в вікні «Запустити програму»."
 
-#: data/org.gnome.gnome-panel.gschema.xml:106
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Увімкнути список програм у вікні запуску програм."
 
-#: data/org.gnome.gnome-panel.gschema.xml:107
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -385,11 +399,11 @@ msgstr ""
 "відомих програм. Чи буде він розгорнутим, чи ні, визначається параметром "
 "show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:111
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Розгортати список програм у вікні запуску програм."
 
-#: data/org.gnome.gnome-panel.gschema.xml:112
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -399,11 +413,11 @@ msgstr ""
 "буде розгорнутим. Цей параметр має значення лише тоді, коли встановлено "
 "параметр enable_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:116
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Увімкнути автодоповнення у вікні запуску програм."
 
-#: data/org.gnome.gnome-panel.gschema.xml:117
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "Якщо встановлено, у вікні запуску програм доступне автодоповнення."
@@ -414,8 +428,8 @@ msgstr "IID об'єкта "
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr "ID реалізація об'єкта — наприклад, «ClockAppletFactory::ClockApplet»."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
@@ -423,7 +437,6 @@ msgid "Module ID"
 msgstr "Ідентифікатор модуля"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:14
-#| msgid "Applets"
 msgid "Applet ID"
 msgstr "Ідентифікатор аплету"
 
@@ -508,18 +521,18 @@ msgstr "Орієнтація панелі"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Орієнтація панелі. Можливими значеннями є \"top\" (вгорі), \"bottom"
-"\" (внизу), \"left\" (зліва), \"right\" (справа). У розширеному режимі "
-"значення визначає, біля якої сторони екрана розміщено панель. Не у "
+"Орієнтація панелі. Можливими значеннями є \"top\" (вгорі), "
+"\"bottom\" (внизу), \"left\" (зліва), \"right\" (справа). У розширеному "
+"режимі значення визначає, біля якої сторони екрана розміщено панель. Не у "
 "розширеному — різниця між \"top\" і \"bottom\" те така важлива, обидва "
 "значення визначають, що це горизонтальна панель, але все ж визначає деякі "
 "аспекти поведінки об'єктів на панелі. Наприклад, із значенням \"top\" меню "
@@ -531,11 +544,11 @@ msgstr "Вирівнювання панелі"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr ""
-"Вирівнювання панелі. Можливі значення: \"start\" (початок), \"center"
-"\" (центр), \"end\" (кінець)."
+"Вирівнювання панелі. Можливі значення: \"start\" (початок), "
+"\"center\" (центр), \"end\" (кінець)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
@@ -641,13 +654,13 @@ msgstr "Швидкість анімації"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Швидкість, з якому має відбуватись анімація. Можливими значеннями є \"slow"
-"\" (повільно), \"medium\" (помірно), і \"fast\" (швидко). Цей параметр має "
-"зміст лише тоді, коли встановлено параметр enable_animations."
+"Швидкість, з якому має відбуватись анімація. Можливими значеннями є "
+"\"slow\" (повільно), \"medium\" (помірно), і \"fast\" (швидко). Цей параметр "
+"має зміст лише тоді, коли встановлено параметр enable_animations."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
 msgid "Use custom background color"
@@ -725,20 +738,20 @@ msgstr ""
 "Запуск інших програм та різні засобів для керування вікнами, показу часу "
 "тощо."
 
-#: gnome-panel/gp-add-applet-window.c:426
+#: gnome-panel/gp-add-applet-window.c:431
 msgid "Add to Panel"
 msgstr "Додати до панелі"
 
-#: gnome-panel/gp-add-applet-window.c:599
+#: gnome-panel/gp-add-applet-window.c:604
 msgid "No applets found"
 msgstr "Аплетів не знайдено"
 
-#: gnome-panel/gp-add-applet-window.c:614
+#: gnome-panel/gp-add-applet-window.c:619
 #, c-format
 msgid "Find an item to add to “%s”"
 msgstr "Знайти запис для додавання до «%s»"
 
-#: gnome-panel/gp-add-applet-window.c:616
+#: gnome-panel/gp-add-applet-window.c:621
 msgid "Find an item to add to the panel"
 msgstr "Знати об'єкт для додавання до панелі"
 
@@ -780,10 +793,9 @@ msgstr "Вилучити аплет з поточними налаштуванн
 
 #: gnome-panel/gp-error-applet.c:124
 #, c-format
-#| msgid "The panel encountered a problem while loading “<b>%s</b>”! %s"
 msgid ""
-"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
-"%s</b>” module! %s"
+"The panel encountered a problem while loading “<b>%s</b>” applet from "
+"“<b>%s</b>” module! %s"
 msgstr ""
 "Виявлено проблему при завантаженні аплету «<b>%s</b>» з модуля «<b>%s</b>»! "
 "%s"
@@ -792,7 +804,7 @@ msgstr ""
 msgid "OK"
 msgstr "Гаразд"
 
-#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1335
+#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1350
 msgid "_Delete"
 msgstr "В_илучити"
 
@@ -961,13 +973,13 @@ msgstr "Пере_містити"
 msgid "_Remove From Panel"
 msgstr "В_илучити з панелі"
 
-#: gnome-panel/panel.c:626
+#: gnome-panel/panel.c:637
 #, c-format
 msgid "Open URL: %s"
 msgstr "Відкрити URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:681 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:692 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -976,18 +988,18 @@ msgstr "Відкрити «%s»"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:751 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:763 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Відкрити особисту теку"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:761 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:773 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Комп'ютер"
 
 #. name
-#: gnome-panel/panel.c:762 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:774 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -995,20 +1007,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:770 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:782 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Мережа"
 
 #. name
-#: gnome-panel/panel.c:771 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:783 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Оглянути закладені й локальні мережеві адреси"
 
-#: gnome-panel/panel.c:1326
+#: gnome-panel/panel.c:1341
 msgid "Delete this panel?"
 msgstr "Вилучити цю панель?"
 
-#: gnome-panel/panel.c:1330
+#: gnome-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1016,7 +1028,7 @@ msgstr ""
 "З вилученням панелі буде втрачено усі параметри\n"
 "цієї панелі."
 
-#: gnome-panel/panel.c:1334 modules/action-button/panel-force-quit.c:214
+#: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
 #: modules/action-button/panel-run-dialog.c:1337
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1057,67 +1069,67 @@ msgstr "Неможливо створити початкове компонув�
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr "Верхня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr "Верхня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr "Верхня панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr "Верхня панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr "Нижня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr "Нижня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr "Нижня панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr "Нижня панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr "Ліва розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr "Ліва центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr "Ліва панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr "Ліва панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr "Права розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr "Права центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr "Права панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr "Права панель у кінці"
 
@@ -2159,7 +2171,7 @@ msgid "Change system appearance and behavior, or get help"
 msgstr "Змінити зовнішній вигляд та поведінку або отримати довідку"
 
 #: modules/menu/gp-menu-bar-applet.c:286
-#: modules/menu/gp-menu-button-applet.c:486
+#: modules/menu/gp-menu-button-applet.c:494
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Будь ласка, встановіть програму «%s»."
