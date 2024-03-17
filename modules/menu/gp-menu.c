@@ -95,6 +95,99 @@ activate_cb (GtkWidget       *item,
   gp_menu_utils_app_info_launch (info);
 }
 
+static gboolean
+icon_name_is_symbolic (const char *icon_name)
+{
+  return g_str_has_suffix (icon_name, "-symbolic") ||
+         g_str_has_suffix (icon_name, "-symbolic-ltr") ||
+         g_str_has_suffix (icon_name, "-symbolic-rtl");
+}
+
+static GPtrArray *
+icon_names_from_themed_icon (GIcon *icon)
+{
+  GPtrArray *array;
+
+  array = g_ptr_array_new_null_terminated (1, NULL, TRUE);
+
+  if (G_IS_THEMED_ICON (icon))
+    {
+      const char *const *names;
+      int i;
+
+      names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+
+      for (i = 0; names[i] != NULL; i++)
+        {
+          if (icon_name_is_symbolic (names[i]))
+            continue;
+
+          g_ptr_array_add (array, (void *) names[i]);
+        }
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  return array;
+}
+
+static GtkWidget *
+image_from_gicon (GIcon        *icon,
+                  unsigned int  size,
+                  int           scale)
+{
+  GtkWidget *image;
+
+  image = gtk_image_new ();
+
+  if (G_IS_THEMED_ICON (icon))
+    {
+      GPtrArray *icon_names;
+      GtkIconTheme *icon_theme;
+      GtkIconLookupFlags flags;
+      GtkIconInfo *icon_info;
+      GFile *file;
+      GIcon *tmp;
+
+      icon_names = icon_names_from_themed_icon (icon);
+
+      icon_theme = gtk_icon_theme_get_default ();
+      flags = GTK_ICON_LOOKUP_FORCE_REGULAR | GTK_ICON_LOOKUP_FORCE_SIZE;
+
+      icon_info = gtk_icon_theme_choose_icon_for_scale (icon_theme,
+                                                        (const char **) icon_names->pdata,
+                                                        size,
+                                                        scale,
+                                                        flags);
+
+      g_ptr_array_unref (icon_names);
+
+      if (icon_info == NULL)
+        icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
+                                                          "image-missing",
+                                                          size,
+                                                          scale,
+                                                          flags);
+
+      file = g_file_new_for_path (gtk_icon_info_get_filename (icon_info));
+      tmp = g_file_icon_new (file);
+      g_object_unref (file);
+
+      gtk_image_set_from_gicon (GTK_IMAGE (image), tmp, GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), size);
+      g_object_unref (tmp);
+    }
+  else
+    {
+      gtk_image_set_from_gicon (GTK_IMAGE (image), icon, GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), size);
+    }
+
+  return image;
+}
+
 static void
 append_directory (GtkMenuShell  *shell,
                   GMenuTreeIter *iter,
@@ -121,12 +214,11 @@ append_directory (GtkMenuShell  *shell,
 
   if (icon != NULL)
     {
+      int scale;
       GtkWidget *image;
 
-      image = gtk_image_new ();
-
-      gtk_image_set_from_gicon (GTK_IMAGE (image), icon, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
+      scale = gtk_widget_get_scale_factor (GTK_WIDGET (menu));
+      image = image_from_gicon (icon, menu->menu_icon_size, scale);
 
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
     }
@@ -182,12 +274,11 @@ append_entry (GtkMenuShell  *shell,
 
   if (icon != NULL)
     {
+      int scale;
       GtkWidget *image;
 
-      image = gtk_image_new ();
-
-      gtk_image_set_from_gicon (GTK_IMAGE (image), icon, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
+      scale = gtk_widget_get_scale_factor (GTK_WIDGET (menu));
+      image = image_from_gicon (icon, menu->menu_icon_size, scale);
 
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
     }
@@ -383,6 +474,13 @@ menu_tree_changed_cb (GMenuTree *tree,
                       GpMenu    *menu)
 {
   queue_reload (menu);
+}
+
+static void
+icon_theme_changed_cb (GtkIconTheme *icon_theme,
+                       GpMenu       *self)
+{
+  queue_reload (self);
 }
 
 static void
@@ -618,6 +716,15 @@ gp_menu_class_init (GpMenuClass *menu_class)
 static void
 gp_menu_init (GpMenu *menu)
 {
+  GtkIconTheme *icon_theme;
+
+  icon_theme = gtk_icon_theme_get_default ();
+
+  g_signal_connect_object (icon_theme,
+                           "changed",
+                           G_CALLBACK (icon_theme_changed_cb),
+                           menu,
+                           0);
 }
 
 GtkWidget *
