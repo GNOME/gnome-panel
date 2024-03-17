@@ -270,12 +270,14 @@ AC_CONFIG_FILES([
   Makefile
 
   data/Makefile
-  data/16x16/Makefile
-  data/22x22/Makefile
-  data/24x24/Makefile
-  data/32x32/Makefile
-  data/48x48/Makefile
-  data/scalable/Makefile
+
+  data/icons/Makefile
+  data/icons/16x16/Makefile
+  data/icons/22x22/Makefile
+  data/icons/24x24/Makefile
+  data/icons/32x32/Makefile
+  data/icons/48x48/Makefile
+  data/icons/scalable/Makefile
 
   data/pkgconfig/Makefile
   data/pkgconfig/libgnome-panel.pc
