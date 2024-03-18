@@ -10,19 +10,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2023-01-25 19:18+0000\n"
-"PO-Revision-Date: 2023-02-12 17:06+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-03-18 18:30+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
-"n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -240,19 +240,19 @@ msgstr ""
 "navpično postavitev) se pokaže v preklopniku delovnih površin. Možnost je "
 "odvisna od možnosti prikaži vse delovne površine."
 
-#: data/org.gnome.gnome-panel.gschema.xml:28
+#: data/org.gnome.gnome-panel.gschema.xml:30
 msgid "Default panel layout"
 msgstr "Privzeta postavitev pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:31
 msgid "The default panel layout to use when panels are created."
 msgstr "Privzeta postavitev pulta, ko je ta ustvarjen."
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid "Enable tooltips"
 msgstr "Omogoči namige"
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:37
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -261,15 +261,15 @@ msgstr ""
 "pladnja. Orodne namige je mogoče onemogočiti za celotno namizje s "
 "spreminjanjem lastnosti gtk-enable-tooltips med nastavitvami GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:42
 msgid "Prefer symbolic icons in panels"
 msgstr "Prednostno uporabi simbolne ikone v pultih"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:47
 msgid "Confirm panel removal"
 msgstr "Potrdi odstranitev pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:48
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -277,31 +277,44 @@ msgstr ""
 "Izbrana možnost onemogoča prikaz pogovornega okna, ki vpraša ali je "
 "uporabnik prepričan o odstranitvi pulta."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "Icon size in menus"
 msgstr "Velikost ikon v meniju"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:54
 msgid "The size of icons in menus."
 msgstr "Velikost ikon v meniju."
 
-#: data/org.gnome.gnome-panel.gschema.xml:57
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid "Maximum icon size in panels"
 msgstr "Največja velikost ikone na pladnju"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:60
 msgid "The maximum size of icons in panels."
 msgstr "Največja sprejemljiva velikost ikone na pladnju."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:66
+msgid "Icon spacing in panels"
+msgstr "Največja velikost ikone na pladnju"
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
+msgstr ""
+"Na vodoravni plošči je najmanjši razmik med zgornjo in spodnjo obrobo ter "
+"ikono. Za navpično ploščo je na voljo minimalni prostor od leve in desne "
+"meje."
+
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid "Which theme variant to use"
 msgstr "Katera različica teme naj bo v uporabi"
 
-#: data/org.gnome.gnome-panel.gschema.xml:70
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr "Seznam ID številk pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -309,11 +322,11 @@ msgstr ""
 "Seznam ID številk pultov. Vsak ID predstavlja samostojen vrhnji pult. "
 "Nastavitve vsakega pulta posebej so shranjene v /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:75
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr "Seznam ID številk predmetov pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -323,11 +336,11 @@ msgstr ""
 "pulta (npr. zaganjalnik, gumb dejanja ali gumb menija). Nastavitve vsakega "
 "izmed predmetov so shranjene v /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:83
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr "Popolno zaklepanje pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:84
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -336,11 +349,11 @@ msgstr ""
 "Izbrana možnost onemogoča spreminjanje nastavitev pulta. Nekateri apleti "
 "morajo biti zaklenjeni posebej. Po izbiri je treba pult ponovno zagnati."
 
-#: data/org.gnome.gnome-panel.gschema.xml:88
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr "IID-številke apletov, ki naj se jim prepreči nalaganje"
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -352,11 +365,11 @@ msgstr ""
 "preprečite vstavek mini-poveljnik v ta seznam dodajte »OAFIID:"
 "GNOME_MiniCommanderApplet«. Možnost zahteva ponovni zagon pulta."
 
-#: data/org.gnome.gnome-panel.gschema.xml:93
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr "Onemogoči vsiljeno končanje"
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -364,21 +377,21 @@ msgstr ""
 "Izbrana možnost onemogoča uporabniku vsiljeno končanje programov tako, da "
 "odstrani možnost iz menija."
 
-#: data/org.gnome.gnome-panel.gschema.xml:101
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr "Zgodovina pogovornega okna »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:102
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Seznam ukazov, ki so bili uporabljeni v pogovornem oknu »Zaženi program«."
 
-#: data/org.gnome.gnome-panel.gschema.xml:106
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Omogoči seznam programov v pogovornem oknu »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:107
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -388,11 +401,11 @@ msgstr ""
 "pogovornega okna »Zaženi program«. Oblika prikaza seznama je podana s "
 "ključem show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:111
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Razširi seznam programov v pogovornem oknu »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:112
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -402,11 +415,11 @@ msgstr ""
 "»Zaženi program« razširi ob odprtju pogovornega okna. Možnost je odvisna od "
 "uporabe možnosti omogoči seznam programov."
 
-#: data/org.gnome.gnome-panel.gschema.xml:116
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Omogoči samodejno dopolnjevanje v pogovornem oknu »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:117
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -419,8 +432,8 @@ msgstr "IID predmeta"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::"
-"ClockApplet\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
+"\"."
 msgstr "Vstavitveni ID predmeta - npr. »ClockAppletFactory::ClockApplet«."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
@@ -510,12 +523,12 @@ msgstr "Usmerjenost pulta"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", "
-"\"left\", \"right\". In expanded mode the key specifies which screen edge "
-"the panel is on. In un-expanded mode the difference between \"top\" and "
-"\"bottom\" is less important - both indicate that this is a horizontal panel "
-"- but still give a useful hint as to how some panel objects should behave. "
-"For example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
@@ -531,8 +544,8 @@ msgstr "Poravnava pulta"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", "
-"\"end\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
+"\"."
 msgstr "Poravnava plošče. Možne vrednosti so »začetek«, »sredinsko«, »konec«."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
@@ -633,8 +646,8 @@ msgstr "Hitrost animacije"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are "
-"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
 "Hitrost animacij pulta. Mogoče vrednosti so »počasi«, »srednje« in »hitro«. "
@@ -771,8 +784,8 @@ msgstr "Ali želite izbrisati aplet iz nastavitev?"
 #: gnome-panel/gp-error-applet.c:124
 #, c-format
 msgid ""
-"The panel encountered a problem while loading “<b>%s</b>” applet from "
-"“<b>%s</b>” module! %s"
+"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
+"%s</b>” module! %s"
 msgstr ""
 "Pult je naletel na težavo pri nalaganju apleta »<b>%s</b>« iz modula »<b>%s</"
 "b>«! %s"
@@ -1045,67 +1058,67 @@ msgstr "Ni mogoče ustvariti začetne postavitve pulta"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr "Zgornji razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr "Zgornji središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr "Zgornji začetni pult"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr "Zgornji končni pult"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr "Spodnji razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr "Spodnji središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr "Spodnji začetni pult"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr "Spodnji končni pult"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr "Levi razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr "Levi središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr "Levi začetni pult"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr "Levi končni pult"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr "Desni razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr "Desni središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr "Desni začetni pult"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr "Desni končni pult"
 
@@ -2139,7 +2152,7 @@ msgid "Change system appearance and behavior, or get help"
 msgstr "Spreminjanje videza in obnašanja sistema oziroma iskanje pomoči"
 
 #: modules/menu/gp-menu-bar-applet.c:286
-#: modules/menu/gp-menu-button-applet.c:486
+#: modules/menu/gp-menu-button-applet.c:494
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Namestiti je treba program »%s«."
