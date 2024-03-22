@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-10-29 14:07+0000\n"
-"PO-Revision-Date: 2022-11-01 07:58+0100\n"
-"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-03-22 05:21+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:20
 msgid "Show week numbers in calendar"
-msgstr ""
+msgstr "კალენდარში კვირის რიცხვის ჩვენება"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:21
 msgid "If true, show week numbers in the calendar."
@@ -211,95 +211,105 @@ msgid ""
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:28
+#: data/org.gnome.gnome-panel.gschema.xml:30
 msgid "Default panel layout"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:31
 msgid "The default panel layout to use when panels are created."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid "Enable tooltips"
 msgstr "მინიშნებების ჩვენება"
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:37
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:42
 msgid "Prefer symbolic icons in panels"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:47
 msgid "Confirm panel removal"
 msgstr "დაადასტურეთ პანელის წაშლა"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:48
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "Icon size in menus"
 msgstr "ხატულის ზომა მენიუებში"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:54
 msgid "The size of icons in menus."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:57
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid "Maximum icon size in panels"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:60
 msgid "The maximum size of icons in panels."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:66
+msgid "Icon spacing in panels"
+msgstr "ადგილი ხატულებს შორის პანელებში"
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid "Which theme variant to use"
 msgstr "თემის სასურველი ვარიანტი"
 
-#: data/org.gnome.gnome-panel.gschema.xml:70
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:75
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
 "each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:83
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:84
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:88
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -307,52 +317,52 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:93
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:101
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:102
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:106
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:107
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:111
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:112
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:116
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:117
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -363,8 +373,8 @@ msgstr "ობიექტის IID"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
@@ -442,12 +452,12 @@ msgstr "პანელის ორიენტაცია"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
@@ -458,8 +468,8 @@ msgstr "პანელის სწორება"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
@@ -543,8 +553,8 @@ msgstr "ანიმაციის სიჩქარე"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
 
@@ -611,21 +621,23 @@ msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
 msgstr ""
+"ჩართე სხვა აპლიკაციები და მაჩვენე გარკვეული უტილიტები ფანჯრის კონტროლისთვის, "
+"დროის ჩვენებისთვის და ა.შ."
 
-#: gnome-panel/gp-add-applet-window.c:426
+#: gnome-panel/gp-add-applet-window.c:431
 msgid "Add to Panel"
 msgstr "პანელზე დამატება"
 
-#: gnome-panel/gp-add-applet-window.c:599
+#: gnome-panel/gp-add-applet-window.c:604
 msgid "No applets found"
 msgstr ""
 
-#: gnome-panel/gp-add-applet-window.c:614
+#: gnome-panel/gp-add-applet-window.c:619
 #, c-format
 msgid "Find an item to add to “%s”"
 msgstr ""
 
-#: gnome-panel/gp-add-applet-window.c:616
+#: gnome-panel/gp-add-applet-window.c:621
 msgid "Find an item to add to the panel"
 msgstr ""
 
@@ -666,15 +678,15 @@ msgstr ""
 #: gnome-panel/gp-error-applet.c:124
 #, c-format
 msgid ""
-"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
-"%s</b>” module! %s"
+"The panel encountered a problem while loading “<b>%s</b>” applet from "
+"“<b>%s</b>” module! %s"
 msgstr ""
 
 #: gnome-panel/gp-error-applet.c:143
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1335
+#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1350
 msgid "_Delete"
 msgstr "წაშლა"
 
@@ -843,13 +855,13 @@ msgstr "გადაადგილება"
 msgid "_Remove From Panel"
 msgstr "_პანელიდან წაშლა"
 
-#: gnome-panel/panel.c:626
+#: gnome-panel/panel.c:637
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL-ის გახსნა: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:681 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:692 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -858,44 +870,45 @@ msgstr "\"%s\"-ის გახსნა"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:751 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:763 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "თქვენი პირადი საქაღალდის გახსნა"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:761 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:773 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "ჩემი კომპიუტერი"
 
 #. name
-#: gnome-panel/panel.c:762 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:774 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
+"თქვენი კომპიუტერიდან ლოკალური ან დაშორებული დისკების, დასტების დათვალიერება"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:770 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:782 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "ქსელი"
 
 #. name
-#: gnome-panel/panel.c:771 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:783 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "ლოკალური და ქსელური მისამართების დათვალიერება"
 
-#: gnome-panel/panel.c:1326
+#: gnome-panel/panel.c:1341
 msgid "Delete this panel?"
 msgstr "წავშალო პანელი?"
 
-#: gnome-panel/panel.c:1330
+#: gnome-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 
-#: gnome-panel/panel.c:1334 modules/action-button/panel-force-quit.c:214
+#: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
 #: modules/action-button/panel-run-dialog.c:1337
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -936,67 +949,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr ""
 
@@ -1193,7 +1206,7 @@ msgstr "_OK"
 #: modules/action-button/panel-run-dialog.c:1727
 #: modules/action-button/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "ამოირჩიეთ პროგრამა მისი აღწერილობის სანახავად."
 
 #: modules/action-button/panel-run-dialog.c:1765
 #, c-format
@@ -1309,7 +1322,7 @@ msgstr "მთელი დღე"
 
 #: modules/clock/calendar-window.c:1204
 msgid "Appointments"
-msgstr ""
+msgstr "ჩაწერილები"
 
 #: modules/clock/calendar-window.c:1229
 msgid "Birthdays and Anniversaries"
@@ -1883,7 +1896,7 @@ msgstr ""
 
 #: modules/launcher/gp-launcher-module.c:58
 msgid "Create a new launcher"
-msgstr ""
+msgstr "შექმენი ახალი გამშვები"
 
 #: modules/launcher/gp-launcher-module.c:67
 msgid "Application Launcher..."
@@ -1998,7 +2011,7 @@ msgid "Change system appearance and behavior, or get help"
 msgstr ""
 
 #: modules/menu/gp-menu-bar-applet.c:286
-#: modules/menu/gp-menu-button-applet.c:486
+#: modules/menu/gp-menu-button-applet.c:494
 #, c-format
 msgid "Please install the '%s' application."
 msgstr ""
@@ -2029,7 +2042,7 @@ msgstr ""
 
 #: modules/menu/gp-menu-module.c:400
 msgid "User menu"
-msgstr ""
+msgstr "მომხმარებლის მენიუ"
 
 #: modules/menu/gp-menu-module.c:401
 msgid "Menu to change your settings and log out"
@@ -2048,7 +2061,7 @@ msgstr ""
 #: modules/menu/gp-places-menu.c:144
 #, c-format
 msgid "Unable to mount %s"
-msgstr ""
+msgstr "შეუძლებელია მონტაჟი %s"
 
 #: modules/menu/gp-places-menu.c:292
 #, c-format
@@ -2178,7 +2191,7 @@ msgstr ""
 #: modules/wncklet/showdesktop.c:73
 #, c-format
 msgid "Failed to load %s: %s\n"
-msgstr ""
+msgstr "\"%s'-ის ჩატვირთვა ჩავარდა: %s\n"
 
 #: modules/wncklet/showdesktop.c:74
 msgid "Icon not found"
