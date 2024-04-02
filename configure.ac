@@ -12,7 +12,7 @@ dnl Define bugzilla address
 dnl **************************************************************************
 
 m4_define([gp_issue_url],
-          [https://gitlab.gnome.org/GNOME/gnome-panel/-/issues/new])
+          [https://gitlab.gnome.org/GNOME/gnome-panel/-/issues/])
 
 dnl **************************************************************************
 dnl Initialize autoconf
