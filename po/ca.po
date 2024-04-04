@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.11.92\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2023-04-23 21:13+0000\n"
-"PO-Revision-Date: 2024-02-19 23:05+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-04-04 08:35+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -251,19 +251,19 @@ msgstr ""
 "canviador d'espais de treball. Aquesta clau només té efecte si la clau "
 "display_all_workspaces és certa."
 
-#: data/org.gnome.gnome-panel.gschema.xml:28
+#: data/org.gnome.gnome-panel.gschema.xml:30
 msgid "Default panel layout"
 msgstr "Disposició predeterminada del quadre"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:31
 msgid "The default panel layout to use when panels are created."
 msgstr "La disposició predeterminada del quadre quan se'n crea un."
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid "Enable tooltips"
 msgstr "Habilita els indicadors de funció"
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:37
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -272,15 +272,15 @@ msgstr ""
 "quadres. Els indicadors de funció es poden desactivar per tot l'escriptori "
 "amb la propietat «gtk-enable-tooltips» en la GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:42
 msgid "Prefer symbolic icons in panels"
 msgstr "Preferència per les icones simbòliques al quadre"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:47
 msgid "Confirm panel removal"
 msgstr "Confirma la supressió dels quadres"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:48
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -288,31 +288,43 @@ msgstr ""
 "Si és cert, es mostra un diàleg demanant confirmació si l'usuari vol "
 "suprimir un quadre."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "Icon size in menus"
 msgstr "Mida d'icona als menús"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:54
 msgid "The size of icons in menus."
 msgstr "La mida de les icones als menús."
 
-#: data/org.gnome.gnome-panel.gschema.xml:57
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid "Maximum icon size in panels"
 msgstr "Mida màxima de les icones als quadres"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:60
 msgid "The maximum size of icons in panels."
 msgstr "La mida màxima de les icones als quadres."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:66
+msgid "Icon spacing in panels"
+msgstr "Distància entre les icones als quadres"
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
+msgstr ""
+"Als quadres horitzontals, l'espai mínim entre la icona i les vores de dalt i "
+"de baix. Als quadres verticals, l'espai mínim amb les vores dreta i esquerra."
+
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid "Which theme variant to use"
 msgstr "Quin tema usar"
 
-#: data/org.gnome.gnome-panel.gschema.xml:70
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr "Llista d'ID de quadres"
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -321,11 +333,11 @@ msgstr ""
 "nivell superior. La configuració per a cada un d'aquests quadres "
 "s'emmagatzema a /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:75
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr "Llista d'ID d'objectes de quadre"
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -336,11 +348,11 @@ msgstr ""
 "d'acció o un botó/barra de menú). La configuració per a cada un d'aquests "
 "objectes s'emmagatzema a /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:83
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr "Blocatge complet del quadre"
 
-#: data/org.gnome.gnome-panel.gschema.xml:84
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -350,11 +362,11 @@ msgstr ""
 "així, pot ser necessari blocar algunes miniaplicacions individuals per "
 "separat. El quadre s'ha de reiniciar perquè això tingui efecte."
 
-#: data/org.gnome.gnome-panel.gschema.xml:88
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr "IID de les miniaplicacions que no es carregaran"
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -367,11 +379,11 @@ msgstr ""
 "«OAFIID:GNOME_MiniCommanderApplet» a aquesta llista. S'ha de tornar a "
 "iniciar el quadre per tal que tingui efecte."
 
-#: data/org.gnome.gnome-panel.gschema.xml:93
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr "Inhabilita la sortida forçada"
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -379,22 +391,22 @@ msgstr ""
 "Si és cert, el quadre no permetrà a l'usuari forçar la sortida d'una "
 "aplicació suprimint l'accés al botó de sortida forçada."
 
-#: data/org.gnome.gnome-panel.gschema.xml:101
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr "Historial del diàleg «Executa una aplicació»"
 
-#: data/org.gnome.gnome-panel.gschema.xml:102
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "La llista d'ordres utilitzades en el passat en el diàleg «Executa una "
 "aplicació»."
 
-#: data/org.gnome.gnome-panel.gschema.xml:106
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Habilita el llistat de programes al diàleg «Executa una aplicació»"
 
-#: data/org.gnome.gnome-panel.gschema.xml:107
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -404,11 +416,11 @@ msgstr ""
 "aplicació» estarà disponible. Si el llistat està o no expandit quan es "
 "mostra el diàleg està controlat per la clau show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:111
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Expandeix el llistat de programes al diàleg «Executa una aplicació»"
 
-#: data/org.gnome.gnome-panel.gschema.xml:112
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -418,11 +430,11 @@ msgstr ""
 "aplicació» estarà disponible. Aquesta clau només té importància si la clau "
 "enable_program_list és certa."
 
-#: data/org.gnome.gnome-panel.gschema.xml:116
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Habilita la compleció automàtica al diàleg «Executa una aplicació»"
 
-#: data/org.gnome.gnome-panel.gschema.xml:117
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -435,8 +447,8 @@ msgstr "IID de l'objecte"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
 "La implementació de l'identificador de l'objecte. Per exemple "
 "«ClockAppletFactory::ClockApplet»."
@@ -532,12 +544,12 @@ msgstr "Orientació del quadre"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
@@ -556,8 +568,8 @@ msgstr "Alineació del quadre"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr ""
 "La alineació del quadre. Els valors possibles són «start», «center», «end»."
 
@@ -663,8 +675,8 @@ msgstr "Velocitat de l'animació"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
 "La velocitat de les animacions. Hi ha tres valors possibles; «slow», "
@@ -801,8 +813,8 @@ msgstr "Voleu eliminar la miniaplicació de la vostra configuració?"
 #: gnome-panel/gp-error-applet.c:124
 #, c-format
 msgid ""
-"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
-"%s</b>” module! %s"
+"The panel encountered a problem while loading “<b>%s</b>” applet from "
+"“<b>%s</b>” module! %s"
 msgstr ""
 "El quadre ha trobat un problema en carregar la miniaplicació «<b>%s</b>» del "
 "mòdul «<b>%s</b>»! %s"
@@ -1078,67 +1090,67 @@ msgstr "No es pot crear la disposició del quadre"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr "Quadre superior expandit"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr "Quadre superior centrat"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr "Quadre superior a l'inici"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr "Quadre superior al final"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr "Quadre cantoner expandit inferior"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr "Quadre centrat inferior"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr "Quadre inferior al final"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr "Quadre inferior a l'inici"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr "Quadre cantoner expandit a l'esquerre"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr "Quadre centrat a l'esquerre"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr "Quadre a l'esquerra a l'inici"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr "Quadre a l'esquerra al final"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr "Quadre cantoner expandit a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr "Quadre centrat a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr "Quadre a la dreta a l'inici"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr "Quadre a la dreta al final"
 
@@ -2181,7 +2193,7 @@ msgstr ""
 "Canvieu l'aparença de l'escriptori i el comportament, o obtingueu ajuda"
 
 #: modules/menu/gp-menu-bar-applet.c:286
-#: modules/menu/gp-menu-button-applet.c:486
+#: modules/menu/gp-menu-button-applet.c:494
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Si us plau, instal·leu l'aplicació «%s»."
@@ -2656,8 +2668,8 @@ msgstr "Espais de treball"
 #, c-format
 #~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 #~ msgstr ""
-#~ "No s'ha pogut obrir el fitxer d'escriptori %s per al llançador del quadre"
-#~ "%s%s\n"
+#~ "No s'ha pogut obrir el fitxer d'escriptori %s per al llançador del "
+#~ "quadre%s%s\n"
 
 #~ msgid "Launcher location is not set, cannot load launcher\n"
 #~ msgstr ""
@@ -3051,11 +3063,11 @@ msgstr "Espais de treball"
 
 #~ msgid ""
 #~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
-#~ "\". If set to \"internet\", the clock will display Internet time. The "
-#~ "Internet time system divides the day into 1000 \".beats\". There are no "
-#~ "time zones in this system, so time is the same all over the world. If set "
-#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and "
+#~ "\"custom\". If set to \"internet\", the clock will display Internet time. "
+#~ "The Internet time system divides the day into 1000 \".beats\". There are "
+#~ "no time zones in this system, so time is the same all over the world. If "
+#~ "set to \"unix\", the clock will display time in seconds since Epoch, i.e. "
 #~ "1970-01-01. If set to \"custom\", the clock will display time according "
 #~ "to the format specified in the custom_format key."
 #~ msgstr ""
@@ -3424,8 +3436,8 @@ msgstr "Espais de treball"
 
 #~ msgid ""
 #~ "The type of this panel object. Possible values are \"drawer-object\", "
-#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet"
-#~ "\", \"menu-bar\" and \"separator\"."
+#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-"
+#~ "applet\", \"menu-bar\" and \"separator\"."
 #~ msgstr ""
 #~ "El tipus d'aquest objecte de quadre. Els valors possibles són «drawer-"
 #~ "object», «menu-object», «launcher-object», «external-applet», «action-"
