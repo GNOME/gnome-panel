@@ -5,14 +5,14 @@
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Tiago Santos <tiagofsantos81@sapo.pt> 2015, 2016.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.6\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-10-29 14:07+0000\n"
-"PO-Revision-Date: 2022-12-01 15:23+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-04-24 15:57+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -245,19 +245,19 @@ msgstr ""
 "colunas (para disposição vertical) o alternador de áreas os mostra. Esta "
 "chave só é relevante se a chave display_all_workspaces for verdadeira."
 
-#: data/org.gnome.gnome-panel.gschema.xml:28
+#: data/org.gnome.gnome-panel.gschema.xml:30
 msgid "Default panel layout"
 msgstr "Disposição padrão do painel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:31
 msgid "The default panel layout to use when panels are created."
 msgstr "A disposição padrão do painel para usar quando os painéis são criados."
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid "Enable tooltips"
 msgstr "Ativar dicas"
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:37
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -266,15 +266,15 @@ msgstr ""
 "desativadas para todo o ambiente de trabalho através da propriedade gtk-"
 "enable-tooltips no GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:42
 msgid "Prefer symbolic icons in panels"
 msgstr "Preferir ícones simbólicos em painéis"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:47
 msgid "Confirm panel removal"
 msgstr "Confirmar a remoção do painel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:48
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -282,31 +282,43 @@ msgstr ""
 "Se verdadeiro, é mostrado um diálogo a pedir a confirmação do utilizador "
 "para remover um painel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "Icon size in menus"
 msgstr "Tamanho do ícone em menus"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:54
 msgid "The size of icons in menus."
 msgstr "O tamanho do ícone em menus."
 
-#: data/org.gnome.gnome-panel.gschema.xml:57
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid "Maximum icon size in panels"
 msgstr "Tamanho máximo de ícone em painéis"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:60
 msgid "The maximum size of icons in panels."
 msgstr "O tamanho máximo de ícone em painéis."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:66
+msgid "Icon spacing in panels"
+msgstr "Espaçamento entre ícones nos painéis"
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
+msgstr ""
+"No painel horizontal, o espaço mínimo entre a margem superior e inferior e o "
+"ícone. No painel vertical, espaço mínimo entre as margens esquerda e direita."
+
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid "Which theme variant to use"
 msgstr "Que variante do tema pretende utilizar"
 
-#: data/org.gnome.gnome-panel.gschema.xml:70
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr "Lista de ID de painel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -315,11 +327,11 @@ msgstr ""
 "de topo. As definições de cada um destes painéis estão armazenadas em /apps/"
 "panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:75
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr "Lista de ID de objetos de painel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -330,11 +342,11 @@ msgstr ""
 "botão/barra de menu). As definições de cada um destes objetos estão "
 "armazenadas em /apps/panel/objets/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:83
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr "Trancar completamente o painel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:84
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -345,11 +357,11 @@ msgstr ""
 "separadamente. O painel terá de ser reiniciado para que esta alteração tenha "
 "efeito."
 
-#: data/org.gnome.gnome-panel.gschema.xml:88
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr "IIDs de aplicaçãos a desativar o carregamento"
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -362,11 +374,11 @@ msgstr ""
 "GNOME_MiniCommanderApplet\" a esta lista. O painel terá de ser reiniciado "
 "para que esta alteração tenha efeito."
 
-#: data/org.gnome.gnome-panel.gschema.xml:93
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr "Desativar Saída forçada"
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -374,22 +386,22 @@ msgstr ""
 "Se verdadeiro, o painel não permitirá que um utilizador force uma aplicação "
 "a terminar removendo o acesso ao botão de forçar a saída."
 
-#: data/org.gnome.gnome-panel.gschema.xml:101
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr "Histórico do diálogo \"Executar aplicação\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:102
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
-"A lista de comandos utilizados anteriormente no diálogo \"Executar aplicação"
-"\"."
+"A lista de comandos utilizados anteriormente no diálogo \"Executar "
+"aplicação\"."
 
-#: data/org.gnome.gnome-panel.gschema.xml:106
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Ativar a listagem de aplicações no diálogo \"Executar aplicação\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:107
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -399,11 +411,11 @@ msgstr ""
 "diálogo \"Executar aplicação\". Se a lista é ou não expandida quando o "
 "diálogo é mostrado é controlado pela chave show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:111
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Expandir a lista de aplicações no diálogo \"Executar aplicação\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:112
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -413,11 +425,11 @@ msgstr ""
 "aplicação\" é expandida ao abrir o diálogo. Esta chave só é relevante se a "
 "chave enable_program_list for verdadeira."
 
-#: data/org.gnome.gnome-panel.gschema.xml:116
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Ativar a conclusão automática no diálogo \"Executar aplicação\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:117
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -430,11 +442,11 @@ msgstr "IID do objeto"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
-"O ID de implementação do objeto - por ex. \"ClockAppletFactory::ClockApplet"
-"\"."
+"O ID de implementação do objeto - por ex. \"ClockAppletFactory::"
+"ClockApplet\"."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
 msgid "Module ID"
@@ -524,19 +536,19 @@ msgstr "Orientação do painel"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"A orientação do painel. Existem quatro valores possíveis; \"top\", \"bottom"
-"\", \"left\", \"right\". Em modo expandido a chave especifica em que margem "
-"de ecrã o painel está. Em modo não-expandido a diferença entre \"top\" e "
-"\"bottom\" é menos importante - ambas indicam que este é um painel "
+"A orientação do painel. Existem quatro valores possíveis; \"top\", "
+"\"bottom\", \"left\", \"right\". Em modo expandido a chave especifica em que "
+"margem de ecrã o painel está. Em modo não-expandido a diferença entre "
+"\"top\" e \"bottom\" é menos importante - ambas indicam que este é um painel "
 "horizontal - mas ainda dão uma dica útil sobre como alguns objetos de painel "
 "se devem comportar. Por exemplo, num painel \"top\" um botão de menu irá "
 "mostrar o seu menu abaixo do painel, e num painel \"bottom\" o menu será "
@@ -548,8 +560,8 @@ msgstr "Alinhamento do painel"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr ""
 "O alinhamento do painel. Os valores possíveis são: \"start\" (inicial), "
 "\"center\" (centralizado), \"end\" (final)."
@@ -639,14 +651,14 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:63
 msgid "Visible pixels when hidden"
-msgstr "Pixels visíveis quando oculto"
+msgstr "Pixéis visíveis quando oculto"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:64
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
-"Especifica o número de pixels visíveis quando o painel está automaticamente "
+"Especifica o número de pixéis visíveis quando o painel está automaticamente "
 "oculto num canto. Esta chave só é relevante se a chave auto_hide for "
 "verdadeira."
 
@@ -656,8 +668,8 @@ msgstr "Velocidade da animação"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
 "A velocidade a que devem ocorrer as animações de painel. Valores possíveis "
@@ -739,20 +751,20 @@ msgstr ""
 "Inicia outras aplicações e disponibiliza vários utilitários para gerir "
 "janelas, mostrar as horas, etc."
 
-#: gnome-panel/gp-add-applet-window.c:426
+#: gnome-panel/gp-add-applet-window.c:431
 msgid "Add to Panel"
 msgstr "Adicionar ao painel"
 
-#: gnome-panel/gp-add-applet-window.c:599
+#: gnome-panel/gp-add-applet-window.c:604
 msgid "No applets found"
 msgstr "Nenhuma mini-aplicação localizada"
 
-#: gnome-panel/gp-add-applet-window.c:614
+#: gnome-panel/gp-add-applet-window.c:619
 #, c-format
 msgid "Find an item to add to “%s”"
 msgstr "Localizar um item para adicionar a “%s”"
 
-#: gnome-panel/gp-add-applet-window.c:616
+#: gnome-panel/gp-add-applet-window.c:621
 msgid "Find an item to add to the panel"
 msgstr "Localizar um item para adicionar ao painel"
 
@@ -795,8 +807,8 @@ msgstr "Deseja remover a aplicação da sua configuração?"
 #: gnome-panel/gp-error-applet.c:124
 #, c-format
 msgid ""
-"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
-"%s</b>” module! %s"
+"The panel encountered a problem while loading “<b>%s</b>” applet from "
+"“<b>%s</b>” module! %s"
 msgstr ""
 "O painel encontrou um problema ao carregar a mini-aplicação “<b>%s</b>” do "
 "módulo “<b>%s</b>”! %s"
@@ -805,13 +817,13 @@ msgstr ""
 msgid "OK"
 msgstr "Aceitar"
 
-#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1335
+#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1350
 msgid "_Delete"
 msgstr "_Eliminar"
 
 #: gnome-panel/gp-error-applet.c:159
 msgid "D_on't Delete"
-msgstr "Nã_O eliminar"
+msgstr "Nã_o eliminar"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -891,7 +903,7 @@ msgstr "_Tamanho:"
 
 #: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
-msgstr "pixels"
+msgstr "pixéis"
 
 #: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
@@ -974,13 +986,13 @@ msgstr "_Mover"
 msgid "_Remove From Panel"
 msgstr "_Remover do painel"
 
-#: gnome-panel/panel.c:626
+#: gnome-panel/panel.c:637
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:681 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:692 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -989,18 +1001,18 @@ msgstr "Abrir \"%s\""
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:751 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:763 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Abrir a sua pasta pessoal"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:761 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:773 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Computador"
 
 #. name
-#: gnome-panel/panel.c:762 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:774 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1009,20 +1021,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:770 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:782 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Rede"
 
 #. name
-#: gnome-panel/panel.c:771 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:783 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Navegar em localizações marcadas e da rede local"
 
-#: gnome-panel/panel.c:1326
+#: gnome-panel/panel.c:1341
 msgid "Delete this panel?"
 msgstr "Eliminar este painel?"
 
-#: gnome-panel/panel.c:1330
+#: gnome-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1030,7 +1042,7 @@ msgstr ""
 "Quando um painel é removido, o painel e as suas\n"
 "definições são perdidas."
 
-#: gnome-panel/panel.c:1334 modules/action-button/panel-force-quit.c:214
+#: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
 #: modules/action-button/panel-run-dialog.c:1337
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1071,67 +1083,67 @@ msgstr "Impossível criar a disposição inicial do painel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr "Painel de margem expansível ao topo"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr "Painel centrado ao topo"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr "Painel superior inicial"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr "Painel superior ao final"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr "Painel de margem expansível em baixo"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr "Painel centrado em baixo"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr "Painel inferior inicial"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr "Painel inferior ao final"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr "Painel de margem expansível à esquerda"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr "Painel centrado à esquerda"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr "Painel inicial esquerdo"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr "Painel final esquerdo"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr "Painel de margem expansível à direita"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr "Painel centrado à direita"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr "Painel inicial direito"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr "Painel final direito"
 
@@ -1280,8 +1292,8 @@ msgid ""
 "Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
 "GSettings schema is set to true."
 msgstr ""
-"Desabilitado porque a configuração “disable-log-out” no esquema GSettings "
-"“org.gnome.desktop.lockdown” está definido para verdadeiro."
+"Desativado porque a configuração “disable-log-out” no esquema GSettings “org."
+"gnome.desktop.lockdown” está definido para verdadeiro."
 
 #: modules/action-button/gp-run-applet.c:134
 #: modules/launcher/gp-launcher-module.c:33
@@ -1289,8 +1301,8 @@ msgid ""
 "Disabled because “disable-command-line” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Desabilitado porque a configuração “disable-command-line” no esquema "
-"GSettings “org.gnome.desktop.lockdown” está definido para verdadeiro."
+"Desativado porque a configuração “disable-command-line” no esquema GSettings "
+"“org.gnome.desktop.lockdown” está definido para verdadeiro."
 
 #: modules/action-button/panel-force-quit.c:71
 msgid ""
@@ -2171,7 +2183,7 @@ msgid "Change system appearance and behavior, or get help"
 msgstr "Altere a aparência ou comportamento do sistema, ou obtenha ajuda"
 
 #: modules/menu/gp-menu-bar-applet.c:286
-#: modules/menu/gp-menu-button-applet.c:486
+#: modules/menu/gp-menu-button-applet.c:494
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Por favor, instale a aplicação “%s”."
@@ -2654,9 +2666,9 @@ msgstr "Áreas de trabalho"
 #~ "specified by the image key will be used as background."
 #~ msgstr ""
 #~ "Que tipo de fundo deve ser utilizado para este painel. Valores possíveis "
-#~ "são \"none\" - será utilizado o fundo GTK+ predefinido de widgets, \"color"
-#~ "\" - a chave de cor será utilizada como cor de fundo ou \"image\" - a "
-#~ "imagem especificada pela chave de imagem será utilizada como fundo."
+#~ "são \"none\" - será utilizado o fundo GTK+ predefinido de widgets, "
+#~ "\"color\" - a chave de cor será utilizada como cor de fundo ou \"image\" "
+#~ "- a imagem especificada pela chave de imagem será utilizada como fundo."
 
 #~ msgid "Specifies the background color for the panel in #RGB format."
 #~ msgstr "Especifica a cor de fundo para o painel no formato #RGB."
@@ -3112,11 +3124,11 @@ msgstr "Áreas de trabalho"
 
 #~ msgid ""
 #~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
-#~ "\". If set to \"internet\", the clock will display Internet time. The "
-#~ "Internet time system divides the day into 1000 \".beats\". There are no "
-#~ "time zones in this system, so time is the same all over the world. If set "
-#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and "
+#~ "\"custom\". If set to \"internet\", the clock will display Internet time. "
+#~ "The Internet time system divides the day into 1000 \".beats\". There are "
+#~ "no time zones in this system, so time is the same all over the world. If "
+#~ "set to \"unix\", the clock will display time in seconds since Epoch, i.e. "
 #~ "1970-01-01. If set to \"custom\", the clock will display time according "
 #~ "to the format specified in the custom_format key."
 #~ msgstr ""
@@ -3342,8 +3354,8 @@ msgstr "Áreas de trabalho"
 #~ msgstr ""
 #~ "Se verdadeiro, a chave custom_icon é utilizada como o ícone personalizado "
 #~ "para o botão. Se falso, a chave custom_icon é ignorada. Esta chave apenas "
-#~ "é relevante se a chave object_type for \"menu-object\" ou \"drawer-object"
-#~ "\"."
+#~ "é relevante se a chave object_type for \"menu-object\" ou \"drawer-"
+#~ "object\"."
 
 #~ msgid ""
 #~ "If true, the menu_path key is used as the path from which the menu "
@@ -3376,9 +3388,9 @@ msgstr "Áreas de trabalho"
 #~ "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 #~ "relevant if the object_type key is \"action-applet\"."
 #~ msgstr ""
-#~ "O tipo de acção que este botão representa. Valores possíveis são \"lock"
-#~ "\", \"logout\", \"run\", \"search\" e \"screenshot\". Esta chave apenas é "
-#~ "relevante se o object_type for \"action-applet\"."
+#~ "O tipo de acção que este botão representa. Valores possíveis são "
+#~ "\"lock\", \"logout\", \"run\", \"search\" e \"screenshot\". Esta chave "
+#~ "apenas é relevante se o object_type for \"action-applet\"."
 
 #~ msgid ""
 #~ "The identifier of the panel attached to this drawer. This key is only "
@@ -3406,12 +3418,12 @@ msgstr "Áreas de trabalho"
 
 #~ msgid ""
 #~ "The type of this panel object. Possible values are \"drawer-object\", "
-#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet"
-#~ "\", \"menu-bar\" and \"separator\"."
+#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-"
+#~ "applet\", \"menu-bar\" and \"separator\"."
 #~ msgstr ""
-#~ "O tipo deste objecto de painel. Os valores possíveis são \"drawer-object"
-#~ "\", \"menu-object\", \"launcher-object\", \"external-applet\", \"action-"
-#~ "applet\", \"menu-bar\" e \"separator\"."
+#~ "O tipo deste objecto de painel. Os valores possíveis são \"drawer-"
+#~ "object\", \"menu-object\", \"launcher-object\", \"external-applet\", "
+#~ "\"action-applet\", \"menu-bar\" e \"separator\"."
 
 #~ msgid ""
 #~ "This key is deprecated, following the migration to a new library for "
