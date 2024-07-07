@@ -19,6 +19,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
+#include <libgnome-desktop/gnome-systemd.h>
 #include <systemd/sd-journal.h>
 
 #include "gp-menu-utils.h"
@@ -297,7 +298,22 @@ pid_cb (GDesktopAppInfo *info,
         GPid             pid,
         gpointer         user_data)
 {
+  const gchar *app_name;
+
   g_child_watch_add (pid, close_pid, NULL);
+
+  app_name = g_app_info_get_id (G_APP_INFO (info));
+  if (app_name == NULL)
+    app_name = g_app_info_get_executable (G_APP_INFO (info));
+
+  /* Start async request; we don't care about the result */
+  gnome_start_systemd_scope (app_name,
+                             pid,
+                             NULL,
+                             NULL,
+                             NULL,
+                             NULL,
+                             NULL);
 }
 
 static gboolean

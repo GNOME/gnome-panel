@@ -6,6 +6,7 @@ menu_lib_LTLIBRARIES = org.gnome.gnome-panel.menu.la
 org_gnome_gnome_panel_menu_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
+	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DG_LOG_DOMAIN=\""menu"\" \
 	-DG_LOG_USE_STRUCTURED=1 \
 	-I$(top_srcdir) \

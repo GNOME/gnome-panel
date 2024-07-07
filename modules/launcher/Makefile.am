@@ -6,6 +6,7 @@ launcher_lib_LTLIBRARIES = org.gnome.gnome-panel.launcher.la
 org_gnome_gnome_panel_launcher_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
+	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DGRESOURCE_PREFIX=\""/org/gnome/gnome-panel/modules/launcher"\" \
 	-DG_LOG_DOMAIN=\""launcher"\" \
 	-DG_LOG_USE_STRUCTURED=1 \
