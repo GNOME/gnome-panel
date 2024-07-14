@@ -251,7 +251,7 @@ proxy_ready_cb (GObject      *source_object,
       return;
     }
 
-  sn_watcher_v0_gen_call_register_host (v0->watcher, v0->object_path,
+  sn_watcher_v0_gen_call_register_host (v0->watcher, v0->bus_name,
                                         v0->cancellable, register_host_cb, v0);
 }
 
