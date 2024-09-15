@@ -1,5 +1,5 @@
 # Polish translation for gnome-panel.
-# Copyright © 1998-2022 the gnome-panel authors.
+# Copyright © 1998-2024 the gnome-panel authors.
 # This file is distributed under the same license as the gnome-panel package.
 # Zbigniew Chyla <chyla@alice.ci.pwr.wroc.pl>, 1998-2002.
 # Kuba Winnicki <bw@idc.com.pl>, 1999.
@@ -7,15 +7,15 @@
 # Wadim Dziedzic <wdziedzic@aviary.pl>, 2007-2009.
 # Tomasz Dominikowski <dominikowski@gmail.com>, 2007-2010.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2010-2022.
-# Aviary.pl <community-poland@mozilla.org>, 2007-2022.
+# Piotr Drąg <piotrdrag@gmail.com>, 2010-2024.
+# Aviary.pl <community-poland@mozilla.org>, 2007-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2022-10-29 14:07+0000\n"
-"PO-Revision-Date: 2022-10-30 14:03+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-09-15 15:11+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -242,19 +242,19 @@ msgstr ""
 "roboczych. Opcja ta ma zastosowanie tylko, gdy ustawione jest "
 "„display_all_workspaces”."
 
-#: data/org.gnome.gnome-panel.gschema.xml:28
+#: data/org.gnome.gnome-panel.gschema.xml:30
 msgid "Default panel layout"
 msgstr "Domyślny układ panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:31
 msgid "The default panel layout to use when panels are created."
 msgstr "Domyślny układ używany podczas tworzenia paneli."
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid "Enable tooltips"
 msgstr "Włączenie podpowiedzi"
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:37
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -263,15 +263,15 @@ msgstr ""
 "Podpowiedzi mogą być wyłączone dla całego środowiska za pomocą własności "
 "„gtk-enable-tooltips” w bibliotece GTK."
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:42
 msgid "Prefer symbolic icons in panels"
 msgstr "Preferowanie ikon symbolicznych na panelach"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:47
 msgid "Confirm panel removal"
 msgstr "Potwierdzenie usunięcia panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:48
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -279,31 +279,43 @@ msgstr ""
 "Określa, czy jest wyświetlane okno z pytaniem o potwierdzenie usunięcia "
 "panelu."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "Icon size in menus"
 msgstr "Rozmiar ikon w menu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:54
 msgid "The size of icons in menus."
 msgstr "Rozmiar ikon w menu."
 
-#: data/org.gnome.gnome-panel.gschema.xml:57
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid "Maximum icon size in panels"
 msgstr "Maksymalny rozmiar ikon na panelach"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:60
 msgid "The maximum size of icons in panels."
 msgstr "Maksymalny rozmiar ikon na panelach."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:66
+msgid "Icon spacing in panels"
+msgstr "Odstępy między ikonami na panelach"
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
+msgstr ""
+"Minimalne miejsce między górną i dolną krawędzią a ikoną na panelu poziomym. "
+"Minimalne miejsce od lewej i prawej krawędzi na panelu pionowym."
+
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid "Which theme variant to use"
 msgstr "Używany wariant motywu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:70
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr "Lista identyfikatorów panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -312,11 +324,11 @@ msgstr ""
 "nadrzędny. Ustawienia każdego z tych paneli są przechowywane w /apps/panel/"
 "toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:75
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr "Lista identyfikatorów obiektów panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -327,11 +339,11 @@ msgstr ""
 "polecenia lub przyciskiem/paskiem menu). Ustawienia dla każdego z tych "
 "obiektów są przechowywane w /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:83
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr "Całkowite zablokowanie panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:84
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -341,11 +353,11 @@ msgstr ""
 "konfiguracji. Pojedyncze aplety mogą jednak mimo tego wymagać zablokowania. "
 "Panel musi zostać ponownie uruchomiony, aby zastosować zmiany."
 
-#: data/org.gnome.gnome-panel.gschema.xml:88
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr "Identyfikatory apletów, które nie będą wczytywane"
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -358,11 +370,11 @@ msgstr ""
 "GNOME_MiniCommanderApplet” do tej listy. Panel musi zostać ponownie "
 "uruchomiony, aby zastosować zmiany."
 
-#: data/org.gnome.gnome-panel.gschema.xml:93
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr "Wyłączenie wymuszenia zamknięcia"
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -370,20 +382,20 @@ msgstr ""
 "Określa, czy zabraniać użytkownikowi wymuszenia zakończenia programu, "
 "poprzez usunięcie przycisku wymuszenia zakończenia."
 
-#: data/org.gnome.gnome-panel.gschema.xml:101
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr "Historia okna „Uruchamianie programu”"
 
-#: data/org.gnome.gnome-panel.gschema.xml:102
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr "Lista poleceń użytych w przeszłości w oknie „Uruchamianie programu”."
 
-#: data/org.gnome.gnome-panel.gschema.xml:106
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Wyświetlanie listy programów w oknie „Uruchamianie programu”"
 
-#: data/org.gnome.gnome-panel.gschema.xml:107
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -393,11 +405,11 @@ msgstr ""
 "program”. Czy lista jest rozwinięta w momencie pokazania tego okna jest "
 "określone przez opcję „show_program_list”."
 
-#: data/org.gnome.gnome-panel.gschema.xml:111
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Rozwinięcie listy programów w oknie „Uruchamianie programu”"
 
-#: data/org.gnome.gnome-panel.gschema.xml:112
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -407,11 +419,11 @@ msgstr ""
 "wyświetlenia okna „Uruchamianie programu”. Ta opcja ma znaczenie tylko, "
 "jeśli „enable_program_list” jest ustawione."
 
-#: data/org.gnome.gnome-panel.gschema.xml:116
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Automatyczne uzupełnianie w oknie „Uruchamianie programu”"
 
-#: data/org.gnome.gnome-panel.gschema.xml:117
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -732,20 +744,20 @@ msgstr ""
 "Uruchamianie innych programów i dostarczanie różnych narzędzi do zarządzania "
 "oknami, wyświetlania czasu itp."
 
-#: gnome-panel/gp-add-applet-window.c:426
+#: gnome-panel/gp-add-applet-window.c:431
 msgid "Add to Panel"
 msgstr "Dodawanie do panelu"
 
-#: gnome-panel/gp-add-applet-window.c:599
+#: gnome-panel/gp-add-applet-window.c:604
 msgid "No applets found"
 msgstr "Nie odnaleziono żadnych apletów"
 
-#: gnome-panel/gp-add-applet-window.c:614
+#: gnome-panel/gp-add-applet-window.c:619
 #, c-format
 msgid "Find an item to add to “%s”"
 msgstr "Wyszukiwany element do dodania do „%s”"
 
-#: gnome-panel/gp-add-applet-window.c:616
+#: gnome-panel/gp-add-applet-window.c:621
 msgid "Find an item to add to the panel"
 msgstr "Wyszukiwany element do dodania do panelu"
 
@@ -798,7 +810,7 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1335
+#: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1350
 msgid "_Delete"
 msgstr "_Usuń"
 
@@ -968,13 +980,13 @@ msgstr "_Przesuń"
 msgid "_Remove From Panel"
 msgstr "U_suń z panelu"
 
-#: gnome-panel/panel.c:626
+#: gnome-panel/panel.c:637
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otwarcie adresu URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:681 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:692 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -983,18 +995,18 @@ msgstr "Otwiera „%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:751 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:763 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Otwiera katalog osobisty użytkownika"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:761 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:773 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: gnome-panel/panel.c:762 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:774 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1003,20 +1015,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:770 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:782 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Sieć"
 
 #. name
-#: gnome-panel/panel.c:771 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:783 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Przegląda zakładki i lokalne położenia sieciowe"
 
-#: gnome-panel/panel.c:1326
+#: gnome-panel/panel.c:1341
 msgid "Delete this panel?"
 msgstr "Usunąć ten panel?"
 
-#: gnome-panel/panel.c:1330
+#: gnome-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1024,7 +1036,7 @@ msgstr ""
 "Po usunięciu panelu jego ustawienia zostaną\n"
 "utracone."
 
-#: gnome-panel/panel.c:1334 modules/action-button/panel-force-quit.c:214
+#: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
 #: modules/action-button/panel-run-dialog.c:1337
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1065,67 +1077,67 @@ msgstr "Nie można utworzyć początkowego układu panelu"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
 msgstr "Górny rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
 msgstr "Górny panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Start Panel"
 msgstr "Górny panel na początku"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top End Panel"
 msgstr "Górny panel na końcu"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr "Dolny rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
 msgstr "Dolny panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Start Panel"
 msgstr "Dolny panel na początku"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom End Panel"
 msgstr "Dolny panel na końcu"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
 msgstr "Dolny rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
 msgstr "Lewy panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Start Panel"
 msgstr "Lewy panel na początku"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left End Panel"
 msgstr "Lewy panel na końcu"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr "Prawy rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
 msgstr "Prawy panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Start Panel"
 msgstr "Prawy panel na początku"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right End Panel"
 msgstr "Prawy panel na końcu"
 
@@ -2164,7 +2176,7 @@ msgid "Change system appearance and behavior, or get help"
 msgstr "Zmiana wyglądu i zachowania systemu oraz pomoc"
 
 #: modules/menu/gp-menu-bar-applet.c:286
-#: modules/menu/gp-menu-button-applet.c:486
+#: modules/menu/gp-menu-button-applet.c:494
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Proszę zainstalować program „%s”."
