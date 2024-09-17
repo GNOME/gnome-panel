@@ -81,7 +81,7 @@ panel_g_lookup_in_data_dirs (const char *basename)
 
 /* Copied from evolution-data-server/libedataserver/e-util.c:
  * e_util_unicode_get_utf8() */
-static char *
+static const char *
 _unicode_get_utf8 (const char *text, gunichar *out)
 {
 	*out = g_utf8_get_char (text);
