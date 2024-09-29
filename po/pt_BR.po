@@ -29,10 +29,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
-"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"POT-Creation-Date: 2024-09-23 17:23+0000\n"
 "PO-Revision-Date: 2024-09-23 14:20-0300\n"
 "Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1065,7 +1065,7 @@ msgstr ""
 "configurações são perdidos."
 
 #: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
-#: modules/action-button/panel-run-dialog.c:1337
+#: modules/action-button/panel-run-dialog.c:1346
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
 #: modules/menu/gp-recent-menu.c:205
@@ -1169,14 +1169,14 @@ msgstr "Painel inicial direito"
 msgid "Right End Panel"
 msgstr "Painel final direito"
 
-#: gnome-panel/panel-util.c:280 modules/menu/gp-menu-utils.c:212
+#: gnome-panel/panel-util.c:282 modules/menu/gp-menu-utils.c:213
 msgid "Home"
 msgstr "Home"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:289 modules/menu/gp-menu-utils.c:229
+#: gnome-panel/panel-util.c:291 modules/menu/gp-menu-utils.c:230
 msgid "File System"
 msgstr "Sistema de arquivos"
 
@@ -1189,7 +1189,7 @@ msgstr "Sistema de arquivos"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:503 modules/menu/gp-menu-utils.c:127
+#: gnome-panel/panel-util.c:505 modules/menu/gp-menu-utils.c:128
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1221,7 +1221,7 @@ msgstr "Não foi possível exibir o documento de ajuda"
 msgid "Backend “%s” is not supported."
 msgstr "Não há suporte ao backend “%s”."
 
-#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
+#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:394
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Não foi possível abrir a localização “%s”"
@@ -1287,8 +1287,8 @@ msgstr ""
 "“org.gnome.gnome-panel.lockdown” está definido para verdadeiro."
 
 #: modules/action-button/gp-lock-screen-applet.c:280
-#: modules/launcher/gp-launcher-applet.c:850
 #: modules/launcher/gp-launcher-applet.c:866
+#: modules/launcher/gp-launcher-applet.c:882
 msgid "Could not launch application"
 msgstr "Não foi possível iniciar o aplicativo"
 
@@ -1349,48 +1349,48 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Fechar forçado"
 
-#: modules/action-button/panel-run-dialog.c:437
+#: modules/action-button/panel-run-dialog.c:438
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Não foi possível localizar um terminal. Usando xterm, mesmo se ele não puder "
 "não funcionar"
 
-#: modules/action-button/panel-run-dialog.c:495
+#: modules/action-button/panel-run-dialog.c:496
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Não foi possível lançar o comando “%s”"
 
-#: modules/action-button/panel-run-dialog.c:562
+#: modules/action-button/panel-run-dialog.c:571
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Não foi possível converter “%s” de UTF-8"
 
-#: modules/action-button/panel-run-dialog.c:1334
+#: modules/action-button/panel-run-dialog.c:1343
 msgid "Choose a file to append to the command..."
 msgstr "Escolha um arquivo para adicionar ao comando…"
 
-#: modules/action-button/panel-run-dialog.c:1338 modules/clock/clock.ui:82
+#: modules/action-button/panel-run-dialog.c:1347 modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
-#: modules/action-button/panel-run-dialog.c:1727
+#: modules/action-button/panel-run-dialog.c:1736
 #: modules/action-button/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Selecione um aplicativo para ver sua descrição."
 
-#: modules/action-button/panel-run-dialog.c:1765
+#: modules/action-button/panel-run-dialog.c:1774
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "O comando “%s” será executado"
 
-#: modules/action-button/panel-run-dialog.c:1798
+#: modules/action-button/panel-run-dialog.c:1807
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "A lista de URIs exibida na caixa de diálogo de execução tinha um formato "
 "(%d) ou tamanho (%d) errado\n"
 
-#: modules/action-button/panel-run-dialog.c:1970
+#: modules/action-button/panel-run-dialog.c:1979
 msgid "file"
 msgstr "arquivo"
 
@@ -1483,6 +1483,8 @@ msgstr "%H:%M"
 #. * the most abbreviated way possible.
 #.
 #: modules/clock/calendar-window.c:421
+#, fuzzy, c-format
+#| msgid "%b %d"
 msgid "%b %d"
 msgstr "%d %b"
 
@@ -2068,20 +2070,20 @@ msgstr "Nomes dos ícones:"
 msgid "Show standard icons only"
 msgstr "Mostrar ícones padrão apenas"
 
-#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+#: modules/launcher/gp-launcher-applet.c:133 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
 msgstr "(vazio)"
 
-#: modules/launcher/gp-launcher-applet.c:862
+#: modules/launcher/gp-launcher-applet.c:878
 #, c-format
 msgid "Can not execute “%s” command line."
 msgstr "Não é possível executar a linha de comando “%s”."
 
-#: modules/launcher/gp-launcher-applet.c:885
+#: modules/launcher/gp-launcher-applet.c:901
 msgid "Could not open location"
 msgstr "Não foi possível abrir a localização"
 
-#: modules/launcher/gp-launcher-applet.c:1012
+#: modules/launcher/gp-launcher-applet.c:1028
 #, c-format
 msgid "Failed to load key file “%s”: %s"
 msgstr "Falha ao carregar o arquivo chave “%s”: %s"
@@ -2244,7 +2246,7 @@ msgstr "Menu de usuário"
 msgid "Menu to change your settings and log out"
 msgstr "Menu para mudar suas configurações e encerrar sessão"
 
-#: modules/menu/gp-menu-utils.c:441
+#: modules/menu/gp-menu-utils.c:457
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Não foi possível iniciar “%s”"
