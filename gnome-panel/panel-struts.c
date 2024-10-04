@@ -377,6 +377,69 @@ panel_struts_compare (const PanelStrut *s1,
         return 0;
 }
 
+static void
+get_strut_geometry (int               monitor,
+                    PanelOrientation  orientation,
+                    int               strut_size,
+                    int               strut_start,
+                    int               strut_end,
+                    GdkRectangle     *geometry)
+{
+  int monitor_x;
+  int monitor_y;
+  int monitor_width;
+  int monitor_height;
+
+  panel_struts_get_monitor_geometry (monitor,
+                                     &monitor_x,
+                                     &monitor_y,
+                                     &monitor_width,
+                                     &monitor_height);
+
+  switch (orientation)
+    {
+      case PANEL_ORIENTATION_TOP:
+        *geometry = (GdkRectangle) {
+          .x = strut_start,
+          .y = monitor_y,
+          .width = strut_end - strut_start + 1,
+          .height = strut_size
+        };
+        break;
+
+      case PANEL_ORIENTATION_BOTTOM:
+        *geometry = (GdkRectangle) {
+          .x = strut_start,
+          .y = monitor_y + monitor_height - strut_size,
+          .width = strut_end - strut_start + 1,
+          .height = strut_size
+        };
+        break;
+
+      case PANEL_ORIENTATION_LEFT:
+        *geometry = (GdkRectangle) {
+          .x = monitor_x,
+          .y = strut_start,
+          .width = strut_size,
+          .height = strut_end - strut_start + 1
+        };
+        break;
+
+      case PANEL_ORIENTATION_RIGHT:
+        *geometry = (GdkRectangle) {
+          .x = monitor_x + monitor_width - strut_size,
+          .y = strut_start,
+          .width = strut_size,
+          .height = strut_end - strut_start + 1
+        };
+        break;
+
+      default:
+        g_assert_not_reached ();
+        break;
+    }
+}
+
 gboolean
 panel_struts_register_strut (PanelToplevel    *toplevel,
 			     int               monitor,
@@ -385,9 +448,16 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 			     int               strut_start,
 			     int               strut_end)
 {
+	GdkRectangle geometry;
 	PanelStrut *strut;
 	gboolean    new_strut = FALSE;
-	int         monitor_x, monitor_y, monitor_width, monitor_height;
+
+	get_strut_geometry (monitor,
+	                    orientation,
+	                    strut_size,
+	                    strut_start,
+	                    strut_end,
+	                    &geometry);
 
 	if (!(strut = panel_struts_find_strut (toplevel))) {
 		strut = g_new0 (PanelStrut, 1);
@@ -398,7 +468,8 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 		   strut->monitor     == monitor     &&
 		   strut->strut_size  == strut_size  &&
 		   strut->strut_start == strut_start &&
-		   strut->strut_end   == strut_end)
+		   strut->strut_end   == strut_end   &&
+		   gdk_rectangle_equal (&strut->geometry, &geometry))
 		return FALSE;
 
 	strut->toplevel    = toplevel;
@@ -407,41 +478,8 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	strut->strut_size  = strut_size;
 	strut->strut_start = strut_start;
 	strut->strut_end   = strut_end;
+	strut->geometry    = geometry;
 	
-	panel_struts_get_monitor_geometry (monitor,
-					   &monitor_x, &monitor_y,
-					   &monitor_width, &monitor_height);
-
-	switch (strut->orientation) {
-	case PANEL_ORIENTATION_TOP:
-		strut->geometry.x      = strut->strut_start;
-		strut->geometry.y      = monitor_y;
-		strut->geometry.width  = strut->strut_end - strut->strut_start + 1;
-		strut->geometry.height = strut->strut_size;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		strut->geometry.x      = strut->strut_start;
-		strut->geometry.y      = monitor_y + monitor_height - strut->strut_size;
-		strut->geometry.width  = strut->strut_end - strut->strut_start + 1;
-		strut->geometry.height = strut->strut_size;
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		strut->geometry.x      = monitor_x;
-		strut->geometry.y      = strut->strut_start;
-		strut->geometry.width  = strut->strut_size;
-		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		strut->geometry.x      = monitor_x + monitor_width - strut->strut_size;
-		strut->geometry.y      = strut->strut_start;
-		strut->geometry.width  = strut->strut_size;
-		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
 	if (new_strut)
 		panel_struts_list = g_slist_append (panel_struts_list, strut);
 
