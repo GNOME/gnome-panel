@@ -2,16 +2,16 @@
 # Copyright (C) 2024 gnome-panel's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-panel package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# ButterflyOfFire <ButterflyOfFire@protonmail.com>, 2024.
+# ButterflyOfFire <butterflyoffire@protonmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
-"POT-Creation-Date: 2024-03-08 13:47+0000\n"
-"PO-Revision-Date: 2024-03-10 14:25+0100\n"
-"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
-"Language-Team: Kabyle <>\n"
+"POT-Creation-Date: 2024-03-16 21:23+0000\n"
+"PO-Revision-Date: 2024-10-05 15:35+0100\n"
+"Last-Translator: ButterflyOfFire <butterflyoffire@protonmail.com>\n"
+"Language-Team: Kabyle\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,8 +21,9 @@ msgstr ""
 "X-DL-Branch: master\n"
 "X-DL-Domain: po\n"
 "X-DL-State: Translating\n"
-"Plural-Forms: nplurals=2; plural=n>1\n"
-"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Generator: Gtranslator 46.1\n"
+"X-DL-Lang: kab\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -265,47 +266,57 @@ msgstr ""
 msgid "The maximum size of icons in panels."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:65
-msgid "Which theme variant to use"
+#: data/org.gnome.gnome-panel.gschema.xml:66
+msgid "Icon spacing in panels"
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:67
+msgid ""
+"On horizontal panel minimum space between top and bottom border and the "
+"icon. For vertical panel minimum space from left and right borders."
 msgstr ""
 
 #: data/org.gnome.gnome-panel.gschema.xml:72
+msgid "Which theme variant to use"
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid "Panel ID list"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:73
+#: data/org.gnome.gnome-panel.gschema.xml:80
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid "Panel object ID list"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:78
+#: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
 "each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:85
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid "Complete panel lockdown"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:86
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:90
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid "Applet IIDs to disable from loading"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:91
+#: data/org.gnome.gnome-panel.gschema.xml:98
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -313,52 +324,52 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:95
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid "Disable Force Quit"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:96
+#: data/org.gnome.gnome-panel.gschema.xml:103
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:103
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid "History of \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:108
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:109
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:113
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:114
+#: data/org.gnome.gnome-panel.gschema.xml:121
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:118
+#: data/org.gnome.gnome-panel.gschema.xml:125
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:119
+#: data/org.gnome.gnome-panel.gschema.xml:126
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -606,7 +617,7 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:116
 msgid "Text Color"
-msgstr ""
+msgstr "Ini n uḍris"
 
 #: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:135
 msgid "Panel"
@@ -645,7 +656,7 @@ msgstr "Ɣef"
 
 #: gnome-panel/gp-applet-list-row.c:284
 msgid "Remove"
-msgstr ""
+msgstr "Kkes"
 
 #: gnome-panel/gp-applet-manager.c:251
 msgid ""
@@ -678,7 +689,7 @@ msgstr ""
 
 #: gnome-panel/gp-error-applet.c:143
 msgid "OK"
-msgstr ""
+msgstr "IH"
 
 #: gnome-panel/gp-error-applet.c:152 gnome-panel/panel.c:1350
 msgid "_Delete"
@@ -823,19 +834,19 @@ msgstr ""
 
 #: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
-msgstr ""
+msgstr "Asentel"
 
 #: gnome-panel/gp-properties-dialog.ui:676
 msgid "Left"
-msgstr ""
+msgstr "Azelmaḍ"
 
 #: gnome-panel/gp-properties-dialog.ui:699
 msgid "Center"
-msgstr ""
+msgstr "Alemmas"
 
 #: gnome-panel/gp-properties-dialog.ui:722
 msgid "Right"
-msgstr ""
+msgstr "Ayeffus"
 
 #: gnome-panel/gp-properties-dialog.ui:754
 msgid "Applets"
@@ -1008,7 +1019,7 @@ msgstr ""
 
 #: gnome-panel/panel-util.c:280 modules/menu/gp-menu-utils.c:212
 msgid "Home"
-msgstr ""
+msgstr "Agejdan"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
@@ -1335,7 +1346,7 @@ msgstr ""
 
 #: modules/clock/calendar-window.c:1624 modules/clock/clock.ui:719
 msgid "Locations"
-msgstr ""
+msgstr "Adigen"
 
 #: modules/clock/calendar-window.c:1939
 msgid "Calendar"
@@ -1367,7 +1378,7 @@ msgstr ""
 #. Done!
 #: modules/clock/clock-applet.c:735
 msgid "Computer Clock"
-msgstr ""
+msgstr "Tamrilt n uselkim"
 
 #: modules/clock/clock-applet.c:821
 msgid "Failed to open the time settings"
@@ -1375,7 +1386,7 @@ msgstr ""
 
 #: modules/clock/clock-applet.c:1477
 msgid "Choose Location"
-msgstr ""
+msgstr "Fren adig"
 
 #: modules/clock/clock-applet.c:1554
 msgid "Edit Location"
@@ -1387,11 +1398,11 @@ msgstr "Amezwer"
 
 #: modules/clock/clock-applet.c:1591
 msgid "Kelvin"
-msgstr ""
+msgstr "Kelvin"
 
 #: modules/clock/clock-applet.c:1592
 msgid "Celsius"
-msgstr ""
+msgstr "Celsius"
 
 #: modules/clock/clock-applet.c:1593
 msgid "Fahrenheit"
@@ -1508,7 +1519,7 @@ msgstr ""
 
 #: modules/clock/clock-module.c:33
 msgid "Clock"
-msgstr ""
+msgstr "Tamrint"
 
 #: modules/clock/clock-module.c:34
 msgid "Get the current time and date"
@@ -1525,23 +1536,23 @@ msgstr ""
 #: modules/clock/clock-menu.ui:15 modules/wncklet/window-list-menu.ui:5
 #: modules/wncklet/workspace-switcher-menu.ui:5
 msgid "_Preferences"
-msgstr ""
+msgstr "Ismenyafen (_P)"
 
 #: modules/clock/clock.ui:30
 msgid "East"
-msgstr ""
+msgstr "Asammar"
 
 #: modules/clock/clock.ui:33
 msgid "West"
-msgstr ""
+msgstr "Amalu"
 
 #: modules/clock/clock.ui:44
 msgid "North"
-msgstr ""
+msgstr "Agafa"
 
 #: modules/clock/clock.ui:47
 msgid "South"
-msgstr ""
+msgstr "Anẓul"
 
 #: modules/clock/clock.ui:162
 msgid "_Location Name:"
@@ -1735,7 +1746,7 @@ msgstr ""
 
 #: modules/fish/fish-menu.ui:5
 msgid "Preferences"
-msgstr ""
+msgstr "Imenyafen"
 
 #: modules/fish/fish.ui:22
 msgid "Fish Preferences"
@@ -1808,11 +1819,11 @@ msgstr ""
 
 #: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
 msgid "Choose a directory..."
-msgstr ""
+msgstr "Fren akaram..."
 
 #: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
 msgid "Choose a file..."
-msgstr ""
+msgstr "Fren afaylu..."
 
 #: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
 msgid "Comm_and:"
@@ -1825,16 +1836,16 @@ msgstr "Adig (_L)"
 #. Type
 #: modules/launcher/gp-editor.c:815
 msgid "_Type:"
-msgstr ""
+msgstr "_Tawsit:"
 
 #. Name
 #: modules/launcher/gp-editor.c:824
 msgid "_Name:"
-msgstr "Isem (_N)"
+msgstr "Isem (_N):"
 
 #: modules/launcher/gp-editor.c:848
 msgid "_Browse..."
-msgstr ""
+msgstr "Snirem (_B)..."
 
 #. Comment
 #: modules/launcher/gp-editor.c:862
@@ -1851,7 +1862,7 @@ msgstr ""
 
 #: modules/launcher/gp-icon-name-chooser.ui:39
 msgid "Select"
-msgstr ""
+msgstr "Fren"
 
 #: modules/launcher/gp-icon-name-chooser.ui:126
 msgid "Contexts:"
@@ -1867,7 +1878,7 @@ msgstr ""
 
 #: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
-msgstr ""
+msgstr "(d ilem)"
 
 #: modules/launcher/gp-launcher-applet.c:862
 #, c-format
@@ -1956,7 +1967,7 @@ msgstr ""
 
 #: modules/menu/gp-lock-logout.c:966
 msgid "Switch User"
-msgstr ""
+msgstr "Senfel aseqdac"
 
 #: modules/menu/gp-lock-logout.c:1049
 msgid "Hibernate"
@@ -2011,11 +2022,11 @@ msgstr ""
 
 #: modules/menu/gp-menu-module.c:377
 msgid "Main Menu"
-msgstr ""
+msgstr "Umuɣ agejdan"
 
 #: modules/menu/gp-menu-module.c:378
 msgid "The main GNOME menu"
-msgstr ""
+msgstr "Umuɣ-nni agejdan n GNOME"
 
 #: modules/menu/gp-menu-module.c:384
 msgid "Menu Button"
@@ -2064,7 +2075,7 @@ msgstr ""
 #: modules/menu/gp-places-menu.c:333
 #, c-format
 msgid "Mount %s"
-msgstr ""
+msgstr "Serkeb %s"
 
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
@@ -2072,7 +2083,7 @@ msgstr ""
 #: modules/menu/gp-places-menu.c:446
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr ""
+msgstr "Tanarit"
 
 #: modules/menu/gp-places-menu.c:447
 msgid "Open the contents of your desktop in a folder"
@@ -2080,7 +2091,7 @@ msgstr ""
 
 #: modules/menu/gp-places-menu.c:467
 msgid "Bookmarks"
-msgstr ""
+msgstr "Ticraḍ"
 
 #: modules/menu/gp-places-menu.c:525
 msgid "Removable Media"
@@ -2092,7 +2103,7 @@ msgstr ""
 
 #: modules/menu/gp-places-menu.c:604
 msgid "Recent Documents"
-msgstr ""
+msgstr "Isemliyen n melmi kan"
 
 #: modules/menu/gp-recent-menu.c:193
 msgid "Clear the Recent Documents list?"
@@ -2188,7 +2199,7 @@ msgstr ""
 
 #: modules/wncklet/showdesktop.c:74
 msgid "Icon not found"
-msgstr ""
+msgstr "Tignit ur tettwaf ara"
 
 #: modules/wncklet/showdesktop.c:105
 msgid "Click here to restore hidden windows."
@@ -2258,7 +2269,7 @@ msgstr ""
 
 #: modules/wncklet/wncklet-module.c:41
 msgid "Show Desktop"
-msgstr ""
+msgstr "Sken-d Tanarit"
 
 #: modules/wncklet/wncklet-module.c:42
 msgid "Hide application windows and show the desktop"
@@ -2293,7 +2304,7 @@ msgstr ""
 #: modules/wncklet/workspace-switcher.c:579
 #: modules/wncklet/workspace-switcher.c:768
 msgid "columns"
-msgstr ""
+msgstr "ijga"
 
 #: modules/wncklet/workspace-switcher.ui:22
 msgid "Workspace Switcher Preferences"
@@ -2310,7 +2321,7 @@ msgstr ""
 #: modules/wncklet/workspace-switcher.ui:128
 #: modules/wncklet/workspace-switcher.ui:228
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: modules/wncklet/workspace-switcher.ui:176
 msgid "Switcher"
@@ -2326,7 +2337,7 @@ msgstr ""
 
 #: modules/wncklet/workspace-switcher.ui:272
 msgid "Workspace Names"
-msgstr ""
+msgstr "Ismawen n Tallunin n umahil"
 
 #: modules/wncklet/workspace-switcher.ui:288
 msgid "Show workspace _names in switcher"
@@ -2334,4 +2345,4 @@ msgstr ""
 
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
-msgstr ""
+msgstr "Tallunin n umahil"
