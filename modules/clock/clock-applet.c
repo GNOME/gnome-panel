@@ -696,9 +696,6 @@ create_clock_widget (ClockApplet *cd)
 {
         GtkWidget *weather_box;
 
-        g_signal_connect (cd->wall_clock, "notify::clock",
-                          G_CALLBACK (update_clock), cd);
-
         /* Main toggle button */
         cd->panel_button = clock_button_new ();
 
@@ -737,9 +734,6 @@ create_clock_widget (ClockApplet *cd)
 	gtk_container_add (GTK_CONTAINER (cd), cd->panel_button);
 	gtk_container_set_border_width (GTK_CONTAINER (cd), 0);
 	gtk_widget_show (cd->panel_button);
-
-	/* Refresh the clock so that it paints its first state */
-        update_clock (NULL, NULL, cd);
 }
 
 static void
@@ -930,11 +924,9 @@ locations_changed (GSettings   *settings,
 	glong id;
 
 	if (!cd->locations) {
-		if (cd->panel_button) {
-			clock_button_set_weather (CLOCK_BUTTON (cd->panel_button),
-			                          NULL,
-			                          NULL);
-		}
+		clock_button_set_weather (CLOCK_BUTTON (cd->panel_button),
+			                  NULL,
+			                  NULL);
 	}
 
 	for (l = cd->locations; l; l = l->next) {
@@ -1069,56 +1061,6 @@ load_cities (ClockApplet *cd)
         }
 
         cd->locations = g_list_reverse (cd->locations);
-}
-
-static gboolean
-fill_clock_applet (ClockApplet *cd)
-{
-        GpApplet *applet;
-        GAction *action;
-
-        applet = GP_APPLET (cd);
-
-        cd->applet_settings = gp_applet_settings_new (applet, "org.gnome.gnome-panel.applet.clock");
-        cd->clock_settings = g_settings_new ("org.gnome.desktop.interface");
-        cd->weather_settings = g_settings_new ("org.gnome.GWeather4");
-
-        g_signal_connect (cd->clock_settings, "changed::clock-format",
-                          G_CALLBACK (format_changed), cd);
-        g_signal_connect (cd->clock_settings, "changed::clock-show-weeks",
-                          G_CALLBACK (show_week_changed), cd);
-        g_signal_connect (cd->applet_settings, "changed::locations",
-                          G_CALLBACK (locations_changed), cd);
-
-        cd->wall_clock = g_object_new (GNOME_TYPE_WALL_CLOCK, NULL);
-
-        cd->world = gweather_location_get_world ();
-        load_cities (cd);
-        locations_changed (NULL, NULL, cd);
-
-	cd->builder = gtk_builder_new ();
-	gtk_builder_set_translation_domain (cd->builder, GETTEXT_PACKAGE);
-	gtk_builder_add_from_resource (cd->builder, CLOCK_RESOURCE_PATH "clock.ui", NULL);
-
-	create_clock_widget (cd);
-
-	gp_applet_setup_menu_from_resource (applet,
-	                                    CLOCK_RESOURCE_PATH "clock-menu.ui",
-	                                    clock_menu_actions);
-
-	action = gp_applet_menu_lookup_action (applet, "preferences");
-	g_object_bind_property (cd, "locked-down",
-				action, "enabled",
-				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
-
-	action = gp_applet_menu_lookup_action (applet, "config");
-	g_object_bind_property (cd, "locked-down",
-				action, "enabled",
-				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
-
-	gtk_widget_show (GTK_WIDGET (cd));
-
-	return TRUE;
 }
 
 static void
@@ -1823,11 +1765,86 @@ display_properties_dialog (ClockApplet *cd,
 }
 
 static void
+setup_menu (ClockApplet *self)
+{
+        GpApplet *applet;
+        GAction *action;
+
+        applet = GP_APPLET (self);
+
+        gp_applet_setup_menu_from_resource (applet,
+                                            CLOCK_RESOURCE_PATH "clock-menu.ui",
+                                            clock_menu_actions);
+
+        action = gp_applet_menu_lookup_action (applet, "preferences");
+
+        g_object_bind_property (self, "locked-down",
+                                action, "enabled",
+                                G_BINDING_DEFAULT |
+                                G_BINDING_INVERT_BOOLEAN |
+                                G_BINDING_SYNC_CREATE);
+
+        action = gp_applet_menu_lookup_action (applet, "config");
+
+        g_object_bind_property (self, "locked-down",
+                                action, "enabled",
+                                G_BINDING_DEFAULT |
+                                G_BINDING_INVERT_BOOLEAN |
+                                G_BINDING_SYNC_CREATE);
+}
+
+static void
 clock_applet_constructed (GObject *object)
 {
+        ClockApplet *self;
+
+        self = CLOCK_APPLET (object);
+
         G_OBJECT_CLASS (clock_applet_parent_class)->constructed (object);
 
-        fill_clock_applet (CLOCK_APPLET (object));
+        self->builder = gtk_builder_new ();
+        gtk_builder_set_translation_domain (self->builder, GETTEXT_PACKAGE);
+        gtk_builder_add_from_resource (self->builder,
+                                       CLOCK_RESOURCE_PATH "clock.ui",
+                                       NULL);
+
+        setup_menu (self);
+
+        self->applet_settings = gp_applet_settings_new (GP_APPLET (self),
+                                                        "org.gnome.gnome-panel.applet.clock");
+        self->clock_settings = g_settings_new ("org.gnome.desktop.interface");
+        self->weather_settings = g_settings_new ("org.gnome.GWeather4");
+
+        self->world = gweather_location_get_world ();
+        self->wall_clock = gnome_wall_clock_new ();
+
+        create_clock_widget (self);
+
+        g_signal_connect (self->clock_settings,
+                          "changed::clock-format",
+                          G_CALLBACK (format_changed),
+                          self);
+
+        g_signal_connect (self->clock_settings,
+                          "changed::clock-show-weeks",
+                          G_CALLBACK (show_week_changed),
+                          self);
+
+        g_signal_connect (self->applet_settings,
+                          "changed::locations",
+                          G_CALLBACK (locations_changed),
+                          self);
+
+        g_signal_connect (self->wall_clock,
+                          "notify::clock",
+                          G_CALLBACK (update_clock),
+                          self);
+
+        load_cities (self);
+        locations_changed (NULL, NULL, self);
+
+        /* Refresh the clock so that it paints its first state */
+        update_clock (NULL, NULL, self);
 }
 
 static void
