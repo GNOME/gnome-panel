@@ -3,7 +3,7 @@ dnl Define version info
 dnl **************************************************************************
 
 m4_define([gp_major_version], [3])
-m4_define([gp_minor_version], [52])
+m4_define([gp_minor_version], [54])
 m4_define([gp_micro_version], [0])
 m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
 
