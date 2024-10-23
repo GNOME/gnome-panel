@@ -19,7 +19,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <libgnome-panel/gp-module.h>
-#include <libwnck/libwnck.h>
+#include <libwnck/libwnck-gtk3.h>
 
 #include "showdesktop.h"
 #include "window-list.h"
