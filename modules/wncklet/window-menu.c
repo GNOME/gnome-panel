@@ -26,7 +26,7 @@
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <libwnck/libwnck.h>
+#include <libwnck/libwnck-gtk3.h>
 #include <string.h>
 
 #include "wncklet.h"

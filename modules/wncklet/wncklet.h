@@ -22,7 +22,7 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <libwnck/libwnck.h>
+#include <libwnck/libwnck-gtk3.h>
 
 #define WNCKLET_RESOURCE_PATH "/org/gnome/panel/applet/wncklet/"
 
