@@ -321,14 +321,26 @@ app_info_launch_uris (GDesktopAppInfo  *info,
                       GList            *uris,
                       GError          **error)
 {
+  GdkDisplay *display;
+  GdkAppLaunchContext *context;
   GSpawnFlags flags;
   gboolean ret;
 
+  display = gdk_display_get_default ();
+  context = gdk_display_get_app_launch_context (display);
   flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
-  ret = g_desktop_app_info_launch_uris_as_manager (info, uris, NULL,
-                                                   flags, child_setup, info,
-                                                   pid_cb, NULL,
+
+  ret = g_desktop_app_info_launch_uris_as_manager (info,
+                                                   uris,
+                                                   G_APP_LAUNCH_CONTEXT (context),
+                                                   flags,
+                                                   child_setup,
+                                                   info,
+                                                   pid_cb,
+                                                   NULL,
                                                    error);
+
+  g_object_unref (context);
 
   return ret;
 }
