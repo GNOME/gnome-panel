@@ -844,21 +844,27 @@ launch (GpLauncherApplet *self,
 
       if (app_info != NULL)
         {
+          GdkDisplay *display;
+          GdkAppLaunchContext *context;
           GSpawnFlags flags;
           GError *error;
 
+          display = gdk_display_get_default ();
+          context = gdk_display_get_app_launch_context (display);
           flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
 
           error = NULL;
           g_desktop_app_info_launch_uris_as_manager (app_info,
                                                      uris,
-                                                     NULL,
+                                                     G_APP_LAUNCH_CONTEXT (context),
                                                      flags,
                                                      child_setup,
                                                      app_info,
                                                      pid_cb,
                                                      NULL,
                                                      &error);
+
+          g_object_unref (context);
 
           if (error != NULL)
             {
