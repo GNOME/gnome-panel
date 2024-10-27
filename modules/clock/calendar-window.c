@@ -274,6 +274,8 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	gchar *program;
 	gchar *command_line;
 	GAppInfo *app_info;
+	GdkDisplay *display;
+	GdkAppLaunchContext *context;
 	GError *error;
 
 	settings = g_settings_new (schema_program);
@@ -304,10 +306,15 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 		return;
 	}
 
-	if (!g_app_info_launch (app_info, NULL, NULL, &error)) {
+	display = gdk_display_get_default ();
+	context = gdk_display_get_app_launch_context (display);
+
+	if (!g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (context), &error)) {
 		g_warning ("Cannot launch calendar/tasks application: %s", error->message);
 		g_error_free (error);
 	}
+
+	g_object_unref (context);
 }
 
 static void
