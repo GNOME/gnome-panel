@@ -254,6 +254,8 @@ properties_cb (GSimpleAction *action,
                gpointer       user_data)
 {
   GpLockScreenApplet *self;
+  GdkDisplay *display;
+  GdkAppLaunchContext *context;
   GSpawnFlags flags;
   GError *error;
 
@@ -261,18 +263,22 @@ properties_cb (GSimpleAction *action,
 
   g_assert (self->lock_panel != NULL);
 
+  display = gdk_display_get_default ();
+  context = gdk_display_get_app_launch_context (display);
   flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
 
   error = NULL;
   g_desktop_app_info_launch_uris_as_manager (self->lock_panel,
                                              NULL,
-                                             NULL,
+                                             G_APP_LAUNCH_CONTEXT (context),
                                              flags,
                                              child_setup,
                                              self->lock_panel,
                                              pid_cb,
                                              NULL,
                                              &error);
+
+  g_object_unref (context);
 
   if (error != NULL)
     {
