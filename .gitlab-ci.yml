@@ -42,7 +42,7 @@ variables:
                   yelp-tools
 
 .build-libwnck: &build-libwnck
-  - git clone https://gitlab.gnome.org/GNOME/libwnck.git -b gnome-43
+  - git clone https://gitlab.gnome.org/GNOME/libwnck.git
   - meson setup libwnck libwnck/build --prefix /usr -Dintrospection=disabled
   - meson install -C libwnck/build
 
