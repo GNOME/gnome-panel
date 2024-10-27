@@ -11,8 +11,10 @@ variables:
                   automake
                   autopoint
                   build-essential
+                  ca-certificates
                   evolution-data-server-dev
                   gettext
+                  git
                   gtk-doc-tools
                   libcairo2-dev
                   libdconf-dev
@@ -28,15 +30,21 @@ variables:
                   libpango1.0-dev
                   libpolkit-gobject-1-dev
                   libsm-dev
+                  libstartup-notification0-dev
                   libsystemd-dev
                   libtool
-                  libwnck-3-dev
                   libx11-dev
                   libxau-dev
                   libxi-dev
                   libxrandr-dev
+                  meson
                   pkg-config
                   yelp-tools
+
+.build-libwnck: &build-libwnck
+  - git clone https://gitlab.gnome.org/GNOME/libwnck.git -b gnome-43
+  - meson setup libwnck libwnck/build --prefix /usr -Dintrospection=disabled
+  - meson install -C libwnck/build
 
 ubuntu:
   image: ubuntu:devel
@@ -46,6 +54,7 @@ ubuntu:
   before_script:
     - apt-get update
     - *install-ubuntu-dependencies
+    - *build-libwnck
   script:
     - ./autogen.sh
     - make
@@ -58,6 +67,7 @@ coverity:
   before_script:
     - apt-get update
     - *install-ubuntu-dependencies
+    - *build-libwnck
     - apt-get install -q -y --no-install-recommends
                       ca-certificates
                       clang
