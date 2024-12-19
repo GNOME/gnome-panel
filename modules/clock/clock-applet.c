@@ -960,6 +960,19 @@ show_week_changed (GSettings   *settings,
 }
 
 static void
+show_weather_changed (GSettings   *settings,
+                      const gchar *key,
+                      ClockApplet *clock)
+{
+        GWeatherInfo  *info;
+
+        if (clock->current != NULL) {
+                info = clock_location_get_weather_info (clock->current);
+                location_weather_updated_cb (clock->current, info, clock);
+        }
+}
+
+static void
 migrate_cities_to_locations (ClockApplet *self)
 {
         GVariant *cities;
@@ -1831,6 +1844,16 @@ clock_applet_constructed (GObject *object)
         g_signal_connect (self->applet_settings,
                           "changed::locations",
                           G_CALLBACK (locations_changed),
+                          self);
+
+        g_signal_connect (self->applet_settings,
+                          "changed::show-weather",
+                          G_CALLBACK (show_weather_changed),
+                          self);
+
+        g_signal_connect (self->applet_settings,
+                          "changed::show-temperature",
+                          G_CALLBACK (show_weather_changed),
                           self);
 
         g_signal_connect (self->wall_clock,
