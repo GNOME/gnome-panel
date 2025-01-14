@@ -424,6 +424,7 @@ format_time (GDesktopClockFormat format,
                 /* Translators: This is a strftime format string.
                  * It is used to display the start date of an appointment, in
                  * the most abbreviated way possible.
+                 * xgettext:no-c-format
                  */
                 time = g_date_time_format (dt, _("%b %d"));
         }
