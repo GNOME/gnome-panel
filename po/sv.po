@@ -1,5 +1,5 @@
 # Swedish messages for gnome-panel.
-# Copyright © 1998-2024 Free Software Foundation, Inc.
+# Copyright © 1998-2025 Free Software Foundation, Inc.
 # Martin Wahlen <mva@sbbs.se>, 1998.
 # Anders Carlsson <anders.carlsson@tordata.se>, 1999.
 # Andreas Hyden  <a.hyden@cyberpoint.se>, 2000.
@@ -7,7 +7,7 @@
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004, 2005.
 # Johan Dahlin <jdahlin@telia.com>, 2002.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021, 2022, 2024.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021, 2022, 2024, 2025.
 # Josef Andersson <josef.andersson@fripost.org>, 2016.
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
-"POT-Creation-Date: 2024-03-16 21:23+0000\n"
-"PO-Revision-Date: 2024-03-17 19:12+0100\n"
+"POT-Creation-Date: 2025-01-15 14:24+0000\n"
+"PO-Revision-Date: 2025-01-15 21:30+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -329,9 +329,9 @@ msgstr "Lista med panelobjekt-id"
 
 #: data/org.gnome.gnome-panel.gschema.xml:85
 msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. an applet, launcher, action button or menu button/bar). The settings for "
-"each of these objects are stored in /apps/panel/objects/$(id)."
+"A list of panel object IDs. Each ID identifies an individual panel object "
+"(e.g. an applet, launcher, action button or menu button/bar). The settings "
+"for each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 "En lista med panelobjekt-id. Varje id identifierar ett individuellt "
 "panelobjekt (t.ex. ett miniprogram, programstartare, åtgärdsknapp eller "
@@ -437,8 +437,8 @@ msgstr "Objekt-IID"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::"
-"ClockApplet\"."
+"The implementation ID of the object - e.g. "
+"\"ClockAppletFactory::ClockApplet\"."
 msgstr ""
 "Implementations ID för objektet - t.ex. \"ClockAppletFactory::ClockApplet\"."
 
@@ -539,14 +539,14 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Orienteringen för panelen. Möjliga värden är \"top\" (överkant), "
-"\"bottom\" (nederkant), \"left\" (vänsterkant), \"right\" (högerkant). I "
-"expanderat läge anger värdet vilken skärmkant som panelen finns på. I "
-"oexpanderat läge är skillnaden mellan \"top\" och \"bottom\" mindre viktig - "
-"båda indikerar att detta är en horisontell panel - men ger fortfarande en "
-"användbar indikering för hur en del panelobjekt ska bete sig. Till exempel "
-"kommer en menyknapp på en överkantspanel visa sin meny nedanför panelen, "
-"medan den på en nederkantspanel kommer att visas ovanför panelen."
+"Orienteringen för panelen. Möjliga värden är \"top\" (överkant), \"bottom\" "
+"(nederkant), \"left\" (vänsterkant), \"right\" (högerkant). I expanderat "
+"läge anger värdet vilken skärmkant som panelen finns på. I oexpanderat läge "
+"är skillnaden mellan \"top\" och \"bottom\" mindre viktig - båda indikerar "
+"att detta är en horisontell panel - men ger fortfarande en användbar "
+"indikering för hur en del panelobjekt ska bete sig. Till exempel kommer en "
+"menyknapp på en överkantspanel visa sin meny nedanför panelen, medan den på "
+"en nederkantspanel kommer att visas ovanför panelen."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
 msgid "Panel alignment"
@@ -663,9 +663,9 @@ msgid ""
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Hastigheten med vilken animeringar ska ske. Möjliga värden är "
-"\"slow\" (långsam), \"medium\" (mellan) och \"fast\" (snabb). Denna "
-"inställning är endast relevant om nyckeln enable_animations är true."
+"Hastigheten med vilken animeringar ska ske. Möjliga värden är \"slow\" "
+"(långsam), \"medium\" (mellan) och \"fast\" (snabb). Denna inställning är "
+"endast relevant om nyckeln enable_animations är true."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
 msgid "Use custom background color"
@@ -773,8 +773,8 @@ msgstr "Ta bort"
 
 #: gnome-panel/gp-applet-manager.c:251
 msgid ""
-"Disabled because this applet is listed in “disabled-applets” setting in “org."
-"gnome.gnome-panel.lockdown” GSettings schema."
+"Disabled because this applet is listed in “disabled-applets” setting in "
+"“org.gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
 "Inaktiverat eftersom detta miniprogram är listat i inställningen ”disabled-"
 "applets” i GSettings-schemat ”org.gnome.gnome-panel.lockdown”."
@@ -1041,7 +1041,7 @@ msgstr ""
 "inställningar."
 
 #: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
-#: modules/action-button/panel-run-dialog.c:1337
+#: modules/action-button/panel-run-dialog.c:1346
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
 #: modules/menu/gp-recent-menu.c:205
@@ -1150,14 +1150,14 @@ msgstr "Inledande högerkantspanel"
 msgid "Right End Panel"
 msgstr "Avslutande högerkantspanel"
 
-#: gnome-panel/panel-util.c:280 modules/menu/gp-menu-utils.c:212
+#: gnome-panel/panel-util.c:282 modules/menu/gp-menu-utils.c:213
 msgid "Home"
 msgstr "Hem"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:289 modules/menu/gp-menu-utils.c:229
+#: gnome-panel/panel-util.c:291 modules/menu/gp-menu-utils.c:230
 msgid "File System"
 msgstr "Filsystem"
 
@@ -1170,7 +1170,7 @@ msgstr "Filsystem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:503 modules/menu/gp-menu-utils.c:127
+#: gnome-panel/panel-util.c:505 modules/menu/gp-menu-utils.c:128
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1202,7 +1202,7 @@ msgstr "Fel vid visning av hjälpdokumentet"
 msgid "Backend “%s” is not supported."
 msgstr "Bakänden ”%s” stöds inte."
 
-#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
+#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:406
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kunde inte öppna platsen ”%s”"
@@ -1223,7 +1223,7 @@ msgid "Lock Screen"
 msgstr "Lås skärmen"
 
 #: modules/action-button/gp-action-button-module.c:55
-#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/action-button/gp-lock-screen-applet.c:326
 #: modules/menu/gp-lock-logout.c:1004
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
@@ -1261,22 +1261,22 @@ msgstr "Stäng av datorn"
 
 #: modules/action-button/gp-force-quit-applet.c:134
 msgid ""
-"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
-"lockdown” GSettings schema is set to true."
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-"
+"panel.lockdown” GSettings schema is set to true."
 msgstr ""
 "Inaktiverat eftersom inställningen ”disable-force-quit” i GSettings-schemat "
 "”org.gnome.gnome-panel.lockdown” är satt till true."
 
-#: modules/action-button/gp-lock-screen-applet.c:280
-#: modules/launcher/gp-launcher-applet.c:850
-#: modules/launcher/gp-launcher-applet.c:866
+#: modules/action-button/gp-lock-screen-applet.c:286
+#: modules/launcher/gp-launcher-applet.c:872
+#: modules/launcher/gp-launcher-applet.c:888
 msgid "Could not launch application"
 msgstr "Kunde inte starta program"
 
-#: modules/action-button/gp-lock-screen-applet.c:434
+#: modules/action-button/gp-lock-screen-applet.c:440
 msgid ""
-"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
-"lockdown” GSettings schema is set to true."
+"Disabled because “disable-lock-screen” setting in "
+"“org.gnome.desktop.lockdown” GSettings schema is set to true."
 msgstr ""
 "Inaktiverat eftersom inställningen ”disable-lock-screen” i GSettings-schemat "
 "”org.gnome.desktop.lockdown” är satt till true."
@@ -1301,8 +1301,8 @@ msgstr ""
 #: modules/action-button/gp-run-applet.c:134
 #: modules/launcher/gp-launcher-module.c:33
 msgid ""
-"Disabled because “disable-command-line” setting in “org.gnome.desktop."
-"lockdown” GSettings schema is set to true."
+"Disabled because “disable-command-line” setting in "
+"“org.gnome.desktop.lockdown” GSettings schema is set to true."
 msgstr ""
 "Inaktiverat eftersom inställningen ”disable-command-line” i GSettings-"
 "schemat ”org.gnome.desktop.lockdown” är satt till true."
@@ -1330,47 +1330,47 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Tvinga avslut"
 
-#: modules/action-button/panel-run-dialog.c:437
+#: modules/action-button/panel-run-dialog.c:438
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Kan inte hitta en terminal, använder xterm, även om det kanske inte fungerar"
 
-#: modules/action-button/panel-run-dialog.c:495
+#: modules/action-button/panel-run-dialog.c:496
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Kunde inte köra kommandot ”%s”"
 
-#: modules/action-button/panel-run-dialog.c:562
+#: modules/action-button/panel-run-dialog.c:571
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunde inte konvertera ”%s” från UTF-8"
 
-#: modules/action-button/panel-run-dialog.c:1334
+#: modules/action-button/panel-run-dialog.c:1343
 msgid "Choose a file to append to the command..."
 msgstr "Välj en fil att lägga till efter kommandot…"
 
-#: modules/action-button/panel-run-dialog.c:1338 modules/clock/clock.ui:82
+#: modules/action-button/panel-run-dialog.c:1347 modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
-#: modules/action-button/panel-run-dialog.c:1727
+#: modules/action-button/panel-run-dialog.c:1736
 #: modules/action-button/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Markera ett program för att visa dess beskrivning."
 
-#: modules/action-button/panel-run-dialog.c:1765
+#: modules/action-button/panel-run-dialog.c:1774
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: ”%s”"
 
-#: modules/action-button/panel-run-dialog.c:1798
+#: modules/action-button/panel-run-dialog.c:1807
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI-listan som släpptes på kördialogen hade felaktigt format (%d) eller "
 "felaktig längd (%d)\n"
 
-#: modules/action-button/panel-run-dialog.c:1970
+#: modules/action-button/panel-run-dialog.c:1979
 msgid "file"
 msgstr "fil"
 
@@ -1435,7 +1435,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:408 modules/clock/clock-location-tile.c:595
+#: modules/clock/calendar-window.c:415 modules/clock/clock-location-tile.c:595
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -1450,7 +1450,7 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:414 modules/clock/clock-location-tile.c:557
+#: modules/clock/calendar-window.c:421 modules/clock/clock-location-tile.c:557
 #: modules/clock/clock-location-tile.c:602
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -1459,48 +1459,49 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:421
+#: modules/clock/calendar-window.c:429
+#, no-c-format
 msgid "%b %d"
 msgstr "%d %b"
 
-#: modules/clock/calendar-window.c:927 modules/clock/calendar-window.c:1116
-#: modules/clock/calendar-window.c:1619
+#: modules/clock/calendar-window.c:935 modules/clock/calendar-window.c:1124
+#: modules/clock/calendar-window.c:1627
 msgid "Edit"
 msgstr "Redigera"
 
-#: modules/clock/calendar-window.c:932
+#: modules/clock/calendar-window.c:940
 msgid "Tasks"
 msgstr "Uppgifter"
 
-#: modules/clock/calendar-window.c:1055
+#: modules/clock/calendar-window.c:1063
 msgid "All Day"
 msgstr "Hela dagen"
 
-#: modules/clock/calendar-window.c:1204
+#: modules/clock/calendar-window.c:1212
 msgid "Appointments"
 msgstr "Möten"
 
-#: modules/clock/calendar-window.c:1229
+#: modules/clock/calendar-window.c:1237
 msgid "Birthdays and Anniversaries"
 msgstr "Födelsedagar och jubileum"
 
-#: modules/clock/calendar-window.c:1254
+#: modules/clock/calendar-window.c:1262
 msgid "Weather Information"
 msgstr "Väderinformation"
 
-#: modules/clock/calendar-window.c:1614
+#: modules/clock/calendar-window.c:1622
 msgid "Click to prevent further changes to timezone"
 msgstr "Klicka för att förhindra ytterligare tidzonsändringar"
 
-#: modules/clock/calendar-window.c:1615
+#: modules/clock/calendar-window.c:1623
 msgid "Click to make changes to timezone"
 msgstr "Klicka för att göra tidzonsändringar"
 
-#: modules/clock/calendar-window.c:1624 modules/clock/clock.ui:719
+#: modules/clock/calendar-window.c:1632 modules/clock/clock.ui:719
 msgid "Locations"
 msgstr "Platser"
 
-#: modules/clock/calendar-window.c:1939
+#: modules/clock/calendar-window.c:1947
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -1528,63 +1529,63 @@ msgid "Click to view month calendar"
 msgstr "Klicka för att visa månadskalendern"
 
 #. Done!
-#: modules/clock/clock-applet.c:735
+#: modules/clock/clock-applet.c:731
 msgid "Computer Clock"
 msgstr "Datorklocka"
 
-#: modules/clock/clock-applet.c:821
+#: modules/clock/clock-applet.c:814
 msgid "Failed to open the time settings"
 msgstr "Misslyckades med att öppna tidsinställningarna"
 
-#: modules/clock/clock-applet.c:1477
+#: modules/clock/clock-applet.c:1417
 msgid "Choose Location"
 msgstr "Välj plats"
 
-#: modules/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1494
 msgid "Edit Location"
 msgstr "Redigera plats"
 
-#: modules/clock/clock-applet.c:1590 modules/clock/clock-applet.c:1598
+#: modules/clock/clock-applet.c:1530 modules/clock/clock-applet.c:1538
 msgid "Default"
 msgstr "Standard"
 
-#: modules/clock/clock-applet.c:1591
+#: modules/clock/clock-applet.c:1531
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1592
+#: modules/clock/clock-applet.c:1532
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1593
+#: modules/clock/clock-applet.c:1533
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1599
+#: modules/clock/clock-applet.c:1539
 msgid "Meters per second (m/s)"
 msgstr "Meter per sekund (m/s)"
 
-#: modules/clock/clock-applet.c:1600
+#: modules/clock/clock-applet.c:1540
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per timme (kph)"
 
-#: modules/clock/clock-applet.c:1601
+#: modules/clock/clock-applet.c:1541
 msgid "Miles per hour (mph)"
 msgstr "Engelska mil per timme (mph)"
 
-#: modules/clock/clock-applet.c:1602
+#: modules/clock/clock-applet.c:1542
 msgid "Knots"
 msgstr "Knop"
 
-#: modules/clock/clock-applet.c:1603
+#: modules/clock/clock-applet.c:1543
 msgid "Beaufort scale"
 msgstr "Beauforts skala"
 
-#: modules/clock/clock-applet.c:1656
+#: modules/clock/clock-applet.c:1596
 msgid "City Name"
 msgstr "Stadens namn"
 
-#: modules/clock/clock-applet.c:1660
+#: modules/clock/clock-applet.c:1600
 msgid "City Time Zone"
 msgstr "Stadens tidszon"
 
@@ -2047,20 +2048,20 @@ msgstr "Ikonnamn:"
 msgid "Show standard icons only"
 msgstr "Visa endast standardikoner"
 
-#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+#: modules/launcher/gp-launcher-applet.c:133 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
 msgstr "(tom)"
 
-#: modules/launcher/gp-launcher-applet.c:862
+#: modules/launcher/gp-launcher-applet.c:884
 #, c-format
 msgid "Can not execute “%s” command line."
 msgstr "Kan inte köra kommandoraden ”%s”."
 
-#: modules/launcher/gp-launcher-applet.c:885
+#: modules/launcher/gp-launcher-applet.c:907
 msgid "Could not open location"
 msgstr "Kunde inte öppna platsen"
 
-#: modules/launcher/gp-launcher-applet.c:1012
+#: modules/launcher/gp-launcher-applet.c:1034
 #, c-format
 msgid "Failed to load key file “%s”: %s"
 msgstr "Misslyckades med att läsa in nyckelfilen ”%s”: %s"
@@ -2223,7 +2224,7 @@ msgstr "Användarmeny"
 msgid "Menu to change your settings and log out"
 msgstr "Meny för att ändra dina inställningar och logga ut"
 
-#: modules/menu/gp-menu-utils.c:441
+#: modules/menu/gp-menu-utils.c:469
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Kunde inte starta ”%s”"
