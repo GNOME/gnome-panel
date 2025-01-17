@@ -5,24 +5,24 @@
 # Andraž Tori <andraz.tori1@guest.arnes.si>, 2002.
 # Matic Žgur <mr.zgur@gmail.com>, 2006.
 # Matej Urbančič <mateju@svn.gnome.org>, 2007–2020.
-# Martin Srebotnjak <miles@filmsi.net>, 2022.
+# Martin Srebotnjak <miles@filmsi.net>, 2022,2024,2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
-"POT-Creation-Date: 2024-03-16 21:23+0000\n"
-"PO-Revision-Date: 2024-03-18 18:30+0100\n"
+"POT-Creation-Date: 2025-01-12 21:24+0000\n"
+"PO-Revision-Date: 2025-01-17 11:13+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -432,8 +432,8 @@ msgstr "IID predmeta"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr "Vstavitveni ID predmeta - npr. »ClockAppletFactory::ClockApplet«."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:10
@@ -523,12 +523,12 @@ msgstr "Usmerjenost pulta"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
@@ -544,8 +544,8 @@ msgstr "Poravnava pulta"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr "Poravnava plošče. Možne vrednosti so »začetek«, »sredinsko«, »konec«."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
@@ -646,8 +646,8 @@ msgstr "Hitrost animacije"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
 "Hitrost animacij pulta. Mogoče vrednosti so »počasi«, »srednje« in »hitro«. "
@@ -784,8 +784,8 @@ msgstr "Ali želite izbrisati aplet iz nastavitev?"
 #: gnome-panel/gp-error-applet.c:124
 #, c-format
 msgid ""
-"The panel encountered a problem while loading “<b>%s</b>” applet from “<b>"
-"%s</b>” module! %s"
+"The panel encountered a problem while loading “<b>%s</b>” applet from "
+"“<b>%s</b>” module! %s"
 msgstr ""
 "Pult je naletel na težavo pri nalaganju apleta »<b>%s</b>« iz modula »<b>%s</"
 "b>«! %s"
@@ -1018,7 +1018,7 @@ msgstr ""
 "vse njegove nastavitve."
 
 #: gnome-panel/panel.c:1349 modules/action-button/panel-force-quit.c:214
-#: modules/action-button/panel-run-dialog.c:1337
+#: modules/action-button/panel-run-dialog.c:1346
 #: modules/action-button/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
 #: modules/menu/gp-recent-menu.c:205
@@ -1122,14 +1122,14 @@ msgstr "Desni začetni pult"
 msgid "Right End Panel"
 msgstr "Desni končni pult"
 
-#: gnome-panel/panel-util.c:280 modules/menu/gp-menu-utils.c:212
+#: gnome-panel/panel-util.c:282 modules/menu/gp-menu-utils.c:213
 msgid "Home"
 msgstr "Začetek"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:289 modules/menu/gp-menu-utils.c:229
+#: gnome-panel/panel-util.c:291 modules/menu/gp-menu-utils.c:230
 msgid "File System"
 msgstr "Datotečni sistem"
 
@@ -1142,7 +1142,7 @@ msgstr "Datotečni sistem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:503 modules/menu/gp-menu-utils.c:127
+#: gnome-panel/panel-util.c:505 modules/menu/gp-menu-utils.c:128
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1174,7 +1174,7 @@ msgstr "Napaka med prikazovanjem dokumenta pomoči"
 msgid "Backend “%s” is not supported."
 msgstr "Zaledje »%s« ni podprto."
 
-#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
+#: libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:406
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Ni mogoče odpreti mesta »%s«"
@@ -1195,7 +1195,7 @@ msgid "Lock Screen"
 msgstr "Zakleni zaslon"
 
 #: modules/action-button/gp-action-button-module.c:55
-#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/action-button/gp-lock-screen-applet.c:326
 #: modules/menu/gp-lock-logout.c:1004
 msgid "Protect your computer from unauthorized use"
 msgstr "Zavaruje računalnik pred neodobreno uporabo"
@@ -1239,13 +1239,13 @@ msgstr ""
 "Onemogočeno, ker je nastavitev »disable-force-quit« v shemi »org.gnome.gnome-"
 "panel.lockdown« GSettings nastavljen na true."
 
-#: modules/action-button/gp-lock-screen-applet.c:280
-#: modules/launcher/gp-launcher-applet.c:850
-#: modules/launcher/gp-launcher-applet.c:866
+#: modules/action-button/gp-lock-screen-applet.c:286
+#: modules/launcher/gp-launcher-applet.c:872
+#: modules/launcher/gp-launcher-applet.c:888
 msgid "Could not launch application"
 msgstr "Programa ni mogoče zagnati"
 
-#: modules/action-button/gp-lock-screen-applet.c:434
+#: modules/action-button/gp-lock-screen-applet.c:440
 msgid ""
 "Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
@@ -1302,44 +1302,44 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Vsili končanje"
 
-#: modules/action-button/panel-run-dialog.c:437
+#: modules/action-button/panel-run-dialog.c:438
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr "Terminala ni mogoče najti, uporabljen bo xterm, četudi morda ne deluje"
 
-#: modules/action-button/panel-run-dialog.c:495
+#: modules/action-button/panel-run-dialog.c:496
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Ni mogoče izvesti ukaza »%s«"
 
-#: modules/action-button/panel-run-dialog.c:562
+#: modules/action-button/panel-run-dialog.c:571
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ni mogoče pretvoriti »%s« iz UTF-8"
 
-#: modules/action-button/panel-run-dialog.c:1334
+#: modules/action-button/panel-run-dialog.c:1343
 msgid "Choose a file to append to the command..."
 msgstr "Izbor datoteke, ki naj se pripne ukazu ..."
 
-#: modules/action-button/panel-run-dialog.c:1338 modules/clock/clock.ui:82
+#: modules/action-button/panel-run-dialog.c:1347 modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_V redu"
 
-#: modules/action-button/panel-run-dialog.c:1727
+#: modules/action-button/panel-run-dialog.c:1736
 #: modules/action-button/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Izbor programa za pregled opisa."
 
-#: modules/action-button/panel-run-dialog.c:1765
+#: modules/action-button/panel-run-dialog.c:1774
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Izveden bo ukaz »%s«"
 
-#: modules/action-button/panel-run-dialog.c:1798
+#: modules/action-button/panel-run-dialog.c:1807
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Seznam naslovov URI ima napačno obliko (%d) ali dolžino (%d)\n"
 
-#: modules/action-button/panel-run-dialog.c:1970
+#: modules/action-button/panel-run-dialog.c:1979
 msgid "file"
 msgstr "datoteka"
 
@@ -1401,7 +1401,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:408 modules/clock/clock-location-tile.c:595
+#: modules/clock/calendar-window.c:415 modules/clock/clock-location-tile.c:595
 msgid "%l:%M %p"
 msgstr "%H.%M"
 
@@ -1416,7 +1416,7 @@ msgstr "%H.%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:414 modules/clock/clock-location-tile.c:557
+#: modules/clock/calendar-window.c:421 modules/clock/clock-location-tile.c:557
 #: modules/clock/clock-location-tile.c:602
 msgid "%H:%M"
 msgstr "%H.%M"
@@ -1425,48 +1425,49 @@ msgstr "%H.%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:421
+#: modules/clock/calendar-window.c:428
+#, c-format
 msgid "%b %d"
-msgstr "%d. %b"
+msgstr "%b-%d"
 
-#: modules/clock/calendar-window.c:927 modules/clock/calendar-window.c:1116
-#: modules/clock/calendar-window.c:1619
+#: modules/clock/calendar-window.c:934 modules/clock/calendar-window.c:1123
+#: modules/clock/calendar-window.c:1626
 msgid "Edit"
 msgstr "Uredi"
 
-#: modules/clock/calendar-window.c:932
+#: modules/clock/calendar-window.c:939
 msgid "Tasks"
 msgstr "Naloge"
 
-#: modules/clock/calendar-window.c:1055
+#: modules/clock/calendar-window.c:1062
 msgid "All Day"
 msgstr "Celodnevno"
 
-#: modules/clock/calendar-window.c:1204
+#: modules/clock/calendar-window.c:1211
 msgid "Appointments"
 msgstr "Sestanki"
 
-#: modules/clock/calendar-window.c:1229
+#: modules/clock/calendar-window.c:1236
 msgid "Birthdays and Anniversaries"
 msgstr "Rojstni dnevi in obletnice"
 
-#: modules/clock/calendar-window.c:1254
+#: modules/clock/calendar-window.c:1261
 msgid "Weather Information"
 msgstr "Vremenske napovedi"
 
-#: modules/clock/calendar-window.c:1614
+#: modules/clock/calendar-window.c:1621
 msgid "Click to prevent further changes to timezone"
 msgstr "Kliknite, če želite preprečiti nadaljnje spremembe časovnega pasu"
 
-#: modules/clock/calendar-window.c:1615
+#: modules/clock/calendar-window.c:1622
 msgid "Click to make changes to timezone"
 msgstr "Kliknite, če želite spremeniti časovni pas"
 
-#: modules/clock/calendar-window.c:1624 modules/clock/clock.ui:719
+#: modules/clock/calendar-window.c:1631 modules/clock/clock.ui:719
 msgid "Locations"
 msgstr "Mesta"
 
-#: modules/clock/calendar-window.c:1939
+#: modules/clock/calendar-window.c:1946
 msgid "Calendar"
 msgstr "Koledar"
 
@@ -1494,63 +1495,63 @@ msgid "Click to view month calendar"
 msgstr "Kliknite za ogled mesečnega koledarja"
 
 #. Done!
-#: modules/clock/clock-applet.c:735
+#: modules/clock/clock-applet.c:731
 msgid "Computer Clock"
 msgstr "Računalniška ura"
 
-#: modules/clock/clock-applet.c:821
+#: modules/clock/clock-applet.c:814
 msgid "Failed to open the time settings"
 msgstr "Napaka med odpiranjem okna nastavitev sistemskega časa"
 
-#: modules/clock/clock-applet.c:1477
+#: modules/clock/clock-applet.c:1417
 msgid "Choose Location"
 msgstr "Izbor mesta"
 
-#: modules/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1494
 msgid "Edit Location"
 msgstr "Urejanje mesta"
 
-#: modules/clock/clock-applet.c:1590 modules/clock/clock-applet.c:1598
+#: modules/clock/clock-applet.c:1530 modules/clock/clock-applet.c:1538
 msgid "Default"
 msgstr "Privzeto"
 
-#: modules/clock/clock-applet.c:1591
+#: modules/clock/clock-applet.c:1531
 msgid "Kelvin"
 msgstr "Kelvini"
 
-#: modules/clock/clock-applet.c:1592
+#: modules/clock/clock-applet.c:1532
 msgid "Celsius"
 msgstr "Celziji"
 
-#: modules/clock/clock-applet.c:1593
+#: modules/clock/clock-applet.c:1533
 msgid "Fahrenheit"
 msgstr "Fahrenheiti"
 
-#: modules/clock/clock-applet.c:1599
+#: modules/clock/clock-applet.c:1539
 msgid "Meters per second (m/s)"
 msgstr "Metri na sekundo (m/s)"
 
-#: modules/clock/clock-applet.c:1600
+#: modules/clock/clock-applet.c:1540
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometri na uro (km/h)"
 
-#: modules/clock/clock-applet.c:1601
+#: modules/clock/clock-applet.c:1541
 msgid "Miles per hour (mph)"
 msgstr "Milje na uro (mi/h)"
 
-#: modules/clock/clock-applet.c:1602
+#: modules/clock/clock-applet.c:1542
 msgid "Knots"
 msgstr "Vozli"
 
-#: modules/clock/clock-applet.c:1603
+#: modules/clock/clock-applet.c:1543
 msgid "Beaufort scale"
 msgstr "Beaufortova skala"
 
-#: modules/clock/clock-applet.c:1656
+#: modules/clock/clock-applet.c:1596
 msgid "City Name"
 msgstr "Ime mesta"
 
-#: modules/clock/clock-applet.c:1660
+#: modules/clock/clock-applet.c:1600
 msgid "City Time Zone"
 msgstr "Časovno območje mesta"
 
@@ -2013,20 +2014,20 @@ msgstr "Imena ikone:"
 msgid "Show standard icons only"
 msgstr "Pokaži samo standardne ikone"
 
-#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+#: modules/launcher/gp-launcher-applet.c:133 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
 msgstr "(prazno)"
 
-#: modules/launcher/gp-launcher-applet.c:862
+#: modules/launcher/gp-launcher-applet.c:884
 #, c-format
 msgid "Can not execute “%s” command line."
 msgstr "Ukazne vrstice »%s« ni mogoče izvršiti."
 
-#: modules/launcher/gp-launcher-applet.c:885
+#: modules/launcher/gp-launcher-applet.c:907
 msgid "Could not open location"
 msgstr "Mesta ni mogoče odpreti"
 
-#: modules/launcher/gp-launcher-applet.c:1012
+#: modules/launcher/gp-launcher-applet.c:1034
 #, c-format
 msgid "Failed to load key file “%s”: %s"
 msgstr "Nalaganje datoteke ključa »%s« je spodletelo: %s"
@@ -2189,7 +2190,7 @@ msgstr "Uporabniški meni"
 msgid "Menu to change your settings and log out"
 msgstr "Meni za spreminjanje nastavitev in odjavo"
 
-#: modules/menu/gp-menu-utils.c:441
+#: modules/menu/gp-menu-utils.c:469
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Ni mogoče zagnati »%s«"
