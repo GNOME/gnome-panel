@@ -927,27 +927,10 @@ locations_changed (GSettings   *settings,
                    const gchar *key,
                    ClockApplet *cd)
 {
-        GList *l;
-        ClockLocation *loc;
-        glong id;
-
         if (!cd->locations) {
                 clock_button_set_weather (CLOCK_BUTTON (cd->panel_button),
                                           NULL,
                                           NULL);
-        }
-
-        for (l = cd->locations; l; l = l->next) {
-                loc = l->data;
-
-                id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (loc), "weather-updated"));
-                if (id == 0) {
-                        id = g_signal_connect (loc, "weather-updated",
-                                               G_CALLBACK (location_weather_updated_cb), cd);
-                        g_object_set_data (G_OBJECT (loc), "weather-updated", GINT_TO_POINTER (id));
-                        g_signal_connect (loc, "set-current",
-                                          G_CALLBACK (location_set_current_cb), cd);
-                }
         }
 
         if (cd->map_widget)
@@ -1055,6 +1038,38 @@ migrate_cities_to_locations (ClockApplet *self)
         g_settings_reset (self->applet_settings, "cities");
 }
 
+static ClockLocation *
+create_location (ClockApplet *self,
+                 const char  *name,
+                 const char  *metar_code,
+                 double       latitude,
+                 double       longitude,
+                 gboolean     current)
+{
+        ClockLocation *loc;
+
+        loc = clock_location_new (self->wall_clock,
+                                  self->world,
+                                  name,
+                                  metar_code,
+                                  TRUE,
+                                  latitude,
+                                  longitude,
+                                  current);
+
+        g_signal_connect (loc,
+                          "weather-updated",
+                          G_CALLBACK (location_weather_updated_cb),
+                          self);
+
+        g_signal_connect (loc,
+                          "set-current",
+                          G_CALLBACK (location_set_current_cb),
+                          self);
+
+        return loc;
+}
+
 static void
 load_cities (ClockApplet *cd)
 {
@@ -1072,11 +1087,12 @@ load_cities (ClockApplet *cd)
                                     &latitude, &longitude, &current)) {
                 ClockLocation *loc;
 
-                loc = clock_location_new (cd->wall_clock,
-                                          cd->world,
-                                          name, code,
-                                          TRUE, latitude, longitude,
-                                          current);
+                loc = create_location (cd,
+                                       name,
+                                       code,
+                                       latitude,
+                                       longitude,
+                                       current);
 
                 cd->locations = g_list_prepend (cd->locations, loc);
 
@@ -1250,14 +1266,12 @@ run_prefs_edit_save (GtkButton   *button,
                 lon = -lon;
         }
 
-        loc = clock_location_new (cd->wall_clock,
-                                  cd->world,
-                                  name,
-                                  weather_code,
-                                  TRUE,
-                                  lat,
-                                  lon,
-                                  cd->locations == NULL);
+        loc = create_location (cd,
+                               name,
+                               weather_code,
+                               lat,
+                               lon,
+                               cd->locations == NULL);
 
         cd->locations = g_list_append (cd->locations, loc);
 
