@@ -1,5 +1,5 @@
 # Hungarian translation for gnome-panel.
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2025 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Szabolcs Ban <shooby at gnome dot hu>, 1998, 1999, 2000, 2001.
@@ -11,15 +11,15 @@
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2018.
 # Mate ORY <orymate at gmail d0t com>, 2006.
 # Nyitrai István <sianis at gmail dot com>, 2008.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2015, 2016, 2017, 2019.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-09-17 14:57+0000\n"
-"PO-Revision-Date: 2019-01-27 18:29+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2025-02-12 23:04+0000\n"
+"PO-Revision-Date: 2025-02-28 21:43+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -432,8 +432,8 @@ msgstr "Objektum IID-je"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
 "Az objektum megvalósítási azonosítója, például: „ClockAppletFactory::"
 "ClockApplet”."
@@ -520,22 +520,22 @@ msgstr "Panel tájolása"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), "
-"„left” (balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a "
-"képernyő melyik szélén lesz a panel. Nem kiterjesztett módban a különbség "
-"fent és lent között kevésbé fontos, – mindkettő vízszintes panelt jelent – "
-"de még mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. "
-"Például, egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, "
-"míg egy alsó panel menüje a panel fölött bukkan fel."
+"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), „left” "
+"(balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a képernyő "
+"melyik szélén lesz a panel. Nem kiterjesztett módban a különbség fent és "
+"lent között kevésbé fontos, – mindkettő vízszintes panelt jelent – de még "
+"mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. Például, "
+"egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, míg egy "
+"alsó panel menüje a panel fölött bukkan fel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
 msgid "Panel size"
@@ -740,12 +740,12 @@ msgstr "Animáció sebessége"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), "
-"„medium” (közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
+"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), „medium” "
+"(közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
 "enable_animations kulcs be van állítva."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
@@ -837,11 +837,6 @@ msgid ""
 msgstr ""
 "Más alkalmazások indítása és különböző segédprogramok biztosítása ablakok "
 "kezeléséhez, az idő megjelenítéséhez, stb."
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
 
 #: gnome-panel/gp-add-applet-window.c:137
 msgid "Help"
@@ -999,7 +994,7 @@ msgid "_Launch"
 msgstr "I_ndítás"
 
 #: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:148
+#: gnome-panel/panel-context-menu.c:147
 msgid "_Properties"
 msgstr "T_ulajdonságok"
 
@@ -1032,7 +1027,7 @@ msgstr "Válasszon ikont"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
 #: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
@@ -1268,23 +1263,23 @@ msgid ""
 "settings are lost."
 msgstr "A panel törlésekor a panel és annak beállításai elvesznek."
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:59
 msgid "Cannot delete this panel"
 msgstr "Ez a panel nem törölhető"
 
-#: gnome-panel/panel-context-menu.c:61
+#: gnome-panel/panel-context-menu.c:60
 msgid "You must always have at least one panel."
 msgstr "Mindig rendelkeznie kell legalább egy panellel."
 
-#: gnome-panel/panel-context-menu.c:139
+#: gnome-panel/panel-context-menu.c:138
 msgid "_Add to Panel..."
 msgstr "Hozzá_adás a panelhez…"
 
-#: gnome-panel/panel-context-menu.c:155
+#: gnome-panel/panel-context-menu.c:154
 msgid "_Delete This Panel"
 msgstr "Panel _törlése"
 
-#: gnome-panel/panel-context-menu.c:167
+#: gnome-panel/panel-context-menu.c:166
 msgid "_New Panel"
 msgstr "Új _panel"
 
@@ -1323,7 +1318,7 @@ msgstr "_Megjegyzés:"
 msgid "_Revert"
 msgstr "_Visszaállítás"
 
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
@@ -1407,20 +1402,20 @@ msgstr "A(z) „%s” parancs nem futtatható"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nem alakítható át UTF-8-ból a következő: „%s”"
 
-#: gnome-panel/panel-run-dialog.c:1280
+#: gnome-panel/panel-run-dialog.c:1288
 msgid "Choose a file to append to the command..."
 msgstr "Válassza ki a parancshoz hozzáfűzendő fájlt…"
 
-#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Válasszon ki egy alkalmazást a leírásának megtekintéséhez."
 
-#: gnome-panel/panel-run-dialog.c:1701
+#: gnome-panel/panel-run-dialog.c:1709
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A következő parancsot futtatja: „%s”"
 
-#: gnome-panel/panel-run-dialog.c:1734
+#: gnome-panel/panel-run-dialog.c:1742
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1544,23 +1539,23 @@ msgstr "Jobb oldali úszópanel"
 msgid "Right Edge Panel"
 msgstr "Jobb oldali élpanel"
 
-#: gnome-panel/panel-util.c:316
+#: gnome-panel/panel-util.c:264
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "A(z) „%s” ikon nem található"
 
-#: gnome-panel/panel-util.c:559
+#: gnome-panel/panel-util.c:507
 msgid "file"
 msgstr "fájl"
 
-#: gnome-panel/panel-util.c:727 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Saját mappa"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:736 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Fájlrendszer"
 
@@ -1573,7 +1568,7 @@ msgstr "Fájlrendszer"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:950 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s, %2$s"
@@ -1624,8 +1619,9 @@ msgstr "%H.%M"
 #. * the most abbreviated way possible.
 #.
 #: modules/clock/calendar-window.c:282
+#, c-format
 msgid "%b %d"
-msgstr "%b. %e."
+msgstr "%b. %-d."
 
 #: modules/clock/calendar-window.c:787
 msgid "Tasks"
@@ -1692,64 +1688,64 @@ msgstr "Számítógép óra"
 msgid "Failed to open the time settings"
 msgstr "Az időbeállítások megnyitása meghiúsult"
 
-#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#: modules/clock/clock-applet.c:1548 modules/fish/fish-applet.c:148
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "A súgódokumentum nem jeleníthető meg: „%s”"
 
-#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+#: modules/clock/clock-applet.c:1577 modules/fish/fish-applet.c:174
 msgid "Error displaying help document"
 msgstr "Hiba a súgódokumentum megjelenítésekor"
 
-#: modules/clock/clock-applet.c:1621
+#: modules/clock/clock-applet.c:1626
 msgid "Choose Location"
 msgstr "Válasszon helyet"
 
-#: modules/clock/clock-applet.c:1700
+#: modules/clock/clock-applet.c:1705
 msgid "Edit Location"
 msgstr "Hely szerkesztése"
 
-#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1741 modules/clock/clock-applet.c:1749
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: modules/clock/clock-applet.c:1737
+#: modules/clock/clock-applet.c:1742
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1738
+#: modules/clock/clock-applet.c:1743
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1744
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1745
+#: modules/clock/clock-applet.c:1750
 msgid "Meters per second (m/s)"
 msgstr "Méter per másodperc (m/s)"
 
-#: modules/clock/clock-applet.c:1746
+#: modules/clock/clock-applet.c:1751
 msgid "Kilometers per hour (kph)"
 msgstr "Kilométer per óra (kph)"
 
-#: modules/clock/clock-applet.c:1747
+#: modules/clock/clock-applet.c:1752
 msgid "Miles per hour (mph)"
 msgstr "Mérföld per óra (mph)"
 
-#: modules/clock/clock-applet.c:1748
+#: modules/clock/clock-applet.c:1753
 msgid "Knots"
 msgstr "Csomó"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1754
 msgid "Beaufort scale"
 msgstr "Beaufort skála"
 
-#: modules/clock/clock-applet.c:1802
+#: modules/clock/clock-applet.c:1807
 msgid "City Name"
 msgstr "Város neve"
 
-#: modules/clock/clock-applet.c:1806
+#: modules/clock/clock-applet.c:1811
 msgid "City Time Zone"
 msgstr "Város időzónája"
 
@@ -2457,4 +2453,3 @@ msgstr "_Munkaterületek neveinek megjelenítése a kisalkalmazásban"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Munkaterületek"
-
