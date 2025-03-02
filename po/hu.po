@@ -1,5 +1,5 @@
 # Hungarian translation for gnome-panel.
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2025 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Szabolcs Ban <shooby at gnome dot hu>, 1998, 1999, 2000, 2001.
@@ -11,20 +11,20 @@
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2018.
 # Mate ORY <orymate at gmail d0t com>, 2006.
 # Nyitrai István <sianis at gmail dot com>, 2008.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-07-20 14:54+0000\n"
-"PO-Revision-Date: 2021-09-16 20:09+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2025-02-12 23:06+0000\n"
+"PO-Revision-Date: 2025-03-02 20:51+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -432,8 +432,8 @@ msgstr "Objektum IID-je"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
 "Az objektum megvalósítási azonosítója, például: „ClockAppletFactory::"
 "ClockApplet”."
@@ -520,35 +520,34 @@ msgstr "Panel tájolása"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), "
-"„left” (balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a "
-"képernyő melyik szélén lesz a panel. Nem kiterjesztett módban a különbség "
-"fent és lent között kevésbé fontos, – mindkettő vízszintes panelt jelent – "
-"de még mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. "
-"Például, egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, "
-"míg egy alsó panel menüje a panel fölött bukkan fel."
+"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), „left” "
+"(balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a képernyő "
+"melyik szélén lesz a panel. Nem kiterjesztett módban a különbség fent és "
+"lent között kevésbé fontos, – mindkettő vízszintes panelt jelent – de még "
+"mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. Például, "
+"egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, míg egy "
+"alsó panel menüje a panel fölött bukkan fel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
-#| msgid "Panel ID list"
 msgid "Panel alignment"
 msgstr "Panel igazítása"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
-"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
-"\"."
+"The alignment of the panel. Possible values are \"start\", \"center\", "
+"\"end\"."
 msgstr ""
-"A panel igazítása. Lehetséges értékek: „start” (kezdés), „center” (középre)"
-" és „end” (befejezés)."
+"A panel igazítása. Lehetséges értékek: „start” (kezdés), „center” (középre) "
+"és „end” (befejezés)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
@@ -651,12 +650,12 @@ msgstr "Animáció sebessége"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), "
-"„medium” (közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
+"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), „medium” "
+"(közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
 "enable_animations kulcs be van állítva."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
@@ -759,7 +758,6 @@ msgid "About"
 msgstr "Névjegy"
 
 #: gnome-panel/gp-applet-list-row.c:207
-#| msgid "_Remove"
 msgid "Remove"
 msgstr "Eltávolítás"
 
@@ -808,7 +806,6 @@ msgid "Right"
 msgstr "Jobbra"
 
 #: gnome-panel/gp-properties-dialog.c:231
-#| msgid "Restart"
 msgctxt "Alignment"
 msgid "Start"
 msgstr "Kezdés"
@@ -819,7 +816,6 @@ msgid "Center"
 msgstr "Középre"
 
 #: gnome-panel/gp-properties-dialog.c:233
-#| msgid "E_xpand"
 msgctxt "Alignment"
 msgid "End"
 msgstr "Befejezés"
@@ -828,103 +824,97 @@ msgstr "Befejezés"
 msgid "Panel Properties"
 msgstr "Panel beállításai"
 
-#: gnome-panel/gp-properties-dialog.ui:56
-#: gnome-panel/gp-properties-dialog.ui:369
+#: gnome-panel/gp-properties-dialog.ui:53
+#: gnome-panel/gp-properties-dialog.ui:366
 msgid "Some of these properties are locked down"
 msgstr "Néhány ezen tulajdonságok közül zárolva van"
 
-#: gnome-panel/gp-properties-dialog.ui:82
+#: gnome-panel/gp-properties-dialog.ui:79
 msgid "_Orientation:"
 msgstr "_Tájolás:"
 
-#: gnome-panel/gp-properties-dialog.ui:125
-#| msgid "Appointments"
+#: gnome-panel/gp-properties-dialog.ui:122
 msgid "_Alignment:"
 msgstr "_Igazítás:"
 
-#: gnome-panel/gp-properties-dialog.ui:168
+#: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
 msgstr "_Méret:"
 
-#: gnome-panel/gp-properties-dialog.ui:204
+#: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
 msgstr "képpont"
 
-#: gnome-panel/gp-properties-dialog.ui:237
+#: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
 msgstr "Egyebek:"
 
-#: gnome-panel/gp-properties-dialog.ui:256
+#: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
 msgstr "S_zéthúzás"
 
-#: gnome-panel/gp-properties-dialog.ui:271
+#: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
 msgstr "_Automatikus elrejtés"
 
-#: gnome-panel/gp-properties-dialog.ui:286
+#: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
 msgstr "Elrejtő_gombok megjelenítése"
 
-#: gnome-panel/gp-properties-dialog.ui:301
+#: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
 msgstr "_Nyilak megjelenítése az elrejtőgombokon"
 
-#: gnome-panel/gp-properties-dialog.ui:334 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Általános"
 
-#: gnome-panel/gp-properties-dialog.ui:401
+#: gnome-panel/gp-properties-dialog.ui:398
 msgid "Background color:"
 msgstr "Háttérszín:"
 
-#: gnome-panel/gp-properties-dialog.ui:464
+#: gnome-panel/gp-properties-dialog.ui:461
 msgid "Background image:"
 msgstr "Háttérkép:"
 
-#: gnome-panel/gp-properties-dialog.ui:503
+#: gnome-panel/gp-properties-dialog.ui:500
 msgid "Tile"
 msgstr "Mozaik"
 
-#: gnome-panel/gp-properties-dialog.ui:518
+#: gnome-panel/gp-properties-dialog.ui:515
 msgid "Stretch"
 msgstr "Nyújtás"
 
-#: gnome-panel/gp-properties-dialog.ui:533
+#: gnome-panel/gp-properties-dialog.ui:530
 msgid "Fit"
 msgstr "Legjobb illeszkedés"
 
-#: gnome-panel/gp-properties-dialog.ui:555
+#: gnome-panel/gp-properties-dialog.ui:552
 msgid "Rotate image on vertical panel"
 msgstr "Függőleges panelen a kép forgatása"
 
-#: gnome-panel/gp-properties-dialog.ui:598
+#: gnome-panel/gp-properties-dialog.ui:595
 msgid "Text color:"
 msgstr "Szövegszín:"
 
-#: gnome-panel/gp-properties-dialog.ui:653
+#: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
 msgstr "Téma"
 
-#: gnome-panel/gp-properties-dialog.ui:669
-#| msgctxt "Orientation"
-#| msgid "Left"
+#: gnome-panel/gp-properties-dialog.ui:676
 msgid "Left"
 msgstr "Balra"
 
-#: gnome-panel/gp-properties-dialog.ui:692
+#: gnome-panel/gp-properties-dialog.ui:699
 msgid "Center"
 msgstr "Középre"
 
-#: gnome-panel/gp-properties-dialog.ui:715
-#| msgctxt "Orientation"
-#| msgid "Right"
+#: gnome-panel/gp-properties-dialog.ui:722
 msgid "Right"
 msgstr "Jobbra"
 
-#: gnome-panel/gp-properties-dialog.ui:743
-#| msgid "Applications"
+#: gnome-panel/gp-properties-dialog.ui:754
 msgid "Applets"
 msgstr "Kisalkalmazások"
 
@@ -1166,12 +1156,10 @@ msgid "Top Centered Panel"
 msgstr "Fenti középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1496
-#| msgid "Top Centered Panel"
 msgid "Top Start Panel"
 msgstr "Fenti kezdetre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1497
-#| msgid "Top Edge Panel"
 msgid "Top End Panel"
 msgstr "Fenti befejezésre helyezett panel"
 
@@ -1184,12 +1172,10 @@ msgid "Bottom Centered Panel"
 msgstr "Lenti középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1503
-#| msgid "Bottom Centered Panel"
 msgid "Bottom Start Panel"
 msgstr "Lenti kezdésre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1504
-#| msgid "Bottom Edge Panel"
 msgid "Bottom End Panel"
 msgstr "Lenti befejezésre helyezett panel"
 
@@ -1202,12 +1188,10 @@ msgid "Left Centered Panel"
 msgstr "Bal oldali középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1510
-#| msgid "Left Centered Panel"
 msgid "Left Start Panel"
 msgstr "Bal oldali kezdésre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1511
-#| msgid "Left Edge Panel"
 msgid "Left End Panel"
 msgstr "Bal oldali befejezésre helyezett panel"
 
@@ -1220,12 +1204,10 @@ msgid "Right Centered Panel"
 msgstr "Jobb oldali középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1517
-#| msgid "Right Centered Panel"
 msgid "Right Start Panel"
 msgstr "Jobb oldali kezdésre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1518
-#| msgid "Right Edge Panel"
 msgid "Right End Panel"
 msgstr "Jobb oldali befejezésre helyezett panel"
 
@@ -1442,8 +1424,10 @@ msgstr "%H.%M"
 #. * the most abbreviated way possible.
 #.
 #: modules/clock/calendar-window.c:282
+#, c-format
+#| msgid "%b %d"
 msgid "%b %d"
-msgstr "%b. %e."
+msgstr "%b. %-d."
 
 #: modules/clock/calendar-window.c:787
 msgid "Tasks"
@@ -2482,3 +2466,4 @@ msgstr "_Munkaterületek neveinek megjelenítése a kisalkalmazásban"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Munkaterületek"
+
