@@ -1,5 +1,5 @@
 # Hungarian translation for gnome-panel.
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2025 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Szabolcs Ban <shooby at gnome dot hu>, 1998, 1999, 2000, 2001.
@@ -11,20 +11,20 @@
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2018.
 # Mate ORY <orymate at gmail d0t com>, 2006.
 # Nyitrai István <sianis at gmail dot com>, 2008.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-03-14 14:52+0000\n"
-"PO-Revision-Date: 2021-03-17 12:14+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues/\n"
+"POT-Creation-Date: 2025-02-12 23:05+0000\n"
+"PO-Revision-Date: 2025-03-02 20:53+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -432,8 +432,8 @@ msgstr "Objektum IID-je"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. \"ClockAppletFactory::"
+"ClockApplet\"."
 msgstr ""
 "Az objektum megvalósítási azonosítója, például: „ClockAppletFactory::"
 "ClockApplet”."
@@ -520,22 +520,22 @@ msgstr "Panel tájolása"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), "
-"„left” (balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a "
-"képernyő melyik szélén lesz a panel. Nem kiterjesztett módban a különbség "
-"fent és lent között kevésbé fontos, – mindkettő vízszintes panelt jelent – "
-"de még mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. "
-"Például, egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, "
-"míg egy alsó panel menüje a panel fölött bukkan fel."
+"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), „left” "
+"(balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a képernyő "
+"melyik szélén lesz a panel. Nem kiterjesztett módban a különbség fent és "
+"lent között kevésbé fontos, – mindkettő vízszintes panelt jelent – de még "
+"mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. Például, "
+"egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, míg egy "
+"alsó panel menüje a panel fölött bukkan fel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
 msgid "Panel size"
@@ -740,12 +740,12 @@ msgstr "Animáció sebessége"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), "
-"„medium” (közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
+"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), „medium” "
+"(közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
 "enable_animations kulcs be van állítva."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
@@ -832,12 +832,10 @@ msgstr "Nem találhatók kisalkalmazások"
 
 #: gnome-panel/gp-add-applet-window.c:556
 #, c-format
-#| msgid "Find an _item to add to \"%s\":"
 msgid "Find an item to add to “%s”"
 msgstr "A következőhöz adandó elem keresése: „%s”"
 
 #: gnome-panel/gp-add-applet-window.c:558
-#| msgid "Find an item to add to the panel:"
 msgid "Find an item to add to the panel"
 msgstr "A panelhez adandó elem keresése"
 
@@ -846,9 +844,8 @@ msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
-"Letiltva, mert ez a kisalkalmazás fel van sorolva az"
-" „org.gnome.gnome-panel.lockdown” GSettings sémában lévő „disabled-applets”"
-" beállításban."
+"Letiltva, mert ez a kisalkalmazás fel van sorolva az „org.gnome.gnome-panel."
+"lockdown” GSettings sémában lévő „disabled-applets” beállításban."
 
 #: gnome-panel/gp-applet-row.c:110
 msgid "Help"
@@ -1378,8 +1375,8 @@ msgid ""
 "Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Letiltva, mert az „org.gnome.gnome-panel.lockdown” GSettings sémában lévő"
-" „disable-force-quit” beállítás igazra van állítva."
+"Letiltva, mert az „org.gnome.gnome-panel.lockdown” GSettings sémában lévő "
+"„disable-force-quit” beállítás igazra van állítva."
 
 #: modules/action-button/gp-lock-screen-applet.c:280
 #: modules/launcher/gp-launcher-applet.c:850
@@ -1392,8 +1389,8 @@ msgid ""
 "Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő"
-" „disable-lock-screen” beállítás igazra van állítva."
+"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő "
+"„disable-lock-screen” beállítás igazra van állítva."
 
 #: modules/action-button/gp-lock-screen-menu.ui:5
 msgid "_Lock Screen"
@@ -1409,8 +1406,8 @@ msgid ""
 "Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
 "GSettings schema is set to true."
 msgstr ""
-"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő"
-" „disable-log-out” beállítás igazra van állítva."
+"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő "
+"„disable-log-out” beállítás igazra van állítva."
 
 #: modules/action-button/gp-run-applet.c:135
 #: modules/launcher/gp-launcher-module.c:33
@@ -1418,8 +1415,8 @@ msgid ""
 "Disabled because “disable-command-line” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő"
-" „disable-command-line” beállítás igazra van állítva."
+"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő "
+"„disable-command-line” beállítás igazra van állítva."
 
 #: modules/action-button/panel-force-quit.c:71
 msgid ""
@@ -1478,8 +1475,10 @@ msgstr "%H.%M"
 #. * the most abbreviated way possible.
 #.
 #: modules/clock/calendar-window.c:282
+#, c-format
+#| msgid "%b %d"
 msgid "%b %d"
-msgstr "%b. %e."
+msgstr "%b. %-d."
 
 #: modules/clock/calendar-window.c:787
 msgid "Tasks"
@@ -1964,7 +1963,6 @@ msgid "File"
 msgstr "Fájl"
 
 #: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
-#| msgid "Choose a file..."
 msgid "Choose Icon File"
 msgstr "Válasszon ikonfájlt"
 
@@ -1973,7 +1971,6 @@ msgid "_Open"
 msgstr "_Megnyitás"
 
 #: modules/launcher/gp-editor.c:347
-#| msgid "Choose an icon"
 msgid "Choose Icon Name"
 msgstr "Válasszon ikonnevet"
 
@@ -1982,7 +1979,6 @@ msgid "Choose an application..."
 msgstr "Válasszon alkalmazást…"
 
 #: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
-#| msgid "Choose a file..."
 msgid "Choose a directory..."
 msgstr "Válasszon könyvtárat…"
 
@@ -2018,7 +2014,6 @@ msgid "Co_mment:"
 msgstr "_Megjegyzés:"
 
 #: modules/launcher/gp-icon-name-chooser.c:482
-#| msgid "All Day"
 msgid "All"
 msgstr "Összes"
 
@@ -2035,7 +2030,6 @@ msgid "Contexts:"
 msgstr "Környezetek:"
 
 #: modules/launcher/gp-icon-name-chooser.ui:195
-#| msgid "_Location Name:"
 msgid "Icon Names:"
 msgstr "Ikonnevek:"
 
@@ -2053,13 +2047,11 @@ msgid "Can not execute “%s” command line."
 msgstr "A(z) „%s” nem futtatható a parancssorban."
 
 #: modules/launcher/gp-launcher-applet.c:885
-#| msgid "Could not open location '%s'"
 msgid "Could not open location"
 msgstr "Nem sikerült megnyitni a helyet"
 
 #: modules/launcher/gp-launcher-applet.c:1010
 #, c-format
-#| msgid "Failed to load %s: %s\n"
 msgid "Failed to load key file “%s”: %s"
 msgstr "A(z) „%s” kulcsfájl betöltése sikertelen: %s"
 
@@ -2102,18 +2094,15 @@ msgid "Launcher has invalid Type key value “%s”."
 msgstr "A parancsikon érvénytelen „%s” típus kulcsértékkel rendelkezik."
 
 #: modules/launcher/gp-launcher-utils.c:156
-#| msgid "The command of the launcher is not set."
 msgid "The icon of the launcher is not set."
 msgstr "A parancsikon ikonja nincs beállítva."
 
 #: modules/launcher/gp-launcher-utils.c:164
-#| msgid "The name of the launcher is not set."
 msgid "The type of the launcher is not set."
 msgstr "A parancsikon típusa nincs beállítva."
 
 #: modules/launcher/gp-launcher-utils.c:173
 #, c-format
-#| msgid "The name of the launcher is not set."
 msgid "The type of the launcher must be “%s” or “%s”."
 msgstr "A parancsikon típusa csak „%s” vagy „%s” lehet."
 
@@ -2134,9 +2123,6 @@ msgid "Launcher location"
 msgstr "Parancsikon helye"
 
 #: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
-#| msgid ""
-#| "The location of the .desktop file describing the launcher. This key is "
-#| "only relevant if the object_type key is \"launcher-object\"."
 msgid "The location of the .desktop file describing the launcher."
 msgstr "A parancsikont leíró .desktop fájl helye."
 
@@ -2531,3 +2517,4 @@ msgstr "_Munkaterületek neveinek megjelenítése a kisalkalmazásban"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Munkaterületek"
+
