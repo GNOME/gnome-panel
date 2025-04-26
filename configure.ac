@@ -3,7 +3,7 @@ dnl Define version info
 dnl **************************************************************************
 
 m4_define([gp_major_version], [3])
-m4_define([gp_minor_version], [54])
+m4_define([gp_minor_version], [56])
 m4_define([gp_micro_version], [0])
 m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
 
@@ -126,7 +126,7 @@ GDK_PIXBUF_REQUIRED=2.26.0
 PANGO_REQUIRED=1.15.4
 GLIB_REQUIRED=2.67.1
 GTK_REQUIRED=3.22.0
-LIBWNCK_REQUIRED=43.1
+LIBWNCK_REQUIRED=43.2
 LIBGNOME_MENU_REQUIRED=3.7.90
 LIBECAL_REQUIRED=3.33.2
 LIBEDATASERVER_REQUIRED=3.5.3
