@@ -164,16 +164,27 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@-t \
 		-d $(top_srcdir)/po && mv $@-t $@
 
+service_in_files = gnome-panel.service.in
+service_files = $(service_in_files:.service.in=.service)
+
+systemduserdir = $(libdir)/systemd/user
+systemduser_DATA = $(service_files)
+
+%.service: %.service.in
+	$(AM_V_GEN) sed -e 's,[@]bindir[@],$(bindir),g' < $< > $@
+
 EXTRA_DIST =					\
 	$(ui_FILES)				\
 	panel.gresource.xml			\
 	$(desktop_in_files) \
+	$(service_in_files) \
 	$(NULL)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(sys_DATA) \
 	$(desktop_DATA) \
+	$(service_files) \
 	$(NULL)
 
 -include $(top_srcdir)/git.mk

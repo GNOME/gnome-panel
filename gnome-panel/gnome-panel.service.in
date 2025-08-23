@@ -1,0 +1,13 @@
+[Unit]
+Description=GNOME Panel
+After=graphical-session.target
+Requisite=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=dbus
+Slice=session.slice
+BusName=org.gnome.Panel
+ExecStart=@bindir@/gnome-panel
+Restart=on-failure
+RestartSec=0ms
