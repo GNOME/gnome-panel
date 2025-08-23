@@ -95,13 +95,16 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 
   self = PANEL_APPLET_FRAME (widget);
 
-  GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
-                                                                     allocation);
-
   if (self->priv->handle == NULL ||
       !gtk_widget_get_visible (self->priv->handle))
-    return;
+    {
+      GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
+                                                                         allocation);
 
+      return;
+    }
+
+  gtk_widget_set_allocation (widget, allocation);
   gtk_widget_get_preferred_size (self->priv->handle, &handle_size, NULL);
 
   if (!gtk_widget_get_has_window (widget))
@@ -114,6 +117,13 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
     }
   else
     {
+      if (gtk_widget_get_realized (widget))
+        gdk_window_move_resize (gtk_widget_get_window (widget),
+                                allocation->x,
+                                allocation->y,
+                                allocation->width,
+                                allocation->height);
+
       handle_allocation.x = 0;
       handle_allocation.y = 0;
 
