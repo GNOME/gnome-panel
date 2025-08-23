@@ -64,6 +64,8 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	int window_scale;
 	gulong struts [12] = { 0, };
 	gulong area[4] = { 0, };
+	gulong *old_struts;
+	gulong *old_area;
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
@@ -115,6 +117,15 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	area[2] = rect->width * window_scale;
 	area[3] = rect->height * window_scale;
 
+	old_struts = g_object_get_data (G_OBJECT (gdk_window), "struts");
+	old_area = g_object_get_data (G_OBJECT (gdk_window), "area");
+
+	if (old_struts != NULL &&
+	    memcmp (old_struts, &struts, sizeof (gulong) * 12) == 0 &&
+	    old_area != NULL &&
+	    memcmp (old_area, &area, sizeof (gulong) * 4) == 0)
+	  return;
+
 	gdk_x11_display_error_trap_push (display);
 
 	XChangeProperty (xdisplay, xwindow, net_wm_strut,
@@ -128,6 +139,14 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 			 (guchar *) &area, 4);
 
 	gdk_x11_display_error_trap_pop_ignored (display);
+
+	old_struts = g_new0 (gulong, 12);
+	memcpy (old_struts, &struts, sizeof (gulong) * 12);
+	g_object_set_data_full (G_OBJECT (gdk_window), "struts", old_struts, g_free);
+
+	old_area = g_new0 (gulong, 4);
+	memcpy (old_area, &area, sizeof (gulong) * 4);
+	g_object_set_data_full (G_OBJECT (gdk_window), "area", old_area, g_free);
 }
 
 void
@@ -155,6 +174,9 @@ panel_xutils_unset_strut (GdkWindow *gdk_window)
 	XDeleteProperty (xdisplay, xwindow, gnome_wm_strut_area);
 
 	gdk_x11_display_error_trap_pop_ignored (display);
+
+	g_object_set_data (G_OBJECT (gdk_window), "struts", NULL);
+	g_object_set_data (G_OBJECT (gdk_window), "area", NULL);
 }
 
 void
