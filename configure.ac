@@ -261,6 +261,21 @@ dnl **************************************************************************
 
 AC_STRUCT_DIRENT_D_TYPE
 
+dnl **************************************************************************
+dnl systemd user unit dir
+dnl **************************************************************************
+
+AS_IF([$PKG_CONFIG systemd], [
+  SYSTEMD_USER_UNIT_DIR=$($PKG_CONFIG \
+    --variable=systemduserunitdir \
+    --define-variable=prefix=${prefix} \
+    systemd)
+], [
+  SYSTEMD_USER_UNIT_DIR="${prefix}/lib/systemd/user"
+])
+
+AC_SUBST([SYSTEMD_USER_UNIT_DIR], [$SYSTEMD_USER_UNIT_DIR])
+
 dnl yelp-tools stuff
 
 YELP_HELP_INIT
