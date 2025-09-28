@@ -167,7 +167,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 service_in_files = gnome-panel.service.in
 service_files = $(service_in_files:.service.in=.service)
 
-systemduserdir = $(libdir)/systemd/user
+systemduserdir = $(SYSTEMD_USER_UNIT_DIR)
 systemduser_DATA = $(service_files)
 
 %.service: %.service.in
