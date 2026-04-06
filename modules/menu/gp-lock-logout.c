@@ -628,7 +628,7 @@ static gboolean
 get_can_shutdown (GpLockLogout *lock_logout)
 {
   GError *error;
-  gboolean can_shutdown;
+  guint can_shutdown;
 
   if (!lock_logout->session_manager)
     {
@@ -650,7 +650,7 @@ get_can_shutdown (GpLockLogout *lock_logout)
       g_error_free (error);
     }
 
-  return can_shutdown;
+  return can_shutdown != 0;
 }
 
 static void

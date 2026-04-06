@@ -90,7 +90,7 @@ can_shutdown_cb (GObject      *source,
                  GAsyncResult *res,
                  gpointer      user_data)
 {
-  gboolean can_shutdown;
+  guint can_shutdown;
   GError *error;
   GpShutdownApplet *self;
 
@@ -109,7 +109,7 @@ can_shutdown_cb (GObject      *source,
     }
 
   self = GP_SHUTDOWN_APPLET (user_data);
-  self->can_shutdown = can_shutdown;
+  self->can_shutdown = can_shutdown != 0;
 
   if (error)
     {
