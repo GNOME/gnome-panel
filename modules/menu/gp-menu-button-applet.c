@@ -142,7 +142,7 @@ static gchar *
 split_menu_uri (const gchar  *menu_uri,
                 gchar       **menu_scheme)
 {
-  gchar *p;
+  const char *p;
 
   if (*menu_uri == '\0')
     return NULL;
