@@ -936,7 +936,7 @@ launcher_error (GpLauncherApplet *self,
 
 static void
 update_icon (GpLauncherApplet *self,
-             const char       *icon_name)
+             char             *icon_name)
 {
   GpLauncherAppletPrivate *priv;
   GIcon *icon;
