@@ -417,8 +417,18 @@ icon_pixmap_new (GVariant *variant)
   gint height;
   GVariant *value;
 
-  if (variant == NULL || g_variant_iter_init (&iter, variant) == 0)
+  if (variant == NULL)
     return NULL;
+
+  if (!g_variant_is_of_type (variant, G_VARIANT_TYPE ("a(iiay)")))
+    {
+      g_warning ("Type for 'IconPixmap' should be 'a(iiay)' "
+                 "but got '%s'", g_variant_get_type_string (variant));
+
+      return NULL;
+    }
+
+  g_variant_iter_init (&iter, variant);
 
   array = g_ptr_array_new ();
   while (g_variant_iter_next (&iter, "(ii@ay)", &width, &height, &value))
